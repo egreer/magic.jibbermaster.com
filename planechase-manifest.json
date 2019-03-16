@@ -1,0 +1,22 @@
+{
+  "name": "Jibbermaster's Planechase",
+  "short_name": "Planechase",
+  "start_url": "./planechase",
+  "lang": "en-US",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "theme_color": "black",
+  "related_applications": [{
+    "platform": "web"
+  }],
+  "icons": [{
+      "src": "./mtg/icon/planechase_64.png",
+      "sizes": "64x64"
+    }, {
+      "src": "./mtg/icon/planechase_128.png",
+      "sizes": "128x128"
+    }, {
+      "src": "./mtg/icon/planechase_256.png",
+      "sizes": "256x256"
+    }]
+}
