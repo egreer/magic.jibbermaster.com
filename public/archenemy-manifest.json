@@ -6,17 +6,18 @@
   "display": "fullscreen",
   "orientation": "portrait",
   "theme_color": "black",
-  "related_applications": [{
-    "platform": "web"
-  }],
-  "icons": [{
+  "icons": [
+    {
       "src": "./mtg/icon/archenemy_64.png",
       "sizes": "64x64"
-    }, {
+    },
+    {
       "src": "./mtg/icon/archenemy_128.png",
       "sizes": "128x128"
-    }, {
+    },
+    {
       "src": "./mtg/icon/archenemy_256.png",
       "sizes": "256x256"
-    }]
+    }
+  ]
 }

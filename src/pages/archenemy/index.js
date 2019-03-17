@@ -1,36 +1,41 @@
 import React, { Component } from "react";
-import { Helmet } from "react-helmet";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  ListGroupItem,
+  ListGroup
+} from "reactstrap";
+import { ArchenemyHelmet } from "./Helmet";
+import { getDeckList, getCardList } from "../../mtg/prebuilt-decks";
+
 export class Archenemy extends Component {
   render() {
     return (
       <div className="App">
-        <Helmet title="Archenemy">
-          <link
-            rel="shortcut icon"
-            href={process.env.PUBLIC_URL + "mtg/icon/archenemy.ico"}
-          />
-          <link
-            rel="apple-touch-icon"
-            href={process.env.PUBLIC_URL + "mtg/icon/archenemy_256.png"}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="64x64"
-            href={process.env.PUBLIC_URL + "mtg/icon/archenemy_64.png"}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="128x128"
-            href={process.env.PUBLIC_URL + "mtg/icon/archenemy_128.png"}
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="256x256"
-            href={process.env.PUBLIC_URL + "mtg/icon/archenemy_256.png"}
-          />
-        </Helmet>
+        <ArchenemyHelmet />
         Archenemy
+        {this.renderPrebuilts()}
       </div>
     );
+  }
+
+  renderPrebuilts() {
+    const prebuilts = getDeckList();
+    const prebuiltItems = prebuilts.map((prebuilt, i) => {
+      const cardList = getCardList(prebuilt);
+      const cardListIems = cardList.map((card, i) => (
+        <ListGroupItem key={i}>{card}</ListGroupItem>
+      ));
+      return (
+        <Card key={i}>
+          <CardBody>
+            <CardTitle>{prebuilt}</CardTitle>
+            <ListGroup>{cardListIems}</ListGroup>
+          </CardBody>
+        </Card>
+      );
+    });
+    return <div>{prebuiltItems}</div>;
   }
 }

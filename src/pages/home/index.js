@@ -4,7 +4,12 @@ export class Home extends Component {
   render() {
     return (
       <div className="App">
-        <Helmet title="Magic" />
+        <Helmet title="Magic">
+          <link
+            rel="manifest"
+            href={process.env.PUBLIC_URL + "/manifest.json"}
+          />
+        </Helmet>
         Magic
       </div>
     );

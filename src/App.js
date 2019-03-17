@@ -98,6 +98,13 @@ class App extends Component {
             <Route path="/archenemy/" exact component={Archenemy} />
           </Switch>
         </div>
+        <h3>Disclaimer</h3>
+        <p>
+          This site is created for personal use. Magic: The Gathering, the mana
+          symbols, the tap symbol and all other related images are owned by
+          Wizards of the Coast. jibbermaster.com is unaffiliated with Wizards of
+          the Coast.
+        </p>
       </BrowserRouter>
     );
   }
