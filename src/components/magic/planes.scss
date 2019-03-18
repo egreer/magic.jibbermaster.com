@@ -4,3 +4,8 @@
   background-color: $black;
   border-color: $black;
 }
+
+.mtg-card-plane,
+.mtg-plane-card {
+  max-width: 600px;
+}

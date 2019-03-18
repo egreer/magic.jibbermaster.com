@@ -28,8 +28,14 @@ export class Counter extends Component {
     const type = getCounterType(card);
     return (
       <div>
-        {this.counterCount()}
-        <Button onClick={this.incrementCounter}>Add {type} Counter</Button>
+        <h1 className="text-shadow">{this.counterCount()}</h1>
+        <Button
+          onClick={this.incrementCounter}
+          color="dark"
+          className="btn-translucent"
+        >
+          Add {type} Counter
+        </Button>
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   Card,
   CardImg,
+  CardImgOverlay,
   CardTitle,
   CardBody,
   CardSubtitle,
@@ -9,13 +10,14 @@ import {
   CardFooter,
   ListGroupItem,
   Modal,
-  ModalBody,
-  Button
+  ModalBody
 } from "reactstrap";
 import { gathererImageURL } from "../../mtg/card";
 import back from "../../images/planechase-back.jpg";
-
+import { Counter } from "./Counter";
 import "./planes.scss";
+
+import { hasCustomProperty } from "../../mtg/card.js";
 
 export class Plane extends Component {
   state = {
@@ -28,7 +30,7 @@ export class Plane extends Component {
   };
 
   render() {
-    const { listDisplay, card } = this.props;
+    const { listDisplay, card, renderActions } = this.props;
     if (listDisplay) {
       return (
         <>
@@ -49,28 +51,54 @@ export class Plane extends Component {
       );
     } else {
       return (
-        <Card inverse>
+        <Card inverse className="mtg-plane-card">
+          {this.renderImage()}
+
           <CardBody>
-            {this.renderImage()}
+            {renderActions && this.renderCounter()}
             {this.renderText()}
           </CardBody>
-          <CardFooter>{this.renderActions()}</CardFooter>
+          {this.renderActions()}
         </Card>
       );
     }
   }
 
+  renderCounter() {
+    const { card, renderActions, hideImage } = this.props;
+    const hasCounters = hasCustomProperty("counter", card);
+    if (renderActions && hasCounters) {
+      if (hideImage) {
+        return (
+          <div className="text-center">
+            <Counter card={card} />
+          </div>
+        );
+      } else {
+        return (
+          <CardImgOverlay className="text-center">
+            <CardTitle className="text-center pt-5 mt-sm-5">
+              <Counter card={card} />
+            </CardTitle>
+          </CardImgOverlay>
+        );
+      }
+    }
+  }
+
   renderActions() {
     const { card } = this.props;
-    if (card) {
+    if (false && card) {
       return (
-        <a
-          href={card.related_uris["gatherer"]}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Gatherer
-        </a>
+        <CardFooter>
+          <a
+            href={card.related_uris["gatherer"]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Gatherer
+          </a>
+        </CardFooter>
       );
     }
   }
@@ -96,7 +124,12 @@ export class Plane extends Component {
     const { hideImage } = this.props;
     if (!hideImage) {
       return (
-        <CardImg top width="100%" src={this.imageURI()} className="mtg-card" />
+        <CardImg
+          top
+          width="100%"
+          src={this.imageURI()}
+          className="mtg-card mtg-card-plane"
+        />
       );
     }
   }

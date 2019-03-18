@@ -23,6 +23,7 @@ import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
 import { Plane } from "../../components/magic/Plane";
 import {
+  Alert,
   Button,
   ListGroup,
   Modal,
@@ -127,7 +128,7 @@ export class Planechase extends Component {
             onClick={this.planeswalk}
             className="mb-2"
             color="success"
-            disabled={planeswalkDisabled}
+            disabled={planeswalkDisabled || loading}
             block
           >
             <i className="ms ms-planeswalker ms-2x mx-2" />
@@ -139,15 +140,18 @@ export class Planechase extends Component {
         {loading ? (
           <Loading className="text-muted" />
         ) : (
-          <div>{currentCard ? <Plane card={currentCard} /> : <Plane />}</div>
+          <div>
+            {currentCard ? (
+              <Plane card={currentCard} renderActions="true" />
+            ) : (
+              <Plane />
+            )}
+          </div>
         )}
-        <hr />
         {this.renderTwoPlanes()}
         {this.renderFivePlanes()}
-        {this.renderCounter(currentCard)}
         {this.renderTripleChaosModal()}
         {this.renderScryModal()}
-        <hr />
         <Button onClick={this.reset} color="danger" block>
           Reset
         </Button>
@@ -194,15 +198,6 @@ export class Planechase extends Component {
     }
   }
 
-  renderCounter(card) {
-    // const { currentCard, counters } = this.state;
-    const hasCounters = hasCustomProperty("counter", card);
-    if (hasCounters) {
-      // const counterType = getCounterType(currentCard);
-      return <Counter card={card} />;
-    }
-  }
-
   renderTwoPlanes() {
     const { currentCard, revealedCards } = this.state;
     if (hasCustomProperty("two-planes", currentCard)) {
@@ -213,12 +208,13 @@ export class Planechase extends Component {
       // TODO Countes, chaos etc
       return (
         <div>
-          <p>Your are on both planes</p>
+          <Alert color="info" className="text-center mb-0">
+            <i className="ms ms-planeswalker mx-2" />
+            You Are On Both Planes
+            <i className="ms ms-planeswalker mx-2" />
+          </Alert>
           {revealedPlanes.map(c => (
-            <p>
-              {c.name}
-              {this.renderCounter(c)}
-            </p>
+            <Plane card={c} key={c.id} renderActions="true" />
           ))}
         </div>
       );
@@ -248,7 +244,11 @@ export class Planechase extends Component {
       // TODO Countes, chaos etc
       return (
         <div>
-          <h1>Pick A Plane to Planeswalk To</h1>
+          <Alert color="info" className="text-center mb-0">
+            <i className="ms ms-planeswalker mx-2" />
+            Pick a Plane to Planeswalk To
+            <i className="ms ms-planeswalker mx-2" />
+          </Alert>
           {revealedPlanes.map(c => (
             <div>
               <Plane card={c} />
