@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 
 export class Home extends Component {
+  componentDidMount = () => {};
   render() {
     return (
       <div className="home">
