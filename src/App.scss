@@ -1,6 +1,15 @@
 @import "styles/colors.scss";
 @import "~bootstrap/scss/bootstrap";
 
+$primary-trans: rgba($primary, 0.8);
+$secondary-trans: rgba($secondary, 0.8);
+$success-trans: rgba($success, 0.8);
+$info-trans: rgba($info, 0.8);
+$warning-trans: rgba($warning, 0.8);
+$danger-trans: rgba($danger, 0.8);
+$light-trans: rgba($light, 0.8);
+$dark-trans: rgba($dark, 0.8);
+
 .mtg-card {
   border-color: $black;
   border-radius: 8%;
@@ -8,6 +17,43 @@
   border-width: 1px;
 }
 
+.btn-translucent {
+  &.btn-primary {
+    background-color: $primary-trans;
+  }
+
+  &.btn-secondary {
+    background-color: $secondary-trans;
+  }
+
+  &.btn-success {
+    background-color: $success-trans;
+  }
+
+  &.btn-info {
+    background-color: $info-trans;
+  }
+
+  &.btn-warning {
+    background-color: $warning-trans;
+  }
+
+  &.btn-danger {
+    background-color: $danger-trans;
+  }
+
+  &.btn-light {
+    background-color: $light-trans;
+  }
+
+  &.btn-dark {
+    background-color: $dark-trans;
+  }
+}
+
+.text-shadow {
+  text-shadow: 0 0 25px $dark, 0 0 5px $black;
+}
 // .app {
 //   background-color: $gray-dark;
 //   color: #fff;
