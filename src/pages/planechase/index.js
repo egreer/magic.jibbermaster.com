@@ -25,13 +25,13 @@ import { Plane } from "../../components/magic/Plane";
 import {
   Alert,
   Button,
+  Fade,
   ListGroup,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter
 } from "reactstrap";
-import { Counter } from "../../components/magic/Counter";
 
 export class Planechase extends Component {
   state = {
@@ -52,7 +52,15 @@ export class Planechase extends Component {
     const deck = getOrCreateCurrentDeck("planechase", planes);
     const currentCard = getCurrentCard("planechase");
     const revealedCards = getRevealedCards("planechase") || [];
-    this.setState({ planes, loading: false, deck, currentCard, revealedCards });
+    const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
+    this.setState({
+      planes,
+      loading: false,
+      deck,
+      currentCard,
+      revealedCards,
+      planeswalkDisabled
+    });
   };
 
   planeswalk = () => {
@@ -176,11 +184,14 @@ export class Planechase extends Component {
         <Button onClick={this.toggleHistory} block>
           {showHistory ? "Hide" : "Show"} History
         </Button>
-        <ListGroup>
-          {showHistory &&
-            history &&
-            history.map(p => <Plane card={p} key={p.id} listDisplay={true} />)}
-        </ListGroup>
+        <Fade in={showHistory}>
+          <ListGroup>
+            {history &&
+              history.map(p => (
+                <Plane card={p} key={p.id} listDisplay={true} />
+              ))}
+          </ListGroup>
+        </Fade>
       </>
     );
   };
@@ -250,12 +261,17 @@ export class Planechase extends Component {
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
           {revealedPlanes.map(c => (
-            <div>
-              <Plane card={c} />
-              <Button block onClick={() => this.selectPlane(c)}>
-                <i className="ms ms-planeswalker mx-2" />
-                <span className="mx-2">{c.name}</span>
-              </Button>
+            <div key={c.id}>
+              <Plane card={c}>
+                <Button
+                  onClick={() => this.selectPlane(c)}
+                  color="primary"
+                  className="btn-translucent"
+                >
+                  <i className="ms ms-planeswalker mx-2" />
+                  <span className="mx-2">Planeswalk</span>
+                </Button>
+              </Plane>
             </div>
           ))}
         </div>

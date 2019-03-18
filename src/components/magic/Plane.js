@@ -30,7 +30,7 @@ export class Plane extends Component {
   };
 
   render() {
-    const { listDisplay, card, renderActions } = this.props;
+    const { listDisplay, card } = this.props;
     if (listDisplay) {
       return (
         <>
@@ -55,7 +55,8 @@ export class Plane extends Component {
           {this.renderImage()}
 
           <CardBody>
-            {renderActions && this.renderCounter()}
+            {this.renderCounter()}
+            {this.renderChildren()}
             {this.renderText()}
           </CardBody>
           {this.renderActions()}
@@ -79,6 +80,23 @@ export class Plane extends Component {
           <CardImgOverlay className="text-center">
             <CardTitle className="text-center pt-5 mt-sm-5">
               <Counter card={card} />
+            </CardTitle>
+          </CardImgOverlay>
+        );
+      }
+    }
+  }
+
+  renderChildren() {
+    const { children, hideImage } = this.props;
+    if (children) {
+      if (hideImage) {
+        return <div className="text-center">{children}</div>;
+      } else {
+        return (
+          <CardImgOverlay className="text-center">
+            <CardTitle className="text-center pt-5 mt-sm-5">
+              {children}
             </CardTitle>
           </CardImgOverlay>
         );
