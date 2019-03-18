@@ -1,7 +1,16 @@
-@import "~bootstrap/scss/bootstrap.scss";
+@import "styles/colors.scss";
+@import "~bootstrap/scss/bootstrap";
 
-// .App {
-//   text-align: center;
+.mtg-card {
+  border-color: $black;
+  border-radius: 8%;
+  border-style: solid;
+  border-width: 1px;
+}
+
+// .app {
+//   background-color: $gray-dark;
+//   color: #fff;
 // }
 //
 // .App-logo {

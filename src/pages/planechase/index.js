@@ -9,7 +9,8 @@ import {
   addCardsToBottom,
   removeCards,
   shuffle,
-  addCardsToTop
+  addCardsToTop,
+  getHistory
 } from "../../mtg/deck.js";
 import {
   getCurrentCard,
@@ -20,9 +21,10 @@ import {
 } from "../../mtg/card.js";
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
+import { Plane } from "../../components/magic/Plane";
 import {
   Button,
-  ButtonGroup,
+  ListGroup,
   Modal,
   ModalHeader,
   ModalBody,
@@ -33,14 +35,15 @@ import { Counter } from "../../components/magic/Counter";
 export class Planechase extends Component {
   state = {
     loading: false,
-    planes: null,
+    planes: [],
     deck: null,
     currentCard: null,
     counters: 0,
     revealedCards: [],
     tripleChaosModalOpen: false,
     scryModalOpen: false,
-    planeswalkDisabled: false
+    planeswalkDisabled: false,
+    showHistory: false
   };
 
   componentDidMount = async () => {
@@ -108,56 +111,86 @@ export class Planechase extends Component {
   };
 
   render() {
-    const { loading, deck, currentCard, planeswalkDisabled } = this.state;
-    // TODO: Two Planes
-    // TODO: 5 Pick 1
+    const {
+      loading,
+      planes,
+      deck,
+      currentCard,
+      planeswalkDisabled
+    } = this.state;
+
     return (
-      <div className="App">
-        <PlanechaseHelmet />
-        <header className="App-header">
-          <p>Planechase</p>
+      <div className="planechase">
+        <PlanechaseHelmet planes={planes} />
+        <div className="fixed-top mt-1 ml-1 w-25 text-left">
           <Button
             onClick={this.planeswalk}
-            color="primary"
+            className="mb-2"
+            color="success"
             disabled={planeswalkDisabled}
+            block
           >
-            Planeswalk
+            <i className="ms ms-planeswalker ms-2x mx-2" />
+            <span className="mx-2 d-none d-md-inline">Planeswalk</span>
           </Button>
-          <Button onClick={this.reset} color="danger">
-            Reset
-          </Button>
-          <Button onClick={this.undo} color="warning">
-            Undo
-          </Button>
-          {loading ? (
-            <Loading className="text-muted" />
-          ) : (
-            <div>{currentCard ? currentCard.name : "None"}</div>
-          )}
-          <hr />
-          {this.renderTwoPlanes()}
-          {this.renderFivePlanes()}
           {this.renderChaos()}
-          {this.renderCounter(currentCard)}
-          {this.renderTripleChaosModal()}
-          {this.renderScryModal()}
-          <hr />
-          {loading ? (
-            <Loading className="text-muted" />
-          ) : (
-            <div>{deck && this.renderPlanes()}</div>
-          )}
-          <p>There are {deck ? deck.length : 0} cards remaining.</p>
-        </header>
+        </div>
+
+        {loading ? (
+          <Loading className="text-muted" />
+        ) : (
+          <div>{currentCard ? <Plane card={currentCard} /> : <Plane />}</div>
+        )}
+        <hr />
+        {this.renderTwoPlanes()}
+        {this.renderFivePlanes()}
+        {this.renderCounter(currentCard)}
+        {this.renderTripleChaosModal()}
+        {this.renderScryModal()}
+        <hr />
+        <Button onClick={this.reset} color="danger" block>
+          Reset
+        </Button>
+        <Button onClick={this.undo} color="warning" block>
+          Undo
+        </Button>
+        <p>There are {deck ? deck.length : 0} cards remaining.</p>
+        {this.renderHistory()}
       </div>
     );
   }
+
+  toggleHistory = () => {
+    this.setState({ showHistory: !this.state.showHistory });
+  };
+
+  renderHistory = () => {
+    const { showHistory } = this.state;
+    const history = getHistory("planechase");
+    return (
+      <>
+        <Button onClick={this.toggleHistory} block>
+          {showHistory ? "Hide" : "Show"} History
+        </Button>
+        <ListGroup>
+          {showHistory &&
+            history &&
+            history.map(p => <Plane card={p} key={p.id} listDisplay={true} />)}
+        </ListGroup>
+      </>
+    );
+  };
 
   renderChaos() {
     const { currentCard } = this.state;
     const hasChaos = hasCustomProperty("chaos-trigger", currentCard);
     if (hasChaos) {
-      return <Button onClick={this.triggerChaos}>Trigger Chaos</Button>;
+      return (
+        <Button onClick={this.triggerChaos} color="info" block>
+          <i className="ms ms-chaos ms-2x mx-2" />
+          <span className="mx-2 d-none d-md-inline">Trigger Chaos</span>
+        </Button>
+      );
     }
   }
 
@@ -215,10 +248,14 @@ export class Planechase extends Component {
       // TODO Countes, chaos etc
       return (
         <div>
-          <h1> Pick A Plane to Planeswalk To</h1>
+          <h1>Pick A Plane to Planeswalk To</h1>
           {revealedPlanes.map(c => (
             <div>
-              <p onClick={() => this.selectPlane(c)}>{c.name}</p>
+              <Plane card={c} />
+              <Button block onClick={() => this.selectPlane(c)}>
+                <i className="ms ms-planeswalker mx-2" />
+                <span className="mx-2">{c.name}</span>
+              </Button>
             </div>
           ))}
         </div>
@@ -258,16 +295,16 @@ export class Planechase extends Component {
           <ModalHeader>{`Triple Chaos`}</ModalHeader>
           <ModalBody>
             <h1 className="text-center">
-              <i className="mi mi-chaos sm-margin" />
-              <i className="mi mi-chaos sm-margin" />
-              <i className="mi mi-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
               Triple Chaos - You Pick Order
-              <i className="mi mi-chaos sm-margin" />
-              <i className="mi mi-chaos sm-margin" />
-              <i className="mi mi-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
+              <i className="ms ms-chaos sm-margin" />
             </h1>
             {revealedPlanes.map(c => (
-              <p>{c.name}</p>
+              <Plane card={c} />
             ))}
           </ModalBody>
           <ModalFooter>
@@ -322,16 +359,16 @@ export class Planechase extends Component {
           size="lg"
         >
           <ModalHeader>
-            <i className="mi mi-chaos sm-margin" />
+            <i className="ms ms-chaos sm-margin" />
             Scry Card
-            <i className="mi mi-chaos sm-margin" />
+            <i className="ms ms-chaos sm-margin" />
           </ModalHeader>
           <ModalBody>
-            <Button color="primary" block onClick={this._scryTop}>
+            <Button color="secondary" block onClick={this._scryTop}>
               Top
             </Button>
             {revealedCards.map(c => (
-              <p>{c.name}</p>
+              <Plane card={c} />
             ))}
             <Button color="secondary" block onClick={this._scryBottom}>
               Bottom
@@ -340,11 +377,5 @@ export class Planechase extends Component {
         </Modal>
       );
     }
-  };
-
-  renderPlanes = () => {
-    const { deck } = this.state;
-
-    return deck.map(p => <p>{p.name}</p>);
   };
 }

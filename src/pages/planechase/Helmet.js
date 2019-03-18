@@ -1,7 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { gathererImageURL } from "../../mtg/card.js";
 
-export const PlanechaseHelmet = () => {
+export const PlanechaseHelmet = ({ planes }) => {
   return (
     <Helmet title="Planechase">
       <link
@@ -31,6 +32,15 @@ export const PlanechaseHelmet = () => {
         rel="manifest"
         href={process.env.PUBLIC_URL + "/planechase-manifest.json"}
       />
+      {planes &&
+        planes.map(p => (
+          <link
+            rel="preload"
+            href={gathererImageURL(p)}
+            as="image"
+            key={p.id}
+          />
+        ))}
     </Helmet>
   );
 };

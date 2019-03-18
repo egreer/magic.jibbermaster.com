@@ -24,3 +24,9 @@ export const getCounterType = card => {
   const property = card.customProperties.find(p => p.name === "counter");
   return property.type;
 };
+
+export const gathererImageURL = card => {
+  return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${
+    card.multiverse_ids[0]
+  }&type=card`;
+};

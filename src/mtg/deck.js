@@ -33,6 +33,10 @@ export const updateHistory = (prefix, card) => {
   store.set(`${prefix}-history`, history);
 };
 
+export const getHistory = (prefix, card) => {
+  return store.get(`${prefix}-history`);
+};
+
 export const undoDraw = prefix => {
   const history = store.get(`${prefix}-history`);
   const card = history.pop();

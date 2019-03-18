@@ -1,6 +1,6 @@
 import axios from "axios";
-import store from "store";
 import moment from "moment";
+import store from "store";
 
 export const internet = axios.create();
 
@@ -19,6 +19,7 @@ export const getAllPlanechaseCards = async () => {
       planes = response.data.data;
       planes = planes.map(p => addAdditionalProperties(p));
       cache("planes", planes);
+      // TODO use the expire store parameter
     } else {
       console.log("Loaded from store");
     }
@@ -48,8 +49,7 @@ function addAdditionalProperties(card) {
   if (properties[card.name]) {
     card.customProperties = properties[card.name];
   } else {
-    // card.customProperties = [];
-    card.customProperties = [{ name: "chaos-trigger" }, { name: "scry-1" }];
+    card.customProperties = [];
   }
 
   return card;

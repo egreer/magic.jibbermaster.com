@@ -10,11 +10,14 @@ import { ArchenemyHelmet } from "./Helmet";
 import { getDeckList, getCardList } from "../../mtg/prebuilt-decks";
 
 export class Archenemy extends Component {
+  state = {};
+
+  componentDidMount = () => {};
+
   render() {
     return (
-      <div className="App">
+      <div className="archenemy">
         <ArchenemyHelmet />
-        Archenemy
         {this.renderPrebuilts()}
       </div>
     );
@@ -31,7 +34,7 @@ export class Archenemy extends Component {
         <Card key={i}>
           <CardBody>
             <CardTitle>{prebuilt}</CardTitle>
-            <ListGroup>{cardListIems}</ListGroup>
+            <ListGroup className="text-dark">{cardListIems}</ListGroup>
           </CardBody>
         </Card>
       );
