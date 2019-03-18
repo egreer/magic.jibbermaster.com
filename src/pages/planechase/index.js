@@ -53,35 +53,37 @@ export class Planechase extends Component {
     const currentCard = getCurrentCard("planechase");
     const revealedCards = getRevealedCards("planechase") || [];
     const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
+    const scryModalOpen =
+      revealedCards.length > 0 && !!hasCustomProperty("scry-1", currentCard);
     this.setState({
       planes,
       loading: false,
       deck,
       currentCard,
       revealedCards,
-      planeswalkDisabled
+      planeswalkDisabled,
+      scryModalOpen
     });
   };
 
   planeswalk = () => {
     const currentCard = drawCard("planechase");
     setCurrentCard("planechase", currentCard);
+    let revealedCards = [];
     if (hasCustomProperty("two-planes", currentCard)) {
-      const revealedCards = revealCards("planechase", 2, true);
+      revealedCards = revealCards("planechase", 2, true);
       removeCards("planechase", revealedCards);
-      setRevealedCards("planechase", revealedCards);
-      this.setState({ revealedCards });
     }
 
     if (hasCustomProperty("top-5", currentCard)) {
-      const revealedCards = revealCards("planechase", 5, true);
+      revealedCards = revealCards("planechase", 5, true);
       removeCards("planechase", revealedCards);
-      setRevealedCards("planechase", revealedCards);
-      this.setState({ revealedCards, planeswalkDisabled: true });
+      this.setState({ planeswalkDisabled: true });
     }
 
+    setRevealedCards("planechase", revealedCards);
     const deck = getCurrentDeck("planechase");
-    this.setState({ currentCard, deck, counters: 0 });
+    this.setState({ currentCard, deck, counters: 0, revealedCards });
   };
 
   reset = async () => {
@@ -99,23 +101,31 @@ export class Planechase extends Component {
   };
 
   triggerChaos = () => {
-    const { currentCard } = this.state;
-    console.log("Choas Triggered");
+    const { currentCard, revealedCards } = this.state;
+    console.log("Chaos Triggered");
     if (hasCustomProperty("triple-chaos", currentCard)) {
-      const revealedCards = revealCards("planechase", 3, true);
-      removeCards("planechase", revealedCards);
-      const shuffledCards = shuffle(revealedCards.slice());
+      const newRevealedCards = revealCards("planechase", 3, true);
+      removeCards("planechase", newRevealedCards);
+      const shuffledCards = shuffle(newRevealedCards.slice());
       addCardsToBottom("planechase", shuffledCards);
       const deck = getCurrentDeck("planechase");
-      setRevealedCards("planechase", revealCards);
-      this.setState({ revealedCards, tripleChaosModalOpen: true, deck });
+      setRevealedCards("planechase", newRevealedCards);
+      this.setState({
+        revealedCards: newRevealedCards,
+        tripleChaosModalOpen: true,
+        deck
+      });
     }
 
     if (hasCustomProperty("scry-1", currentCard)) {
-      const revealedCards = revealCards("planechase", 1, false);
-      removeCards("planechase", revealedCards);
-      setRevealedCards("planechase", revealCards);
-      this.setState({ revealedCards, scryModalOpen: true });
+      console.log("revealed cards", revealedCards);
+      if (!revealedCards || revealedCards.length === 0) {
+        const newRevealedCards = revealCards("planechase", 1, false);
+        removeCards("planechase", newRevealedCards);
+        setRevealedCards("planechase", newRevealedCards);
+        this.setState({ revealedCards: newRevealedCards });
+      }
+      this.setState({ scryModalOpen: true });
     }
   };
 
@@ -305,28 +315,32 @@ export class Planechase extends Component {
           isOpen={!!tripleChaosModalOpen}
           toggle={this._tripleChaosModalToggle}
           onClosed={this._tripleChaosModalClose}
-          size="lg"
+          size="md"
           backdrop={true}
+          contentClassName="bg-secondary"
         >
-          <ModalHeader>{`Triple Chaos`}</ModalHeader>
-          <ModalBody>
-            <h1 className="text-center">
-              <i className="ms ms-chaos sm-margin" />
-              <i className="ms ms-chaos sm-margin" />
-              <i className="ms ms-chaos sm-margin" />
-              Triple Chaos - You Pick Order
-              <i className="ms ms-chaos sm-margin" />
-              <i className="ms ms-chaos sm-margin" />
-              <i className="ms ms-chaos sm-margin" />
-            </h1>
+          <ModalHeader className="justify-content-center text-center text-white">
+            <div>
+              <i className="ms ms-chaos mr-1" />
+              <i className="ms ms-chaos mr-1" />
+              <i className="ms ms-chaos mr-1" />
+              <span className="mx-1">Triple Chaos</span>
+              <i className="ms ms-chaos ml-1" />
+              <i className="ms ms-chaos ml-1" />
+              <i className="ms ms-chaos ml-1" />
+            </div>
+            <div>
+              <small className="text-center">You Pick Order</small>
+            </div>
+          </ModalHeader>
+          <ModalBody className="text-center">
             {revealedPlanes.map(c => (
-              <Plane card={c} />
+              <Plane card={c} key={c.id} />
             ))}
           </ModalBody>
           <ModalFooter>
             <Button
-              color="primary"
-              outline
+              color="info"
               block
               aria-label="Close"
               onClick={this._tripleChaosModalClose}
@@ -371,22 +385,22 @@ export class Planechase extends Component {
       return (
         <Modal
           isOpen={!!scryModalOpen}
-          onClosed={this._tripleChaosModalClose}
-          size="lg"
+          size="md"
+          contentClassName="bg-secondary"
         >
-          <ModalHeader>
-            <i className="ms ms-chaos sm-margin" />
+          <ModalHeader className="justify-content-center text-white">
+            <i className="ms ms-chaos mx-4" />
             Scry Card
-            <i className="ms ms-chaos sm-margin" />
+            <i className="ms ms-chaos mx-4" />
           </ModalHeader>
           <ModalBody>
-            <Button color="secondary" block onClick={this._scryTop}>
+            <Button color="info" block onClick={this._scryTop}>
               Top
             </Button>
             {revealedCards.map(c => (
-              <Plane card={c} />
+              <Plane card={c} key={c.id} />
             ))}
-            <Button color="secondary" block onClick={this._scryBottom}>
+            <Button color="info" block onClick={this._scryBottom}>
               Bottom
             </Button>
           </ModalBody>

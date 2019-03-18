@@ -53,16 +53,28 @@ export class Plane extends Component {
       return (
         <Card inverse className="mtg-plane-card">
           {this.renderImage()}
-
-          <CardBody>
-            {this.renderCounter()}
-            {this.renderChildren()}
-            {this.renderText()}
-          </CardBody>
+          {this.renderBody()}
           {this.renderActions()}
         </Card>
       );
     }
+  }
+
+  renderBody() {
+    const counter = this.renderCounter();
+    const children = this.renderChildren();
+    const text = this.renderText();
+    const hasBody = counter || children || text;
+
+    return (
+      hasBody && (
+        <CardBody>
+          {counter}
+          {children}
+          {text}
+        </CardBody>
+      )
+    );
   }
 
   renderCounter() {
