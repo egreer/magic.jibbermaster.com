@@ -18,6 +18,7 @@ import { Counter } from "./Counter";
 import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
+import { getSetting } from "../../util/settings.js";
 
 export class Plane extends Component {
   state = {
@@ -30,21 +31,23 @@ export class Plane extends Component {
   };
 
   render() {
-    const { listDisplay, card } = this.props;
+    const { listDisplay, card, children } = this.props;
     if (listDisplay) {
       return (
         <>
           <ListGroupItem color="dark" onClick={this.toggleModal}>
-            {card.name}
+            <div>{card.name}</div>
           </ListGroupItem>
           <Modal
             isOpen={this.state.modalOpen}
             toggle={this.toggleModal}
             size="md"
             backdrop={true}
+            contentClassName="bg-secondary"
           >
             <ModalBody className="p-0" centered="true">
               <Plane card={card} />
+              {children}
             </ModalBody>
           </Modal>
         </>
@@ -78,16 +81,11 @@ export class Plane extends Component {
   }
 
   renderCounter() {
-    const { card, renderActions, hideImage } = this.props;
+    const { card, renderActions } = this.props;
+    const displayImages = getSetting("displayImages");
     const hasCounters = hasCustomProperty("counter", card);
     if (renderActions && hasCounters) {
-      if (hideImage) {
-        return (
-          <div className="text-center">
-            <Counter card={card} />
-          </div>
-        );
-      } else {
+      if (displayImages) {
         return (
           <CardImgOverlay className="text-center">
             <CardTitle className="text-center pt-5 mt-sm-5">
@@ -95,16 +93,21 @@ export class Plane extends Component {
             </CardTitle>
           </CardImgOverlay>
         );
+      } else {
+        return (
+          <div className="text-center">
+            <Counter card={card} />
+          </div>
+        );
       }
     }
   }
 
   renderChildren() {
-    const { children, hideImage } = this.props;
+    const { children } = this.props;
+    const displayImages = getSetting("displayImages");
     if (children) {
-      if (hideImage) {
-        return <div className="text-center">{children}</div>;
-      } else {
+      if (displayImages) {
         return (
           <CardImgOverlay className="text-center">
             <CardTitle className="text-center pt-5 mt-sm-5">
@@ -112,6 +115,8 @@ export class Plane extends Component {
             </CardTitle>
           </CardImgOverlay>
         );
+      } else {
+        return <div className="text-center">{children}</div>;
       }
     }
   }
@@ -134,7 +139,8 @@ export class Plane extends Component {
   }
 
   renderText() {
-    const { card, displayText } = this.props;
+    const { card } = this.props;
+    const displayText = getSetting("displayText");
     if (displayText) {
       if (card) {
         return (
@@ -151,8 +157,8 @@ export class Plane extends Component {
   }
 
   renderImage() {
-    const { hideImage } = this.props;
-    if (!hideImage) {
+    const displayImages = getSetting("displayImages");
+    if (displayImages) {
       return (
         <CardImg
           top

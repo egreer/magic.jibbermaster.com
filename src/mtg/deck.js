@@ -1,5 +1,11 @@
 import store from "store";
 
+export const moveCard = (prefix, from, to) => {
+  const deck = getCurrentDeck(prefix);
+  deck.splice(to, 0, deck.splice(from, 1)[0]);
+  storeCurrentDeck(prefix, deck);
+};
+
 export const getOrCreateCurrentDeck = (prefix, cards, reset = false) => {
   let deck = getCurrentDeck(prefix);
   if (!deck || reset) {
@@ -71,7 +77,7 @@ export const findCardById = (prefix, cardId) => {
 };
 
 export const findAndPutOnTop = (prefix, cardId) => {
-  const tmpCard = findCardById(cardId);
+  const tmpCard = findCardById(prefix, cardId);
 
   if (tmpCard) {
     removeCards(prefix, [tmpCard]);
@@ -80,7 +86,7 @@ export const findAndPutOnTop = (prefix, cardId) => {
 };
 
 export const findAndPutOnBottom = (prefix, cardId) => {
-  const tmpCard = findCardById(cardId);
+  const tmpCard = findCardById(prefix, cardId);
 
   if (tmpCard) {
     removeCards(prefix, [tmpCard]);

@@ -24,6 +24,8 @@ import store from "store";
 
 import "./App.scss";
 
+import { setSetting, getSetting, toggleSetting } from "./util/settings";
+
 import { Home } from "./pages/home";
 import { Planechase } from "./pages/planechase";
 import { Archenemy } from "./pages/archenemy";
@@ -31,7 +33,10 @@ import { Archenemy } from "./pages/archenemy";
 class App extends Component {
   state = {
     isOpen: false,
-    disclaimerDismissed: false
+    disclaimerDismissed: false,
+    displayText: false,
+    displayImages: false,
+    devTools: false
   };
 
   toggle = () => {
@@ -41,16 +46,54 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    const dismissed = store.get("disclaimer-dismissed");
-    this.setState({ disclaimerDismissed: !!dismissed });
+    this.setState({
+      disclaimerDismissed: getSetting("disclaimerDismissed"),
+      displayText: getSetting("displayText"),
+      displayImages: getSetting("displayImages"),
+      devTools: getSetting("devTools")
+    });
   };
 
-  dismissDiscalimer = () => {
-    store.set("disclaimer-dismissed", true);
-    this.setState({ disclaimerDismissed: true });
+  dismissDisclaimer = () => {
+    this.setState({
+      disclaimerDismissed: setSetting("disclaimerDismissed", true)
+    });
+  };
+
+  _toggleSetting = setting => {
+    const tempState = {};
+    tempState[setting] = toggleSetting(setting);
+    this.setState(tempState);
+  };
+
+  _mtgToggler = (value, displayText, onClick) => {
+    return (
+      <DropdownItem toggle={false} onClick={onClick}>
+        <span>
+          {value ? (
+            <i className="ms ms-dfc ms-dfc-day" />
+          ) : (
+            <i className="ms ms-dfc ms-dfc-night" />
+          )}
+        </span>
+        <span className="ml-3">{displayText}</span>
+      </DropdownItem>
+    );
+  };
+
+  closeNavbar = () => {
+    if (this.state.isOpen) {
+      this.setState({ isOpen: false });
+    }
   };
 
   render() {
+    const {
+      disclaimerDismissed,
+      displayText,
+      displayImages,
+      devTools
+    } = this.state;
     return (
       <BrowserRouter>
         <Helmet titleTemplate="%s - Jibbermaster" />
@@ -60,7 +103,13 @@ class App extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink tag={RRNavLink} exact to="/" activeClassName="active">
+                <NavLink
+                  tag={RRNavLink}
+                  exact
+                  to="/"
+                  activeClassName="active"
+                  onClick={this.closeNavbar}
+                >
                   Home
                 </NavLink>
               </NavItem>
@@ -70,6 +119,7 @@ class App extends Component {
                   exact
                   to="/planechase"
                   activeClassName="active"
+                  onClick={this.closeNavbar}
                 >
                   Planechase
                 </NavLink>
@@ -80,19 +130,32 @@ class App extends Component {
                   exact
                   to="/archenemy"
                   activeClassName="active"
+                  onClick={this.closeNavbar}
                 >
                   Archenemy
                 </NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Settings
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
+                  {this._mtgToggler(
+                    disclaimerDismissed,
+                    "Disclaimer Dismissed",
+                    () => this._toggleSetting("disclaimerDismissed")
+                  )}
+                  {this._mtgToggler(displayText, "Display Text", () =>
+                    this._toggleSetting("displayText")
+                  )}
+                  {this._mtgToggler(displayImages, "Display Images", () =>
+                    this._toggleSetting("displayImages")
+                  )}
+                  {this._mtgToggler(devTools, "Dev Tools", () =>
+                    this._toggleSetting("devTools")
+                  )}
                   <DropdownItem divider />
-                  <DropdownItem onClick={() => store.clearAll()}>
+                  <DropdownItem toggle={false} onClick={() => store.clearAll()}>
                     Clear Everything
                   </DropdownItem>
                 </DropdownMenu>
@@ -100,7 +163,7 @@ class App extends Component {
             </Nav>
           </Collapse>
         </Navbar>
-        <div className="app text-light bg-dark">
+        <div className="app text-light bg-dark col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
           <Switch>
             <Route path="/" exact render={props => <Home {...props} />} />
             <Route
@@ -118,7 +181,7 @@ class App extends Component {
             color="warning"
             className="fixed-bottom mb-0 py-1"
             isOpen={!this.state.disclaimerDismissed}
-            toggle={this.dismissDiscalimer}
+            toggle={this.dismissDisclaimer}
           >
             <h6>Disclaimer</h6>
             <small className="text-muted m-0">

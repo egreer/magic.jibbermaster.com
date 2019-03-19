@@ -10,7 +10,10 @@ import {
   removeCards,
   shuffle,
   addCardsToTop,
-  getHistory
+  getHistory,
+  findAndPutOnBottom,
+  findAndPutOnTop,
+  moveCard
 } from "../../mtg/deck.js";
 import {
   getCurrentCard,
@@ -30,8 +33,10 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  ListGroupItem
 } from "reactstrap";
+import { getSetting } from "../../util/settings.js";
 
 export class Planechase extends Component {
   state = {
@@ -44,7 +49,8 @@ export class Planechase extends Component {
     tripleChaosModalOpen: false,
     scryModalOpen: false,
     planeswalkDisabled: false,
-    showHistory: false
+    showHistory: false,
+    showDeck: false
   };
 
   componentDidMount = async () => {
@@ -66,6 +72,11 @@ export class Planechase extends Component {
     });
   };
 
+  refreshDeck = () => {
+    const deck = getCurrentDeck("planechase");
+    this.setState({ deck });
+  };
+
   planeswalk = () => {
     const currentCard = drawCard("planechase");
     setCurrentCard("planechase", currentCard);
@@ -82,8 +93,8 @@ export class Planechase extends Component {
     }
 
     setRevealedCards("planechase", revealedCards);
-    const deck = getCurrentDeck("planechase");
-    this.setState({ currentCard, deck, counters: 0, revealedCards });
+    this.refreshDeck();
+    this.setState({ currentCard, counters: 0, revealedCards });
   };
 
   reset = async () => {
@@ -96,8 +107,8 @@ export class Planechase extends Component {
 
   undo = async () => {
     const currentCard = undoDraw("planechase");
-    const deck = getCurrentDeck("planechase");
-    this.setState({ deck, currentCard });
+    this.refreshDeck();
+    this.setState({ currentCard });
   };
 
   triggerChaos = () => {
@@ -108,12 +119,11 @@ export class Planechase extends Component {
       removeCards("planechase", newRevealedCards);
       const shuffledCards = shuffle(newRevealedCards.slice());
       addCardsToBottom("planechase", shuffledCards);
-      const deck = getCurrentDeck("planechase");
+      this.refreshDeck();
       setRevealedCards("planechase", newRevealedCards);
       this.setState({
         revealedCards: newRevealedCards,
-        tripleChaosModalOpen: true,
-        deck
+        tripleChaosModalOpen: true
       });
     }
 
@@ -158,7 +168,7 @@ export class Planechase extends Component {
         {loading ? (
           <Loading className="text-muted" />
         ) : (
-          <div>
+          <div className="mb-2">
             {currentCard ? (
               <Plane card={currentCard} renderActions="true" />
             ) : (
@@ -173,14 +183,104 @@ export class Planechase extends Component {
         <Button onClick={this.reset} color="danger" block>
           Reset
         </Button>
-        <Button onClick={this.undo} color="warning" block>
-          Undo
-        </Button>
-        <p>There are {deck ? deck.length : 0} cards remaining.</p>
+        <p className="text-center my-3">
+          There are {deck ? deck.length : 0} cards remaining.
+        </p>
         {this.renderHistory()}
+        {this.renderDevTools()}
       </div>
     );
   }
+
+  renderDevTools = () => {
+    const devTools = getSetting("devTools");
+    if (devTools) {
+      return (
+        <div className="my-4 text-center">
+          <h5>Dev Tools</h5>
+          <Button onClick={this.undo} color="warning" block>
+            Undo
+          </Button>
+          {this.renderDeck()}
+        </div>
+      );
+    }
+  };
+
+  toggleDeck = () => {
+    this.setState({ showDeck: !this.state.showDeck });
+  };
+
+  manipulateDeck = () => {
+    this.refreshDeck();
+  };
+
+  renderDeck = () => {
+    const { showDeck } = this.state;
+    const deck = getCurrentDeck("planechase");
+    return (
+      <div className="my-2">
+        <Button onClick={this.toggleDeck} block>
+          {showDeck ? "Hide" : "Show"} Deck
+        </Button>
+        <Fade in={showDeck}>
+          {showDeck && (
+            <ListGroup>
+              {deck.map((p, i) => (
+                <React.Fragment key={p.id}>
+                  <Plane card={p} listDisplay={true} />
+                  <ListGroupItem>
+                    <Button
+                      disabled={i === 0}
+                      onClick={() =>
+                        this.manipulateDeck(moveCard("planechase", i, i - 1))
+                      }
+                    >
+                      Up
+                    </Button>
+                    <Button
+                      disabled={i === deck.length - 1}
+                      onClick={() =>
+                        this.manipulateDeck(moveCard("planechase", i, i + 1))
+                      }
+                    >
+                      Down
+                    </Button>
+                    <Button
+                      disabled={i === 0}
+                      onClick={() =>
+                        this.manipulateDeck(findAndPutOnTop("planechase", p.id))
+                      }
+                    >
+                      Top
+                    </Button>
+                    <Button
+                      disabled={i === deck.length - 1}
+                      onClick={() =>
+                        this.manipulateDeck(
+                          findAndPutOnBottom("planechase", p.id)
+                        )
+                      }
+                    >
+                      Botom
+                    </Button>
+                    <Button
+                      color="danger"
+                      onClick={() =>
+                        this.manipulateDeck(removeCards("planechase", [p]))
+                      }
+                    >
+                      Remove
+                    </Button>
+                  </ListGroupItem>
+                </React.Fragment>
+              ))}
+            </ListGroup>
+          )}
+        </Fade>
+      </div>
+    );
+  };
 
   toggleHistory = () => {
     this.setState({ showHistory: !this.state.showHistory });
@@ -190,19 +290,20 @@ export class Planechase extends Component {
     const { showHistory } = this.state;
     const history = getHistory("planechase");
     return (
-      <>
+      <div className="my-2">
         <Button onClick={this.toggleHistory} block>
           {showHistory ? "Hide" : "Show"} History
         </Button>
         <Fade in={showHistory}>
-          <ListGroup>
-            {history &&
-              history.map(p => (
+          {showHistory && (
+            <ListGroup>
+              {history.reverse().map(p => (
                 <Plane card={p} key={p.id} listDisplay={true} />
               ))}
-          </ListGroup>
+            </ListGroup>
+          )}
         </Fade>
-      </>
+      </div>
     );
   };
 
@@ -222,11 +323,10 @@ export class Planechase extends Component {
   renderTwoPlanes() {
     const { currentCard, revealedCards } = this.state;
     if (hasCustomProperty("two-planes", currentCard)) {
-      console.log(revealedCards);
       const revealedPlanes = revealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      // TODO Countes, chaos etc
+      // TODO chaos Add to history etc
       return (
         <div>
           <Alert color="info" className="text-center mb-0">
@@ -365,18 +465,18 @@ export class Planechase extends Component {
     const { revealedCards } = this.state;
     addCardsToTop("planechase", revealedCards);
     console.log("Scry Top", revealedCards);
-    const deck = getCurrentDeck("planechase");
+    this.refreshDeck();
     setRevealedCards("planechase", []);
-    this.setState({ revealedCards: [], scryModalOpen: false, deck });
+    this.setState({ revealedCards: [], scryModalOpen: false });
   };
 
   _scryBottom = () => {
     const { revealedCards } = this.state;
     addCardsToBottom("planechase", revealedCards);
     console.log("Scry Bottom", revealedCards);
-    const deck = getCurrentDeck("planechase");
+    this.refreshDeck();
     setRevealedCards("planechase", []);
-    this.setState({ revealedCards: [], scryModalOpen: false, deck });
+    this.setState({ revealedCards: [], scryModalOpen: false });
   };
 
   renderScryModal = () => {
