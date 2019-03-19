@@ -28,7 +28,7 @@ export class Counter extends Component {
     const type = getCounterType(card);
     return (
       <div>
-        <h1 className="text-shadow">{this.counterCount()}</h1>
+        <h1 className="text-shadow noselect">{this.counterCount()}</h1>
         <Button
           onClick={this.incrementCounter}
           color="dark"

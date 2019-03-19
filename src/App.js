@@ -99,7 +99,12 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Helmet titleTemplate="%s - Jibbermaster" />
-        <Navbar color="dark" dark expand="md" className="text-right p-1">
+        <Navbar
+          color="dark"
+          dark
+          expand="md"
+          className="text-right p-1 noselect"
+        >
           <NavbarBrand />
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

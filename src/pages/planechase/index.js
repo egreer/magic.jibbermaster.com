@@ -222,7 +222,7 @@ export class Planechase extends Component {
         <Button onClick={this.reset} color="danger" block>
           Reset
         </Button>
-        <p className="text-center my-3">
+        <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
         {this.renderHistory()}
@@ -236,7 +236,7 @@ export class Planechase extends Component {
     if (devTools) {
       return (
         <div className="my-4">
-          <h5 className="text-center">Dev Tools</h5>
+          <h5 className="text-center noselect">Dev Tools</h5>
           <Button onClick={this.undo} color="warning" block>
             Undo
           </Button>
