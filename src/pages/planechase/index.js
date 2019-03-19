@@ -11,6 +11,7 @@ import {
   shuffle,
   addCardsToTop,
   getHistory,
+  updateHistory,
   findAndPutOnBottom,
   findAndPutOnTop,
   moveCard
@@ -20,7 +21,11 @@ import {
   setCurrentCard,
   hasCustomProperty,
   setRevealedCards,
-  getRevealedCards
+  getRevealedCards,
+  setAdditionalCards,
+  getAdditionalCards,
+  setScryCards,
+  getScryCards
 } from "../../mtg/card.js";
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
@@ -28,6 +33,8 @@ import { Plane } from "../../components/magic/Plane";
 import {
   Alert,
   Button,
+  ButtonGroup,
+  ButtonToolbar,
   Fade,
   ListGroup,
   Modal,
@@ -46,6 +53,8 @@ export class Planechase extends Component {
     currentCard: null,
     counters: 0,
     revealedCards: [],
+    additionalCards: [],
+    scryCards: [],
     tripleChaosModalOpen: false,
     scryModalOpen: false,
     planeswalkDisabled: false,
@@ -59,15 +68,19 @@ export class Planechase extends Component {
     const deck = getOrCreateCurrentDeck("planechase", planes);
     const currentCard = getCurrentCard("planechase");
     const revealedCards = getRevealedCards("planechase") || [];
+    const scryCards = getScryCards("planechase") || [];
+    const additionalCards = getAdditionalCards("planechase");
     const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
     const scryModalOpen =
-      revealedCards.length > 0 && !!hasCustomProperty("scry-1", currentCard);
+      scryCards.length > 0 && !!hasCustomProperty("scry-1", currentCard);
     this.setState({
       planes,
       loading: false,
       deck,
       currentCard,
       revealedCards,
+      additionalCards,
+      scryCards,
       planeswalkDisabled,
       scryModalOpen
     });
@@ -82,9 +95,20 @@ export class Planechase extends Component {
     const currentCard = drawCard("planechase");
     setCurrentCard("planechase", currentCard);
     let revealedCards = [];
+    let additionalCards = [];
     if (hasCustomProperty("two-planes", currentCard)) {
       revealedCards = revealCards("planechase", 2, true);
       removeCards("planechase", revealedCards);
+      const revealedPlanes = revealedCards.filter(
+        c => c.type_line.search("Plane") >= 0
+      );
+      const revealedPhenomenon = revealedCards.filter(
+        c => c.type_line.search("Phenomenon") >= 0
+      );
+      revealedPlanes.forEach(c => updateHistory("planechase", c));
+      addCardsToBottom("planechase", revealedPhenomenon);
+      revealedCards = [];
+      additionalCards = revealedPlanes;
     }
 
     if (hasCustomProperty("top-5", currentCard)) {
@@ -94,8 +118,9 @@ export class Planechase extends Component {
     }
 
     setRevealedCards("planechase", revealedCards);
+    setAdditionalCards("planechase", additionalCards);
     this.refreshDeck();
-    this.setState({ currentCard, counters: 0, revealedCards });
+    this.setState({ currentCard, counters: 0, revealedCards, additionalCards });
   };
 
   reset = async () => {
@@ -103,7 +128,20 @@ export class Planechase extends Component {
     const planes = await getAllPlanechaseCards();
     const deck = getOrCreateCurrentDeck("planechase", planes, true);
     const currentCard = setCurrentCard("planechase", null);
-    this.setState({ planes, loading: false, deck, currentCard });
+    const revealedCards = setRevealedCards("planechase", []);
+    const scryCards = setScryCards("planechase", []);
+    const additionalCards = setAdditionalCards("planechase", []);
+    this.setState({
+      planes,
+      loading: false,
+      deck,
+      currentCard,
+      revealedCards,
+      scryCards,
+      additionalCards,
+      planeswalkDisabled: false,
+      scryModalOpen: false
+    });
   };
 
   undo = async () => {
@@ -112,10 +150,10 @@ export class Planechase extends Component {
     this.setState({ currentCard });
   };
 
-  triggerChaos = () => {
-    const { currentCard, revealedCards } = this.state;
+  triggerChaos = card => {
+    const { scryCards } = this.state;
     console.log("Chaos Triggered");
-    if (hasCustomProperty("triple-chaos", currentCard)) {
+    if (hasCustomProperty("triple-chaos", card)) {
       const newRevealedCards = revealCards("planechase", 3, true);
       removeCards("planechase", newRevealedCards);
       const shuffledCards = shuffle(newRevealedCards.slice());
@@ -128,13 +166,12 @@ export class Planechase extends Component {
       });
     }
 
-    if (hasCustomProperty("scry-1", currentCard)) {
-      console.log("revealed cards", revealedCards);
-      if (!revealedCards || revealedCards.length === 0) {
-        const newRevealedCards = revealCards("planechase", 1, false);
-        removeCards("planechase", newRevealedCards);
-        setRevealedCards("planechase", newRevealedCards);
-        this.setState({ revealedCards: newRevealedCards });
+    if (hasCustomProperty("scry-1", card)) {
+      if (!scryCards || scryCards.length === 0) {
+        const newScryCards = revealCards("planechase", 1, false);
+        removeCards("planechase", newScryCards);
+        setScryCards("planechase", newScryCards);
+        this.setState({ scryCards: newScryCards });
       }
       this.setState({ scryModalOpen: true });
     }
@@ -163,7 +200,6 @@ export class Planechase extends Component {
             <i className="ms ms-planeswalker ms-2x mx-2" />
             <span className="mx-2 d-none d-md-inline">Planeswalk</span>
           </Button>
-          {this.renderChaos()}
         </div>
 
         {loading ? (
@@ -171,7 +207,9 @@ export class Planechase extends Component {
         ) : (
           <div className="mb-2">
             {currentCard ? (
-              <Plane card={currentCard} renderActions="true" />
+              <Plane card={currentCard} renderActions="true">
+                {this.renderChaos(currentCard)}
+              </Plane>
             ) : (
               <Plane />
             )}
@@ -197,8 +235,8 @@ export class Planechase extends Component {
     const devTools = getSetting("devTools");
     if (devTools) {
       return (
-        <div className="my-4 text-center">
-          <h5>Dev Tools</h5>
+        <div className="my-4">
+          <h5 className="text-center">Dev Tools</h5>
           <Button onClick={this.undo} color="warning" block>
             Undo
           </Button>
@@ -232,57 +270,71 @@ export class Planechase extends Component {
           {showDeck && (
             <>
               <Button onClick={this.toggleDeckImages} block>
-                {showDeckImages ? "Hide" : "Show"} Images
+                {showDeckImages ? "Hide" : "Show"} Full Card
               </Button>
               <ListGroup>
                 {deck.map((p, i) => (
                   <React.Fragment key={p.id}>
                     <Plane card={p} listDisplay={!showDeckImages} />
-                    <ListGroupItem>
-                      <Button
-                        disabled={i === 0}
-                        onClick={() =>
-                          this.manipulateDeck(moveCard("planechase", i, i - 1))
-                        }
-                      >
-                        Up
-                      </Button>
-                      <Button
-                        disabled={i === deck.length - 1}
-                        onClick={() =>
-                          this.manipulateDeck(moveCard("planechase", i, i + 1))
-                        }
-                      >
-                        Down
-                      </Button>
-                      <Button
-                        disabled={i === 0}
-                        onClick={() =>
-                          this.manipulateDeck(
-                            findAndPutOnTop("planechase", p.id)
-                          )
-                        }
-                      >
-                        Top
-                      </Button>
-                      <Button
-                        disabled={i === deck.length - 1}
-                        onClick={() =>
-                          this.manipulateDeck(
-                            findAndPutOnBottom("planechase", p.id)
-                          )
-                        }
-                      >
-                        Bottom
-                      </Button>
-                      <Button
-                        color="danger"
-                        onClick={() =>
-                          this.manipulateDeck(removeCards("planechase", [p]))
-                        }
-                      >
-                        Remove
-                      </Button>
+                    <ListGroupItem className="text-center justify-content-center d-flex">
+                      <ButtonToolbar>
+                        <ButtonGroup>
+                          <Button
+                            disabled={i === 0}
+                            onClick={() =>
+                              this.manipulateDeck(
+                                moveCard("planechase", i, i - 1)
+                              )
+                            }
+                          >
+                            <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
+                          </Button>
+                          <Button
+                            disabled={i === deck.length - 1}
+                            onClick={() =>
+                              this.manipulateDeck(
+                                moveCard("planechase", i, i + 1)
+                              )
+                            }
+                          >
+                            <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
+                          </Button>
+                        </ButtonGroup>
+                        <ButtonGroup className="ml-2">
+                          <Button
+                            disabled={i === 0}
+                            onClick={() =>
+                              this.manipulateDeck(
+                                findAndPutOnTop("planechase", p.id)
+                              )
+                            }
+                          >
+                            <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
+                          </Button>
+                          <Button
+                            disabled={i === deck.length - 1}
+                            onClick={() =>
+                              this.manipulateDeck(
+                                findAndPutOnBottom("planechase", p.id)
+                              )
+                            }
+                          >
+                            <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
+                          </Button>
+                        </ButtonGroup>
+                        <ButtonGroup className="ml-2">
+                          <Button
+                            color="danger"
+                            onClick={() =>
+                              this.manipulateDeck(
+                                removeCards("planechase", [p])
+                              )
+                            }
+                          >
+                            <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
+                          </Button>
+                        </ButtonGroup>
+                      </ButtonToolbar>
                     </ListGroupItem>
                   </React.Fragment>
                 ))}
@@ -307,7 +359,7 @@ export class Planechase extends Component {
           {showHistory ? "Hide" : "Show"} History
         </Button>
         <Fade in={showHistory}>
-          {showHistory && (
+          {showHistory && history && (
             <ListGroup>
               {history.reverse().map(p => (
                 <Plane card={p} key={p.id} listDisplay={true} />
@@ -319,12 +371,16 @@ export class Planechase extends Component {
     );
   };
 
-  renderChaos() {
-    const { currentCard } = this.state;
-    const hasChaos = hasCustomProperty("chaos-trigger", currentCard);
+  renderChaos(card) {
+    const hasChaos = hasCustomProperty("chaos-trigger", card);
     if (hasChaos) {
       return (
-        <Button onClick={this.triggerChaos} color="info" block>
+        <Button
+          onClick={() => this.triggerChaos(card)}
+          color="info"
+          size="lg"
+          className="btn-translucent"
+        >
           <i className="ms ms-chaos ms-2x mx-2" />
           <span className="mx-2 d-none d-md-inline">Trigger Chaos</span>
         </Button>
@@ -333,12 +389,12 @@ export class Planechase extends Component {
   }
 
   renderTwoPlanes() {
-    const { currentCard, revealedCards } = this.state;
+    const { currentCard, additionalCards } = this.state;
     if (hasCustomProperty("two-planes", currentCard)) {
-      const revealedPlanes = revealedCards.filter(
+      const revealedPlanes = additionalCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      // TODO chaos Add to history etc
+      // TODO chaos etc
       return (
         <div>
           <Alert color="info" className="text-center mb-0">
@@ -347,7 +403,11 @@ export class Planechase extends Component {
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
           {revealedPlanes.map(c => (
-            <Plane card={c} key={c.id} renderActions="true" />
+            <React.Fragment key={c.id}>
+              <Plane card={c} renderActions="true">
+                {this.renderChaos(c)}
+              </Plane>
+            </React.Fragment>
           ))}
         </div>
       );
@@ -418,7 +478,6 @@ export class Planechase extends Component {
   renderTripleChaosModal() {
     const { revealedCards, tripleChaosModalOpen } = this.state;
     if (revealedCards && tripleChaosModalOpen) {
-      // TODO filter only planes in revealed cards
       const revealedPlanes = revealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
@@ -447,7 +506,9 @@ export class Planechase extends Component {
           </ModalHeader>
           <ModalBody className="text-center">
             {revealedPlanes.map(c => (
-              <Plane card={c} key={c.id} />
+              <React.Fragment key={c.id}>
+                <Plane card={c}>{this.renderChaos(c)}</Plane>
+              </React.Fragment>
             ))}
           </ModalBody>
           <ModalFooter>
@@ -466,34 +527,34 @@ export class Planechase extends Component {
   }
 
   _scryModalClose = () => {
-    setRevealedCards("planechase", []);
+    setScryCards("planechase", []);
     this.setState({
       scryModalOpen: false,
-      revealedCards: []
+      scryCards: []
     });
   };
 
   _scryTop = () => {
-    const { revealedCards } = this.state;
-    addCardsToTop("planechase", revealedCards);
-    console.log("Scry Top", revealedCards);
+    const { scryCards } = this.state;
+    addCardsToTop("planechase", scryCards);
+    console.log("Scry Top", scryCards);
     this.refreshDeck();
-    setRevealedCards("planechase", []);
-    this.setState({ revealedCards: [], scryModalOpen: false });
+    setScryCards("planechase", []);
+    this.setState({ scryCards: [], scryModalOpen: false });
   };
 
   _scryBottom = () => {
-    const { revealedCards } = this.state;
-    addCardsToBottom("planechase", revealedCards);
-    console.log("Scry Bottom", revealedCards);
+    const { scryCards } = this.state;
+    addCardsToBottom("planechase", scryCards);
+    console.log("Scry Bottom", scryCards);
     this.refreshDeck();
-    setRevealedCards("planechase", []);
-    this.setState({ revealedCards: [], scryModalOpen: false });
+    setScryCards("planechase", []);
+    this.setState({ scryCards: [], scryModalOpen: false });
   };
 
   renderScryModal = () => {
-    const { revealedCards, scryModalOpen } = this.state;
-    if (revealedCards && scryModalOpen) {
+    const { scryCards, scryModalOpen } = this.state;
+    if (scryCards && scryModalOpen) {
       return (
         <Modal
           isOpen={!!scryModalOpen}
@@ -509,7 +570,7 @@ export class Planechase extends Component {
             <Button color="info" block onClick={this._scryTop}>
               Top
             </Button>
-            {revealedCards.map(c => (
+            {scryCards.map(c => (
               <Plane card={c} key={c.id} />
             ))}
             <Button color="info" block onClick={this._scryBottom}>

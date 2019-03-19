@@ -16,6 +16,22 @@ export const setRevealedCards = (prefix, cards) => {
   return store.set(`${prefix}-revealedCards`, cards);
 };
 
+export const getAdditionalCards = prefix => {
+  return store.get(`${prefix}-additionalCards`);
+};
+
+export const setAdditionalCards = (prefix, cards) => {
+  return store.set(`${prefix}-additionalCards`, cards);
+};
+
+export const getScryCards = prefix => {
+  return store.get(`${prefix}-scryCards`);
+};
+
+export const setScryCards = (prefix, cards) => {
+  return store.set(`${prefix}-scryCards`, cards);
+};
+
 export const hasCustomProperty = (property, card) => {
   return card && card.customProperties.find(p => p.name === property);
 };
