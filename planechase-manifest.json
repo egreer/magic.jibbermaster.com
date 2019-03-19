@@ -4,8 +4,9 @@
   "start_url": "./planechase",
   "lang": "en-US",
   "display": "fullscreen",
-  "orientation": "portrait",
+  "orientation": "any",
   "theme_color": "black",
+  "background_color": "#17a2b8",
   "icons": [
     {
       "src": "./mtg/icon/planechase_64.png",

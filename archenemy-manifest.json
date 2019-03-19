@@ -4,8 +4,9 @@
   "start_url": "./archenemy",
   "lang": "en-US",
   "display": "fullscreen",
-  "orientation": "portrait",
+  "orientation": "any",
   "theme_color": "black",
+  "background_color": "#dc3545",
   "icons": [
     {
       "src": "./mtg/icon/archenemy_64.png",
