@@ -50,7 +50,8 @@ export class Planechase extends Component {
     scryModalOpen: false,
     planeswalkDisabled: false,
     showHistory: false,
-    showDeck: false
+    showDeck: false,
+    showDeckImages: false
   };
 
   componentDidMount = async () => {
@@ -211,12 +212,16 @@ export class Planechase extends Component {
     this.setState({ showDeck: !this.state.showDeck });
   };
 
+  toggleDeckImages = () => {
+    this.setState({ showDeckImages: !this.state.showDeckImages });
+  };
+
   manipulateDeck = () => {
     this.refreshDeck();
   };
 
   renderDeck = () => {
-    const { showDeck } = this.state;
+    const { showDeck, showDeckImages } = this.state;
     const deck = getCurrentDeck("planechase");
     return (
       <div className="my-2">
@@ -225,57 +230,64 @@ export class Planechase extends Component {
         </Button>
         <Fade in={showDeck}>
           {showDeck && (
-            <ListGroup>
-              {deck.map((p, i) => (
-                <React.Fragment key={p.id}>
-                  <Plane card={p} listDisplay={true} />
-                  <ListGroupItem>
-                    <Button
-                      disabled={i === 0}
-                      onClick={() =>
-                        this.manipulateDeck(moveCard("planechase", i, i - 1))
-                      }
-                    >
-                      Up
-                    </Button>
-                    <Button
-                      disabled={i === deck.length - 1}
-                      onClick={() =>
-                        this.manipulateDeck(moveCard("planechase", i, i + 1))
-                      }
-                    >
-                      Down
-                    </Button>
-                    <Button
-                      disabled={i === 0}
-                      onClick={() =>
-                        this.manipulateDeck(findAndPutOnTop("planechase", p.id))
-                      }
-                    >
-                      Top
-                    </Button>
-                    <Button
-                      disabled={i === deck.length - 1}
-                      onClick={() =>
-                        this.manipulateDeck(
-                          findAndPutOnBottom("planechase", p.id)
-                        )
-                      }
-                    >
-                      Botom
-                    </Button>
-                    <Button
-                      color="danger"
-                      onClick={() =>
-                        this.manipulateDeck(removeCards("planechase", [p]))
-                      }
-                    >
-                      Remove
-                    </Button>
-                  </ListGroupItem>
-                </React.Fragment>
-              ))}
-            </ListGroup>
+            <>
+              <Button onClick={this.toggleDeckImages} block>
+                {showDeckImages ? "Hide" : "Show"} Images
+              </Button>
+              <ListGroup>
+                {deck.map((p, i) => (
+                  <React.Fragment key={p.id}>
+                    <Plane card={p} listDisplay={!showDeckImages} />
+                    <ListGroupItem>
+                      <Button
+                        disabled={i === 0}
+                        onClick={() =>
+                          this.manipulateDeck(moveCard("planechase", i, i - 1))
+                        }
+                      >
+                        Up
+                      </Button>
+                      <Button
+                        disabled={i === deck.length - 1}
+                        onClick={() =>
+                          this.manipulateDeck(moveCard("planechase", i, i + 1))
+                        }
+                      >
+                        Down
+                      </Button>
+                      <Button
+                        disabled={i === 0}
+                        onClick={() =>
+                          this.manipulateDeck(
+                            findAndPutOnTop("planechase", p.id)
+                          )
+                        }
+                      >
+                        Top
+                      </Button>
+                      <Button
+                        disabled={i === deck.length - 1}
+                        onClick={() =>
+                          this.manipulateDeck(
+                            findAndPutOnBottom("planechase", p.id)
+                          )
+                        }
+                      >
+                        Bottom
+                      </Button>
+                      <Button
+                        color="danger"
+                        onClick={() =>
+                          this.manipulateDeck(removeCards("planechase", [p]))
+                        }
+                      >
+                        Remove
+                      </Button>
+                    </ListGroupItem>
+                  </React.Fragment>
+                ))}
+              </ListGroup>
+            </>
           )}
         </Fade>
       </div>

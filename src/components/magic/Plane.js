@@ -147,7 +147,7 @@ export class Plane extends Component {
           <>
             <CardTitle>{card.name}</CardTitle>
             <CardSubtitle>{card.type_line}</CardSubtitle>
-            <CardText>{card.oracle_text}</CardText>
+            <CardText dangerouslySetInnerHTML={card.oracle_html} />
           </>
         );
       } else {
