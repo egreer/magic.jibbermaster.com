@@ -7,7 +7,8 @@ const SETTINGS = {
   "setting-disclaimerDismissed": false,
   "setting-displayText": false,
   "setting-displayImages": true,
-  "setting-devTools": false
+  "setting-devTools": false,
+  "setting-displayGatherer": false
 };
 store.defaults(SETTINGS);
 

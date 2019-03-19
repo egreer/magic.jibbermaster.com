@@ -36,7 +36,8 @@ class App extends Component {
     disclaimerDismissed: false,
     displayText: false,
     displayImages: false,
-    devTools: false
+    devTools: false,
+    displayGatherer: false
   };
 
   toggle = () => {
@@ -92,6 +93,7 @@ class App extends Component {
       disclaimerDismissed,
       displayText,
       displayImages,
+      displayGatherer,
       devTools
     } = this.state;
     return (
@@ -150,6 +152,9 @@ class App extends Component {
                   )}
                   {this._mtgToggler(displayImages, "Display Images", () =>
                     this._toggleSetting("displayImages")
+                  )}
+                  {this._mtgToggler(displayGatherer, "Display Gatherer", () =>
+                    this._toggleSetting("displayGatherer")
                   )}
                   {this._mtgToggler(devTools, "Dev Tools", () =>
                     this._toggleSetting("devTools")

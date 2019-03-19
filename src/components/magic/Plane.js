@@ -123,7 +123,8 @@ export class Plane extends Component {
 
   renderActions() {
     const { card } = this.props;
-    if (false && card) {
+    const displayGatherer = getSetting("displayGatherer");
+    if (displayGatherer && card) {
       return (
         <CardFooter>
           <a
