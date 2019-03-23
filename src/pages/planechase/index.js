@@ -272,7 +272,7 @@ export class Planechase extends Component {
               </Button>
               <ListGroup>
                 {deck.map((p, i) => (
-                  <React.Fragment key={p.id}>
+                  <React.Fragment key={p.deck_card_id}>
                     <Plane card={p} listDisplay={!showDeckImages} />
                     <ListGroupItem className="text-center justify-content-center d-flex">
                       <ButtonToolbar>
@@ -303,7 +303,7 @@ export class Planechase extends Component {
                             disabled={i === 0}
                             onClick={() =>
                               this.manipulateDeck(
-                                findAndPutOnTop("planechase", p.id)
+                                findAndPutOnTop("planechase", p.deck_card_id)
                               )
                             }
                           >
@@ -313,7 +313,7 @@ export class Planechase extends Component {
                             disabled={i === deck.length - 1}
                             onClick={() =>
                               this.manipulateDeck(
-                                findAndPutOnBottom("planechase", p.id)
+                                findAndPutOnBottom("planechase", p.deck_card_id)
                               )
                             }
                           >
@@ -360,7 +360,7 @@ export class Planechase extends Component {
           {showHistory && history && (
             <ListGroup>
               {history.reverse().map(p => (
-                <Plane card={p} key={p.id} listDisplay={true} />
+                <Plane card={p} key={p.deck_card_id} listDisplay={true} />
               ))}
             </ListGroup>
           )}
@@ -401,7 +401,7 @@ export class Planechase extends Component {
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
           {revealedPlanes.map(c => (
-            <React.Fragment key={c.id}>
+            <React.Fragment key={c.deck_card_id}>
               <Plane card={c} renderActions="true">
                 {this.renderChaos(c)}
               </Plane>
@@ -416,7 +416,9 @@ export class Planechase extends Component {
     const { revealedCards } = this.state;
     removeCards("planechase", revealedCards);
     addCardsToTop("planechase", [card]);
-    const restCards = revealedCards.filter(c => c.id !== card.id);
+    const restCards = revealedCards.filter(
+      c => c.deck_card_id !== card.deck_card_id
+    );
     const shuffledCards = shuffle(restCards.slice());
     addCardsToBottom("planechase", shuffledCards);
     setRevealedCards("planechase", []);
@@ -441,7 +443,7 @@ export class Planechase extends Component {
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
           {revealedPlanes.map(c => (
-            <div key={c.id}>
+            <div key={c.deck_card_id}>
               <Plane card={c}>
                 <Button
                   onClick={() => this.selectPlane(c)}
@@ -504,7 +506,7 @@ export class Planechase extends Component {
           </ModalHeader>
           <ModalBody className="text-center">
             {revealedPlanes.map(c => (
-              <React.Fragment key={c.id}>
+              <React.Fragment key={c.deck_card_id}>
                 <Plane card={c}>{this.renderChaos(c)}</Plane>
               </React.Fragment>
             ))}
@@ -569,7 +571,7 @@ export class Planechase extends Component {
               Top
             </Button>
             {scryCards.map(c => (
-              <Plane card={c} key={c.id} />
+              <Plane card={c} key={c.deck_card_id} />
             ))}
             <Button color="info" block onClick={this._scryBottom}>
               Bottom

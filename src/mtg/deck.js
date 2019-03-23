@@ -1,4 +1,5 @@
 import store from "store";
+import uuidv4 from "uuid/v4";
 
 export const moveCard = (prefix, from, to) => {
   const deck = getCurrentDeck(prefix);
@@ -10,7 +11,11 @@ export const getOrCreateCurrentDeck = (prefix, cards, reset = false) => {
   let deck = getCurrentDeck(prefix);
   if (!deck || reset) {
     console.log(`Creating New ${prefix} Deck`);
-    deck = shuffle(cards);
+    // Clone all the cards so that we aren't modifying original objects
+    const clonedCard = JSON.parse(JSON.stringify(cards));
+    // Add Deck Card Id so that each card in the deck has a unique value
+    clonedCard.forEach(c => (c.deck_card_id = uuidv4()));
+    deck = shuffle(clonedCard);
     store.set(`${prefix}-history`, []);
     storeCurrentDeck(prefix, deck);
   }
@@ -68,16 +73,16 @@ export const deckSize = prefix => {
 };
 
 export const findCard = (prefix, card) => {
-  return findCardById(prefix, card.id);
+  return findCardByDeckCardId(prefix, card.deck_card_id);
 };
 
-export const findCardById = (prefix, cardId) => {
+export const findCardByDeckCardId = (prefix, deckCardId) => {
   const deck = getCurrentDeck(prefix);
-  return deck.find(c => c.id === cardId);
+  return deck.find(c => c.deck_card_id === deckCardId);
 };
 
-export const findAndPutOnTop = (prefix, cardId) => {
-  const tmpCard = findCardById(prefix, cardId);
+export const findAndPutOnTop = (prefix, deckCardId) => {
+  const tmpCard = findCardByDeckCardId(prefix, deckCardId);
 
   if (tmpCard) {
     removeCards(prefix, [tmpCard]);
@@ -85,8 +90,8 @@ export const findAndPutOnTop = (prefix, cardId) => {
   }
 };
 
-export const findAndPutOnBottom = (prefix, cardId) => {
-  const tmpCard = findCardById(prefix, cardId);
+export const findAndPutOnBottom = (prefix, deckCardId) => {
+  const tmpCard = findCardByDeckCardId(prefix, deckCardId);
 
   if (tmpCard) {
     removeCards(prefix, [tmpCard]);
@@ -97,7 +102,7 @@ export const findAndPutOnBottom = (prefix, cardId) => {
 export const removeCards = (prefix, cardsToRemove) => {
   const deck = getCurrentDeck(prefix);
   const filteredDeck = deck.filter(
-    c => !cardsToRemove.find(r => r.id === c.id)
+    c => !cardsToRemove.find(r => r.deck_card_id === c.deck_card_id)
   );
   storeCurrentDeck(prefix, filteredDeck);
 };

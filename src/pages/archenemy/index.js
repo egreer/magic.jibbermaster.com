@@ -189,7 +189,7 @@ export class Archenemy extends Component {
           </Alert>
           <div className="d-flex justify-content-center flex-wrap ">
             {ongoingSchemes.map(c => (
-              <React.Fragment key={c.id}>
+              <React.Fragment key={c.deck_card_id}>
                 <Scheme card={c} renderActions="true">
                   {this.renderAbandon(c)}
                 </Scheme>
@@ -218,14 +218,16 @@ export class Archenemy extends Component {
 
   abandonScheme = card => {
     const { ongoingSchemes, currentCard } = this.state;
-    if (currentCard.id === card.id) {
+    if (currentCard.deck_card_id === card.deck_card_id) {
       console.log("Abandon Current Scheme", card);
       setCurrentCard("archenemy", null);
       const abandonedOngoing = store.set("archenemy-abandonedOngoing", true);
       this.setState({ currentCard: null, abandonedOngoing });
     } else {
       console.log("Abandon Scheme", card);
-      let newOngoing = ongoingSchemes.filter(s => s.id !== card.id);
+      let newOngoing = ongoingSchemes.filter(
+        s => s.deck_card_id !== card.deck_card_id
+      );
       setAdditionalCards("archenemy", newOngoing);
       this.setState({ ongoingSchemes: newOngoing });
     }
@@ -266,7 +268,7 @@ export class Archenemy extends Component {
           {showHistory && history && (
             <ListGroup>
               {history.reverse().map(p => (
-                <Scheme card={p} key={p.id} listDisplay={true} />
+                <Scheme card={p} key={p.deck_card_id} listDisplay={true} />
               ))}
             </ListGroup>
           )}
@@ -321,7 +323,7 @@ export class Archenemy extends Component {
               </Button>
               <ListGroup>
                 {deck.map((p, i) => (
-                  <React.Fragment key={p.id}>
+                  <React.Fragment key={p.deck_card_id}>
                     <Scheme card={p} listDisplay={!showDeckImages} />
                     <ListGroupItem className="text-center justify-content-center d-flex">
                       <ButtonToolbar>
@@ -352,7 +354,7 @@ export class Archenemy extends Component {
                             disabled={i === 0}
                             onClick={() =>
                               this.manipulateDeck(
-                                findAndPutOnTop("archenemy", p.id)
+                                findAndPutOnTop("archenemy", p.deck_card_id)
                               )
                             }
                           >
@@ -362,7 +364,7 @@ export class Archenemy extends Component {
                             disabled={i === deck.length - 1}
                             onClick={() =>
                               this.manipulateDeck(
-                                findAndPutOnBottom("archenemy", p.id)
+                                findAndPutOnBottom("archenemy", p.deck_card_id)
                               )
                             }
                           >
