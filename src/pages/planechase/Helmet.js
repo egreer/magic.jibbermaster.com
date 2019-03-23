@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { gathererImageURL } from "../../mtg/card.js";
 
 export const PlanechaseHelmet = ({ planes }) => {

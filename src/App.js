@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
   BrowserRouter,
   Route,
@@ -98,110 +98,115 @@ class App extends Component {
     } = this.state;
     return (
       <BrowserRouter>
-        <Helmet titleTemplate="%s - Jibbermaster" />
-        <Navbar
-          color="dark"
-          dark
-          expand="md"
-          className="text-right p-1 noselect"
-        >
-          <NavbarBrand />
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  exact
-                  to="/"
-                  activeClassName="active"
-                  onClick={this.closeNavbar}
-                >
-                  Home
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  exact
-                  to="/planechase"
-                  activeClassName="active"
-                  onClick={this.closeNavbar}
-                >
-                  Planechase
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  exact
-                  to="/archenemy"
-                  activeClassName="active"
-                  onClick={this.closeNavbar}
-                >
-                  Archenemy
-                </NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Settings
-                </DropdownToggle>
-                <DropdownMenu right>
-                  {this._mtgToggler(
-                    disclaimerDismissed,
-                    "Disclaimer Dismissed",
-                    () => this._toggleSetting("disclaimerDismissed")
-                  )}
-                  {this._mtgToggler(displayText, "Display Text", () =>
-                    this._toggleSetting("displayText")
-                  )}
-                  {this._mtgToggler(displayImages, "Display Images", () =>
-                    this._toggleSetting("displayImages")
-                  )}
-                  {this._mtgToggler(displayGatherer, "Display Gatherer", () =>
-                    this._toggleSetting("displayGatherer")
-                  )}
-                  {this._mtgToggler(devTools, "Dev Tools", () =>
-                    this._toggleSetting("devTools")
-                  )}
-                  <DropdownItem divider />
-                  <DropdownItem toggle={false} onClick={() => store.clearAll()}>
-                    Clear Everything
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <div className="app text-light bg-dark col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
-          <Switch>
-            <Route path="/" exact render={props => <Home {...props} />} />
-            <Route
-              path="/archenemy"
-              exact
-              render={props => <Archenemy {...props} />}
-            />
-            <Route
-              path="/planechase"
-              exact
-              render={props => <Planechase {...props} />}
-            />
-          </Switch>
-          <Alert
-            color="warning"
-            className="fixed-bottom mb-0 py-1"
-            isOpen={!this.state.disclaimerDismissed}
-            toggle={this.dismissDisclaimer}
+        <HelmetProvider>
+          <Helmet titleTemplate="%s - Jibbermaster" />
+          <Navbar
+            color="dark"
+            dark
+            expand="md"
+            className="text-right p-1 noselect"
           >
-            <h6>Disclaimer</h6>
-            <small className="text-muted m-0">
-              This site is created for personal use. Magic: The Gathering, the
-              mana symbols, the tap symbol and all other related images are
-              owned by Wizards of the Coast. jibbermaster.com is unaffiliated
-              with Wizards of the Coast.
-            </small>
-          </Alert>
-        </div>
+            <NavbarBrand />
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    exact
+                    to="/"
+                    activeClassName="active"
+                    onClick={this.closeNavbar}
+                  >
+                    Home
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    exact
+                    to="/planechase"
+                    activeClassName="active"
+                    onClick={this.closeNavbar}
+                  >
+                    Planechase
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    exact
+                    to="/archenemy"
+                    activeClassName="active"
+                    onClick={this.closeNavbar}
+                  >
+                    Archenemy
+                  </NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Settings
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    {this._mtgToggler(
+                      disclaimerDismissed,
+                      "Disclaimer Dismissed",
+                      () => this._toggleSetting("disclaimerDismissed")
+                    )}
+                    {this._mtgToggler(displayText, "Display Text", () =>
+                      this._toggleSetting("displayText")
+                    )}
+                    {this._mtgToggler(displayImages, "Display Images", () =>
+                      this._toggleSetting("displayImages")
+                    )}
+                    {this._mtgToggler(displayGatherer, "Display Gatherer", () =>
+                      this._toggleSetting("displayGatherer")
+                    )}
+                    {this._mtgToggler(devTools, "Dev Tools", () =>
+                      this._toggleSetting("devTools")
+                    )}
+                    <DropdownItem divider />
+                    <DropdownItem
+                      toggle={false}
+                      onClick={() => store.clearAll()}
+                    >
+                      Clear Everything
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </Navbar>
+          <div className="app text-light bg-dark col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+            <Switch>
+              <Route path="/" exact render={props => <Home {...props} />} />
+              <Route
+                path="/archenemy"
+                exact
+                render={props => <Archenemy {...props} />}
+              />
+              <Route
+                path="/planechase"
+                exact
+                render={props => <Planechase {...props} />}
+              />
+            </Switch>
+            <Alert
+              color="warning"
+              className="fixed-bottom mb-0 py-1"
+              isOpen={!this.state.disclaimerDismissed}
+              toggle={this.dismissDisclaimer}
+            >
+              <h6>Disclaimer</h6>
+              <small className="text-muted m-0">
+                This site is created for personal use. Magic: The Gathering, the
+                mana symbols, the tap symbol and all other related images are
+                owned by Wizards of the Coast. jibbermaster.com is unaffiliated
+                with Wizards of the Coast.
+              </small>
+            </Alert>
+          </div>
+        </HelmetProvider>
       </BrowserRouter>
     );
   }

@@ -1,9 +1,9 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
-export const ArchenemyHelmet = ({ archenemy, schemes }) => {
+export const ArchenemyHelmet = ({ schemes }) => {
   return (
-    <Helmet name="Archenemy">
+    <Helmet title="Archenemy">
       <link
         rel="shortcut icon"
         href={process.env.PUBLIC_URL + "mtg/icon/archenemy.ico"}
