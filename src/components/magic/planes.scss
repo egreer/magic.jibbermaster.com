@@ -5,7 +5,28 @@
   border-color: $black;
 }
 
-.mtg-card-plane,
-.mtg-plane-card {
-  // max-width: 600px;
+// .mtg-card-plane,
+// .mtg-plane-card {
+//   // max-width: 600px;
+// }
+
+.mtg-card-scheme {
+  border-radius: 6%;
+  max-width: 520px;
+}
+
+.mtg-scheme-card {
+  max-width: 520px;
+}
+
+.child-overlay {
+  padding-top: 25%;
+}
+
+.counter-overlay {
+  padding-top: 15%;
+
+  &.scheme-overlay {
+    padding-top: 25%;
+  }
 }

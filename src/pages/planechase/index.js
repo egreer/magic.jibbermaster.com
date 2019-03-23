@@ -1,4 +1,17 @@
 import React, { Component } from "react";
+import {
+  Alert,
+  Button,
+  ButtonGroup,
+  ButtonToolbar,
+  Fade,
+  ListGroup,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ListGroupItem
+} from "reactstrap";
 import { PlanechaseHelmet } from "./Helmet";
 import {
   getCurrentDeck,
@@ -30,19 +43,6 @@ import {
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
 import { Plane } from "../../components/magic/Plane";
-import {
-  Alert,
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Fade,
-  ListGroup,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ListGroupItem
-} from "reactstrap";
 import { getSetting } from "../../util/settings.js";
 
 export class Planechase extends Component {
@@ -51,7 +51,6 @@ export class Planechase extends Component {
     planes: [],
     deck: null,
     currentCard: null,
-    counters: 0,
     revealedCards: [],
     additionalCards: [],
     scryCards: [],
@@ -120,7 +119,7 @@ export class Planechase extends Component {
     setRevealedCards("planechase", revealedCards);
     setAdditionalCards("planechase", additionalCards);
     this.refreshDeck();
-    this.setState({ currentCard, counters: 0, revealedCards, additionalCards });
+    this.setState({ currentCard, revealedCards, additionalCards });
   };
 
   reset = async () => {
@@ -259,8 +258,7 @@ export class Planechase extends Component {
   };
 
   renderDeck = () => {
-    const { showDeck, showDeckImages } = this.state;
-    const deck = getCurrentDeck("planechase");
+    const { deck, showDeck, showDeckImages } = this.state;
     return (
       <div className="my-2">
         <Button onClick={this.toggleDeck} block>

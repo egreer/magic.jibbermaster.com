@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-export const ArchenemyHelmet = ({ archenemy }) => {
+export const ArchenemyHelmet = ({ archenemy, schemes }) => {
   return (
     <Helmet name="Archenemy">
       <link
@@ -31,6 +31,15 @@ export const ArchenemyHelmet = ({ archenemy }) => {
         rel="manifest"
         href={process.env.PUBLIC_URL + "/archenemy-manifest.json"}
       />
+      {schemes &&
+        schemes.map(p => (
+          <link
+            rel="preload"
+            href={p.image_uris["large"]}
+            as="image"
+            key={p.id}
+          />
+        ))}
     </Helmet>
   );
 };

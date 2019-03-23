@@ -12,15 +12,14 @@ import {
   Modal,
   ModalBody
 } from "reactstrap";
-import { gathererImageURL } from "../../mtg/card";
-import back from "../../images/planechase-back.jpg";
+import back from "../../images/archenemy-back.jpg";
 import { Counter } from "./Counter";
 import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
 import { getSetting } from "../../util/settings.js";
 
-export class Plane extends Component {
+export class Scheme extends Component {
   state = {
     modalOpen: false
   };
@@ -46,7 +45,7 @@ export class Plane extends Component {
             contentClassName="bg-secondary"
           >
             <ModalBody className="p-0" centered="true">
-              <Plane card={card} />
+              <Scheme card={card} />
               {children}
             </ModalBody>
           </Modal>
@@ -54,7 +53,7 @@ export class Plane extends Component {
       );
     } else {
       return (
-        <Card inverse className="mtg-plane-card">
+        <Card inverse className="mtg-scheme-card">
           {this.renderImage()}
           {this.renderBody()}
           {this.renderActions()}
@@ -87,8 +86,8 @@ export class Plane extends Component {
     if (renderActions && hasCounters) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center plane-overlay counter-overlay">
-            <CardTitle className="text-center">
+          <CardImgOverlay className="text-center scheme-overlay counter-overlay">
+            <CardTitle className="text-center pt-5 mt-sm-5">
               <Counter card={card} />
             </CardTitle>
           </CardImgOverlay>
@@ -109,8 +108,10 @@ export class Plane extends Component {
     if (children) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center plane-overlay child-overlay">
-            <CardTitle className="text-center">{children}</CardTitle>
+          <CardImgOverlay className="text-center scheme-overlay child-overlay">
+            <CardTitle className="text-center pt-5 mt-sm-5">
+              {children}
+            </CardTitle>
           </CardImgOverlay>
         );
       } else {
@@ -163,7 +164,7 @@ export class Plane extends Component {
           top
           width="100%"
           src={this.imageURI()}
-          className="mtg-card mtg-card-plane"
+          className="mtg-card mtg-card-scheme"
         />
       );
     }
@@ -172,9 +173,7 @@ export class Plane extends Component {
   imageURI() {
     const { card } = this.props;
     if (card) {
-      // Use   Scryfall and rotate or use Gatherer
-      // scryfall (rotated) card.image_uris["border_crop"]
-      return gathererImageURL(card);
+      return card.image_uris["large"];
     } else {
       return back;
     }

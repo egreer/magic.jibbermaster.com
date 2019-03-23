@@ -32,9 +32,10 @@ export class Counter extends Component {
         <Button
           onClick={this.incrementCounter}
           color="dark"
+          size="lg"
           className="btn-translucent"
         >
-          Add {type} Counter
+          <h3 className="mb-0">Add {type} Counter</h3>
         </Button>
       </div>
     );

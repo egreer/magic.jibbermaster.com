@@ -29,6 +29,25 @@ export const getAllPlanechaseCards = async () => {
   }
 };
 
+export const getAllArchenemyCards = async () => {
+  try {
+    let schemes = cached("schemes");
+    if (!schemes) {
+      console.log("Loading from Axios");
+      let response = await internet.get(SCHEMES_URL);
+      schemes = response.data.data;
+      schemes = schemes.map(p => addAdditionalProperties(p));
+      cache("schemes", schemes);
+      // TODO use the expire store parameter
+    } else {
+      console.log("Loaded from store");
+    }
+    return schemes;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 function addAdditionalProperties(card) {
   const properties = {
     Aretopolis: [{ name: "counter", type: "Scroll" }],
