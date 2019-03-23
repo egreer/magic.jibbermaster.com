@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 
