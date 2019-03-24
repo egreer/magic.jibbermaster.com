@@ -54,7 +54,8 @@ export class Archenemy extends Component {
     showDeck: false,
     showDeckImages: false,
     abandonedOngoing: false,
-    deckSelection: true
+    deckSelection: true,
+    customDeck: null
   };
 
   componentDidMount = async () => {
@@ -65,6 +66,8 @@ export class Archenemy extends Component {
     const currentCard = getCurrentCard("archenemy");
     const ongoingSchemes = getAdditionalCards("archenemy") || [];
     const abandonedOngoing = !!store.get("archenemy-abandonedOngoing");
+    const customDeck = JSON.parse(JSON.stringify(schemes));
+    customDeck.forEach(c => (c.count = 0));
     this.setState({
       currentCard,
       deck,
@@ -72,7 +75,8 @@ export class Archenemy extends Component {
       ongoingSchemes,
       schemes,
       abandonedOngoing,
-      deckSelection: !deck
+      deckSelection: !deck,
+      customDeck
     });
   };
 
@@ -108,6 +112,8 @@ export class Archenemy extends Component {
     const currentCard = setCurrentCard("archenemy", null);
     const ongoingSchemes = setAdditionalCards("archenemy", []);
     const abandonedOngoing = store.set("archenemy-abandonedOngoing", false);
+    const customDeck = JSON.parse(JSON.stringify(schemes));
+    customDeck.forEach(c => (c.count = 0));
     this.setState({
       schemes,
       loading: false,
@@ -115,7 +121,8 @@ export class Archenemy extends Component {
       currentCard,
       ongoingSchemes,
       abandonedOngoing,
-      deckSelection: true
+      deckSelection: true,
+      customDeck
     });
   };
 
@@ -126,14 +133,7 @@ export class Archenemy extends Component {
   };
   // TODO Cards with same id
   render() {
-    const {
-      loading,
-      deck,
-      schemes,
-      currentCard,
-      abandonedOngoing,
-      deckSelection
-    } = this.state;
+    const { loading, schemes, deckSelection } = this.state;
 
     return (
       <div className="archenemy">
@@ -151,13 +151,7 @@ export class Archenemy extends Component {
   }
 
   renderGamePlay() {
-    const {
-      loading,
-      deck,
-      schemes,
-      currentCard,
-      abandonedOngoing
-    } = this.state;
+    const { loading, deck, currentCard, abandonedOngoing } = this.state;
 
     return (
       <>
@@ -207,7 +201,27 @@ export class Archenemy extends Component {
   }
 
   renderDeckSelect() {
-    return <>{this.renderPrebuilts()}</>;
+    const { schemes } = this.state;
+    return (
+      <>
+        <Card>
+          <CardBody>
+            <CardTitle>
+              <h3 className="text-center">All Schemes</h3>
+            </CardTitle>
+            <Button
+              block
+              color="success"
+              onClick={() => this.selectDeck("All", schemes)}
+            >
+              Use All
+            </Button>
+          </CardBody>
+        </Card>
+        {this.renderPrebuilts()}
+        {this.renderBuildCustomDeck()}
+      </>
+    );
   }
 
   renderOngoingSchemes() {
@@ -325,6 +339,96 @@ export class Archenemy extends Component {
     });
   }
 
+  incrementCount(card) {
+    const { customDeck } = this.state;
+    customDeck.forEach(c => {
+      if (c.id === card.id) {
+        c.count += 1;
+        c.count = Math.min(c.count, 2);
+      }
+    });
+    this.setState({ customDeck });
+  }
+
+  decrementCount(card) {
+    const { customDeck } = this.state;
+    customDeck.forEach(c => {
+      if (c.id === card.id) {
+        c.count -= 1;
+        c.count = Math.max(c.count, 0);
+      }
+    });
+    this.setState({ customDeck });
+  }
+  customDeckSize() {
+    const { customDeck } = this.state;
+    const reducer = (a, b) => a + b;
+    return customDeck.map(c => c.count).reduce(reducer, 0);
+  }
+  renderBuildCustomDeck() {
+    const { customDeck } = this.state;
+
+    const cardListIems = customDeck.map(card => (
+      <ListGroupItem key={card.id}>
+        <Scheme card={card} />
+        <h1 className="text-center">x{card.count}</h1>
+        <ButtonGroup>
+          <Button
+            disabled={card.count >= 2}
+            onClick={() => this.incrementCount(card)}
+          >
+            <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
+          </Button>
+          <Button
+            disabled={card.count <= 0}
+            onClick={() => this.decrementCount(card)}
+          >
+            <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
+          </Button>
+        </ButtonGroup>
+      </ListGroupItem>
+    ));
+
+    return (
+      <>
+        <Card>
+          <CardBody>
+            <CardTitle>
+              <h3 className="text-center">Custom Deck</h3>
+            </CardTitle>
+            <Button block id="custom-deck-toggle">
+              Build Custom
+            </Button>
+            <UncontrolledCollapse toggler="custom-deck-toggle">
+              <div className="fixed-top mt-1 ml-1 text-left">
+                <Alert color="info" className="clearfix">
+                  <h4 className="float-left">
+                    Custom Deck Size: {this.customDeckSize()}
+                  </h4>
+                  <Button
+                    className="float-right"
+                    onClick={() => this.selectDeck("Custom", customDeck)}
+                  >
+                    Use Deck
+                  </Button>
+                </Alert>
+              </div>
+
+              <ListGroup className="text-dark">{cardListIems}</ListGroup>
+            </UncontrolledCollapse>
+            <Button
+              block
+              color="success"
+              onClick={() => this.selectDeck("Custom", customDeck)}
+            >
+              Use Deck
+            </Button>
+          </CardBody>
+        </Card>
+      </>
+    );
+  }
+
   renderPrebuilts() {
     const { schemes } = this.state;
     const prebuilts = getDeckList();
@@ -360,25 +464,7 @@ export class Archenemy extends Component {
       );
     });
 
-    return (
-      <div>
-        <Card>
-          <CardBody>
-            <CardTitle>
-              <h3 className="text-center">All Schemes</h3>
-            </CardTitle>
-            <Button
-              block
-              color="success"
-              onClick={() => this.selectDeck("All", schemes)}
-            >
-              Use All
-            </Button>
-          </CardBody>
-        </Card>
-        {prebuiltItems}
-      </div>
-    );
+    return <>{prebuiltItems}</>;
   }
 
   toggleDeck = () => {
