@@ -33,7 +33,9 @@ export const storeCurrentDeck = (prefix, deck) => {
 export const drawCard = prefix => {
   const deck = getCurrentDeck(prefix);
   const card = deck.shift();
-  updateHistory(prefix, card);
+  if (card) {
+    updateHistory(prefix, card);
+  }
   storeCurrentDeck(prefix, deck);
   return card;
 };
