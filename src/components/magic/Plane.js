@@ -56,6 +56,8 @@ export class Plane extends Component {
       return (
         <Card inverse className="mtg-plane-card">
           {this.renderImage()}
+          {this.renderCounter()}
+          {this.renderChildren()}
           {this.renderBody()}
           {this.renderActions()}
         </Card>
@@ -64,20 +66,10 @@ export class Plane extends Component {
   }
 
   renderBody() {
-    const counter = this.renderCounter();
-    const children = this.renderChildren();
     const text = this.renderText();
-    const hasBody = counter || children || text;
+    const hasBody = text;
 
-    return (
-      hasBody && (
-        <CardBody>
-          {counter}
-          {children}
-          {text}
-        </CardBody>
-      )
-    );
+    return hasBody && <CardBody>{text}</CardBody>;
   }
 
   renderCounter() {
@@ -95,9 +87,9 @@ export class Plane extends Component {
         );
       } else {
         return (
-          <div className="text-center">
+          <CardBody className="text-center pb-0">
             <Counter card={card} />
-          </div>
+          </CardBody>
         );
       }
     }
@@ -114,7 +106,7 @@ export class Plane extends Component {
           </CardImgOverlay>
         );
       } else {
-        return <div className="text-center">{children}</div>;
+        return <CardBody className="text-center pb-0">{children}</CardBody>;
       }
     }
   }

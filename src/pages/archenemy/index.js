@@ -178,9 +178,11 @@ export class Archenemy extends Component {
                 </Container>
               </Jumbotron>
             ) : currentCard ? (
-              <Scheme card={currentCard} renderActions="true">
-                {this.renderAbandon(currentCard)}
-              </Scheme>
+              <Fade key={currentCard.deck_card_id} timeout={100}>
+                <Scheme card={currentCard} renderActions="true">
+                  {this.renderAbandon(currentCard)}
+                </Scheme>
+              </Fade>
             ) : (
               <Scheme />
             )}

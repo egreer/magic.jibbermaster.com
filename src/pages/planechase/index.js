@@ -206,9 +206,11 @@ export class Planechase extends Component {
         ) : (
           <div className="mb-2">
             {currentCard ? (
-              <Plane card={currentCard} renderActions="true">
-                {this.renderChaos(currentCard)}
-              </Plane>
+              <Fade key={currentCard.deck_card_id} timeout={100}>
+                <Plane card={currentCard} renderActions="true">
+                  {this.renderChaos(currentCard)}
+                </Plane>
+              </Fade>
             ) : (
               <Plane />
             )}
