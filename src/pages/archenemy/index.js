@@ -360,32 +360,42 @@ export class Archenemy extends Component {
     });
     this.setState({ customDeck });
   }
+
   customDeckSize() {
     const { customDeck } = this.state;
     const reducer = (a, b) => a + b;
     return customDeck.map(c => c.count).reduce(reducer, 0);
   }
+
+  resetCustomDeck = () => {
+    const { customDeck } = this.state;
+    customDeck.forEach(c => (c.count = 0));
+    this.setState({ customDeck });
+  };
+
   renderBuildCustomDeck() {
     const { customDeck } = this.state;
 
     const cardListIems = customDeck.map(card => (
-      <ListGroupItem key={card.id}>
+      <ListGroupItem key={card.id} color="dark">
         <Scheme card={card} />
-        <h1 className="text-center">x{card.count}</h1>
-        <ButtonGroup>
-          <Button
-            disabled={card.count >= 2}
-            onClick={() => this.incrementCount(card)}
-          >
-            <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-          </Button>
-          <Button
-            disabled={card.count <= 0}
-            onClick={() => this.decrementCount(card)}
-          >
-            <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-          </Button>
-        </ButtonGroup>
+        <div className="text-center">
+          <h1>x{card.count}</h1>
+          <ButtonGroup>
+            <Button
+              disabled={card.count <= 0}
+              onClick={() => this.decrementCount(card)}
+            >
+              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
+            </Button>
+            <Button
+              disabled={card.count >= 2}
+              onClick={() => this.incrementCount(card)}
+            >
+              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
+            </Button>
+          </ButtonGroup>
+        </div>
       </ListGroupItem>
     ));
 
@@ -405,16 +415,21 @@ export class Archenemy extends Component {
                   <h4 className="float-left">
                     Custom Deck Size: {this.customDeckSize()}
                   </h4>
-                  <Button
-                    className="float-right"
-                    onClick={() => this.selectDeck("Custom", customDeck)}
-                  >
-                    Use Deck
-                  </Button>
+                  <ButtonGroup className="float-right">
+                    <Button color="danger" onClick={this.resetCustomDeck}>
+                      Reset
+                    </Button>
+                    <Button
+                      color="success"
+                      onClick={() => this.selectDeck("Custom", customDeck)}
+                    >
+                      Use Deck
+                    </Button>
+                  </ButtonGroup>
                 </Alert>
               </div>
 
-              <ListGroup className="text-dark">{cardListIems}</ListGroup>
+              <ListGroup>{cardListIems}</ListGroup>
             </UncontrolledCollapse>
             <Button
               block
@@ -435,7 +450,7 @@ export class Archenemy extends Component {
     const prebuiltItems = prebuilts.map((prebuilt, i) => {
       const cardList = getCardList(prebuilt, schemes);
       const cardListIems = cardList.map((card, i) => (
-        <ListGroupItem key={i}>
+        <ListGroupItem key={i} color="dark">
           <Scheme card={card} />
           <h1 className="text-center">x{card.count}</h1>
         </ListGroupItem>
@@ -450,7 +465,7 @@ export class Archenemy extends Component {
               Decklist
             </Button>
             <UncontrolledCollapse toggler={`#prebuilt-${i}`}>
-              <ListGroup className="text-dark">{cardListIems}</ListGroup>
+              <ListGroup>{cardListIems}</ListGroup>
             </UncontrolledCollapse>
             <Button
               block
