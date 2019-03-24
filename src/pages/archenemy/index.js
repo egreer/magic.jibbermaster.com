@@ -11,7 +11,8 @@ import {
   ListGroup,
   ListGroupItem,
   Jumbotron,
-  Container
+  Container,
+  UncontrolledCollapse
 } from "reactstrap";
 import store from "store";
 
@@ -25,6 +26,7 @@ import { getSetting } from "../../util/settings.js";
 import {
   getCurrentDeck,
   getOrCreateCurrentDeck,
+  storeCurrentDeck,
   drawCard,
   undoDraw,
   removeCards,
@@ -51,12 +53,13 @@ export class Archenemy extends Component {
     showHistory: false,
     showDeck: false,
     showDeckImages: false,
-    abandonedOngoing: false
+    abandonedOngoing: false,
+    deckSelection: true
   };
 
   componentDidMount = async () => {
     const schemes = await getAllArchenemyCards();
-    const deck = getOrCreateCurrentDeck("archenemy", schemes);
+    const deck = getCurrentDeck("archenemy");
     // TODO switch to selecting deck
     // const deck = getCurrentDeck("archenemy");
     const currentCard = getCurrentCard("archenemy");
@@ -68,7 +71,8 @@ export class Archenemy extends Component {
       loading: false,
       ongoingSchemes,
       schemes,
-      abandonedOngoing
+      abandonedOngoing,
+      deckSelection: !deck
     });
   };
 
@@ -99,7 +103,8 @@ export class Archenemy extends Component {
     this.setState({ loading: true });
     // TODO reset to deck selection
     const schemes = await getAllArchenemyCards();
-    const deck = getOrCreateCurrentDeck("archenemy", schemes, true);
+    const deck = null;
+    storeCurrentDeck("archenemy", deck);
     const currentCard = setCurrentCard("archenemy", null);
     const ongoingSchemes = setAdditionalCards("archenemy", []);
     const abandonedOngoing = store.set("archenemy-abandonedOngoing", false);
@@ -109,7 +114,8 @@ export class Archenemy extends Component {
       deck,
       currentCard,
       ongoingSchemes,
-      abandonedOngoing
+      abandonedOngoing,
+      deckSelection: true
     });
   };
 
@@ -125,12 +131,36 @@ export class Archenemy extends Component {
       deck,
       schemes,
       currentCard,
-      abandonedOngoing
+      abandonedOngoing,
+      deckSelection
     } = this.state;
 
     return (
       <div className="archenemy">
         <ArchenemyHelmet schemes={schemes} />
+        {loading ? (
+          <Loading className="text-muted" />
+        ) : deckSelection ? (
+          this.renderDeckSelect()
+        ) : (
+          this.renderGamePlay()
+        )}
+        {this.renderDevTools()}
+      </div>
+    );
+  }
+
+  renderGamePlay() {
+    const {
+      loading,
+      deck,
+      schemes,
+      currentCard,
+      abandonedOngoing
+    } = this.state;
+
+    return (
+      <>
         <div className="fixed-top mt-1 ml-1 w-25 text-left">
           <Button
             onClick={this.scheme}
@@ -165,18 +195,19 @@ export class Archenemy extends Component {
 
         {this.renderOngoingSchemes()}
 
-        <Button onClick={this.reset} color="danger" block>
-          Reset
-        </Button>
+        {this.renderHistory()}
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        {this.renderHistory()}
-        {this.renderDevTools()}
-
-        {this.renderPrebuilts()}
-      </div>
+        <Button onClick={this.reset} color="danger" block>
+          Reset
+        </Button>
+      </>
     );
+  }
+
+  renderDeckSelect() {
+    return <>{this.renderPrebuilts()}</>;
   }
 
   renderOngoingSchemes() {
@@ -277,23 +308,77 @@ export class Archenemy extends Component {
     );
   };
 
+  selectDeck(name, cards) {
+    console.log(`Selected ${name}`, cards);
+
+    const newCards = name === "All" ? cards : [];
+    cards.forEach(c => {
+      for (let i = 0; i < c.count; i++) {
+        newCards.push(c);
+      }
+    });
+
+    const deck = getOrCreateCurrentDeck("archenemy", newCards, true);
+    this.setState({
+      deck,
+      deckSelection: false
+    });
+  }
+
   renderPrebuilts() {
+    const { schemes } = this.state;
     const prebuilts = getDeckList();
     const prebuiltItems = prebuilts.map((prebuilt, i) => {
-      const cardList = getCardList(prebuilt);
+      const cardList = getCardList(prebuilt, schemes);
       const cardListIems = cardList.map((card, i) => (
-        <ListGroupItem key={i}>{card}</ListGroupItem>
+        <ListGroupItem key={i}>
+          <Scheme card={card} />
+          <h1 className="text-center">x{card.count}</h1>
+        </ListGroupItem>
       ));
       return (
         <Card key={i}>
           <CardBody>
-            <CardTitle>{prebuilt}</CardTitle>
-            <ListGroup className="text-dark">{cardListIems}</ListGroup>
+            <CardTitle>
+              <h3 className="text-center">{prebuilt}</h3>
+            </CardTitle>
+            <Button block id={`prebuilt-${i}`}>
+              Decklist
+            </Button>
+            <UncontrolledCollapse toggler={`#prebuilt-${i}`}>
+              <ListGroup className="text-dark">{cardListIems}</ListGroup>
+            </UncontrolledCollapse>
+            <Button
+              block
+              color="success"
+              onClick={() => this.selectDeck(prebuilt, cardList)}
+            >
+              Use Deck
+            </Button>
           </CardBody>
         </Card>
       );
     });
-    return <div>{prebuiltItems}</div>;
+
+    return (
+      <div>
+        <Card>
+          <CardBody>
+            <CardTitle>
+              <h3 className="text-center">All Schemes</h3>
+            </CardTitle>
+            <Button
+              block
+              color="success"
+              onClick={() => this.selectDeck("All", schemes)}
+            >
+              Use All
+            </Button>
+          </CardBody>
+        </Card>
+        {prebuiltItems}
+      </div>
+    );
   }
 
   toggleDeck = () => {
@@ -316,7 +401,7 @@ export class Archenemy extends Component {
           {showDeck ? "Hide" : "Show"} Deck
         </Button>
         <Fade in={showDeck}>
-          {showDeck && (
+          {showDeck && deck && (
             <>
               <Button onClick={this.toggleDeckImages} block>
                 {showDeckImages ? "Hide" : "Show"} Full Card

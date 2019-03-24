@@ -2,9 +2,14 @@ export const getDeckList = () => {
   return DECKS.map(s => s.name);
 };
 
-export const getCardList = deckname => {
+export const getCardList = (deckname, schemes) => {
   const deck = DECKS.find(s => s.name === deckname);
-  return deck.cards;
+  return deck.cards.map(c => {
+    const scheme = schemes.find(s => s.name === c[0]);
+    const clonedCard = JSON.parse(JSON.stringify(scheme));
+    clonedCard.count = c[1];
+    return clonedCard;
+  });
 };
 const DECKS = [
   {

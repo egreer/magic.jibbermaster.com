@@ -35,7 +35,7 @@ export class Scheme extends Component {
       return (
         <>
           <ListGroupItem color="dark" onClick={this.toggleModal}>
-            <div>{card.name}</div>
+            {card.name}
           </ListGroupItem>
           <Modal
             isOpen={this.state.modalOpen}
@@ -145,7 +145,9 @@ export class Scheme extends Component {
       if (card) {
         return (
           <>
-            <CardTitle>{card.name}</CardTitle>
+            <CardTitle>
+              <h5>{card.name}</h5>
+            </CardTitle>
             <CardSubtitle>{card.type_line}</CardSubtitle>
             <CardText dangerouslySetInnerHTML={card.oracle_html} />
           </>

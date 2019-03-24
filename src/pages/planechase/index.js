@@ -218,13 +218,15 @@ export class Planechase extends Component {
         {this.renderFivePlanes()}
         {this.renderTripleChaosModal()}
         {this.renderScryModal()}
-        <Button onClick={this.reset} color="danger" block>
-          Reset
-        </Button>
+        {this.renderHistory()}
+
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        {this.renderHistory()}
+        <Button onClick={this.reset} color="danger" block>
+          Reset
+        </Button>
+
         {this.renderDevTools()}
       </div>
     );
