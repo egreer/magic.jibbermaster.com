@@ -1,0 +1,24 @@
+{
+  "name": "Jibbermaster's SYB",
+  "short_name": "SYB",
+  "start_url": "./syb",
+  "lang": "en-US",
+  "display": "fullscreen",
+  "orientation": "any",
+  "theme_color": "black",
+  "background_color": "#1e7e34",
+  "icons": [
+    {
+      "src": "./mtg/icon/starter_64.png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "./mtg/icon/starter_128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "./mtg/icon/starter_256.png",
+      "sizes": "256x256"
+    }
+  ]
+}

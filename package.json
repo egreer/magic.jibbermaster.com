@@ -5,9 +5,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "cytoscape": "^3.5.0",
     "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "react": "^16.8.4",
+    "react-cytoscapejs": "^1.1.0",
     "react-dom": "^16.8.4",
     "react-helmet-async": "^1.0.2",
     "react-router": "^4.4.0",

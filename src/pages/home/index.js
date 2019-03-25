@@ -37,6 +37,10 @@ export class Home extends Component {
             <i className="ss ss-arc ss-3x mx-2 d-block" />
             <span className="d-block">Archenemy</span>
           </Button>
+          <Button tag={NavLink} exact to="/syb" block color="success" size="lg">
+            <i className="ss ss-s00 ss-3x mx-2 d-block" />
+            <span className="d-block">SYB</span>
+          </Button>
         </div>
       </div>
     );

@@ -29,6 +29,7 @@ import { setSetting, getSetting, toggleSetting } from "./util/settings";
 import { Home } from "./pages/home";
 import { Planechase } from "./pages/planechase";
 import { Archenemy } from "./pages/archenemy";
+import { SYB } from "./pages/syb";
 
 class App extends Component {
   state = {
@@ -143,6 +144,17 @@ class App extends Component {
                     Archenemy
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    exact
+                    to="/syb"
+                    activeClassName="active"
+                    onClick={this.closeNavbar}
+                  >
+                    SYB
+                  </NavLink>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Settings
@@ -190,6 +202,7 @@ class App extends Component {
                 exact
                 render={props => <Planechase {...props} />}
               />
+              <Route path="/syb" exact render={props => <SYB {...props} />} />
             </Switch>
             <Alert
               color="warning"
