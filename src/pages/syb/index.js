@@ -8,7 +8,8 @@ import { shuffle } from "../../mtg/deck.js";
 
 import { SYBHelmet } from "./Helmet";
 
-const layout = { name: "circle", nodeDimensionsIncludeLabels: true };
+const circleLayout = { name: "circle", nodeDimensionsIncludeLabels: true };
+const gridLayout = { name: "grid", nodeDimensionsIncludeLabels: true, rows: 2 };
 
 export class SYB extends Component {
   state = {
@@ -18,9 +19,11 @@ export class SYB extends Component {
   componentDidMount = () => {
     const playerCount = store.get("syb-playerCount") || 4;
     const targets = store.get("syb-targets") || null;
+    const tableShape = store.get("syb-tableShape") || "circle";
     this.setState({
       playerCount,
-      targets
+      targets,
+      tableShape
     });
   };
 
@@ -60,6 +63,7 @@ export class SYB extends Component {
   }
 
   handleCy(cy) {
+    const layout = this.isSquare() ? gridLayout : circleLayout;
     const SELECT_THRESHOLD = 100;
 
     // Refresh Layout if needed
@@ -73,6 +77,7 @@ export class SYB extends Component {
   }
 
   renderCyto() {
+    const layout = this.isSquare() ? gridLayout : circleLayout;
     const elements = {
       nodes: this.generateNodes(),
       edges: this.generateEdges()
@@ -81,6 +86,10 @@ export class SYB extends Component {
       {
         selector: "node",
         style: {
+          padding: "50%",
+          width: "50%",
+          height: "50%",
+          "background-color": "#17a2b8",
           "text-valign": "center",
           "text-halign": "center",
           content: "data(label)"
@@ -89,20 +98,23 @@ export class SYB extends Component {
       {
         selector: "node[label]",
         style: {
-          label: "data(label)"
+          label: "data(label)",
+          "font-size": "2em",
+          color: "white"
         }
       },
       {
         selector: "edge",
         style: {
-          "curve-style": "straight",
+          width: "5%",
+          "curve-style": this.isSquare() ? "unbundled-bezier" : "straight",
           "target-arrow-shape": "triangle "
         }
       }
     ];
+
     return (
       <CytoscapeComponent
-        autoRefreshLayout={true}
         cy={cy => this.handleCy(cy)}
         elements={CytoscapeComponent.normalizeElements(elements)}
         style={{ width: "100vw", height: "100vh" }}
@@ -112,6 +124,11 @@ export class SYB extends Component {
         layout={layout}
       />
     );
+  }
+
+  isSquare() {
+    const { tableShape } = this.state;
+    return false && tableShape === "square";
   }
 
   incrementCount() {
@@ -131,8 +148,13 @@ export class SYB extends Component {
     this.setState({ playerCount: newPlayerCount });
   }
 
+  setTableShape(shape) {
+    const tableShape = store.set("syb-tableShape", shape);
+    this.setState({ tableShape });
+  }
+
   render() {
-    const { playerCount } = this.state;
+    const { playerCount, tableShape } = this.state;
     return (
       <div className="syb">
         <SYBHelmet />
@@ -150,7 +172,22 @@ export class SYB extends Component {
                 <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
               </Button>
             </ButtonGroup>
-            <ButtonGroup />
+            {false && (
+              <ButtonGroup>
+                <Button
+                  active={tableShape === "circle"}
+                  onClick={() => this.setTableShape("circle")}
+                >
+                  <i className="ss ss-portal ss-2x" />
+                </Button>
+                <Button
+                  active={tableShape === "square"}
+                  onClick={() => this.setTableShape("square")}
+                >
+                  <i className="ss ss-bfz ss-2x" />
+                </Button>
+              </ButtonGroup>
+            )}
           </div>
         </div>
         <div className="text-center my-2">
