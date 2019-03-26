@@ -120,7 +120,7 @@ export class SYB extends Component {
         style={{ width: "100vw", height: "100vh" }}
         className={"flex-grow"}
         stylesheet={stylesheet}
-        panningEnabled={false}
+        userPanningEnabled={false}
         layout={layout}
       />
     );
