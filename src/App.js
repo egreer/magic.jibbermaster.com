@@ -30,6 +30,7 @@ import { Home } from "./pages/home";
 import { Planechase } from "./pages/planechase";
 import { Archenemy } from "./pages/archenemy";
 import { SYB } from "./pages/syb";
+import { Formats } from "./pages/formats";
 
 class App extends Component {
   state = {
@@ -155,6 +156,17 @@ class App extends Component {
                     SYB
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink}
+                    exact
+                    to="/formats"
+                    activeClassName="active"
+                    onClick={this.closeNavbar}
+                  >
+                    Formats
+                  </NavLink>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Settings
@@ -203,6 +215,11 @@ class App extends Component {
                 render={props => <Planechase {...props} />}
               />
               <Route path="/syb" exact render={props => <SYB {...props} />} />
+              <Route
+                path="/formats"
+                exact
+                render={props => <Formats {...props} />}
+              />
             </Switch>
             <Alert
               color="warning"

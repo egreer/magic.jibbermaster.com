@@ -16,6 +16,7 @@ export class SYB extends Component {
     playerCount: 4,
     targets: null
   };
+
   componentDidMount = () => {
     const playerCount = store.get("syb-playerCount") || 4;
     const targets = store.get("syb-targets") || null;
