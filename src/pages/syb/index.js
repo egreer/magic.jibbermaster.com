@@ -109,7 +109,11 @@ export class SYB extends Component {
         style: {
           width: "5%",
           "curve-style": this.isSquare() ? "unbundled-bezier" : "straight",
-          "target-arrow-shape": "triangle "
+          "target-arrow-shape": "triangle ",
+          "arrow-scale": 2.5,
+          "target-arrow-color": "#FF4444",
+          "line-fill": "linear-gradient",
+          "line-gradient-stop-colors": ["#17a2b8", "#FF4444"]
         }
       }
     ];
