@@ -46,10 +46,10 @@ export class Home extends Component {
             exact
             to="/formats"
             block
-            color="success"
+            color="primary"
             size="lg"
           >
-            <i className="ss ss-s00 ss-3x mx-2 d-block" />
+            <i className="ss ss-evg ss-3x mx-2 d-block" />
             <span className="d-block">Formats</span>
           </Button>
         </div>

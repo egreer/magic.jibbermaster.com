@@ -1,0 +1,24 @@
+{
+  "name": "Jibbermaster's Format Selector",
+  "short_name": "MTG Formats",
+  "start_url": "./formats",
+  "lang": "en-US",
+  "display": "fullscreen",
+  "orientation": "any",
+  "theme_color": "black",
+  "background_color": "#007bff",
+  "icons": [
+    {
+      "src": "./mtg/icon/evg_180.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "./mtg/icon/evg_192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./mtg/icon/evg_512.png",
+      "sizes": "512x512"
+    }
+  ]
+}
