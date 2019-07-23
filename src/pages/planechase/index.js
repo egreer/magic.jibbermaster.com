@@ -453,6 +453,7 @@ export class Planechase extends Component {
                   onClick={() => this.selectPlane(c)}
                   color="primary"
                   className="btn-translucent"
+                  size="lg"
                 >
                   <i className="ms ms-planeswalker mx-2" />
                   <span className="mx-2">Planeswalk</span>
