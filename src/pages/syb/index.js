@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup } from "reactstrap";
+import { Button, ButtonGroup, Spinner } from "reactstrap";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
 import store from "store";
@@ -14,7 +14,8 @@ const gridLayout = { name: "grid", nodeDimensionsIncludeLabels: true, rows: 2 };
 export class SYB extends Component {
   state = {
     playerCount: 4,
-    targets: null
+    targets: null,
+    loadingDirection: false
   };
 
   componentDidMount = () => {
@@ -158,8 +159,18 @@ export class SYB extends Component {
     this.setState({ tableShape });
   }
 
+  whichWay = () => {
+    const targets = store.set("syb-targets", null);
+    this.setState({ loadingDirection: true, targets });
+
+    setTimeout(() => {
+      this.regenerateOrder();
+      this.setState({ loadingDirection: false });
+    }, 1500);
+  };
+
   render() {
-    const { playerCount, tableShape } = this.state;
+    const { playerCount, tableShape, loadingDirection } = this.state;
     return (
       <div className="syb">
         <SYBHelmet />
@@ -196,11 +207,31 @@ export class SYB extends Component {
           </div>
         </div>
         <div className="text-center my-2">
-          <Button color="danger" onClick={() => this.regenerateOrder()}>
-            Which way are we screwing?
+          <Button
+            color="danger"
+            onClick={this.whichWay}
+            block
+            disabled={loadingDirection}
+          >
+            {loadingDirection ? "Calculating..." : "Which way are we screwing?"}
           </Button>
         </div>
-        <div className="d-flex">{this.renderCyto()}</div>
+        <div className="d-flex">
+          {loadingDirection && (
+            <div
+              className="position-absolute w-75 text-center"
+              style={{ top: "50%" }}
+            >
+              <Spinner
+                color="danger"
+                type="grow"
+                className="position-absolute"
+                style={{ width: "10rem", height: "10rem" }}
+              />
+            </div>
+          )}
+          {this.renderCyto()}
+        </div>
       </div>
     );
   }
