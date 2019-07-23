@@ -100,7 +100,7 @@ export class Formats extends Component {
       Math.min(playerCount + 1, 6)
     );
 
-    this.setState({ playerCount: newPlayerCount });
+    this.setState({ playerCount: newPlayerCount, activeFormat: null });
   }
 
   decrementCount() {
@@ -110,7 +110,7 @@ export class Formats extends Component {
       Math.max(playerCount - 1, 4)
     );
 
-    this.setState({ playerCount: newPlayerCount });
+    this.setState({ playerCount: newPlayerCount, activeFormat: null });
   }
 
   updateFormatValue = (format, value) => {
@@ -132,7 +132,7 @@ export class Formats extends Component {
         <div className="my-4">
           <div className="text-center">
             <h1>{playerCount} Players</h1>
-            <ButtonGroup>
+            <ButtonGroup className="my-4">
               <Button
                 disabled={playerCount <= 1}
                 onClick={() => this.decrementCount()}
@@ -143,31 +143,34 @@ export class Formats extends Component {
                 <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
               </Button>
             </ButtonGroup>
-            <div className="my-3">
-              <Button color="danger" onClick={this.reset}>
-                Reset
+            <div className="text-center mb-5">
+              <Button
+                block
+                color="danger"
+                onClick={() => this.pickFormat()}
+                disabled={loadingFormat}
+              >
+                {loadingFormat ? "Computing..." : "Which Format?"}
               </Button>
+              {loadingFormat ? (
+                <Spinner size="lg" color="primary" className="mt-3 mb-2">
+                  Loading...
+                </Spinner>
+              ) : (
+                <h1 className="my-2">
+                  {(activeFormat && activeFormat.name) || "None"}
+                </h1>
+              )}
             </div>
           </div>
         </div>
+        <hr className="text-light" />
         <div className="mb-5">{this.renderFormatToggles()}</div>
         <div className="mb-5">{this.renderActiveFormats()}</div>
-        <div className="text-center mb-5">
-          <Button
-            block
-            color="danger"
-            onClick={() => this.pickFormat()}
-            disabled={loadingFormat}
-          >
-            {loadingFormat ? "Computing..." : "Which Format?"}
+        <div className="my-3">
+          <Button color="danger" onClick={this.reset} block>
+            Reset
           </Button>
-          {loadingFormat ? (
-            <Spinner size="lg" color="primary">
-              Loading...
-            </Spinner>
-          ) : (
-            <h1>{activeFormat && activeFormat.name}</h1>
-          )}
         </div>
       </div>
     );
@@ -208,9 +211,8 @@ export class Formats extends Component {
 
       const values = tagStates.map((t, i) => {
         return (
-          <div className="col-6 col-md-4 col-lg-3 mb-1">
+          <div className="col-6 col-md-4 col-lg-3 mb-1" key={i}>
             <Button
-              key={i}
               size="sm"
               block
               onClick={() => {
@@ -220,9 +222,9 @@ export class Formats extends Component {
             >
               <div className="float-left">
                 {t.enabled ? (
-                  <i className="ms ms-dfc ms-dfc-day text-dark" />
+                  <i className="ms ms-dfc ms-dfc-day text-light" />
                 ) : (
-                  <i className="ms ms-dfc ms-dfc-night text-light" />
+                  <i className="ms ms-dfc ms-dfc-night text-dark" />
                 )}
               </div>
               <div className="d-inline">{t.name}</div>
