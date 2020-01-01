@@ -182,9 +182,9 @@ export class Formats extends Component {
       5: FIVE_PLAYER,
       6: SIX_PLAYER
     };
-    formats[4].forEach(f => (f.weight = f.initial));
-    formats[5].forEach(f => (f.weight = f.initial));
-    formats[6].forEach(f => (f.weight = f.initial));
+    formats[4].forEach(f => (f.weight = 0.5) /* f.initial */);
+    formats[5].forEach(f => (f.weight = 0.5) /* f.initial */);
+    formats[6].forEach(f => (f.weight = 0.5) /* f.initial */);
     return formats;
   }
 
