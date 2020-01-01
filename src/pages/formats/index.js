@@ -34,7 +34,8 @@ export class Formats extends Component {
     tags: null,
     currentFormats: null,
     activeFormat: null,
-    loadingFormat: false
+    loadingFormat: false,
+    swapTriggered: false
   };
 
   componentDidMount = () => {
@@ -67,7 +68,7 @@ export class Formats extends Component {
 
   pickFormat() {
     console.log("Generate Format");
-    this.setState({ loadingFormat: true });
+    this.setState({ loadingFormat: true, swapTriggered: false });
     const formats = this.activeFormats();
     const activeFormat = this.getRandomFormat(formats);
     console.log("picked item", activeFormat);
@@ -125,7 +126,18 @@ export class Formats extends Component {
   };
 
   render() {
-    const { playerCount, activeFormat, loadingFormat } = this.state;
+    const {
+      playerCount,
+      activeFormat,
+      loadingFormat,
+      swapTriggered
+    } = this.state;
+    const showDeckswapButton =
+      !loadingFormat &&
+      !swapTriggered &&
+      activeFormat &&
+      activeFormat.showSwaps &&
+      this.enabledTags().includes("Deck Swaps");
     return (
       <div className="formats">
         <FormatsHelmet />
@@ -157,14 +169,22 @@ export class Formats extends Component {
                   Loading...
                 </Spinner>
               ) : (
-                <h1 className="my-2">
-                  {(activeFormat && activeFormat.name) || "None"}
-                </h1>
+                <h1 className="my-2">{this.renderActiveFormatName()}</h1>
+              )}
+              {showDeckswapButton && (
+                <Button
+                  onClick={this.triggerSwap}
+                  block
+                  className={"w-50 mx-auto"}
+                  color="success"
+                >
+                  Deckswaps?
+                </Button>
               )}
             </div>
           </div>
         </div>
-        <hr className="text-light" />
+        <hr className="border-info" />
         <div className="mb-5">{this.renderFormatToggles()}</div>
         <div className="mb-5">{this.renderActiveFormats()}</div>
         <div className="my-3">
@@ -175,6 +195,22 @@ export class Formats extends Component {
       </div>
     );
   }
+
+  renderActiveFormatName() {
+    const { activeFormat, swapTriggered } = this.state;
+
+    if (!activeFormat) {
+      return "None";
+    } else {
+      return swapTriggered
+        ? activeFormat.name
+        : activeFormat.displayName || activeFormat.name;
+    }
+  }
+
+  triggerSwap = () => {
+    this.setState({ swapTriggered: true });
+  };
 
   createFormats() {
     let formats = {
@@ -190,11 +226,13 @@ export class Formats extends Component {
 
   activeTags() {
     const { currentFormats, playerCount } = this.state;
-    return uniq(
-      flatMap(currentFormats[playerCount], f => {
-        return f.tags;
-      })
-    ).sort();
+    return currentFormats
+      ? uniq(
+          flatMap(currentFormats[playerCount], f => {
+            return f.tags;
+          })
+        ).sort()
+      : [];
   }
 
   createTags() {
@@ -248,6 +286,11 @@ export class Formats extends Component {
     this.setState({ tags: newTags });
   };
 
+  enabledTags() {
+    const { tags } = this.state;
+    return tags ? tags.filter(t => t.enabled).map(t => t.name) : [];
+  }
+
   activeFormats() {
     const { tags, currentFormats, playerCount } = this.state;
     let formats = null;
@@ -255,7 +298,7 @@ export class Formats extends Component {
     console.log("format", currentFormats);
     if (tags && currentFormats && playerCount) {
       formats = currentFormats[playerCount];
-      const enabledTags = tags.filter(t => t.enabled).map(t => t.name);
+      const enabledTags = this.enabledTags();
       console.log("enabledTags", enabledTags);
       formats = formats.filter(f => f.tags.every(t => enabledTags.includes(t)));
       // formats.forEach(f => f.weight = f.initial) // Store weights
