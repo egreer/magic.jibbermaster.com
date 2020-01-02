@@ -4,6 +4,7 @@ import store from "store";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FOUR_PLAYER, FIVE_PLAYER, SIX_PLAYER } from "./formats";
 
+import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
 
@@ -214,9 +215,9 @@ export class Formats extends Component {
 
   createFormats() {
     let formats = {
-      4: FOUR_PLAYER,
-      5: FIVE_PLAYER,
-      6: SIX_PLAYER
+      4: cloneDeep(FOUR_PLAYER),
+      5: cloneDeep(FIVE_PLAYER),
+      6: cloneDeep(SIX_PLAYER)
     };
     formats[4].forEach(f => (f.weight = 0.5) /* f.initial */);
     formats[5].forEach(f => (f.weight = 0.5) /* f.initial */);
@@ -311,9 +312,12 @@ export class Formats extends Component {
     const { playerCount } = this.state;
     const formats = this.activeFormats();
     if (formats) {
-      const formatTags = formats.map((f, i) => {
+      const formatTags = formats.map(f => {
         return (
-          <div className="row mb-2" key={`${playerCount}-${i}`}>
+          <div
+            className="row mb-2"
+            key={`${playerCount}-${f.id}-${f.weight * 100}`}
+          >
             <div className="col-5">{f.name}</div>
             <div className="col-7">
               <Slider
