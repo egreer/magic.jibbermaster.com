@@ -219,9 +219,9 @@ export class Formats extends Component {
       5: cloneDeep(FIVE_PLAYER),
       6: cloneDeep(SIX_PLAYER)
     };
-    formats[4].forEach(f => (f.weight = 0.5) /* f.initial */);
-    formats[5].forEach(f => (f.weight = 0.5) /* f.initial */);
-    formats[6].forEach(f => (f.weight = 0.5) /* f.initial */);
+    formats[4].forEach(f => (f.weight = f.initial));
+    formats[5].forEach(f => (f.weight = f.initial));
+    formats[6].forEach(f => (f.weight = f.initial));
     return formats;
   }
 
@@ -238,7 +238,7 @@ export class Formats extends Component {
 
   createTags() {
     return TAGS.map(t => {
-      return { name: t, enabled: true };
+      return { name: t.name, enabled: t.defaultEnabled };
     });
   }
 
