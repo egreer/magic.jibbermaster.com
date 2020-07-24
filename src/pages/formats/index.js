@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, ButtonGroup, Spinner } from "reactstrap";
 import store from "store";
 import { FormatsHelmet } from "./Helmet";
-import { TAGS, FOUR_PLAYER, FIVE_PLAYER, SIX_PLAYER } from "./formats";
+import { TAGS, THREE_PLAYER, FOUR_PLAYER, FIVE_PLAYER, SIX_PLAYER, SEVEN_PLAYER } from "./formats";
 
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
@@ -99,7 +99,7 @@ export class Formats extends Component {
     const { playerCount } = this.state;
     const newPlayerCount = store.set(
       "formats-playerCount",
-      Math.min(playerCount + 1, 6)
+      Math.min(playerCount + 1, 7)
     );
 
     this.setState({ playerCount: newPlayerCount, activeFormat: null });
@@ -109,7 +109,7 @@ export class Formats extends Component {
     const { playerCount } = this.state;
     const newPlayerCount = store.set(
       "formats-playerCount",
-      Math.max(playerCount - 1, 4)
+      Math.max(playerCount - 1, 3)
     );
 
     this.setState({ playerCount: newPlayerCount, activeFormat: null });
@@ -215,13 +215,17 @@ export class Formats extends Component {
 
   createFormats() {
     let formats = {
+      3: cloneDeep(THREE_PLAYER),
       4: cloneDeep(FOUR_PLAYER),
       5: cloneDeep(FIVE_PLAYER),
-      6: cloneDeep(SIX_PLAYER)
+      6: cloneDeep(SIX_PLAYER),
+      7: cloneDeep(SEVEN_PLAYER)
     };
+    formats[3].forEach(f => (f.weight = f.initial));
     formats[4].forEach(f => (f.weight = f.initial));
     formats[5].forEach(f => (f.weight = f.initial));
     formats[6].forEach(f => (f.weight = f.initial));
+    formats[7].forEach(f => (f.weight = f.initial));
     return formats;
   }
 
