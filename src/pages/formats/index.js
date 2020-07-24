@@ -142,7 +142,7 @@ export class Formats extends Component {
     return (
       <div className="formats">
         <FormatsHelmet />
-        <div className="my-4">
+        <div className="my-4 noselect">
           <div className="text-center">
             <h1>{playerCount} Players</h1>
             <ButtonGroup className="my-4">
@@ -187,7 +187,7 @@ export class Formats extends Component {
         </div>
         <hr className="border-info" />
         <div className="mb-5">{this.renderFormatToggles()}</div>
-        <div className="mb-5">{this.renderActiveFormats()}</div>
+        <div className="mb-5 noselect">{this.renderActiveFormats()}</div>
         <div className="my-3">
           <Button color="danger" onClick={this.reset} block>
             Reset
