@@ -201,6 +201,13 @@ export const SIX_PLAYER = [
   },
   {
     id: 17,
+    name: "Secret Partners",
+    initial: 0.1275,
+    tags: ["Secret Partners"],
+    showSwaps: true
+  },
+  {
+    id: 18,
     name: "Secret Partners Deck Swaps",
     displayName: "Secret Partners",
     initial: 0.15,
@@ -208,10 +215,18 @@ export const SIX_PLAYER = [
     showSwaps: true
   },
   {
-    id: 18,
-    name: "Secret Partners",
+    id: 19,
+    name: "EDH Secret Partners",
     initial: 0.1275,
-    tags: ["Secret Partners"],
+    tags: ["EDH", "Secret Partners"],
+    showSwaps: true
+  },
+  {
+    id: 20,
+    name: "EDH Secret Partners Deck Swaps",
+    displayName: "EDH Secret Partners",
+    initial: 0.1275,
+    tags: ["EDH", "Secret Partners", "Deck Swaps"],
     showSwaps: true
   }
 ];
