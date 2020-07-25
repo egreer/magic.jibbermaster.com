@@ -109,9 +109,11 @@ export class Plane extends Component {
     if (children) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center plane-overlay child-overlay">
-            <CardTitle className="text-center">{children}</CardTitle>
-          </CardImgOverlay>
+          <div onDoubleClick={this.toggleFullScreen}>
+            <CardImgOverlay className="text-center plane-overlay child-overlay">
+              <CardTitle className="text-center">{children}</CardTitle>
+            </CardImgOverlay>
+          </div>
         );
       } else {
         return <CardBody className="text-center pb-0">{children}</CardBody>;
