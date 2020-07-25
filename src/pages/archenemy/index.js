@@ -170,7 +170,7 @@ export class Archenemy extends Component {
         {loading ? (
           <Loading className="text-muted" />
         ) : (
-          <div className="mb-2 d-flex justify-content-center">
+          <div className="pt-2 mb-2 d-flex justify-content-center">
             {abandonedOngoing ? (
               <Jumbotron className="bg-danger text-center" fluid>
                 <Container fluid>
@@ -206,7 +206,7 @@ export class Archenemy extends Component {
     const { schemes } = this.state;
     return (
       <>
-        <Card>
+        <Card className="noselect">
           <CardBody>
             <CardTitle>
               <h3 className="text-center">All Schemes</h3>
@@ -379,7 +379,7 @@ export class Archenemy extends Component {
     const { customDeck } = this.state;
 
     const cardListIems = customDeck.map(card => (
-      <ListGroupItem key={card.id} color="dark">
+      <ListGroupItem key={card.id} color="dark" className="noselect">
         <Scheme card={card} />
         <div className="text-center">
           <h1>x{card.count}</h1>
@@ -403,7 +403,7 @@ export class Archenemy extends Component {
 
     return (
       <>
-        <Card>
+        <Card className="noselect">
           <CardBody>
             <CardTitle>
               <h3 className="text-center">Custom Deck</h3>
