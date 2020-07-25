@@ -42,7 +42,5 @@ export const getCounterType = card => {
 };
 
 export const gathererImageURL = card => {
-  return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${
-    card.multiverse_ids[0]
-  }&type=card`;
+  return `https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${card.multiverse_ids[0]}&type=card`;
 };
