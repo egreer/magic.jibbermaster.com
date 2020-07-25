@@ -44,6 +44,8 @@ import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
 import { Plane } from "../../components/magic/Plane";
 import { getSetting } from "../../util/settings.js";
+import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
+import { DoubleFaceIcon } from "../../components/magic/DoubleFaceIcon";
 
 export class Planechase extends Component {
   state = {
@@ -59,7 +61,8 @@ export class Planechase extends Component {
     planeswalkDisabled: false,
     showHistory: false,
     showDeck: false,
-    showDeckImages: false
+    showDeckImages: false,
+    showPlanarDie: true
   };
 
   componentDidMount = async () => {
@@ -182,7 +185,8 @@ export class Planechase extends Component {
       planes,
       deck,
       currentCard,
-      planeswalkDisabled
+      planeswalkDisabled,
+      showPlanarDie
     } = this.state;
 
     return (
@@ -230,6 +234,15 @@ export class Planechase extends Component {
         </Button>
 
         {this.renderDevTools()}
+
+        {showPlanarDie && !planeswalkDisabled && (
+          <div
+            className="position-fixed"
+            style={{ bottom: "5px", right: "5px" }}
+          >
+            <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
+          </div>
+        )}
       </div>
     );
   }
@@ -244,9 +257,20 @@ export class Planechase extends Component {
             Undo
           </Button>
           {this.renderDeck()}
+          <Button onClick={this.togglePlanarDie} block>
+            <span className="mr-2">Planar Die</span>
+            <DoubleFaceIcon
+              enabled={this.state.showPlanarDie}
+              backdrop={true}
+            />
+          </Button>
         </div>
       );
     }
+  };
+
+  togglePlanarDie = () => {
+    this.setState({ showPlanarDie: !this.state.showPlanarDie });
   };
 
   toggleDeck = () => {

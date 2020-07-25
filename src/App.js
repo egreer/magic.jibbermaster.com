@@ -31,6 +31,7 @@ import { Planechase } from "./pages/planechase";
 import { Archenemy } from "./pages/archenemy";
 import { SYB } from "./pages/syb";
 import { Formats } from "./pages/formats";
+import { DoubleFaceIcon } from "./components/magic/DoubleFaceIcon";
 
 class App extends Component {
   state = {
@@ -72,13 +73,7 @@ class App extends Component {
   _mtgToggler = (value, displayText, onClick) => {
     return (
       <DropdownItem toggle={false} onClick={onClick}>
-        <span>
-          {value ? (
-            <i className="ms ms-dfc ms-dfc-day" />
-          ) : (
-            <i className="ms ms-dfc ms-dfc-night" />
-          )}
-        </span>
+        <DoubleFaceIcon enabled={value} />
         <span className="ml-3">{displayText}</span>
       </DropdownItem>
     );

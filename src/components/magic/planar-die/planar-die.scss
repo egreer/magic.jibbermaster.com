@@ -1,0 +1,82 @@
+// sass-lint:disable force-pseudo-nesting, no-important
+$translucent: rgba(0, 0, 0, 0.2);
+
+@keyframes backside {
+  0% {
+    visibility: hidden;
+  }
+
+  1% {
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+  }
+}
+
+.planar .dice {
+  .dot {
+    // sass-lint:disable-block property-sort-order, no-vendor-prefixes
+
+    // Override Dice Style
+    background: none !important;
+
+    // Reposition Dot for Planeswalk symbols
+    left: 10px !important;
+    top: 10px !important;
+
+    // Import Symbol Code
+    -webkit-font-smoothing: antialiased;
+    font: normal normal normal 14px/1 Mana;
+    font-size: 2.5em;
+    line-height: 1em;
+    speak: none;
+    text-rendering: auto;
+    text-transform: none;
+    transform: translate(0, 0);
+    vertical-align: middle;
+  }
+
+  .face {
+    background-color: $translucent !important;
+
+    &.one {
+      .dot:first-child::before {
+        // Planeswalk
+        content: "\e623";
+      }
+    }
+
+    &.six {
+      .dot:first-child::before {
+        // Chaos
+        content: "\e61d";
+      }
+    }
+  }
+
+  // Hide the non facing sides
+  .die {
+    // sass-lint:disable-block nesting-depth, force-element-nesting
+    &.roll1 {
+      .face.six {
+        .dot {
+          animation-duration: 2s;
+          animation-name: backside;
+          visibility: hidden;
+        }
+      }
+    }
+
+    &.roll6 {
+      .face.one {
+        .dot {
+          animation-duration: 2s;
+          animation-name: backside;
+          visibility: hidden;
+        }
+      }
+    }
+  }
+}
