@@ -32,6 +32,8 @@ import { Archenemy } from "./pages/archenemy";
 import { SYB } from "./pages/syb";
 import { Formats } from "./pages/formats";
 import { DoubleFaceIcon } from "./components/magic/DoubleFaceIcon";
+import GitInfo from "react-git-info/macro";
+const gitInfo = GitInfo();
 
 class App extends Component {
   state = {
@@ -50,12 +52,22 @@ class App extends Component {
   };
 
   componentDidMount = () => {
+    this.versionCheck();
     this.setState({
       disclaimerDismissed: getSetting("disclaimerDismissed"),
       displayText: getSetting("displayText"),
       displayImages: getSetting("displayImages"),
       devTools: getSetting("devTools")
     });
+  };
+
+  versionCheck = () => {
+    const version = getSetting("version");
+    if (version !== gitInfo.commit.shortHash) {
+      // TODO: Future refine this reset
+      store.clearAll();
+    }
+    setSetting("version", gitInfo.commit.shortHash);
   };
 
   dismissDisclaimer = () => {
@@ -191,6 +203,15 @@ class App extends Component {
                     >
                       Clear Everything
                     </DropdownItem>
+
+                    {this.state.devTools && (
+                      <>
+                        <DropdownItem divider />
+                        <DropdownItem disabled>
+                          Version {getSetting("version")}
+                        </DropdownItem>
+                      </>
+                    )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
