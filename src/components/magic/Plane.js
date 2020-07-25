@@ -22,12 +22,18 @@ import { getSetting } from "../../util/settings.js";
 
 export class Plane extends Component {
   state = {
-    modalOpen: false
+    modalOpen: false,
+    fullscreen: false
   };
 
   toggleModal = () => {
     console.log("Toggle Modal");
     this.setState({ modalOpen: !this.state.modalOpen });
+  };
+
+  toggleFullScreen = () => {
+    console.log("Toggle FullScreen");
+    this.setState({ fullscreen: !this.state.fullscreen });
   };
 
   render() {
@@ -79,11 +85,13 @@ export class Plane extends Component {
     if (renderActions && hasCounters) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center plane-overlay counter-overlay">
-            <CardTitle className="text-center">
-              <Counter card={card} />
-            </CardTitle>
-          </CardImgOverlay>
+          <div onDoubleClick={this.toggleFullScreen}>
+            <CardImgOverlay className="text-center plane-overlay counter-overlay">
+              <CardTitle className="text-center">
+                <Counter card={card} />
+              </CardTitle>
+            </CardImgOverlay>
+          </div>
         );
       } else {
         return (
@@ -149,16 +157,40 @@ export class Plane extends Component {
     }
   }
 
+  renderCardImage = () => (
+    <CardImg
+      top
+      width="100%"
+      src={this.imageURI()}
+      className="mtg-card mtg-card-plane"
+    />
+  );
+
   renderImage() {
     const displayImages = getSetting("displayImages");
     if (displayImages) {
       return (
-        <CardImg
-          top
-          width="100%"
-          src={this.imageURI()}
-          className="mtg-card mtg-card-plane"
-        />
+        <>
+          <div onDoubleClick={this.toggleFullScreen}>
+            {this.renderCardImage()}
+          </div>
+          <Modal
+            isOpen={this.state.fullscreen}
+            toggle={this.toggleFullScreen}
+            backdrop={true}
+            contentClassName="bg-transparent"
+            centered={true}
+            modalClassName="modal-content-full"
+          >
+            <ModalBody
+              className="p-0"
+              centered="true"
+              onClick={this.toggleFullScreen}
+            >
+              {this.renderCardImage()}
+            </ModalBody>
+          </Modal>
+        </>
       );
     }
   }
