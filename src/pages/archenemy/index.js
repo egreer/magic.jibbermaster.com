@@ -204,13 +204,12 @@ export class Archenemy extends Component {
 
   renderDeckSelect() {
     const { schemes } = this.state;
+    const deckName = "All Schemes";
     return (
       <>
         <Card className="noselect">
           <CardBody>
-            <CardTitle>
-              <h3 className="text-center">All Schemes</h3>
-            </CardTitle>
+            {this.deckCardTitle(deckName)}
             <Button
               block
               color="success"
@@ -377,6 +376,7 @@ export class Archenemy extends Component {
 
   renderBuildCustomDeck() {
     const { customDeck } = this.state;
+    const deckName = "Custom Deck";
 
     const cardListIems = customDeck.map(card => (
       <ListGroupItem key={card.id} color="dark" className="noselect">
@@ -405,9 +405,7 @@ export class Archenemy extends Component {
       <>
         <Card className="noselect">
           <CardBody>
-            <CardTitle>
-              <h3 className="text-center">Custom Deck</h3>
-            </CardTitle>
+            {this.deckCardTitle(deckName)}
             <Button block id="custom-deck-toggle">
               Build Custom
             </Button>
@@ -438,12 +436,33 @@ export class Archenemy extends Component {
               color="success"
               onClick={() => this.selectDeck("Custom", customDeck)}
             >
-              Use Deck
+              Use Custom Deck
             </Button>
           </CardBody>
         </Card>
       </>
     );
+  }
+
+  deckIcon(name, type = "ss-mythic ss-grad") {
+    switch (name) {
+      case "All Schemes":
+        return <i className={`ss ${type} ss-lea`}></i>;
+      case "Custom Deck":
+        return <i className={`ss ${type} ss-chr`}></i>;
+      case "Assemble the Doomsday Machine":
+        return <i className={`ss ${type} ss-usg`}></i>;
+      case "Scorch the World with Dragonfire":
+        return <i className={`ss ${type} ss-scg`}></i>;
+      case "Trample Civilization Underfoot":
+        return <i className={`ss ${type} ss-c20`}></i>;
+      case "Bring About the Undead Apocalypse":
+        return <i className={`ss ${type} ss-pd3`}></i>;
+      case "Archenemy Nicol Bolas":
+        return <i className={`ss ${type} ss-hou`}></i>;
+      default:
+        return null;
+    }
   }
 
   renderPrebuilts() {
@@ -460,9 +479,7 @@ export class Archenemy extends Component {
       return (
         <Card key={i}>
           <CardBody>
-            <CardTitle>
-              <h3 className="text-center">{prebuilt}</h3>
-            </CardTitle>
+            {this.deckCardTitle(prebuilt)}
             <Button block id={`prebuilt-${i}`}>
               Decklist
             </Button>
@@ -483,6 +500,20 @@ export class Archenemy extends Component {
 
     return <>{prebuiltItems}</>;
   }
+
+  deckCardTitle = name => (
+    <CardTitle className="d-flex">
+      <div className="h3 text-center align-self-center">
+        {this.deckIcon(name)}
+      </div>
+      <div className="flex-grow-1">
+        <h3 className="text-center">{name}</h3>
+      </div>
+      <div className="h3 text-center align-self-center">
+        {this.deckIcon(name)}
+      </div>
+    </CardTitle>
+  );
 
   toggleDeck = () => {
     this.setState({ showDeck: !this.state.showDeck });
