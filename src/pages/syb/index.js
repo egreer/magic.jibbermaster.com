@@ -5,7 +5,10 @@ import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
 import store from "store";
 
+import { getSetting } from "../../util/settings.js";
 import { shuffle } from "../../mtg/deck.js";
+
+import { DoubleFaceIcon } from "../../components/magic/DoubleFaceIcon";
 
 import { SYBHelmet } from "./Helmet";
 
@@ -18,7 +21,8 @@ export class SYB extends Component {
     targets: null,
     loadingDirection: false,
     cySet: false,
-    labels: { 0: "J" }
+    labels: { 0: "J" },
+    showTurnEdges: true
   };
 
   cy = null;
@@ -47,22 +51,39 @@ export class SYB extends Component {
   }
 
   generateEdges() {
-    const { targets } = this.state;
+    const { targets, showTurnEdges } = this.state;
 
     return !targets
       ? []
-      : targets.map((player, i) => {
-          const targetIndex = i + 1 >= targets.length ? 0 : i + 1;
-          const target = targets[targetIndex];
-          // const playerContent = this.renderPlayer(player, target, playerCount);
-          return {
-            data: {
-              source: `player-${player}`,
-              target: `player-${target}`,
-              label: `Edge from ${player} to ${target}`
-            }
-          };
-        });
+      : targets
+          .map((player, i) => {
+            const targetIndex = i + 1 >= targets.length ? 0 : i + 1;
+            const target = targets[targetIndex];
+            // const playerContent = this.renderPlayer(player, target, playerCount);
+            return {
+              data: {
+                source: `player-${player}`,
+                target: `player-${target}`,
+                label: `Edge from ${player} to ${target}`
+              },
+              classes: "screw"
+            };
+          })
+          .concat(
+            showTurnEdges
+              ? targets.map((_, i) => {
+                  const target = i + 1 >= targets.length ? 0 : i + 1;
+                  return {
+                    data: {
+                      source: `player-${i}`,
+                      target: `player-${target}`,
+                      label: `Turn from ${i} to ${target}`
+                    },
+                    classes: "turn"
+                  };
+                })
+              : []
+          );
   }
 
   regenerateOrder(c) {
@@ -143,7 +164,7 @@ export class SYB extends Component {
         }
       },
       {
-        selector: "edge",
+        selector: ".screw",
         style: {
           width: "5%",
           "curve-style": this.isSquare() ? "unbundled-bezier" : "straight",
@@ -151,7 +172,24 @@ export class SYB extends Component {
           "arrow-scale": 2.5,
           "target-arrow-color": "#FF4444",
           "line-fill": "linear-gradient",
-          "line-gradient-stop-colors": ["#17a2b8", "#FF4444"]
+          "line-gradient-stop-colors": ["#17a2b8", "#FF4444"],
+          "z-index": 2
+        }
+      },
+      {
+        selector: ".turn",
+        style: {
+          width: "2%",
+          "curve-style": "unbundled-bezier",
+          "control-point-distances": [-20, -25, -20],
+          "control-point-weights": [0.25, 0.5, 0.75],
+          "target-arrow-shape": "vee ",
+          "line-style": "dashed",
+          "arrow-scale": 1.5,
+          "target-arrow-color": "#707070",
+          "line-color": "#707070",
+          opacity: 0.5,
+          "z-index": 1
         }
       }
     ];
@@ -301,6 +339,9 @@ export class SYB extends Component {
         <Button onClick={this.reset} color="danger" block>
           Reset
         </Button>
+
+        {this.renderDevTools()}
+
         <Dialog
           ref={component => {
             this.dialog = component;
@@ -309,4 +350,26 @@ export class SYB extends Component {
       </div>
     );
   }
+
+  toggleTurnEdges = () => {
+    this.setState({ showTurnEdges: !this.state.showTurnEdges });
+  };
+
+  renderDevTools = () => {
+    const devTools = getSetting("devTools");
+    if (devTools) {
+      return (
+        <div className="my-4">
+          <h5 className="text-center noselect">Dev Tools</h5>
+          <Button onClick={this.toggleTurnEdges} block>
+            <span className="mr-2">Turn Edges</span>
+            <DoubleFaceIcon
+              enabled={this.state.showTurnEdges}
+              backdrop={true}
+            />
+          </Button>
+        </div>
+      );
+    }
+  };
 }
