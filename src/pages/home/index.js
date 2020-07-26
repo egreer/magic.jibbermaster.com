@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
 
 export class Home extends Component {
   componentDidMount = () => {};
@@ -16,37 +16,44 @@ export class Home extends Component {
         </Helmet>
         <div className="mt-4">
           <Button
-            tag={NavLink}
+            as={NavLink}
             exact
             to="/planechase"
             block
-            color="info"
+            variant="info"
             size="lg"
           >
             <i className="ms ms-planeswalker ms-4x mx-2 d-block" />
             <span className="d-block">Planechase</span>
           </Button>
           <Button
-            tag={NavLink}
+            as={NavLink}
             exact
             to="/archenemy"
             block
-            color="danger"
+            variant="danger"
             size="lg"
           >
             <i className="ss ss-arc ss-3x mx-2 d-block" />
             <span className="d-block">Archenemy</span>
           </Button>
-          <Button tag={NavLink} exact to="/syb" block color="success" size="lg">
+          <Button
+            as={NavLink}
+            exact
+            to="/syb"
+            block
+            variant="success"
+            size="lg"
+          >
             <i className="ss ss-s00 ss-3x mx-2 d-block" />
             <span className="d-block">SYB</span>
           </Button>
           <Button
-            tag={NavLink}
+            as={NavLink}
             exact
             to="/formats"
             block
-            color="primary"
+            variant="primary"
             size="lg"
           >
             <i className="ss ss-evg ss-3x mx-2 d-block" />
