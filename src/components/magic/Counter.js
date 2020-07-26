@@ -3,13 +3,17 @@ import { Button } from "react-bootstrap";
 import { getCounterType } from "../../mtg/card.js";
 
 export const Counter = ({ card }) => {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(card?.counter || 0);
   const type = getCounterType(card);
+  const incrementCounter = () => {
+    card.counter = counter + 1;
+    setCounter(counter + 1);
+  };
   return (
     <div>
       <h1 className="text-shadow noselect">{counter}</h1>
       <Button
-        onClick={() => setCounter(counter + 1)}
+        onClick={incrementCounter}
         variant="dark"
         size="lg"
         className="btn-translucent"
