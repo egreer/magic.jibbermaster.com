@@ -21,7 +21,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
-    "reactstrap": "^7.1.0",
     "store": "^2.0.12",
     "uuid": "^3.4.0"
   },

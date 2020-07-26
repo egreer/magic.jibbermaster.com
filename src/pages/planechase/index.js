@@ -6,12 +6,8 @@ import {
   ButtonToolbar,
   Fade,
   ListGroup,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ListGroupItem
-} from "reactstrap";
+  Modal
+} from "react-bootstrap";
 import { PlanechaseHelmet } from "./Helmet";
 import {
   getCurrentDeck,
@@ -196,7 +192,7 @@ export class Planechase extends Component {
           <Button
             onClick={this.planeswalk}
             className="mb-2"
-            color="success"
+            variant="success"
             disabled={planeswalkDisabled || loading}
             block
           >
@@ -229,7 +225,7 @@ export class Planechase extends Component {
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        <Button onClick={this.reset} color="danger" block>
+        <Button onClick={this.reset} variant="danger" block>
           Reset
         </Button>
 
@@ -253,11 +249,11 @@ export class Planechase extends Component {
       return (
         <div className="my-4">
           <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.undo} color="warning" block>
+          <Button onClick={this.undo} variant="warning" block>
             Undo
           </Button>
           {this.renderDeck()}
-          <Button onClick={this.togglePlanarDie} block>
+          <Button onClick={this.togglePlanarDie} variant="secondary" block>
             <span className="mr-2">Planar Die</span>
             <DoubleFaceIcon
               enabled={this.state.showPlanarDie}
@@ -289,84 +285,97 @@ export class Planechase extends Component {
     const { deck, showDeck, showDeckImages } = this.state;
     return (
       <div className="my-2">
-        <Button onClick={this.toggleDeck} block>
+        <Button onClick={this.toggleDeck} variant="secondary" block>
           {showDeck ? "Hide" : "Show"} Deck
         </Button>
         <Fade in={showDeck}>
-          {showDeck && (
-            <>
-              <Button onClick={this.toggleDeckImages} block>
-                {showDeckImages ? "Hide" : "Show"} Full Card
-              </Button>
-              <ListGroup>
-                {deck.map((p, i) => (
-                  <React.Fragment key={p.deck_card_id}>
-                    <Plane card={p} listDisplay={!showDeckImages} />
-                    <ListGroupItem className="text-center justify-content-center d-flex">
-                      <ButtonToolbar>
-                        <ButtonGroup>
-                          <Button
-                            disabled={i === 0}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                moveCard("planechase", i, i - 1)
-                              )
-                            }
-                          >
-                            <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-                          </Button>
-                          <Button
-                            disabled={i === deck.length - 1}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                moveCard("planechase", i, i + 1)
-                              )
-                            }
-                          >
-                            <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-                          </Button>
-                        </ButtonGroup>
-                        <ButtonGroup className="ml-2">
-                          <Button
-                            disabled={i === 0}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                findAndPutOnTop("planechase", p.deck_card_id)
-                              )
-                            }
-                          >
-                            <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
-                          </Button>
-                          <Button
-                            disabled={i === deck.length - 1}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                findAndPutOnBottom("planechase", p.deck_card_id)
-                              )
-                            }
-                          >
-                            <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
-                          </Button>
-                        </ButtonGroup>
-                        <ButtonGroup className="ml-2">
-                          <Button
-                            color="danger"
-                            onClick={() =>
-                              this.manipulateDeck(
-                                removeCards("planechase", [p])
-                              )
-                            }
-                          >
-                            <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
-                          </Button>
-                        </ButtonGroup>
-                      </ButtonToolbar>
-                    </ListGroupItem>
-                  </React.Fragment>
-                ))}
-              </ListGroup>
-            </>
-          )}
+          <div>
+            {showDeck && (
+              <>
+                <Button
+                  onClick={this.toggleDeckImages}
+                  variant="secondary"
+                  block
+                >
+                  {showDeckImages ? "Hide" : "Show"} Full Card
+                </Button>
+                <ListGroup>
+                  {deck.map((p, i) => (
+                    <React.Fragment key={p.deck_card_id}>
+                      <Plane card={p} listDisplay={!showDeckImages} />
+                      <ListGroup.Item className="text-center justify-content-center d-flex">
+                        <ButtonToolbar>
+                          <ButtonGroup>
+                            <Button
+                              variant="secondary"
+                              disabled={i === 0}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  moveCard("planechase", i, i - 1)
+                                )
+                              }
+                            >
+                              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              disabled={i === deck.length - 1}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  moveCard("planechase", i, i + 1)
+                                )
+                              }
+                            >
+                              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
+                            </Button>
+                          </ButtonGroup>
+                          <ButtonGroup className="ml-2">
+                            <Button
+                              variant="secondary"
+                              disabled={i === 0}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  findAndPutOnTop("planechase", p.deck_card_id)
+                                )
+                              }
+                            >
+                              <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              disabled={i === deck.length - 1}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  findAndPutOnBottom(
+                                    "planechase",
+                                    p.deck_card_id
+                                  )
+                                )
+                              }
+                            >
+                              <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
+                            </Button>
+                          </ButtonGroup>
+                          <ButtonGroup className="ml-2">
+                            <Button
+                              variant="danger"
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  removeCards("planechase", [p])
+                                )
+                              }
+                            >
+                              <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
+                            </Button>
+                          </ButtonGroup>
+                        </ButtonToolbar>
+                      </ListGroup.Item>
+                    </React.Fragment>
+                  ))}
+                </ListGroup>
+              </>
+            )}
+          </div>
         </Fade>
       </div>
     );
@@ -381,17 +390,19 @@ export class Planechase extends Component {
     const history = getHistory("planechase");
     return (
       <div className="my-2">
-        <Button onClick={this.toggleHistory} block>
+        <Button onClick={this.toggleHistory} variant="secondary" block>
           {showHistory ? "Hide" : "Show"} History
         </Button>
         <Fade in={showHistory}>
-          {showHistory && history && (
-            <ListGroup>
-              {history.reverse().map(p => (
-                <Plane card={p} key={p.deck_card_id} listDisplay={true} />
-              ))}
-            </ListGroup>
-          )}
+          <div>
+            {showHistory && history && (
+              <ListGroup>
+                {history.reverse().map(p => (
+                  <Plane card={p} key={p.deck_card_id} listDisplay={true} />
+                ))}
+              </ListGroup>
+            )}
+          </div>
         </Fade>
       </div>
     );
@@ -403,7 +414,7 @@ export class Planechase extends Component {
       return (
         <Button
           onClick={() => this.triggerChaos(card)}
-          color="info"
+          variant="info"
           size="lg"
           className="btn-translucent"
         >
@@ -423,7 +434,7 @@ export class Planechase extends Component {
       // TODO chaos etc
       return (
         <div>
-          <Alert color="info" className="text-center mb-0">
+          <Alert variant="info" className="text-center mb-0">
             <i className="ms ms-planeswalker mx-2" />
             You Are On Both Planes
             <i className="ms ms-planeswalker mx-2" />
@@ -465,7 +476,7 @@ export class Planechase extends Component {
       // TODO Countes, chaos etc
       return (
         <div>
-          <Alert color="info" className="text-center mb-0">
+          <Alert variant="info" className="text-center mb-0">
             <i className="ms ms-planeswalker mx-2" />
             Pick a Plane to Planeswalk To
             <i className="ms ms-planeswalker mx-2" />
@@ -475,7 +486,7 @@ export class Planechase extends Component {
               <Plane card={c}>
                 <Button
                   onClick={() => this.selectPlane(c)}
-                  color="primary"
+                  variant="primary"
                   className="btn-translucent"
                   size="lg"
                 >
@@ -512,15 +523,14 @@ export class Planechase extends Component {
       );
       return (
         <Modal
-          isOpen={!!tripleChaosModalOpen}
-          toggle={this._tripleChaosModalToggle}
-          onClosed={this._tripleChaosModalClose}
+          show={!!tripleChaosModalOpen}
+          onHide={this._tripleChaosModalToggle}
           size="md"
           backdrop={true}
-          contentClassName="bg-secondary"
+          dialogClassName="bg-secondary"
         >
-          <ModalHeader className="justify-content-center text-center text-white">
-            <div>
+          <Modal.Header className="flex-column text-center text-white">
+            <div className="modal-title h5 mx-auto">
               <i className="ms ms-chaos mr-1" />
               <i className="ms ms-chaos mr-1" />
               <i className="ms ms-chaos mr-1" />
@@ -529,27 +539,27 @@ export class Planechase extends Component {
               <i className="ms ms-chaos ml-1" />
               <i className="ms ms-chaos ml-1" />
             </div>
-            <div>
+            <div className="mx-auto">
               <small className="text-center">You Pick Order</small>
             </div>
-          </ModalHeader>
-          <ModalBody className="text-center">
+          </Modal.Header>
+          <Modal.Body className="text-center">
             {revealedPlanes.map(c => (
               <React.Fragment key={c.deck_card_id}>
                 <Plane card={c}>{this.renderChaos(c)}</Plane>
               </React.Fragment>
             ))}
-          </ModalBody>
-          <ModalFooter>
+          </Modal.Body>
+          <Modal.Footer>
             <Button
-              color="info"
+              variant="info"
               block
               aria-label="Close"
               onClick={this._tripleChaosModalClose}
             >
               Done
             </Button>
-          </ModalFooter>
+          </Modal.Footer>
         </Modal>
       );
     }
@@ -586,26 +596,30 @@ export class Planechase extends Component {
     if (scryCards && scryModalOpen) {
       return (
         <Modal
-          isOpen={!!scryModalOpen}
+          show={!!scryModalOpen}
           size="md"
-          contentClassName="bg-secondary"
+          dialogClassName="bg-secondary"
+          variant="secondary"
+          backdrop="static"
         >
-          <ModalHeader className="justify-content-center text-white">
-            <i className="ms ms-chaos mx-4" />
-            Scry Card
-            <i className="ms ms-chaos mx-4" />
-          </ModalHeader>
-          <ModalBody>
-            <Button color="info" block onClick={this._scryTop}>
+          <Modal.Header className="justify-content-center text-white">
+            <Modal.Title>
+              <i className="ms ms-chaos mx-4" />
+              Scry Card
+              <i className="ms ms-chaos mx-4" />
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Button variant="info" block onClick={this._scryTop}>
               Top
             </Button>
             {scryCards.map(c => (
               <Plane card={c} key={c.deck_card_id} />
             ))}
-            <Button color="info" block onClick={this._scryBottom}>
+            <Button variant="info" block onClick={this._scryBottom}>
               Bottom
             </Button>
-          </ModalBody>
+          </Modal.Body>
         </Modal>
       );
     }

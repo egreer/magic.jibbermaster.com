@@ -71,6 +71,11 @@ $dark-trans: rgba($dark, 0.8);
       @extend .bg-transparent;
     }
   }
+  &.bg-secondary {
+    .modal-content {
+      @extend .bg-secondary;
+    }
+  }
 }
 
 .modal-content-full {
