@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, ButtonGroup, Spinner } from "reactstrap";
+import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
 import store from "store";
@@ -15,25 +16,32 @@ export class SYB extends Component {
   state = {
     playerCount: 4,
     targets: null,
-    loadingDirection: false
+    loadingDirection: false,
+    cySet: false,
+    labels: { 0: "J" }
   };
+
+  cy = null;
+  dialog = null;
 
   componentDidMount = () => {
     const playerCount = store.get("syb-playerCount") || 4;
     const targets = store.get("syb-targets") || null;
     const tableShape = store.get("syb-tableShape") || "circle";
+    const labels = store.get("syb-labels") || { 0: "J" };
     this.setState({
       playerCount,
       targets,
-      tableShape
+      tableShape,
+      labels
     });
   };
 
   generateNodes() {
-    const { playerCount } = this.state;
+    const { playerCount, labels } = this.state;
     const players = Array.from(Array(playerCount).keys());
     return players.map(p => {
-      const label = p === 0 ? "J" : p;
+      const label = labels[p] || p;
       return { data: { id: `player-${p}`, label, type: "triangle-tee" } };
     });
   }
@@ -73,8 +81,37 @@ export class SYB extends Component {
       cy.layout(layout).run();
     }, SELECT_THRESHOLD);
 
-    cy.on("add remove", () => {
-      refreshLayout();
+    const nodeClick = debounce(e => {
+      const clickedNode = e.target;
+      this.setLabel(clickedNode.id().split("-")[1]);
+    }, SELECT_THRESHOLD);
+
+    if (!this.state.cySet) {
+      cy.on("add remove", () => {
+        refreshLayout();
+      });
+
+      cy.nodes().on("tap click", nodeClick);
+      this.setState({ cySet: true });
+    }
+    this.cy = cy;
+  }
+
+  setLabel(number) {
+    console.log("Setting label", number);
+    this.dialog.show({
+      title: "Who is this?",
+      bsSize: "sm",
+      actions: [
+        Dialog.CancelAction(),
+        Dialog.OKAction(a => {
+          const { labels } = this.state;
+          labels[number] = a.value;
+          store.set("syb-labels", labels);
+          this.setState({ labels });
+        })
+      ],
+      prompt: Dialog.TextPrompt({ initialValue: number })
     });
   }
 
@@ -132,6 +169,14 @@ export class SYB extends Component {
     );
   }
 
+  removeListeners() {
+    this.cy.removeListener("add");
+    this.cy.removeListener("remove");
+    this.cy.nodes().removeListener("click");
+    this.cy.nodes().removeListener("tap");
+    this.setState({ cySet: false });
+  }
+
   isSquare() {
     const { tableShape } = this.state;
     return false && tableShape === "square";
@@ -141,6 +186,7 @@ export class SYB extends Component {
     const { playerCount } = this.state;
     const newPlayerCount = store.set("syb-playerCount", playerCount + 1);
     this.regenerateOrder(newPlayerCount);
+    this.removeListeners();
     this.setState({ playerCount: newPlayerCount });
   }
 
@@ -151,6 +197,7 @@ export class SYB extends Component {
       Math.max(playerCount - 1, 1)
     );
     this.regenerateOrder(newPlayerCount);
+    this.removeListeners();
     this.setState({ playerCount: newPlayerCount });
   }
 
@@ -167,6 +214,25 @@ export class SYB extends Component {
       this.regenerateOrder();
       this.setState({ loadingDirection: false });
     }, 1500);
+  };
+
+  reset = async () => {
+    this.setState({ loading: true });
+    const playerCount = store.set("syb-playerCount", 4);
+    const targets = store.set("syb-targets", null);
+    const tableShape = store.set("syb-tableShape", "circle");
+    const labels = store.set("syb-labels", { 0: "J" });
+
+    this.removeListeners();
+    this.setState(
+      {
+        playerCount,
+        targets,
+        tableShape,
+        labels
+      },
+      () => this.regenerateOrder(playerCount)
+    );
   };
 
   render() {
@@ -232,6 +298,14 @@ export class SYB extends Component {
           )}
           {this.renderCyto()}
         </div>
+        <Button onClick={this.reset} color="danger" block>
+          Reset
+        </Button>
+        <Dialog
+          ref={component => {
+            this.dialog = component;
+          }}
+        />
       </div>
     );
   }
