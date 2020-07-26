@@ -14,7 +14,7 @@ import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 const Handle = Slider.Handle;
 
-const MIN_PLAYERS = 3;
+const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 9;
 const DEFAULT_PLAYERS = 5;
 

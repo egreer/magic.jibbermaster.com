@@ -55,6 +55,8 @@ export const TAGS = [
 
 const canAny = p => true;
 const canEven = p => p % 2 === 0;
+const can2Hg = p => p > 2 && canEven(p);
+const canFreeForAll = p => p > 2;
 const canEmperor = p => p >= 6 && p % 3 === 0;
 const canSecretPartner = p => p >= 6 && canEven(p);
 const canRange1 = p => p > 4;
@@ -87,7 +89,7 @@ export const FORMATS = [
     name: "EDH Free for All",
     initial: 0.5,
     tags: ["EDH", "Free for All"],
-    players: canAny
+    players: canFreeForAll
   },
   {
     id: 5,
@@ -128,14 +130,14 @@ export const FORMATS = [
     name: "2 Headed Giant SYB",
     initial: 0.5,
     tags: ["2 Headed Giant", "SYB"],
-    players: canEven
+    players: can2Hg
   },
   {
     id: 10,
     name: "2 Headed Giant Free for All",
     initial: 0.5,
     tags: ["2 Headed Giant", "Free for All"],
-    players: canEven
+    players: p => can2Hg(p) && canFreeForAll(p)
   },
   {
     id: 11,
@@ -166,7 +168,7 @@ export const FORMATS = [
     name: "Free for All",
     initial: 0.5,
     tags: ["Free for All"],
-    players: canAny
+    players: canFreeForAll
   },
   {
     id: 15,

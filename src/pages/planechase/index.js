@@ -529,7 +529,7 @@ export class Planechase extends Component {
           backdrop={true}
           dialogClassName="bg-secondary"
         >
-          <Modal.Header className="flex-column text-center text-white">
+          <Modal.Header className="flex-column text-center text-white noselect">
             <div className="modal-title h5 mx-auto">
               <i className="ms ms-chaos mr-1" />
               <i className="ms ms-chaos mr-1" />
@@ -602,7 +602,7 @@ export class Planechase extends Component {
           variant="secondary"
           backdrop="static"
         >
-          <Modal.Header className="justify-content-center text-white">
+          <Modal.Header className="justify-content-center text-white noselect">
             <Modal.Title>
               <i className="ms ms-chaos mx-4" />
               Scry Card
