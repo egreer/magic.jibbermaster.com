@@ -6,20 +6,7 @@ import {
   Switch,
   NavLink as RRNavLink
 } from "react-router-dom";
-import {
-  Alert,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Alert, Navbar, Nav, Dropdown } from "react-bootstrap";
 import store from "store";
 
 import "./App.scss";
@@ -84,10 +71,10 @@ class App extends Component {
 
   _mtgToggler = (value, displayText, onClick) => {
     return (
-      <DropdownItem toggle={false} onClick={onClick}>
+      <Dropdown.Item onClick={onClick}>
         <DoubleFaceIcon enabled={value} />
         <span className="ml-3">{displayText}</span>
-      </DropdownItem>
+      </Dropdown.Item>
     );
   };
 
@@ -110,75 +97,76 @@ class App extends Component {
         <HelmetProvider>
           <Helmet titleTemplate="%s - Jibbermaster" />
           <Navbar
-            color="dark"
-            dark
+            variant="dark"
             expand="md"
             className="text-right p-1 noselect"
+            expanded={this.state.isOpen}
           >
-            <NavbarBrand />
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
+            <Navbar.Brand />
+            <Navbar.Toggle onClick={this.toggle} />
+            <Navbar.Collapse>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink
-                    tag={RRNavLink}
+                <Nav.Item>
+                  <Nav.Link
+                    as={RRNavLink}
                     exact
                     to="/"
                     activeClassName="active"
                     onClick={this.closeNavbar}
                   >
                     Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={RRNavLink}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={RRNavLink}
                     exact
                     to="/planechase"
                     activeClassName="active"
                     onClick={this.closeNavbar}
                   >
                     Planechase
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={RRNavLink}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={RRNavLink}
                     exact
                     to="/archenemy"
                     activeClassName="active"
                     onClick={this.closeNavbar}
                   >
                     Archenemy
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={RRNavLink}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={RRNavLink}
                     exact
                     to="/syb"
                     activeClassName="active"
                     onClick={this.closeNavbar}
                   >
                     SYB
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={RRNavLink}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={RRNavLink}
                     exact
                     to="/formats"
                     activeClassName="active"
                     onClick={this.closeNavbar}
                   >
                     Formats
-                  </NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    Settings
-                  </DropdownToggle>
-                  <DropdownMenu right>
+                  </Nav.Link>
+                </Nav.Item>
+                <Dropdown
+                  navbar
+                  onToggle={isOpen => !isOpen && this.closeNavbar()}
+                >
+                  <Dropdown.Toggle as={Nav.Link}>Settings</Dropdown.Toggle>
+                  <Dropdown.Menu alignRight>
                     {this._mtgToggler(
                       disclaimerDismissed,
                       "Disclaimer Dismissed",
@@ -196,26 +184,23 @@ class App extends Component {
                     {this._mtgToggler(devTools, "Dev Tools", () =>
                       this._toggleSetting("devTools")
                     )}
-                    <DropdownItem divider />
-                    <DropdownItem
-                      toggle={false}
-                      onClick={() => store.clearAll()}
-                    >
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => store.clearAll()}>
                       Clear Everything
-                    </DropdownItem>
+                    </Dropdown.Item>
 
                     {this.state.devTools && (
                       <>
-                        <DropdownItem divider />
-                        <DropdownItem disabled>
+                        <Dropdown.Divider />
+                        <Dropdown.Item disabled>
                           Version {getSetting("version")}
-                        </DropdownItem>
+                        </Dropdown.Item>
                       </>
                     )}
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Nav>
-            </Collapse>
+            </Navbar.Collapse>
           </Navbar>
           <div className="app text-light bg-dark col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
             <Switch>
@@ -238,10 +223,11 @@ class App extends Component {
               />
             </Switch>
             <Alert
-              color="warning"
+              variant="warning"
               className="fixed-bottom mb-0 py-1"
-              isOpen={!this.state.disclaimerDismissed}
-              toggle={this.dismissDisclaimer}
+              show={!this.state.disclaimerDismissed}
+              onClose={this.dismissDisclaimer}
+              dismissible
             >
               <h6>Disclaimer</h6>
               <small className="text-muted m-0">
