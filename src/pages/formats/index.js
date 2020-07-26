@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup, Spinner } from "reactstrap";
+import { Button, ButtonGroup, Spinner } from "react-bootstrap";
 import store from "store";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FORMATS } from "./formats";
@@ -154,25 +154,31 @@ export class Formats extends Component {
               <Button
                 disabled={playerCount <= 1}
                 onClick={() => this.decrementCount()}
+                variant="secondary"
               >
                 <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
               </Button>
-              <Button onClick={() => this.incrementCount()}>
+              <Button onClick={() => this.incrementCount()} variant="secondary">
                 <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
               </Button>
             </ButtonGroup>
             <div className="text-center mb-5">
               <Button
                 block
-                color="danger"
+                variant="danger"
                 onClick={() => this.pickFormat()}
                 disabled={loadingFormat}
               >
                 {loadingFormat ? "Computing..." : "Which Format?"}
               </Button>
               {loadingFormat ? (
-                <Spinner size="lg" color="primary" className="mt-3 mb-2">
-                  Loading...
+                <Spinner
+                  size="lg"
+                  animation="border"
+                  variant="primary"
+                  className="mt-3 mb-2"
+                >
+                  <span className="sr-only">Loading...</span>
                 </Spinner>
               ) : (
                 <h1 className="my-2">{this.renderActiveFormatName()}</h1>
@@ -182,7 +188,7 @@ export class Formats extends Component {
                   onClick={this.triggerSwap}
                   block
                   className={"w-50 mx-auto"}
-                  color="success"
+                  variant="success"
                 >
                   Deckswaps?
                 </Button>
@@ -194,7 +200,7 @@ export class Formats extends Component {
         <div className="mb-5">{this.renderFormatToggles()}</div>
         <div className="mb-5 noselect">{this.renderActiveFormats()}</div>
         <div className="my-3">
-          <Button color="danger" onClick={this.reset} block>
+          <Button variant="danger" onClick={this.reset} block>
             Reset
           </Button>
         </div>
@@ -261,7 +267,7 @@ export class Formats extends Component {
               onClick={() => {
                 this.toggleTag(t);
               }}
-              color={t.enabled ? "info" : "secondary"}
+              variant={t.enabled ? "info" : "secondary"}
             >
               <div className="float-left">
                 {t.enabled ? (
