@@ -42,6 +42,11 @@ $translucent: rgba(0, 0, 0, 0.2);
     background-color: $translucent !important;
 
     &.one {
+      .dot:first-child {
+        // Flip the planeswalk symbol upright
+        transform: rotateX(180deg) translateY(-30px);
+      }
+
       .dot:first-child::before {
         // Planeswalk
         content: "\e623";
