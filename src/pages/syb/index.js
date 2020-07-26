@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup, Spinner } from "reactstrap";
+import { Button, ButtonGroup, Spinner } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
@@ -285,10 +285,11 @@ export class SYB extends Component {
               <Button
                 disabled={playerCount <= 1}
                 onClick={() => this.decrementCount()}
+                variant="secondary"
               >
                 <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
               </Button>
-              <Button onClick={() => this.incrementCount()}>
+              <Button onClick={() => this.incrementCount()} variant="secondary">
                 <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
               </Button>
             </ButtonGroup>
@@ -297,12 +298,14 @@ export class SYB extends Component {
                 <Button
                   active={tableShape === "circle"}
                   onClick={() => this.setTableShape("circle")}
+                  variant="secondary"
                 >
                   <i className="ss ss-portal ss-2x" />
                 </Button>
                 <Button
                   active={tableShape === "square"}
                   onClick={() => this.setTableShape("square")}
+                  variant="secondary"
                 >
                   <i className="ss ss-bfz ss-2x" />
                 </Button>
@@ -312,7 +315,7 @@ export class SYB extends Component {
         </div>
         <div className="text-center my-2">
           <Button
-            color="danger"
+            variant="danger"
             onClick={this.whichWay}
             block
             disabled={loadingDirection}
@@ -324,11 +327,11 @@ export class SYB extends Component {
           {loadingDirection && (
             <div
               className="position-absolute w-75 text-center"
-              style={{ top: "50%" }}
+              style={{ top: "45%", left: "0%" }}
             >
               <Spinner
-                color="danger"
-                type="grow"
+                variant="danger"
+                animation="grow"
                 className="position-absolute"
                 style={{ width: "10rem", height: "10rem" }}
               />
@@ -336,7 +339,7 @@ export class SYB extends Component {
           )}
           {this.renderCyto()}
         </div>
-        <Button onClick={this.reset} color="danger" block>
+        <Button onClick={this.reset} variant="danger" block>
           Reset
         </Button>
 
@@ -361,7 +364,7 @@ export class SYB extends Component {
       return (
         <div className="my-4">
           <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.toggleTurnEdges} block>
+          <Button onClick={this.toggleTurnEdges} block variant="secondary">
             <span className="mr-2">Turn Edges</span>
             <DoubleFaceIcon
               enabled={this.state.showTurnEdges}
