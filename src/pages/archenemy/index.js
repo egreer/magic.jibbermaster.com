@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import {
+  Accordion,
   Alert,
+  Badge,
   Button,
   ButtonGroup,
   ButtonToolbar,
   Card,
-  CardBody,
-  CardTitle,
   Fade,
   ListGroup,
-  ListGroupItem,
   Jumbotron,
-  Container,
-  UncontrolledCollapse
-} from "reactstrap";
+  Container
+} from "react-bootstrap";
 import store from "store";
 
 import { ArchenemyHelmet } from "./Helmet";
@@ -159,7 +157,7 @@ export class Archenemy extends Component {
           <Button
             onClick={this.scheme}
             className="mb-2"
-            color="success"
+            variant="success"
             disabled={loading}
             block
           >
@@ -195,7 +193,7 @@ export class Archenemy extends Component {
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        <Button onClick={this.reset} color="danger" block>
+        <Button onClick={this.reset} variant="danger" block>
           Reset
         </Button>
       </>
@@ -208,16 +206,16 @@ export class Archenemy extends Component {
     return (
       <>
         <Card className="noselect">
-          <CardBody>
+          <Card.Body>
             {this.deckCardTitle(deckName)}
             <Button
               block
-              color="success"
+              variant="success"
               onClick={() => this.selectDeck("All", schemes)}
             >
               Use All
             </Button>
-          </CardBody>
+          </Card.Body>
         </Card>
         {this.renderPrebuilts()}
         {this.renderBuildCustomDeck()}
@@ -230,7 +228,7 @@ export class Archenemy extends Component {
     if (ongoingSchemes && ongoingSchemes.length > 0) {
       return (
         <>
-          <Alert color="info" className="text-center">
+          <Alert variant="info" className="text-center">
             <h5>Ongoing Schemes</h5>
           </Alert>
           <div className="d-flex justify-content-center flex-wrap ">
@@ -253,7 +251,7 @@ export class Archenemy extends Component {
       return (
         <div className="my-4">
           <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.undo} color="warning" block>
+          <Button onClick={this.undo} variant="warning" block>
             Undo
           </Button>
           {this.renderDeck()}
@@ -285,7 +283,7 @@ export class Archenemy extends Component {
       return (
         <Button
           onClick={() => this.abandonScheme(card)}
-          color="danger"
+          variant="danger"
           size="lg"
           className="btn-translucent"
         >
@@ -307,17 +305,19 @@ export class Archenemy extends Component {
     const history = getHistory("archenemy");
     return (
       <div className="my-2">
-        <Button onClick={this.toggleHistory} block>
+        <Button onClick={this.toggleHistory} block variant="secondary">
           {showHistory ? "Hide" : "Show"} History
         </Button>
         <Fade in={showHistory}>
-          {showHistory && history && (
-            <ListGroup>
-              {history.reverse().map(p => (
-                <Scheme card={p} key={p.deck_card_id} listDisplay={true} />
-              ))}
-            </ListGroup>
-          )}
+          <div>
+            {showHistory && history && (
+              <ListGroup>
+                {history.reverse().map(p => (
+                  <Scheme card={p} key={p.deck_card_id} listDisplay={true} />
+                ))}
+              </ListGroup>
+            )}
+          </div>
         </Fade>
       </div>
     );
@@ -378,69 +378,82 @@ export class Archenemy extends Component {
     const { customDeck } = this.state;
     const deckName = "Custom Deck";
 
-    const cardListIems = customDeck.map(card => (
-      <ListGroupItem key={card.id} color="dark" className="noselect">
+    const cardListItems = customDeck.map(card => (
+      <ListGroup.Item key={card.id} variant="dark" className="noselect">
         <Scheme card={card} />
         <div className="text-center">
-          <h1>x{card.count}</h1>
+          <h1>
+            <Badge pill variant={card.count > 0 ? "success" : "dark"}>
+              x{card.count}
+            </Badge>
+          </h1>
           <ButtonGroup>
             <Button
               disabled={card.count <= 0}
               onClick={() => this.decrementCount(card)}
+              variant="secondary"
             >
               <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
             </Button>
             <Button
               disabled={card.count >= 2}
               onClick={() => this.incrementCount(card)}
+              variant="secondary"
             >
               <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
             </Button>
           </ButtonGroup>
         </div>
-      </ListGroupItem>
+      </ListGroup.Item>
     ));
 
     return (
-      <>
+      <Accordion>
         <Card className="noselect">
-          <CardBody>
+          <Card.Body>
             {this.deckCardTitle(deckName)}
-            <Button block id="custom-deck-toggle">
+            <Accordion.Toggle
+              as={Button}
+              block
+              eventKey="custom-deck-toggle"
+              variant="secondary"
+            >
               Build Custom
-            </Button>
-            <UncontrolledCollapse toggler="custom-deck-toggle">
-              <div className="fixed-top mt-1 ml-1 text-left">
-                <Alert color="info" className="clearfix">
-                  <h4 className="float-left">
-                    Custom Deck Size: {this.customDeckSize()}
-                  </h4>
-                  <ButtonGroup className="float-right">
-                    <Button color="danger" onClick={this.resetCustomDeck}>
-                      Reset
-                    </Button>
-                    <Button
-                      color="success"
-                      onClick={() => this.selectDeck("Custom", customDeck)}
-                    >
-                      Use Deck
-                    </Button>
-                  </ButtonGroup>
-                </Alert>
-              </div>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="custom-deck-toggle">
+              <>
+                <div className="fixed-top mt-1 ml-1 text-left">
+                  <Alert variant="info" className="clearfix">
+                    <h4 className="float-left">
+                      Custom Deck Size: {this.customDeckSize()}
+                    </h4>
+                    <ButtonGroup className="float-right">
+                      <Button variant="danger" onClick={this.resetCustomDeck}>
+                        Reset
+                      </Button>
+                      <Button
+                        variant="success"
+                        onClick={() => this.selectDeck("Custom", customDeck)}
+                      >
+                        Use Deck
+                      </Button>
+                    </ButtonGroup>
+                  </Alert>
+                </div>
 
-              <ListGroup>{cardListIems}</ListGroup>
-            </UncontrolledCollapse>
+                <ListGroup>{cardListItems}</ListGroup>
+              </>
+            </Accordion.Collapse>
             <Button
               block
-              color="success"
+              variant="success"
               onClick={() => this.selectDeck("Custom", customDeck)}
             >
               Use Custom Deck
             </Button>
-          </CardBody>
+          </Card.Body>
         </Card>
-      </>
+      </Accordion>
     );
   }
 
@@ -470,31 +483,42 @@ export class Archenemy extends Component {
     const prebuilts = getDeckList();
     const prebuiltItems = prebuilts.map((prebuilt, i) => {
       const cardList = getCardList(prebuilt, schemes);
-      const cardListIems = cardList.map((card, i) => (
-        <ListGroupItem key={i} color="dark">
+      const cardListItems = cardList.map((card, i) => (
+        <ListGroup.Item key={i} variant="dark">
           <Scheme card={card} />
-          <h1 className="text-center">x{card.count}</h1>
-        </ListGroupItem>
+          <h1 className="text-center">
+            <Badge pill variant={card.count > 0 ? "success" : "dark"}>
+              x{card.count}
+            </Badge>
+          </h1>
+        </ListGroup.Item>
       ));
       return (
-        <Card key={i}>
-          <CardBody>
-            {this.deckCardTitle(prebuilt)}
-            <Button block id={`prebuilt-${i}`}>
-              Decklist
-            </Button>
-            <UncontrolledCollapse toggler={`#prebuilt-${i}`}>
-              <ListGroup>{cardListIems}</ListGroup>
-            </UncontrolledCollapse>
-            <Button
-              block
-              color="success"
-              onClick={() => this.selectDeck(prebuilt, cardList)}
-            >
-              Use Deck
-            </Button>
-          </CardBody>
-        </Card>
+        <Accordion key={i}>
+          <Card>
+            <Card.Body>
+              {this.deckCardTitle(prebuilt)}
+              <Accordion.Toggle
+                as={Button}
+                block
+                eventKey={`prebuilt-${i}`}
+                variant="secondary"
+              >
+                Decklist
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey={`prebuilt-${i}`}>
+                <ListGroup>{cardListItems}</ListGroup>
+              </Accordion.Collapse>
+              <Button
+                block
+                variant="success"
+                onClick={() => this.selectDeck(prebuilt, cardList)}
+              >
+                Use Deck
+              </Button>
+            </Card.Body>
+          </Card>
+        </Accordion>
       );
     });
 
@@ -502,7 +526,7 @@ export class Archenemy extends Component {
   }
 
   deckCardTitle = name => (
-    <CardTitle className="d-flex">
+    <Card.Title className="d-flex">
       <div className="h3 text-center align-self-center">
         {this.deckIcon(name)}
       </div>
@@ -512,7 +536,7 @@ export class Archenemy extends Component {
       <div className="h3 text-center align-self-center">
         {this.deckIcon(name)}
       </div>
-    </CardTitle>
+    </Card.Title>
   );
 
   toggleDeck = () => {
@@ -531,82 +555,97 @@ export class Archenemy extends Component {
     const { deck, showDeck, showDeckImages } = this.state;
     return (
       <div className="my-2">
-        <Button onClick={this.toggleDeck} block>
+        <Button onClick={this.toggleDeck} block variant="secondary">
           {showDeck ? "Hide" : "Show"} Deck
         </Button>
         <Fade in={showDeck}>
-          {showDeck && deck && (
-            <>
-              <Button onClick={this.toggleDeckImages} block>
-                {showDeckImages ? "Hide" : "Show"} Full Card
-              </Button>
-              <ListGroup>
-                {deck.map((p, i) => (
-                  <React.Fragment key={p.deck_card_id}>
-                    <Scheme card={p} listDisplay={!showDeckImages} />
-                    <ListGroupItem className="text-center justify-content-center d-flex">
-                      <ButtonToolbar>
-                        <ButtonGroup>
-                          <Button
-                            disabled={i === 0}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                moveCard("archenemy", i, i - 1)
-                              )
-                            }
-                          >
-                            <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-                          </Button>
-                          <Button
-                            disabled={i === deck.length - 1}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                moveCard("archenemy", i, i + 1)
-                              )
-                            }
-                          >
-                            <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-                          </Button>
-                        </ButtonGroup>
-                        <ButtonGroup className="ml-2">
-                          <Button
-                            disabled={i === 0}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                findAndPutOnTop("archenemy", p.deck_card_id)
-                              )
-                            }
-                          >
-                            <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
-                          </Button>
-                          <Button
-                            disabled={i === deck.length - 1}
-                            onClick={() =>
-                              this.manipulateDeck(
-                                findAndPutOnBottom("archenemy", p.deck_card_id)
-                              )
-                            }
-                          >
-                            <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
-                          </Button>
-                        </ButtonGroup>
-                        <ButtonGroup className="ml-2">
-                          <Button
-                            color="danger"
-                            onClick={() =>
-                              this.manipulateDeck(removeCards("archenemy", [p]))
-                            }
-                          >
-                            <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
-                          </Button>
-                        </ButtonGroup>
-                      </ButtonToolbar>
-                    </ListGroupItem>
-                  </React.Fragment>
-                ))}
-              </ListGroup>
-            </>
-          )}
+          <div>
+            {showDeck && deck && (
+              <>
+                <Button
+                  onClick={this.toggleDeckImages}
+                  block
+                  variant="secondary"
+                >
+                  {showDeckImages ? "Hide" : "Show"} Full Card
+                </Button>
+                <ListGroup>
+                  {deck.map((p, i) => (
+                    <React.Fragment key={p.deck_card_id}>
+                      <Scheme card={p} listDisplay={!showDeckImages} />
+                      <ListGroup.Item className="text-center justify-content-center d-flex">
+                        <ButtonToolbar>
+                          <ButtonGroup>
+                            <Button
+                              variant="secondary"
+                              disabled={i === 0}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  moveCard("archenemy", i, i - 1)
+                                )
+                              }
+                            >
+                              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              disabled={i === deck.length - 1}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  moveCard("archenemy", i, i + 1)
+                                )
+                              }
+                            >
+                              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
+                            </Button>
+                          </ButtonGroup>
+                          <ButtonGroup className="ml-2">
+                            <Button
+                              variant="secondary"
+                              disabled={i === 0}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  findAndPutOnTop("archenemy", p.deck_card_id)
+                                )
+                              }
+                            >
+                              <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              disabled={i === deck.length - 1}
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  findAndPutOnBottom(
+                                    "archenemy",
+                                    p.deck_card_id
+                                  )
+                                )
+                              }
+                            >
+                              <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
+                            </Button>
+                          </ButtonGroup>
+                          <ButtonGroup className="ml-2">
+                            <Button
+                              variant="danger"
+                              onClick={() =>
+                                this.manipulateDeck(
+                                  removeCards("archenemy", [p])
+                                )
+                              }
+                            >
+                              <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
+                            </Button>
+                          </ButtonGroup>
+                        </ButtonToolbar>
+                      </ListGroup.Item>
+                    </React.Fragment>
+                  ))}
+                </ListGroup>
+              </>
+            )}
+          </div>
         </Fade>
       </div>
     );
