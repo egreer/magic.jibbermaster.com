@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "reactstrap";
+import { Button } from "react-bootstrap";
 import { getCounterType } from "../../mtg/card.js";
 
 export const Counter = ({ card }) => {
@@ -10,7 +10,7 @@ export const Counter = ({ card }) => {
       <h1 className="text-shadow noselect">{counter}</h1>
       <Button
         onClick={() => setCounter(counter + 1)}
-        color="dark"
+        variant="dark"
         size="lg"
         className="btn-translucent"
       >

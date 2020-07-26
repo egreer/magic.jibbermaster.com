@@ -1,4 +1,4 @@
-@import "styles/colors.scss";
+@import "styles/colors";
 @import "~bootstrap/scss/bootstrap";
 
 $primary-trans: rgba($primary, 0.8);
@@ -56,6 +56,7 @@ $dark-trans: rgba($dark, 0.8);
 }
 
 .noselect {
+  //sass-lint:disable-block no-vendor-prefixes
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -64,37 +65,20 @@ $dark-trans: rgba($dark, 0.8);
   user-select: none;
 }
 
-// .app {
-//   background-color: $gray-dark;
-//   color: #fff;
-// }
-//
-// .App-logo {
-//   animation: App-logo-spin infinite 20s linear;
-//   height: 40vmin;
-//   pointer-events: none;
-// }
-//
-// .App-header {
-//   background-color: #282c34;
-//   min-height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: calc(10px + 2vmin);
-//   color: white;
-// }
-//
-// .App-link {
-//   color: #61dafb;
-// }
-//
-// @keyframes App-logo-spin {
-//   from {
-//     transform: rotate(0deg);
-//   }
-//   to {
-//     transform: rotate(360deg);
-//   }
-// }
+.modal-dialog {
+  &.bg-transparent {
+    .modal-content {
+      @extend .bg-transparent;
+    }
+  }
+}
+
+.modal-content-full {
+  max-width: 98%;
+}
+
+.modal-content-no-border {
+  .modal-content {
+    border: 0;
+  }
+}

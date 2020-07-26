@@ -1,17 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardImgOverlay,
-  CardTitle,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardFooter,
-  ListGroupItem,
-  Modal,
-  ModalBody
-} from "reactstrap";
+import { Card, ListGroup, Modal } from "react-bootstrap";
 import { gathererImageURL } from "../../mtg/card";
 import back from "../../images/planechase-back.jpg";
 import { Counter } from "./Counter";
@@ -41,26 +29,26 @@ export class Plane extends Component {
     if (listDisplay) {
       return (
         <>
-          <ListGroupItem color="dark" onClick={this.toggleModal}>
+          <ListGroup.Item variant="dark" onClick={this.toggleModal}>
             <div>{card.name}</div>
-          </ListGroupItem>
+          </ListGroup.Item>
           <Modal
-            isOpen={this.state.modalOpen}
-            toggle={this.toggleModal}
+            show={this.state.modalOpen}
+            onHide={this.toggleModal}
             size="md"
             backdrop={true}
-            contentClassName="bg-secondary"
+            dialogClassName="modal-content-no-border"
           >
-            <ModalBody className="p-0" centered="true">
+            <Modal.Body className="p-0" centered="true">
               <Plane card={card} />
               {children}
-            </ModalBody>
+            </Modal.Body>
           </Modal>
         </>
       );
     } else {
       return (
-        <Card inverse className="mtg-plane-card">
+        <Card bg="black" text="light" className="mtg-plane-card">
           {this.renderImage()}
           {this.renderCounter()}
           {this.renderChildren()}
@@ -75,7 +63,7 @@ export class Plane extends Component {
     const text = this.renderText();
     const hasBody = text;
 
-    return hasBody && <CardBody>{text}</CardBody>;
+    return hasBody && <Card.Body>{text}</Card.Body>;
   }
 
   renderCounter() {
@@ -86,18 +74,18 @@ export class Plane extends Component {
       if (displayImages) {
         return (
           <div onDoubleClick={this.toggleFullScreen}>
-            <CardImgOverlay className="text-center plane-overlay counter-overlay">
-              <CardTitle className="text-center">
+            <Card.ImgOverlay className="text-center plane-overlay counter-overlay">
+              <Card.Title className="text-center">
                 <Counter card={card} />
-              </CardTitle>
-            </CardImgOverlay>
+              </Card.Title>
+            </Card.ImgOverlay>
           </div>
         );
       } else {
         return (
-          <CardBody className="text-center pb-0">
+          <Card.Body className="text-center pb-0">
             <Counter card={card} />
-          </CardBody>
+          </Card.Body>
         );
       }
     }
@@ -110,13 +98,13 @@ export class Plane extends Component {
       if (displayImages) {
         return (
           <div onDoubleClick={this.toggleFullScreen}>
-            <CardImgOverlay className="text-center plane-overlay child-overlay">
-              <CardTitle className="text-center">{children}</CardTitle>
-            </CardImgOverlay>
+            <Card.ImgOverlay className="text-center plane-overlay child-overlay">
+              <Card.Title className="text-center">{children}</Card.Title>
+            </Card.ImgOverlay>
           </div>
         );
       } else {
-        return <CardBody className="text-center pb-0">{children}</CardBody>;
+        return <Card.Body className="text-center pb-0">{children}</Card.Body>;
       }
     }
   }
@@ -126,15 +114,15 @@ export class Plane extends Component {
     const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
-        <CardFooter>
-          <a
+        <Card.Footer>
+          <Card.Link
             href={card.related_uris["gatherer"]}
             target="_blank"
             rel="noopener noreferrer"
           >
             Gatherer
-          </a>
-        </CardFooter>
+          </Card.Link>
+        </Card.Footer>
       );
     }
   }
@@ -146,22 +134,22 @@ export class Plane extends Component {
       if (card) {
         return (
           <>
-            <CardTitle>
+            <Card.Title>
               <h5>{card.name}</h5>
-            </CardTitle>
-            <CardSubtitle>{card.type_line}</CardSubtitle>
-            <CardText dangerouslySetInnerHTML={card.oracle_html} />
+            </Card.Title>
+            <Card.Subtitle>{card.type_line}</Card.Subtitle>
+            <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
           </>
         );
       } else {
-        return <CardTitle>None</CardTitle>;
+        return <Card.Title>None</Card.Title>;
       }
     }
   }
 
   renderCardImage = () => (
-    <CardImg
-      top
+    <Card.Img
+      variant="top"
       width="100%"
       src={this.imageURI()}
       className="mtg-card mtg-card-plane"
@@ -177,20 +165,19 @@ export class Plane extends Component {
             {this.renderCardImage()}
           </div>
           <Modal
-            isOpen={this.state.fullscreen}
-            toggle={this.toggleFullScreen}
+            show={this.state.fullscreen}
+            onHide={this.toggleFullScreen}
             backdrop={true}
-            contentClassName="bg-transparent"
+            dialogClassName="modal-content-full bg-transparent"
             centered={true}
-            modalClassName="modal-content-full"
           >
-            <ModalBody
+            <Modal.Body
               className="p-0"
               centered="true"
               onClick={this.toggleFullScreen}
             >
               {this.renderCardImage()}
-            </ModalBody>
+            </Modal.Body>
           </Modal>
         </>
       );

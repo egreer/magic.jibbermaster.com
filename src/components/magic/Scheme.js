@@ -1,17 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardImgOverlay,
-  CardTitle,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardFooter,
-  ListGroupItem,
-  Modal,
-  ModalBody
-} from "reactstrap";
+import { Card, ListGroup, Modal } from "react-bootstrap";
 import back from "../../images/archenemy-back.jpg";
 import { Counter } from "./Counter";
 import "./planes.scss";
@@ -34,26 +22,26 @@ export class Scheme extends Component {
     if (listDisplay) {
       return (
         <>
-          <ListGroupItem color="dark" onClick={this.toggleModal}>
+          <ListGroup.Item variant="dark" onClick={this.toggleModal}>
             {card.name}
-          </ListGroupItem>
+          </ListGroup.Item>
           <Modal
-            isOpen={this.state.modalOpen}
-            toggle={this.toggleModal}
+            show={this.state.modalOpen}
+            onHide={this.toggleModal}
             size="md"
             backdrop={true}
-            contentClassName="bg-secondary"
+            dialogClassName="modal-content-no-border"
           >
-            <ModalBody className="p-0" centered="true">
+            <Modal.Body className="p-0" centered="true">
               <Scheme card={card} />
               {children}
-            </ModalBody>
+            </Modal.Body>
           </Modal>
         </>
       );
     } else {
       return (
-        <Card inverse className="mtg-scheme-card">
+        <Card bg="black" text="light" className="mtg-scheme-card">
           {this.renderImage()}
           {this.renderCounter()}
           {this.renderChildren()}
@@ -68,7 +56,7 @@ export class Scheme extends Component {
     const text = this.renderText();
     const hasBody = text;
 
-    return hasBody && <CardBody>{text}</CardBody>;
+    return hasBody && <Card.Body>{text}</Card.Body>;
   }
 
   renderCounter() {
@@ -78,17 +66,17 @@ export class Scheme extends Component {
     if (renderActions && hasCounters) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center scheme-overlay counter-overlay">
-            <CardTitle className="text-center pt-5 mt-sm-5">
+          <Card.ImgOverlay className="text-center scheme-overlay counter-overlay">
+            <Card.Title className="text-center pt-5 mt-sm-5">
               <Counter card={card} />
-            </CardTitle>
-          </CardImgOverlay>
+            </Card.Title>
+          </Card.ImgOverlay>
         );
       } else {
         return (
-          <CardBody className="text-center pb-0">
+          <Card.Body className="text-center pb-0">
             <Counter card={card} />
-          </CardBody>
+          </Card.Body>
         );
       }
     }
@@ -100,14 +88,14 @@ export class Scheme extends Component {
     if (children) {
       if (displayImages) {
         return (
-          <CardImgOverlay className="text-center scheme-overlay child-overlay">
-            <CardTitle className="text-center pt-5 mt-sm-5">
+          <Card.ImgOverlay className="text-center scheme-overlay child-overlay">
+            <Card.Title className="text-center pt-5 mt-sm-5">
               {children}
-            </CardTitle>
-          </CardImgOverlay>
+            </Card.Title>
+          </Card.ImgOverlay>
         );
       } else {
-        return <CardBody className="text-center pb-0">{children}</CardBody>;
+        return <Card.Body className="text-center pb-0">{children}</Card.Body>;
       }
     }
   }
@@ -117,15 +105,15 @@ export class Scheme extends Component {
     const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
-        <CardFooter>
-          <a
+        <Card.Footer>
+          <Card.Link
             href={card.related_uris["gatherer"]}
             target="_blank"
             rel="noopener noreferrer"
           >
             Gatherer
-          </a>
-        </CardFooter>
+          </Card.Link>
+        </Card.Footer>
       );
     }
   }
@@ -137,15 +125,15 @@ export class Scheme extends Component {
       if (card) {
         return (
           <>
-            <CardTitle>
+            <Card.Title>
               <h5>{card.name}</h5>
-            </CardTitle>
-            <CardSubtitle>{card.type_line}</CardSubtitle>
-            <CardText dangerouslySetInnerHTML={card.oracle_html} />
+            </Card.Title>
+            <Card.Subtitle>{card.type_line}</Card.Subtitle>
+            <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
           </>
         );
       } else {
-        return <CardTitle>None</CardTitle>;
+        return <Card.Title>None</Card.Title>;
       }
     }
   }
@@ -154,8 +142,8 @@ export class Scheme extends Component {
     const displayImages = getSetting("displayImages");
     if (displayImages) {
       return (
-        <CardImg
-          top
+        <Card.Img
+          variant="top"
           width="100%"
           src={this.imageURI()}
           className="mtg-card mtg-card-scheme"
