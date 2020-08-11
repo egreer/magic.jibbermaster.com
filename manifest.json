@@ -22,7 +22,8 @@
     {
       "src": "./mtg/icon/planechase_256.png",
       "type": "image/png",
-      "sizes": "256x256"
+      "sizes": "256x256",
+      "purpose": "maskable any"
     }
   ]
 }
