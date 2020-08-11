@@ -1,23 +1,29 @@
 {
+  "manifest_version": 2,
   "name": "Jibbermaster's Planechase",
   "short_name": "Planechase",
   "start_url": "./planechase",
+  "description": "Play the Planechase format for Magic the Gathering players.",
   "lang": "en-US",
+  "default_locale": "en",
   "display": "fullscreen",
   "orientation": "any",
-  "theme_color": "black",
+  "theme_color": "#000000",
   "background_color": "#17a2b8",
   "icons": [
     {
       "src": "./mtg/icon/planechase_64.png",
+      "type": "image/png",
       "sizes": "64x64"
     },
     {
       "src": "./mtg/icon/planechase_128.png",
+      "type": "image/png",
       "sizes": "128x128"
     },
     {
       "src": "./mtg/icon/planechase_256.png",
+      "type": "image/png",
       "sizes": "256x256"
     }
   ]

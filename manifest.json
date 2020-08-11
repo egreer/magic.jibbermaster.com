@@ -1,22 +1,28 @@
 {
-  "short_name": "MTG Tools",
+  "manifest_version": 2,
   "name": "Jibbermaster's MTG",
+  "short_name": "MTG Tools",
+  "description": "A suite of browser-based tools for Magic The Gathering players.",
+  "default_locale": "en",
+  "start_url": ".",
+  "display": "fullscreen",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
   "icons": [
     {
       "src": "./mtg/icon/planechase_64.png",
+      "type": "image/png",
       "sizes": "64x64"
     },
     {
       "src": "./mtg/icon/planechase_128.png",
+      "type": "image/png",
       "sizes": "128x128"
     },
     {
       "src": "./mtg/icon/planechase_256.png",
+      "type": "image/png",
       "sizes": "256x256"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }

@@ -1,23 +1,29 @@
 {
+  "manifest_version": 2,
   "name": "Jibbermaster's SYB",
   "short_name": "SYB",
   "start_url": "./syb",
+  "description": "Random target objective generator for any table top game players.",
   "lang": "en-US",
+  "default_locale": "en",
   "display": "fullscreen",
   "orientation": "any",
-  "theme_color": "black",
+  "theme_color": "#000000",
   "background_color": "#1e7e34",
   "icons": [
     {
       "src": "./mtg/icon/starter_64.png",
+      "type": "image/png",
       "sizes": "64x64"
     },
     {
       "src": "./mtg/icon/starter_128.png",
+      "type": "image/png",
       "sizes": "128x128"
     },
     {
       "src": "./mtg/icon/starter_256.png",
+      "type": "image/png",
       "sizes": "256x256"
     }
   ]
