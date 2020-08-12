@@ -1,23 +1,29 @@
 {
+  "manifest_version": 2,
   "name": "Jibbermaster's Archenemy",
   "short_name": "Archenemy",
   "start_url": "./archenemy",
+  "description": "Play the Archenemy format for Magic the Gathering players.",
   "lang": "en-US",
+  "default_locale": "en",
   "display": "fullscreen",
   "orientation": "any",
-  "theme_color": "black",
+  "theme_color": "#000000",
   "background_color": "#dc3545",
   "icons": [
     {
       "src": "./mtg/icon/archenemy_64.png",
+      "type": "image/png",
       "sizes": "64x64"
     },
     {
       "src": "./mtg/icon/archenemy_128.png",
+      "type": "image/png",
       "sizes": "128x128"
     },
     {
       "src": "./mtg/icon/archenemy_256.png",
+      "type": "image/png",
       "sizes": "256x256"
     }
   ]
