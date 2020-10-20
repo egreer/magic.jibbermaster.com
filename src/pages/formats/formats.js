@@ -44,10 +44,6 @@ export const TAGS = [
     defaultEnabled: true
   },
   {
-    name: "Pentacle",
-    defaultEnabled: true
-  },
-  {
     name: "Emperor",
     defaultEnabled: true
   }
@@ -59,7 +55,7 @@ const can2Hg = p => p > 2 && canEven(p);
 const canFreeForAll = p => p > 2;
 const canEmperor = p => p >= 6 && p % 3 === 0;
 const canSecretPartner = p => p >= 6 && canEven(p);
-const canRange1 = p => p > 4;
+const canRange1 = p => p > 3;
 const canPentacle = p => p === 5;
 
 export const FORMATS = [
