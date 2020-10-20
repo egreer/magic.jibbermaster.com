@@ -14,20 +14,17 @@
     {
       "src": "./mtg/icon/evg_180.png",
       "type": "image/png",
-      "sizes": "180x180",
-      "purpose": "maskable any"
+      "sizes": "180x180"
     },
     {
       "src": "./mtg/icon/evg_192.png",
       "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "maskable any"
+      "sizes": "192x192"
     },
     {
       "src": "./mtg/icon/evg_512.png",
       "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable any"
+      "sizes": "512x512"
     }
   ]
 }
