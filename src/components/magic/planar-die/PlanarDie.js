@@ -23,7 +23,7 @@ export const PlanarDie = ({ rollDone = noop }) => {
         rollDone={r => rollDone(translateRoll(r))}
         defaultRoll={1}
         outline={true}
-        outlineColor="#000000"
+        outlineColor="#808080"
       />
     </div>
   );
