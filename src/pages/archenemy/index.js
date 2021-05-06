@@ -18,6 +18,7 @@ import { ArchenemyHelmet } from "./Helmet";
 import { getDeckList, getCardList } from "../../mtg/prebuilt-decks";
 import { getAllArchenemyCards } from "../../util/api.js";
 import { Scheme } from "../../components/magic/Scheme";
+import { Confirm } from "../../components/Confirm";
 import { Loading } from "../../components/Loading";
 import { getSetting } from "../../util/settings.js";
 
@@ -193,9 +194,14 @@ export class Archenemy extends Component {
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        <Button onClick={this.reset} variant="danger" block>
-          Reset
-        </Button>
+        <Confirm
+          onConfirm={this.reset}
+          headerText="Reset Schemes?"
+          triggerText="Reset"
+          confirmText="Reset"
+          confirmVariant="danger"
+          triggerButtonParams={{ variant: "danger", block: true }}
+        />
       </>
     );
   }

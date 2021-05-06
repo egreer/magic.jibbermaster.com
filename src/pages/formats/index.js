@@ -3,6 +3,7 @@ import { Button, ButtonGroup, Spinner } from "react-bootstrap";
 import store from "store";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FORMATS } from "./formats";
+import { Confirm } from "../../components/Confirm";
 
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
@@ -200,9 +201,14 @@ export class Formats extends Component {
         <div className="mb-5">{this.renderFormatToggles()}</div>
         <div className="mb-5 noselect">{this.renderActiveFormats()}</div>
         <div className="my-3">
-          <Button variant="danger" onClick={this.reset} block>
-            Reset
-          </Button>
+          <Confirm
+            onConfirm={this.reset}
+            headerText="Reset Formats?"
+            triggerText="Reset"
+            confirmText="Reset"
+            confirmVariant="danger"
+            triggerButtonParams={{ variant: "danger", block: true }}
+          />
         </div>
       </div>
     );

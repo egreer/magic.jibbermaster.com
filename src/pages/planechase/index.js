@@ -38,6 +38,7 @@ import {
 } from "../../mtg/card.js";
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
+import { Confirm } from "../../components/Confirm";
 import { Plane } from "../../components/magic/Plane";
 import { getSetting } from "../../util/settings.js";
 import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
@@ -200,7 +201,6 @@ export class Planechase extends Component {
             <span className="mx-2 d-none d-md-inline">Planeswalk</span>
           </Button>
         </div>
-
         {loading ? (
           <Loading className="text-muted" />
         ) : (
@@ -221,16 +221,18 @@ export class Planechase extends Component {
         {this.renderTripleChaosModal()}
         {this.renderScryModal()}
         {this.renderHistory()}
-
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
-        <Button onClick={this.reset} variant="danger" block>
-          Reset
-        </Button>
-
+        <Confirm
+          onConfirm={this.reset}
+          headerText="Reset Planes?"
+          triggerText="Reset"
+          confirmText="Reset"
+          confirmVariant="danger"
+          triggerButtonParams={{ variant: "danger", block: true }}
+        />
         {this.renderDevTools()}
-
         {showPlanarDie && !planeswalkDisabled && (
           <div
             className="position-fixed"
