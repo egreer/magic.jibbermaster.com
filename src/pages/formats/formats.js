@@ -59,13 +59,14 @@ export const TAGS = [
 
 const canAny = p => true;
 const canEven = p => p % 2 === 0;
+const canOdd = p => p % 2 === 1;
 const can2Hg = p => p > 2 && canEven(p);
 const canFreeForAll = p => p > 2;
 const canEmperor = p => p >= 6 && p % 3 === 0;
 const canSecretPartner = p => p >= 6 && canEven(p);
 const canRange1 = p => p > 3;
 const canPentacle = p => p >= 5;
-const canStar = p => p >= 5;
+export const canStar = p => p >= 5 && canOdd(p);
 const canTeams = p => p > 2 && canEven(p);
 
 export const FORMATS = [

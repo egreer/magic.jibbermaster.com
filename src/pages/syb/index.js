@@ -11,6 +11,7 @@ import { shuffle } from "../../mtg/deck.js";
 import { DoubleFaceIcon } from "../../components/magic/DoubleFaceIcon";
 
 import { SYBHelmet } from "./Helmet";
+import { canStar } from "../formats/formats";
 
 const circleLayout = { name: "circle", nodeDimensionsIncludeLabels: true };
 const gridLayout = { name: "grid", nodeDimensionsIncludeLabels: true, rows: 2 };
@@ -26,7 +27,9 @@ export class SYB extends Component {
     loadingDirection: false,
     cySet: false,
     labels: { 0: "J" },
-    showTurnEdges: true
+    showTurnEdges: true,
+    starTurn: false,
+    showScrewEdges: true
   };
 
   cy = null;
@@ -57,42 +60,62 @@ export class SYB extends Component {
   }
 
   generateEdges() {
-    const { targets, playerTargets, playerCount, showTurnEdges } = this.state;
+    const {
+      targets,
+      playerTargets,
+      playerCount,
+      showTurnEdges,
+      starTurn,
+      showScrewEdges
+    } = this.state;
 
-    return !targets
-      ? []
-      : targets
-          .flatMap((player, i) => {
-            return Array(playerTargets)
-              .fill(1)
-              .map((_, b) => {
-                const targetIndex = (i + b + 1) % playerCount;
-                const target = targets[targetIndex];
-                return {
-                  data: {
-                    source: `player-${player}`,
-                    target: `player-${target}`,
-                    label: `Edge from ${player} to ${target}`
-                  },
-                  classes: "screw"
-                };
-              });
-          })
-          .concat(
-            showTurnEdges
-              ? targets.map((_, i) => {
-                  const target = i + 1 >= targets.length ? 0 : i + 1;
-                  return {
-                    data: {
-                      source: `player-${i}`,
-                      target: `player-${target}`,
-                      label: `Turn from ${i} to ${target}`
-                    },
-                    classes: "turn"
-                  };
-                })
-              : []
-          );
+    if (!targets) return [];
+
+    const screwEdges = showScrewEdges
+      ? targets.flatMap((player, i) => {
+          return Array(playerTargets)
+            .fill(1)
+            .map((_, b) => {
+              const targetIndex = (i + b + 1) % playerCount;
+              const target = targets[targetIndex];
+              return {
+                data: {
+                  source: `player-${player}`,
+                  target: `player-${target}`,
+                  label: `Edge from ${player} to ${target}`
+                },
+                classes: "screw"
+              };
+            });
+        })
+      : [];
+
+    const turnEdges = showTurnEdges
+      ? targets.map((_, i) => {
+          const starNum = i + 2;
+          const starTurnTarget =
+            starNum > targets.length
+              ? 1
+              : starNum >= targets.length
+              ? 0
+              : starNum;
+          const normalTurnTarget = i + 1 >= targets.length ? 0 : i + 1;
+          const target =
+            starTurn && canStar(targets.length)
+              ? starTurnTarget
+              : normalTurnTarget;
+          return {
+            data: {
+              source: `player-${i}`,
+              target: `player-${target}`,
+              label: `Turn from ${i} to ${target}`
+            },
+            classes: "turn"
+          };
+        })
+      : [];
+
+    return screwEdges.concat(turnEdges);
   }
 
   regenerateOrder(c) {
@@ -517,6 +540,14 @@ export class SYB extends Component {
     this.setState({ showTurnEdges: !this.state.showTurnEdges });
   };
 
+  toggleScrewEdges = () => {
+    this.setState({ showScrewEdges: !this.state.showScrewEdges });
+  };
+
+  toggleStarTurn = () => {
+    this.setState({ starTurn: !this.state.starTurn });
+  };
+
   renderDevTools = () => {
     const devTools = getSetting("devTools");
     if (devTools) {
@@ -529,6 +560,17 @@ export class SYB extends Component {
               enabled={this.state.showTurnEdges}
               backdrop={true}
             />
+          </Button>
+          <Button onClick={this.toggleScrewEdges} block variant="secondary">
+            <span className="mr-2">Screw Edges</span>
+            <DoubleFaceIcon
+              enabled={this.state.showScrewEdges}
+              backdrop={true}
+            />
+          </Button>
+          <Button onClick={this.toggleStarTurn} block variant="secondary">
+            <span className="mr-2">Star Turn</span>
+            <DoubleFaceIcon enabled={this.state.starTurn} backdrop={true} />
           </Button>
         </div>
       );
