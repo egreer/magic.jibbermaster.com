@@ -125,19 +125,27 @@ export class SYB extends Component {
 
       cy.on("mouseover touchstart", "node", function(e) {
         let sel = e.target;
+
+        sel.addClass("highlight");
+
+        const incomers = sel.incomers(".screw");
+        const allIncomers = incomers.union(incomers.sources());
+        allIncomers.addClass("highlight incoming");
+
+        const outgoers = sel.outgoers(".screw");
+        const allOutgoers = outgoers.union(outgoers.targets());
+        allOutgoers.addClass("highlight outgoing");
+
         cy.elements()
-          .difference(sel.outgoers().union(sel.incomers()))
+          .difference(allOutgoers.union(allIncomers))
           .not(sel)
-          .addClass("semitransp");
-        sel.incomers().addClass("highlight incoming");
-        sel.outgoers().addClass("highlight outgoing");
+          .addClass("semitransparent");
       });
 
       cy.on("mouseout touchend", "node", function(e) {
-        let sel = e.target;
-        cy.elements().removeClass("semitransp");
-        sel.incomers().removeClass("highlight incoming");
-        sel.outgoers().removeClass("highlight outgoing");
+        cy.elements().removeClass(
+          "semitransparent highlight incoming outgoing"
+        );
       });
 
       this.setState({ cySet: true });
@@ -244,7 +252,14 @@ export class SYB extends Component {
         }
       },
       {
-        selector: "node.semitransp",
+        selector: "node.highlight.outgoing.incoming",
+        style: {
+          "border-color": SOURCE_COLOR,
+          "border-width": "2px"
+        }
+      },
+      {
+        selector: "node.semitransparent",
         style: { opacity: "0.5" }
       },
       {
@@ -271,7 +286,7 @@ export class SYB extends Component {
         }
       },
       {
-        selector: "edge.semitransp",
+        selector: "edge.semitransparent",
         style: { opacity: "0.2" }
       }
     ];
