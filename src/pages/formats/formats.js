@@ -46,6 +46,14 @@ export const TAGS = [
   {
     name: "Emperor",
     defaultEnabled: true
+  },
+  {
+    name: "Teams",
+    defaultEnabled: false
+  },
+  {
+    name: "Star",
+    defaultEnabled: false
   }
 ];
 
@@ -56,7 +64,9 @@ const canFreeForAll = p => p > 2;
 const canEmperor = p => p >= 6 && p % 3 === 0;
 const canSecretPartner = p => p >= 6 && canEven(p);
 const canRange1 = p => p > 3;
-const canPentacle = p => p === 5;
+const canPentacle = p => p >= 5;
+const canStar = p => p >= 5;
+const canTeams = p => p > 2 && canEven(p);
 
 export const FORMATS = [
   {
@@ -125,7 +135,7 @@ export const FORMATS = [
     id: 9,
     name: "2 Headed Giant SYB",
     initial: 0.5,
-    tags: ["2 Headed Giant", "SYB"],
+    tags: ["2 Headed Giant"],
     players: can2Hg
   },
   {
@@ -133,7 +143,7 @@ export const FORMATS = [
     name: "2 Headed Giant Free for All",
     initial: 0.5,
     tags: ["2 Headed Giant", "Free for All"],
-    players: p => can2Hg(p) && canFreeForAll(p)
+    players: p => can2Hg(p) && canFreeForAll(p) && p > 4
   },
   {
     id: 11,
@@ -256,5 +266,54 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Archenemy"],
     players: p => p === 4
+  },
+  {
+    id: 26,
+    name: "EDH 2 Headed Giant SYB",
+    initial: 0.1,
+    tags: ["EDH", "2 Headed Giant"],
+    players: can2Hg
+  },
+  {
+    id: 27,
+    name: "EDH 2 Headed Giant FFA",
+    initial: 0.1,
+    tags: ["EDH", "2 Headed Giant", "Free for All"],
+    players: p => can2Hg(p) && canFreeForAll(p) && p > 4
+  },
+  {
+    id: 28,
+    name: "EDH Range 1",
+    initial: 0.5,
+    tags: ["EDH", "Range 1"],
+    players: canRange1
+  },
+  {
+    id: 29,
+    name: "Teams",
+    initial: 0.5,
+    tags: ["Teams"],
+    players: canTeams
+  },
+  {
+    id: 30,
+    name: "EDH Teams",
+    initial: 0.5,
+    tags: ["Teams", "EDH"],
+    players: canTeams
+  },
+  {
+    id: 31,
+    name: "Star",
+    initial: 0.5,
+    tags: ["Star"],
+    players: canStar
+  },
+  {
+    id: 32,
+    name: "EDH Star",
+    initial: 0.5,
+    tags: ["Star", "EDH"],
+    players: canStar
   }
 ];
