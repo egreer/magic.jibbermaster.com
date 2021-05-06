@@ -8,15 +8,17 @@ import store from "store";
 import { getSetting } from "../../util/settings.js";
 import { shuffle } from "../../mtg/deck.js";
 
-import { DoubleFaceIcon } from "../../components/magic/DoubleFaceIcon";
-
 import { SYBHelmet } from "./Helmet";
 import { canStar } from "../formats/formats";
+import { cytoStyle } from "./Cyto";
+import {
+  DoubleFaceButton,
+  LoyaltyDownButton,
+  LoyaltyUpButton
+} from "../../components/magic/Buttons.js";
 
 const circleLayout = { name: "circle", nodeDimensionsIncludeLabels: true };
 const gridLayout = { name: "grid", nodeDimensionsIncludeLabels: true, rows: 2 };
-const SOURCE_COLOR = "#17a2b8";
-const TARGET_COLOR = "#FF4444";
 const TARGET_OFFSET = 2;
 
 export class SYB extends Component {
@@ -200,119 +202,7 @@ export class SYB extends Component {
       nodes: this.generateNodes(),
       edges: this.generateEdges()
     };
-    const stylesheet = [
-      {
-        selector: "node",
-        style: {
-          padding: "50%",
-          width: "50%",
-          height: "50%",
-          "background-color": SOURCE_COLOR,
-          "text-valign": "center",
-          "text-halign": "center",
-          content: "data(label)"
-        }
-      },
-      {
-        selector: "node[label]",
-        style: {
-          label: "data(label)",
-          "font-size": "2em",
-          color: "white"
-        }
-      },
-      {
-        selector: ".screw",
-        style: {
-          width: "5%",
-          "curve-style": this.isSquare() ? "unbundled-bezier" : "straight",
-          "target-arrow-shape": "triangle ",
-          "arrow-scale": 2.5,
-          "target-arrow-color": TARGET_COLOR,
-          "line-fill": "linear-gradient",
-          "line-gradient-stop-colors": [SOURCE_COLOR, TARGET_COLOR],
-          "z-index": 2
-        }
-      },
-      {
-        selector: ".turn",
-        style: {
-          width: "2%",
-          "curve-style": "unbundled-bezier",
-          "control-point-distances": [-20, -25, -20],
-          "control-point-weights": [0.25, 0.5, 0.75],
-          "target-arrow-shape": "vee ",
-          "line-style": "dashed",
-          "arrow-scale": 1.5,
-          "target-arrow-color": "#707070",
-          "line-color": "#707070",
-          opacity: 0.5,
-          "z-index": 1
-        }
-      },
-      {
-        selector: "node.highlight",
-        style: {
-          "background-color": "#218838",
-          "border-color": "#218838",
-          "border-width": "2px"
-        }
-      },
-      {
-        selector: "node.highlight.incoming",
-        style: {
-          "background-color": SOURCE_COLOR,
-          "border-color": SOURCE_COLOR,
-          "border-width": "2px"
-        }
-      },
-      {
-        selector: "node.highlight.outgoing",
-        style: {
-          "background-color": TARGET_COLOR,
-          "border-color": TARGET_COLOR,
-          "border-width": "2px"
-        }
-      },
-      {
-        selector: "node.highlight.outgoing.incoming",
-        style: {
-          "border-color": SOURCE_COLOR,
-          "border-width": "2px"
-        }
-      },
-      {
-        selector: "node.semitransparent",
-        style: { opacity: "0.5" }
-      },
-      {
-        selector: "edge.highlight",
-        style: {
-          "curve-style": "unbundled-bezier"
-        }
-      },
-      {
-        selector: "edge.highlight.incoming",
-        style: {
-          "curve-style": "unbundled-bezier",
-          "target-arrow-color": SOURCE_COLOR,
-          "line-gradient-stop-colors": [SOURCE_COLOR, SOURCE_COLOR],
-          "z-index": 3
-        }
-      },
-      {
-        selector: "edge.highlight.outgoing",
-        style: {
-          "target-arrow-color": TARGET_COLOR,
-          "line-gradient-stop-colors": [TARGET_COLOR, TARGET_COLOR],
-          "z-index": 4
-        }
-      },
-      {
-        selector: "edge.semitransparent",
-        style: { opacity: "0.2" }
-      }
-    ];
+    const stylesheet = cytoStyle({ square: this.isSquare() });
 
     return (
       <CytoscapeComponent
@@ -445,35 +335,24 @@ export class SYB extends Component {
           <Col>
             <h1>{playerCount} Players</h1>
             <ButtonGroup>
-              <Button
+              <LoyaltyDownButton
                 disabled={playerCount <= 1}
                 onClick={() => this.decrementCount()}
-                variant="secondary"
-              >
-                <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-              </Button>
-              <Button onClick={() => this.incrementCount()} variant="secondary">
-                <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-              </Button>
+              />
+              <LoyaltyUpButton onClick={() => this.incrementCount()} />
             </ButtonGroup>
           </Col>
           <Col>
             <h1>{playerTargets} Targets</h1>
             <ButtonGroup>
-              <Button
+              <LoyaltyDownButton
                 disabled={playerTargets <= 1}
                 onClick={() => this.decrementTargetCount()}
-                variant="secondary"
-              >
-                <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-              </Button>
-              <Button
+              />
+              <LoyaltyUpButton
                 onClick={() => this.incrementTargetCount()}
                 disabled={playerTargets >= playerCount - TARGET_OFFSET}
-                variant="secondary"
-              >
-                <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-              </Button>
+              />
             </ButtonGroup>
           </Col>
           {false && (
@@ -554,24 +433,21 @@ export class SYB extends Component {
       return (
         <div className="my-4">
           <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.toggleTurnEdges} block variant="secondary">
-            <span className="mr-2">Turn Edges</span>
-            <DoubleFaceIcon
-              enabled={this.state.showTurnEdges}
-              backdrop={true}
-            />
-          </Button>
-          <Button onClick={this.toggleScrewEdges} block variant="secondary">
-            <span className="mr-2">Screw Edges</span>
-            <DoubleFaceIcon
-              enabled={this.state.showScrewEdges}
-              backdrop={true}
-            />
-          </Button>
-          <Button onClick={this.toggleStarTurn} block variant="secondary">
-            <span className="mr-2">Star Turn</span>
-            <DoubleFaceIcon enabled={this.state.starTurn} backdrop={true} />
-          </Button>
+          <DoubleFaceButton
+            text="Turn Edges"
+            onClick={this.toggleTurnEdges}
+            enabled={this.state.showTurnEdges}
+          />
+          <DoubleFaceButton
+            text="Screw Edges"
+            onClick={this.toggleScrewEdges}
+            enabled={this.state.showScrewEdges}
+          />
+          <DoubleFaceButton
+            text="Star Turn"
+            onClick={this.toggleStarTurn}
+            enabled={this.state.starTurn}
+          />
         </div>
       );
     }

@@ -41,6 +41,11 @@ import {
   setAdditionalCards,
   getAdditionalCards
 } from "../../mtg/card.js";
+import {
+  LoyaltyButtonGroup,
+  TapButtonGroup,
+  TenthEditionButton
+} from "../../components/magic/Buttons";
 
 export class Archenemy extends Component {
   state = {
@@ -393,22 +398,16 @@ export class Archenemy extends Component {
               x{card.count}
             </Badge>
           </h1>
-          <ButtonGroup>
-            <Button
-              disabled={card.count <= 0}
-              onClick={() => this.decrementCount(card)}
-              variant="secondary"
-            >
-              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-            </Button>
-            <Button
-              disabled={card.count >= 2}
-              onClick={() => this.incrementCount(card)}
-              variant="secondary"
-            >
-              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-            </Button>
-          </ButtonGroup>
+          <LoyaltyButtonGroup
+            downProps={{
+              disabled: card.count <= 0,
+              onClick: () => this.decrementCount(card)
+            }}
+            upProps={{
+              disabled: card.count >= 2,
+              onClick: () => this.incrementCount(card)
+            }}
+          />
         </div>
       </ListGroup.Item>
     ));
@@ -581,68 +580,52 @@ export class Archenemy extends Component {
                       <Scheme card={p} listDisplay={!showDeckImages} />
                       <ListGroup.Item className="text-center justify-content-center d-flex">
                         <ButtonToolbar>
-                          <ButtonGroup>
-                            <Button
-                              variant="secondary"
-                              disabled={i === 0}
-                              onClick={() =>
-                                this.manipulateDeck(
-                                  moveCard("archenemy", i, i - 1)
-                                )
-                              }
-                            >
-                              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              disabled={i === deck.length - 1}
-                              onClick={() =>
+                          <LoyaltyButtonGroup
+                            reverse
+                            downProps={{
+                              disabled: i === deck.length - 1,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   moveCard("archenemy", i, i + 1)
                                 )
-                              }
-                            >
-                              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-                            </Button>
-                          </ButtonGroup>
-                          <ButtonGroup className="ml-2">
-                            <Button
-                              variant="secondary"
-                              disabled={i === 0}
-                              onClick={() =>
+                            }}
+                            upProps={{
+                              disabled: i === 0,
+                              onClick: () =>
+                                this.manipulateDeck(
+                                  moveCard("archenemy", i, i - 1)
+                                )
+                            }}
+                          />
+                          <TapButtonGroup
+                            className="ml-2"
+                            unTapProps={{
+                              disabled: i === 0,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   findAndPutOnTop("archenemy", p.deck_card_id)
                                 )
-                              }
-                            >
-                              <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              disabled={i === deck.length - 1}
-                              onClick={() =>
+                            }}
+                            tapProps={{
+                              disabled: i === deck.length - 1,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   findAndPutOnBottom(
                                     "archenemy",
                                     p.deck_card_id
                                   )
                                 )
-                              }
-                            >
-                              <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
-                            </Button>
-                          </ButtonGroup>
+                            }}
+                          />
+
                           <ButtonGroup className="ml-2">
-                            <Button
-                              variant="danger"
+                            <TenthEditionButton
                               onClick={() =>
                                 this.manipulateDeck(
                                   removeCards("archenemy", [p])
                                 )
                               }
-                            >
-                              <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
-                            </Button>
+                            />
                           </ButtonGroup>
                         </ButtonToolbar>
                       </ListGroup.Item>

@@ -13,6 +13,11 @@ import "rc-slider/assets/index.css";
 import "rc-tooltip/assets/bootstrap.css";
 import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
+import {
+  DoubleFaceHighlighButton,
+  LoyaltyDownButton,
+  LoyaltyUpButton
+} from "../../components/magic/Buttons";
 const Handle = Slider.Handle;
 
 const MIN_PLAYERS = 2;
@@ -152,16 +157,14 @@ export class Formats extends Component {
           <div className="text-center">
             <h1>{playerCount} Players</h1>
             <ButtonGroup className="my-4">
-              <Button
-                disabled={playerCount <= 1}
+              <LoyaltyDownButton
+                disabled={playerCount <= MIN_PLAYERS}
                 onClick={() => this.decrementCount()}
-                variant="secondary"
-              >
-                <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-              </Button>
-              <Button onClick={() => this.incrementCount()} variant="secondary">
-                <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-              </Button>
+              />
+              <LoyaltyUpButton
+                onClick={() => this.incrementCount()}
+                disabled={playerCount >= MAX_PLAYERS}
+              />
             </ButtonGroup>
             <div className="text-center mb-5">
               <Button
@@ -267,23 +270,13 @@ export class Formats extends Component {
       const values = tagStates.map((t, i) => {
         return (
           <div className="col-6 col-md-4 col-lg-3 mb-1" key={i}>
-            <Button
-              size="sm"
-              block
+            <DoubleFaceHighlighButton
               onClick={() => {
                 this.toggleTag(t);
               }}
-              variant={t.enabled ? "info" : "secondary"}
-            >
-              <div className="float-left">
-                {t.enabled ? (
-                  <i className="ms ms-dfc ms-dfc-day text-light" />
-                ) : (
-                  <i className="ms ms-dfc ms-dfc-night text-dark" />
-                )}
-              </div>
-              <div className="d-inline">{t.name}</div>
-            </Button>
+              enabled={t.enabled}
+              text={t.name}
+            />
           </div>
         );
       });

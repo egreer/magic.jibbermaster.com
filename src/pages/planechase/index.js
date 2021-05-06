@@ -42,7 +42,12 @@ import { Confirm } from "../../components/Confirm";
 import { Plane } from "../../components/magic/Plane";
 import { getSetting } from "../../util/settings.js";
 import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
-import { DoubleFaceIcon } from "../../components/magic/DoubleFaceIcon";
+import {
+  DoubleFaceButton,
+  LoyaltyButtonGroup,
+  TapButtonGroup,
+  TenthEditionButton
+} from "../../components/magic/Buttons";
 
 export class Planechase extends Component {
   state = {
@@ -255,13 +260,11 @@ export class Planechase extends Component {
             Undo
           </Button>
           {this.renderDeck()}
-          <Button onClick={this.togglePlanarDie} variant="secondary" block>
-            <span className="mr-2">Planar Die</span>
-            <DoubleFaceIcon
-              enabled={this.state.showPlanarDie}
-              backdrop={true}
-            />
-          </Button>
+          <DoubleFaceButton
+            text="Planar Die"
+            onClick={this.togglePlanarDie}
+            enabled={this.state.showPlanarDie}
+          />
         </div>
       );
     }
@@ -307,68 +310,52 @@ export class Planechase extends Component {
                       <Plane card={p} listDisplay={!showDeckImages} />
                       <ListGroup.Item className="text-center justify-content-center d-flex">
                         <ButtonToolbar>
-                          <ButtonGroup>
-                            <Button
-                              variant="secondary"
-                              disabled={i === 0}
-                              onClick={() =>
-                                this.manipulateDeck(
-                                  moveCard("planechase", i, i - 1)
-                                )
-                              }
-                            >
-                              <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              disabled={i === deck.length - 1}
-                              onClick={() =>
+                          <LoyaltyButtonGroup
+                            reverse
+                            downProps={{
+                              disabled: i === deck.length - 1,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   moveCard("planechase", i, i + 1)
                                 )
-                              }
-                            >
-                              <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
-                            </Button>
-                          </ButtonGroup>
-                          <ButtonGroup className="ml-2">
-                            <Button
-                              variant="secondary"
-                              disabled={i === 0}
-                              onClick={() =>
+                            }}
+                            upProps={{
+                              disabled: i === 0,
+                              onClick: () =>
+                                this.manipulateDeck(
+                                  moveCard("planechase", i, i - 1)
+                                )
+                            }}
+                          />
+                          <TapButtonGroup
+                            className="ml-2"
+                            unTapProps={{
+                              disabled: i === 0,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   findAndPutOnTop("planechase", p.deck_card_id)
                                 )
-                              }
-                            >
-                              <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              disabled={i === deck.length - 1}
-                              onClick={() =>
+                            }}
+                            tapProps={{
+                              disabled: i === deck.length - 1,
+                              onClick: () =>
                                 this.manipulateDeck(
                                   findAndPutOnBottom(
                                     "planechase",
                                     p.deck_card_id
                                   )
                                 )
-                              }
-                            >
-                              <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
-                            </Button>
-                          </ButtonGroup>
+                            }}
+                          />
+
                           <ButtonGroup className="ml-2">
-                            <Button
-                              variant="danger"
+                            <TenthEditionButton
                               onClick={() =>
                                 this.manipulateDeck(
                                   removeCards("planechase", [p])
                                 )
                               }
-                            >
-                              <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
-                            </Button>
+                            />
                           </ButtonGroup>
                         </ButtonToolbar>
                       </ListGroup.Item>
