@@ -1,27 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.29ad7aef.chunk.css",
-    "main.js": "/static/js/main.9525768e.chunk.js",
-    "main.js.map": "/static/js/main.9525768e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.7bff37c1.js",
-    "runtime-main.js.map": "/static/js/runtime-main.7bff37c1.js.map",
-    "static/css/2.944e6820.chunk.css": "/static/css/2.944e6820.chunk.css",
-    "static/js/2.6505b221.chunk.js": "/static/js/2.6505b221.chunk.js",
-    "static/js/2.6505b221.chunk.js.map": "/static/js/2.6505b221.chunk.js.map",
+    "main.css": "/static/css/main.2bed74af.chunk.css",
+    "main.js": "/static/js/main.659f17b8.chunk.js",
+    "main.js.map": "/static/js/main.659f17b8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.1cc30486.js",
+    "runtime-main.js.map": "/static/js/runtime-main.1cc30486.js.map",
+    "static/css/2.cca2402b.chunk.css": "/static/css/2.cca2402b.chunk.css",
+    "static/js/2.1e1b9da3.chunk.js": "/static/js/2.1e1b9da3.chunk.js",
+    "static/js/2.1e1b9da3.chunk.js.map": "/static/js/2.1e1b9da3.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.f1b779d9f80687740401c2dc990ea119.js": "/precache-manifest.f1b779d9f80687740401c2dc990ea119.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.944e6820.chunk.css.map": "/static/css/2.944e6820.chunk.css.map",
-    "static/css/main.29ad7aef.chunk.css.map": "/static/css/main.29ad7aef.chunk.css.map",
-    "static/js/2.6505b221.chunk.js.LICENSE.txt": "/static/js/2.6505b221.chunk.js.LICENSE.txt",
-    "static/media/archenemy-back.jpg": "/static/media/archenemy-back.2c00b5d4.jpg",
-    "static/media/planechase-back.jpg": "/static/media/planechase-back.c7f50007.jpg"
+    "static/css/2.cca2402b.chunk.css.map": "/static/css/2.cca2402b.chunk.css.map",
+    "static/css/main.2bed74af.chunk.css.map": "/static/css/main.2bed74af.chunk.css.map",
+    "static/js/2.1e1b9da3.chunk.js.LICENSE.txt": "/static/js/2.1e1b9da3.chunk.js.LICENSE.txt",
+    "static/media/archenemy-back.6d5cbfc7.jpg": "/static/media/archenemy-back.6d5cbfc7.jpg",
+    "static/media/planechase-back.dbcf0de1.jpg": "/static/media/planechase-back.dbcf0de1.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7bff37c1.js",
-    "static/css/2.944e6820.chunk.css",
-    "static/js/2.6505b221.chunk.js",
-    "static/css/main.29ad7aef.chunk.css",
-    "static/js/main.9525768e.chunk.js"
+    "static/js/runtime-main.1cc30486.js",
+    "static/css/2.cca2402b.chunk.css",
+    "static/js/2.1e1b9da3.chunk.js",
+    "static/css/main.2bed74af.chunk.css",
+    "static/js/main.659f17b8.chunk.js"
   ]
 }
