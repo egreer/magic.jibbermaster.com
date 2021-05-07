@@ -1,18 +1,24 @@
 import React from "react";
 import merge from "lodash/merge";
+import cn from "classnames";
 
-export const DoubleFaceIcon = ({ enabled, backdrop = false, style = {} }) => {
+export const DoubleFaceIcon = ({
+  enabled,
+  backdrop = false,
+  invert = false,
+  style = {}
+}) => {
   const backdropStyle = backdrop ? { backgroundColor: "#ffffff" } : {};
   return (
     <span>
       {enabled ? (
         <i
-          className="ms ms-dfc ms-dfc-day"
+          className={cn("ms ms-dfc ms-dfc-day", { "text-light": invert })}
           style={merge({}, backdropStyle, style)}
         />
       ) : (
         <i
-          className="ms ms-dfc ms-dfc-night"
+          className={cn("ms ms-dfc ms-dfc-night", { "text-dark": invert })}
           style={merge({}, backdropStyle, style)}
         />
       )}

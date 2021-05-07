@@ -65,18 +65,14 @@ export const TapButtonGroup = ({ unTapProps, tapProps, reverse, ...props }) => (
 export const DoubleFaceButton = ({ enabled, text, ...props }) => (
   <Button {...props} block variant="secondary">
     <span className="mr-2">{text}</span>
-    <DoubleFaceIcon enabled={enabled} backdrop={true} />
+    <DoubleFaceIcon enabled={enabled} backdrop />
   </Button>
 );
 
-export const DoubleFaceHighlighButton = ({ enabled, text, ...props }) => (
+export const DoubleFaceHighlightButton = ({ enabled, text, ...props }) => (
   <Button size="sm" block {...props} variant={enabled ? "info" : "secondary"}>
     <div className="float-left">
-      {enabled ? (
-        <i className="ms ms-dfc ms-dfc-day text-light" />
-      ) : (
-        <i className="ms ms-dfc ms-dfc-night text-dark" />
-      )}
+      <DoubleFaceIcon enabled={enabled} invert />
     </div>
     <div className="d-inline">{text}</div>
   </Button>

@@ -14,7 +14,7 @@ import "rc-tooltip/assets/bootstrap.css";
 import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 import {
-  DoubleFaceHighlighButton,
+  DoubleFaceHighlightButton,
   LoyaltyDownButton,
   LoyaltyUpButton
 } from "../../components/magic/Buttons";
@@ -270,7 +270,7 @@ export class Formats extends Component {
       const values = tagStates.map((t, i) => {
         return (
           <div className="col-6 col-md-4 col-lg-3 mb-1" key={i}>
-            <DoubleFaceHighlighButton
+            <DoubleFaceHighlightButton
               onClick={() => {
                 this.toggleTag(t);
               }}
