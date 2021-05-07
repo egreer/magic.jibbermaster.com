@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup, Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import store from "store";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FORMATS } from "./formats";
@@ -15,8 +15,7 @@ import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 import {
   DoubleFaceHighlightButton,
-  LoyaltyDownButton,
-  LoyaltyUpButton
+  LoyaltyButtonGroup
 } from "../../components/magic/Buttons";
 const Handle = Slider.Handle;
 
@@ -156,16 +155,17 @@ export class Formats extends Component {
         <div className="my-4 noselect">
           <div className="text-center">
             <h1>{playerCount} Players</h1>
-            <ButtonGroup className="my-4">
-              <LoyaltyDownButton
-                disabled={playerCount <= MIN_PLAYERS}
-                onClick={() => this.decrementCount()}
-              />
-              <LoyaltyUpButton
-                onClick={() => this.incrementCount()}
-                disabled={playerCount >= MAX_PLAYERS}
-              />
-            </ButtonGroup>
+            <LoyaltyButtonGroup
+              className="my-4"
+              upProps={{
+                disabled: playerCount >= MAX_PLAYERS,
+                onClick: () => this.incrementCount()
+              }}
+              downProps={{
+                disabled: playerCount <= MIN_PLAYERS,
+                onClick: () => this.decrementCount()
+              }}
+            />
             <div className="text-center mb-5">
               <Button
                 block
