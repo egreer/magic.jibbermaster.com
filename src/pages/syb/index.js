@@ -13,8 +13,7 @@ import { canStar } from "../formats/formats";
 import { cytoStyle } from "./Cyto";
 import {
   DoubleFaceButton,
-  LoyaltyDownButton,
-  LoyaltyUpButton
+  LoyaltyButtonGroup
 } from "../../components/magic/Buttons.js";
 
 const circleLayout = { name: "circle", nodeDimensionsIncludeLabels: true };
@@ -334,26 +333,36 @@ export class SYB extends Component {
         <Row className="my-4 text-center">
           <Col>
             <h1>{playerCount} Players</h1>
-            <ButtonGroup>
-              <LoyaltyDownButton
-                disabled={playerCount <= 1}
-                onClick={() => this.decrementCount()}
-              />
-              <LoyaltyUpButton onClick={() => this.incrementCount()} />
-            </ButtonGroup>
+            <LoyaltyButtonGroup
+              upProps={{
+                onClick: () => {
+                  this.incrementCount();
+                }
+              }}
+              downProps={{
+                disabled: playerCount <= 1,
+                onClick: () => {
+                  this.decrementCount();
+                }
+              }}
+            />
           </Col>
           <Col>
             <h1>{playerTargets} Targets</h1>
-            <ButtonGroup>
-              <LoyaltyDownButton
-                disabled={playerTargets <= 1}
-                onClick={() => this.decrementTargetCount()}
-              />
-              <LoyaltyUpButton
-                onClick={() => this.incrementTargetCount()}
-                disabled={playerTargets >= playerCount - TARGET_OFFSET}
-              />
-            </ButtonGroup>
+            <LoyaltyButtonGroup
+              upProps={{
+                disabled: playerTargets >= playerCount - TARGET_OFFSET,
+                onClick: () => {
+                  this.incrementTargetCount();
+                }
+              }}
+              downProps={{
+                disabled: playerTargets <= 1,
+                onClick: () => {
+                  this.decrementTargetCount();
+                }
+              }}
+            />
           </Col>
           {false && (
             <ButtonGroup>
