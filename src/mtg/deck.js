@@ -152,16 +152,3 @@ export const shuffle = array => {
 
   return array;
 };
-
-// 	function showHistory(){
-// 		foreach( $_SESSION[ $this->prefix . 'history'] as $card){
-// 			echo Card::displayHoverCardName($card, '', 'card');
-// 		}
-//
-// 	}
-//
-// 	function showRemainingCards(){
-// 		foreach(  $_SESSION[ $this->prefix . 'deck'] as $card){
-// 		 echo Card::displayHoverCardName($card, $classes='');
-// 		}
-// 	}
