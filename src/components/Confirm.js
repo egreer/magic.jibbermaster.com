@@ -6,10 +6,10 @@ export const Confirm = ({
   onConfirm,
   triggerButtonParams,
   triggerText,
-  headerText,
+  headerText = "Confirm?",
   bodyText,
-  confirmText,
-  confirmVariant
+  confirmText = "Save",
+  confirmVariant = "primary"
 }) => {
   const [open, setOpen] = useState(false);
   const close = confirmed => {
@@ -21,7 +21,7 @@ export const Confirm = ({
 
   const header = (
     <Modal.Header>
-      <Modal.Title>{headerText || "Confirm?"}</Modal.Title>
+      <Modal.Title>{headerText}</Modal.Title>
     </Modal.Header>
   );
 
@@ -44,12 +44,8 @@ export const Confirm = ({
             </Button>
           </Col>
           <Col>
-            <Button
-              variant={confirmVariant || "primary"}
-              onClick={() => close(true)}
-              block
-            >
-              {confirmText || "Save"}
+            <Button variant={confirmVariant} onClick={() => close(true)} block>
+              {confirmText}
             </Button>
           </Col>
         </Modal.Footer>
