@@ -9,22 +9,7 @@ import {
   Modal
 } from "react-bootstrap";
 import { PlanechaseHelmet } from "./Helmet";
-import {
-  getCurrentDeck,
-  getOrCreateCurrentDeck,
-  drawCard,
-  undoDraw,
-  revealCards,
-  addCardsToBottom,
-  removeCards,
-  shuffle,
-  addCardsToTop,
-  getHistory,
-  updateHistory,
-  findAndPutOnBottom,
-  findAndPutOnTop,
-  moveCard
-} from "../../mtg/deck.js";
+import { shuffleArray } from "../../mtg/deck.js";
 import {
   getCurrentCard,
   setCurrentCard,
@@ -48,6 +33,7 @@ import {
   TapButtonGroup,
   TenthEditionButton
 } from "../../components/magic/Buttons";
+import { DeckContext } from "../../mtg/DeckContext";
 
 export class Planechase extends Component {
   state = {
@@ -69,7 +55,7 @@ export class Planechase extends Component {
 
   componentDidMount = async () => {
     const planes = await getAllPlanechaseCards();
-    const deck = getOrCreateCurrentDeck("planechase", planes);
+    const deck = this.context.getOrCreateCurrentDeck(planes);
     const currentCard = getCurrentCard("planechase");
     const revealedCards = getRevealedCards("planechase") || [];
     const scryCards = getScryCards("planechase") || [];
@@ -91,33 +77,33 @@ export class Planechase extends Component {
   };
 
   refreshDeck = () => {
-    const deck = getCurrentDeck("planechase");
+    const deck = this.context.deck;
     this.setState({ deck });
   };
 
   planeswalk = () => {
-    const currentCard = drawCard("planechase");
+    const currentCard = this.context.drawCard("planechase");
     setCurrentCard("planechase", currentCard);
     let revealedCards = [];
     let additionalCards = [];
     if (hasCustomProperty("two-planes", currentCard)) {
-      revealedCards = revealCards("planechase", 2, true);
-      removeCards("planechase", revealedCards);
+      revealedCards = this.context.revealCards(2, true);
+      this.context.removeCards(revealedCards);
       const revealedPlanes = revealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
       const revealedPhenomenon = revealedCards.filter(
         c => c.type_line.search("Phenomenon") >= 0
       );
-      revealedPlanes.forEach(c => updateHistory("planechase", c));
-      addCardsToBottom("planechase", revealedPhenomenon);
+      revealedPlanes.forEach(c => this.context.updateHistory(c));
+      this.context.addCardsToBottom(revealedPhenomenon);
       revealedCards = [];
       additionalCards = revealedPlanes;
     }
 
     if (hasCustomProperty("top-5", currentCard)) {
-      revealedCards = revealCards("planechase", 5, true);
-      removeCards("planechase", revealedCards);
+      revealedCards = this.context.revealCards(5, true);
+      this.context.removeCards(revealedCards);
       this.setState({ planeswalkDisabled: true });
     }
 
@@ -130,7 +116,7 @@ export class Planechase extends Component {
   reset = async () => {
     this.setState({ loading: true });
     const planes = await getAllPlanechaseCards();
-    const deck = getOrCreateCurrentDeck("planechase", planes, true);
+    const deck = this.context.getOrCreateCurrentDeck(planes, true);
     const currentCard = setCurrentCard("planechase", null);
     const revealedCards = setRevealedCards("planechase", []);
     const scryCards = setScryCards("planechase", []);
@@ -149,7 +135,7 @@ export class Planechase extends Component {
   };
 
   undo = async () => {
-    const currentCard = undoDraw("planechase");
+    const currentCard = this.context.undoDraw();
     this.refreshDeck();
     this.setState({ currentCard });
   };
@@ -158,10 +144,10 @@ export class Planechase extends Component {
     const { scryCards } = this.state;
     console.log("Chaos Triggered");
     if (hasCustomProperty("triple-chaos", card)) {
-      const newRevealedCards = revealCards("planechase", 3, true);
-      removeCards("planechase", newRevealedCards);
-      const shuffledCards = shuffle(newRevealedCards.slice());
-      addCardsToBottom("planechase", shuffledCards);
+      const newRevealedCards = this.context.revealCards(3, true);
+      this.context.removeCards(newRevealedCards);
+      const shuffledCards = shuffleArray(newRevealedCards.slice());
+      this.context.addCardsToBottom(shuffledCards);
       this.refreshDeck();
       setRevealedCards("planechase", newRevealedCards);
       this.setState({
@@ -172,8 +158,8 @@ export class Planechase extends Component {
 
     if (hasCustomProperty("scry-1", card)) {
       if (!scryCards || scryCards.length === 0) {
-        const newScryCards = revealCards("planechase", 1, false);
-        removeCards("planechase", newScryCards);
+        const newScryCards = this.context.revealCards(1, false);
+        this.context.removeCards(newScryCards);
         setScryCards("planechase", newScryCards);
         this.setState({ scryCards: newScryCards });
       }
@@ -316,14 +302,14 @@ export class Planechase extends Component {
                               disabled: i === deck.length - 1,
                               onClick: () =>
                                 this.manipulateDeck(
-                                  moveCard("planechase", i, i + 1)
+                                  this.context.moveCard(i, i + 1)
                                 )
                             }}
                             upProps={{
                               disabled: i === 0,
                               onClick: () =>
                                 this.manipulateDeck(
-                                  moveCard("planechase", i, i - 1)
+                                  this.context.moveCard(i, i - 1)
                                 )
                             }}
                           />
@@ -333,15 +319,14 @@ export class Planechase extends Component {
                               disabled: i === 0,
                               onClick: () =>
                                 this.manipulateDeck(
-                                  findAndPutOnTop("planechase", p.deck_card_id)
+                                  this.context.findAndPutOnTop(p.deck_card_id)
                                 )
                             }}
                             tapProps={{
                               disabled: i === deck.length - 1,
                               onClick: () =>
                                 this.manipulateDeck(
-                                  findAndPutOnBottom(
-                                    "planechase",
+                                  this.context.findAndPutOnBottom(
                                     p.deck_card_id
                                   )
                                 )
@@ -352,7 +337,7 @@ export class Planechase extends Component {
                             <TenthEditionButton
                               onClick={() =>
                                 this.manipulateDeck(
-                                  removeCards("planechase", [p])
+                                  this.context.removeCards([p])
                                 )
                               }
                             />
@@ -376,7 +361,7 @@ export class Planechase extends Component {
 
   renderHistory = () => {
     const { showHistory } = this.state;
-    const history = getHistory("planechase");
+    const history = this.context.history;
     return (
       <div className="my-2">
         <Button onClick={this.toggleHistory} variant="secondary" block>
@@ -442,14 +427,14 @@ export class Planechase extends Component {
 
   selectPlane = card => {
     const { revealedCards } = this.state;
-    removeCards("planechase", revealedCards);
-    addCardsToTop("planechase", [card]);
+    this.context.removeCards(revealedCards);
+    this.context.addCardsToTop([card]);
     const restCards = revealedCards.filter(
       c => c.deck_card_id !== card.deck_card_id
     );
-    const shuffledCards = shuffle(restCards.slice());
-    addCardsToBottom("planechase", shuffledCards);
-    setRevealedCards("planechase", []);
+    const shuffledCards = shuffleArray(restCards.slice());
+    this.context.addCardsToBottom(shuffledCards);
+    this.context.setRevealedCards([]);
     this.setState({ planeswalkDisabled: false, revealedCards: [] });
     this.planeswalk();
   };
@@ -564,7 +549,7 @@ export class Planechase extends Component {
 
   _scryTop = () => {
     const { scryCards } = this.state;
-    addCardsToTop("planechase", scryCards);
+    this.context.addCardsToTop(scryCards);
     console.log("Scry Top", scryCards);
     this.refreshDeck();
     setScryCards("planechase", []);
@@ -573,7 +558,7 @@ export class Planechase extends Component {
 
   _scryBottom = () => {
     const { scryCards } = this.state;
-    addCardsToBottom("planechase", scryCards);
+    this.context.addCardsToBottom(scryCards);
     console.log("Scry Bottom", scryCards);
     this.refreshDeck();
     setScryCards("planechase", []);
@@ -614,3 +599,5 @@ export class Planechase extends Component {
     }
   };
 }
+
+Planechase.contextType = DeckContext;

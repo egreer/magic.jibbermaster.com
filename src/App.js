@@ -20,6 +20,7 @@ import { SYB } from "./pages/syb";
 import { Formats } from "./pages/formats";
 import { DoubleFaceIcon } from "./components/magic/DoubleFaceIcon";
 import GitInfo from "react-git-info/macro";
+import { DeckProvider } from "./mtg/DeckContext";
 const gitInfo = GitInfo();
 
 class App extends Component {
@@ -213,7 +214,11 @@ class App extends Component {
               <Route
                 path="/planechase"
                 exact
-                render={props => <Planechase {...props} />}
+                render={props => (
+                  <DeckProvider prefix="planechase">
+                    <Planechase {...props} />
+                  </DeckProvider>
+                )}
               />
               <Route path="/syb" exact render={props => <SYB {...props} />} />
               <Route

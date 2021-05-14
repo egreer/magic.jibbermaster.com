@@ -15,7 +15,7 @@ export const getOrCreateCurrentDeck = (prefix, cards, reset = false) => {
     const clonedCard = JSON.parse(JSON.stringify(cards));
     // Add Deck Card Id so that each card in the deck has a unique value
     clonedCard.forEach(c => (c.deck_card_id = uuidv4()));
-    deck = shuffle(clonedCard);
+    deck = shuffleArray(clonedCard);
     store.set(`${prefix}-history`, []);
     storeCurrentDeck(prefix, deck);
   }
@@ -133,7 +133,7 @@ export const revealCards = (prefix, numReveal, onlyPlanes = false) => {
   return revealedCards;
 };
 
-export const shuffle = array => {
+export const shuffleArray = array => {
   let currentIndex = array.length,
     temporaryValue,
     randomIndex;

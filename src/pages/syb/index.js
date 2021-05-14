@@ -6,7 +6,7 @@ import debounce from "lodash/debounce";
 import store from "store";
 
 import { getSetting } from "../../util/settings.js";
-import { shuffle } from "../../mtg/deck.js";
+import { shuffleArray } from "../../mtg/deck.js";
 
 import { SYBHelmet } from "./Helmet";
 import { canStar } from "../formats/formats";
@@ -122,7 +122,7 @@ export class SYB extends Component {
   regenerateOrder(c) {
     const { playerCount } = this.state;
     const players = Array.from(Array(c || playerCount).keys());
-    const targets = store.set("syb-targets", shuffle(players));
+    const targets = store.set("syb-targets", shuffleArray(players));
     this.setState({ targets });
   }
 
