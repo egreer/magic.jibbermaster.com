@@ -1,65 +1,70 @@
 import React, { useContext } from "react";
 import uuidv4 from "uuid/v4";
-import { useLocalStorage } from "../hooks/useLocalState";
+import { useLocalState } from "../hooks/useLocalState";
 import { shuffleArray } from "./deck";
 
 export const DeckContext = React.createContext({});
 export const useDeckContext = () => useContext(DeckContext);
 
 export const DeckProvider = ({ prefix = null, children }) => {
-  const [deck, setDeck] = useLocalStorage(`${prefix}-deck`, []);
-  const [history, setHistory] = useLocalStorage(`${prefix}-history`, []);
-  const save = () => setDeck(deck);
+  const [deck, setDeck] = useLocalState(`${prefix}-deck`, []);
+  const [history, setHistory] = useLocalState(`${prefix}-history`, []);
 
-  const getOrCreateCurrentDeck = (cards, reset = false) => {
+  const initDeck = (cards, reset = false) => {
     if (deck.length === 0 || reset) {
       console.log(`Creating New ${prefix} Deck`);
-      // Clone all the cards so that we aren't modifying original objects
-      const clonedCard = JSON.parse(JSON.stringify(cards));
-      // Add Deck Card Id so that each card in the deck has a unique value
-      clonedCard.forEach(c => (c.deck_card_id = uuidv4()));
-      setDeck(shuffleArray(clonedCard));
+      const clonedCards = cards.map(card => {
+        return {
+          // Add Deck Card Id so that each card in the deck has a unique value
+          deck_card_id: uuidv4(),
+          // Clone all the cards so that we aren't modifying original objects
+          ...card
+        };
+      });
+      const newDeck = shuffleArray(clonedCards);
+      setDeck(newDeck);
       resetHistory();
     }
-    return deck;
   };
 
   const moveCard = (from, to) => {
     deck.splice(to, 0, deck.splice(from, 1)[0]);
-    save();
+    setDeck([...deck]);
   };
 
   const drawCard = () => {
     const card = deck.shift();
+    setDeck([...deck]);
     if (card) {
       updateHistory(card);
     }
-    save();
     return card;
   };
 
   const updateHistory = card => {
-    setHistory(prevHistory => prevHistory.push(card));
+    setHistory([card, ...history]);
   };
 
   const resetHistory = () => {
     setHistory([]);
   };
+
   const undoDraw = () => {
-    const card = history.pop();
+    const card = history.shift();
     if (card) {
       addCardsToTop([card]);
     }
-    setHistory(history);
-    return history[history.length - 1];
+    setHistory([...history]);
+    const lastCard = history[0];
+    return lastCard;
   };
 
   const addCardsToTop = topCards => {
-    setDeck(prevDeck => topCards.concat(prevDeck));
+    setDeck(prevDeck => [...topCards, ...prevDeck]);
   };
 
   const addCardsToBottom = bottomCards => {
-    setDeck(prevDeck => prevDeck.concat(bottomCards));
+    setDeck(prevDeck => [...prevDeck, ...bottomCards]);
   };
 
   const findCard = card => {
@@ -71,7 +76,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
   };
 
   const findAndPutOnTop = deckCardId => {
-    const tmpCard = findCardByDeckCardId(prefix, deckCardId);
+    const tmpCard = findCardByDeckCardId(deckCardId);
 
     if (tmpCard) {
       removeCards([tmpCard]);
@@ -89,11 +94,12 @@ export const DeckProvider = ({ prefix = null, children }) => {
   };
 
   const removeCards = cardsToRemove => {
-    const filteredDeck = deck.filter(
-      c => !cardsToRemove.find(r => r.deck_card_id === c.deck_card_id)
-    );
-
-    setDeck(filteredDeck);
+    setDeck(prevDeck => {
+      const filteredDeck = [...prevDeck].filter(
+        c => !cardsToRemove.find(r => r.deck_card_id === c.deck_card_id)
+      );
+      return filteredDeck;
+    });
   };
 
   // TODO: Move this
@@ -130,8 +136,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
         prefix,
         deck,
         history,
-        getOrCreateCurrentDeck,
-        save,
+        initDeck,
         moveCard,
         drawCard,
         updateHistory,

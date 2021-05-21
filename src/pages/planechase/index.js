@@ -39,7 +39,6 @@ export class Planechase extends Component {
   state = {
     loading: false,
     planes: [],
-    deck: null,
     currentCard: null,
     revealedCards: [],
     additionalCards: [],
@@ -55,7 +54,7 @@ export class Planechase extends Component {
 
   componentDidMount = async () => {
     const planes = await getAllPlanechaseCards();
-    const deck = this.context.getOrCreateCurrentDeck(planes);
+    this.context.initDeck(planes);
     const currentCard = getCurrentCard("planechase");
     const revealedCards = getRevealedCards("planechase") || [];
     const scryCards = getScryCards("planechase") || [];
@@ -66,7 +65,6 @@ export class Planechase extends Component {
     this.setState({
       planes,
       loading: false,
-      deck,
       currentCard,
       revealedCards,
       additionalCards,
@@ -74,11 +72,6 @@ export class Planechase extends Component {
       planeswalkDisabled,
       scryModalOpen
     });
-  };
-
-  refreshDeck = () => {
-    const deck = this.context.deck;
-    this.setState({ deck });
   };
 
   planeswalk = () => {
@@ -109,14 +102,13 @@ export class Planechase extends Component {
 
     setRevealedCards("planechase", revealedCards);
     setAdditionalCards("planechase", additionalCards);
-    this.refreshDeck();
     this.setState({ currentCard, revealedCards, additionalCards });
   };
 
   reset = async () => {
     this.setState({ loading: true });
     const planes = await getAllPlanechaseCards();
-    const deck = this.context.getOrCreateCurrentDeck(planes, true);
+    this.context.initDeck(planes, true);
     const currentCard = setCurrentCard("planechase", null);
     const revealedCards = setRevealedCards("planechase", []);
     const scryCards = setScryCards("planechase", []);
@@ -124,7 +116,6 @@ export class Planechase extends Component {
     this.setState({
       planes,
       loading: false,
-      deck,
       currentCard,
       revealedCards,
       scryCards,
@@ -136,7 +127,6 @@ export class Planechase extends Component {
 
   undo = async () => {
     const currentCard = this.context.undoDraw();
-    this.refreshDeck();
     this.setState({ currentCard });
   };
 
@@ -148,7 +138,6 @@ export class Planechase extends Component {
       this.context.removeCards(newRevealedCards);
       const shuffledCards = shuffleArray(newRevealedCards.slice());
       this.context.addCardsToBottom(shuffledCards);
-      this.refreshDeck();
       setRevealedCards("planechase", newRevealedCards);
       this.setState({
         revealedCards: newRevealedCards,
@@ -171,11 +160,12 @@ export class Planechase extends Component {
     const {
       loading,
       planes,
-      deck,
       currentCard,
       planeswalkDisabled,
       showPlanarDie
     } = this.state;
+
+    const deck = this.context.deck;
 
     return (
       <div className="planechase">
@@ -268,12 +258,9 @@ export class Planechase extends Component {
     this.setState({ showDeckImages: !this.state.showDeckImages });
   };
 
-  manipulateDeck = () => {
-    this.refreshDeck();
-  };
-
   renderDeck = () => {
-    const { deck, showDeck, showDeckImages } = this.state;
+    const { showDeck, showDeckImages } = this.state;
+    const deck = this.context.deck;
     return (
       <div className="my-2">
         <Button onClick={this.toggleDeck} variant="secondary" block>
@@ -300,17 +287,11 @@ export class Planechase extends Component {
                             reverse
                             downProps={{
                               disabled: i === deck.length - 1,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  this.context.moveCard(i, i + 1)
-                                )
+                              onClick: () => this.context.moveCard(i, i + 1)
                             }}
                             upProps={{
                               disabled: i === 0,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  this.context.moveCard(i, i - 1)
-                                )
+                              onClick: () => this.context.moveCard(i, i - 1)
                             }}
                           />
                           <TapButtonGroup
@@ -318,28 +299,18 @@ export class Planechase extends Component {
                             unTapProps={{
                               disabled: i === 0,
                               onClick: () =>
-                                this.manipulateDeck(
-                                  this.context.findAndPutOnTop(p.deck_card_id)
-                                )
+                                this.context.findAndPutOnTop(p.deck_card_id)
                             }}
                             tapProps={{
                               disabled: i === deck.length - 1,
                               onClick: () =>
-                                this.manipulateDeck(
-                                  this.context.findAndPutOnBottom(
-                                    p.deck_card_id
-                                  )
-                                )
+                                this.context.findAndPutOnBottom(p.deck_card_id)
                             }}
                           />
 
                           <ButtonGroup className="ml-2">
                             <TenthEditionButton
-                              onClick={() =>
-                                this.manipulateDeck(
-                                  this.context.removeCards([p])
-                                )
-                              }
+                              onClick={() => this.context.removeCards([p])}
                             />
                           </ButtonGroup>
                         </ButtonToolbar>
@@ -371,7 +342,7 @@ export class Planechase extends Component {
           <div>
             {showHistory && history && (
               <ListGroup>
-                {history.reverse().map(p => (
+                {history.map(p => (
                   <Plane card={p} key={p.deck_card_id} listDisplay={true} />
                 ))}
               </ListGroup>
@@ -405,7 +376,6 @@ export class Planechase extends Component {
       const revealedPlanes = additionalCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      // TODO chaos etc
       return (
         <div>
           <Alert variant="info" className="text-center mb-0">
@@ -434,20 +404,19 @@ export class Planechase extends Component {
     );
     const shuffledCards = shuffleArray(restCards.slice());
     this.context.addCardsToBottom(shuffledCards);
-    this.context.setRevealedCards([]);
+    setRevealedCards("planechase", []);
     this.setState({ planeswalkDisabled: false, revealedCards: [] });
-    this.planeswalk();
+    setTimeout(this.planeswalk);
   };
 
   renderFivePlanes() {
     const { currentCard, revealedCards } = this.state;
     if (hasCustomProperty("top-5", currentCard)) {
-      console.log(revealedCards);
+      console.log("Render 5 - Revealed Cards", revealedCards);
       const revealedPlanes = revealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      console.log(revealedPlanes);
-      // TODO Countes, chaos etc
+      console.log("Render 5 - Revealed Planes", revealedPlanes);
       return (
         <div>
           <Alert variant="info" className="text-center mb-0">
@@ -551,7 +520,6 @@ export class Planechase extends Component {
     const { scryCards } = this.state;
     this.context.addCardsToTop(scryCards);
     console.log("Scry Top", scryCards);
-    this.refreshDeck();
     setScryCards("planechase", []);
     this.setState({ scryCards: [], scryModalOpen: false });
   };
@@ -560,7 +528,6 @@ export class Planechase extends Component {
     const { scryCards } = this.state;
     this.context.addCardsToBottom(scryCards);
     console.log("Scry Bottom", scryCards);
-    this.refreshDeck();
     setScryCards("planechase", []);
     this.setState({ scryCards: [], scryModalOpen: false });
   };
