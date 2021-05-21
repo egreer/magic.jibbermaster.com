@@ -23,18 +23,6 @@ import { Loading } from "../../components/Loading";
 import { getSetting } from "../../util/settings.js";
 
 import {
-  getCurrentDeck,
-  getOrCreateCurrentDeck,
-  storeCurrentDeck,
-  drawCard,
-  undoDraw,
-  removeCards,
-  getHistory,
-  findAndPutOnBottom,
-  findAndPutOnTop,
-  moveCard
-} from "../../mtg/deck.js";
-import {
   getCurrentCard,
   setCurrentCard,
   hasCustomProperty,
@@ -46,11 +34,11 @@ import {
   TapButtonGroup,
   TenthEditionButton
 } from "../../components/magic/Buttons";
+import { DeckContext } from "../../mtg/DeckContext";
 
 export class Archenemy extends Component {
   state = {
     loading: true,
-    deck: null,
     currentCard: null,
     ongoingSchemes: [],
     schemes: [],
@@ -64,42 +52,36 @@ export class Archenemy extends Component {
 
   componentDidMount = async () => {
     const schemes = await getAllArchenemyCards();
-    const deck = getCurrentDeck("archenemy");
     // TODO switch to selecting deck
     // const deck = getCurrentDeck("archenemy");
     const currentCard = getCurrentCard("archenemy");
     const ongoingSchemes = getAdditionalCards("archenemy") || [];
     const abandonedOngoing = !!store.get("archenemy-abandonedOngoing");
-    const customDeck = JSON.parse(JSON.stringify(schemes));
-    customDeck.forEach(c => (c.count = 0));
+    const customDeck = schemes.map(scheme => {
+      return { ...scheme, count: 0 };
+    });
     this.setState({
       currentCard,
-      deck,
       loading: false,
       ongoingSchemes,
       schemes,
       abandonedOngoing,
-      deckSelection: !deck,
+      deckSelection: !this.context.isInit,
       customDeck
     });
   };
 
-  refreshDeck = () => {
-    const deck = getCurrentDeck("archenemy");
-    this.setState({ deck });
-  };
-
   scheme = () => {
     const { currentCard, ongoingSchemes } = this.state;
+
     if (currentCard) {
       if (currentCard.type_line === "Ongoing Scheme") {
         ongoingSchemes.push(currentCard);
       }
     }
-    const newCard = drawCard("archenemy");
+    const newCard = this.context.drawCard();
     setCurrentCard("archenemy", newCard);
     setAdditionalCards("archenemy", ongoingSchemes);
-    this.refreshDeck();
     this.setState({
       currentCard: newCard,
       ongoingSchemes,
@@ -111,17 +93,16 @@ export class Archenemy extends Component {
     this.setState({ loading: true });
     // TODO reset to deck selection
     const schemes = await getAllArchenemyCards();
-    const deck = null;
-    storeCurrentDeck("archenemy", deck);
+    this.context.reInit();
     const currentCard = setCurrentCard("archenemy", null);
     const ongoingSchemes = setAdditionalCards("archenemy", []);
     const abandonedOngoing = store.set("archenemy-abandonedOngoing", false);
-    const customDeck = JSON.parse(JSON.stringify(schemes));
-    customDeck.forEach(c => (c.count = 0));
+    const customDeck = schemes.map(scheme => {
+      return { ...scheme, count: 0 };
+    });
     this.setState({
       schemes,
       loading: false,
-      deck,
       currentCard,
       ongoingSchemes,
       abandonedOngoing,
@@ -131,8 +112,7 @@ export class Archenemy extends Component {
   };
 
   undo = async () => {
-    const currentCard = undoDraw("archenemy");
-    this.refreshDeck();
+    const currentCard = this.context.undoDraw();
     this.setState({ currentCard });
   };
   // TODO Cards with same id
@@ -155,8 +135,8 @@ export class Archenemy extends Component {
   }
 
   renderGamePlay() {
-    const { loading, deck, currentCard, abandonedOngoing } = this.state;
-
+    const { loading, currentCard, abandonedOngoing } = this.state;
+    const deck = this.context.deck;
     return (
       <>
         <div className="fixed-top mt-1 ml-1 w-25 text-left">
@@ -313,7 +293,7 @@ export class Archenemy extends Component {
 
   renderHistory = () => {
     const { showHistory } = this.state;
-    const history = getHistory("archenemy");
+    const history = this.context.history;
     return (
       <div className="my-2">
         <Button onClick={this.toggleHistory} block variant="secondary">
@@ -323,7 +303,7 @@ export class Archenemy extends Component {
           <div>
             {showHistory && history && (
               <ListGroup>
-                {history.reverse().map(p => (
+                {history.map(p => (
                   <Scheme card={p} key={p.deck_card_id} listDisplay={true} />
                 ))}
               </ListGroup>
@@ -344,7 +324,7 @@ export class Archenemy extends Component {
       }
     });
 
-    const deck = getOrCreateCurrentDeck("archenemy", newCards, true);
+    const deck = this.context.initDeck(newCards, true);
     this.setState({
       deck,
       deckSelection: false
@@ -552,12 +532,9 @@ export class Archenemy extends Component {
     this.setState({ showDeckImages: !this.state.showDeckImages });
   };
 
-  manipulateDeck = () => {
-    this.refreshDeck();
-  };
-
   renderDeck = () => {
-    const { deck, showDeck, showDeckImages } = this.state;
+    const { showDeck, showDeckImages } = this.state;
+    const deck = this.context.deck;
     return (
       <div className="my-2">
         <Button onClick={this.toggleDeck} block variant="secondary">
@@ -584,17 +561,11 @@ export class Archenemy extends Component {
                             reverse
                             downProps={{
                               disabled: i === deck.length - 1,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  moveCard("archenemy", i, i + 1)
-                                )
+                              onClick: () => this.context.moveCard(i, i + 1)
                             }}
                             upProps={{
                               disabled: i === 0,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  moveCard("archenemy", i, i - 1)
-                                )
+                              onClick: () => this.context.moveCard(i, i - 1)
                             }}
                           />
                           <TapButtonGroup
@@ -602,29 +573,18 @@ export class Archenemy extends Component {
                             unTapProps={{
                               disabled: i === 0,
                               onClick: () =>
-                                this.manipulateDeck(
-                                  findAndPutOnTop("archenemy", p.deck_card_id)
-                                )
+                                this.context.findAndPutOnTop(p.deck_card_id)
                             }}
                             tapProps={{
                               disabled: i === deck.length - 1,
                               onClick: () =>
-                                this.manipulateDeck(
-                                  findAndPutOnBottom(
-                                    "archenemy",
-                                    p.deck_card_id
-                                  )
-                                )
+                                this.context.findAndPutOnBottom(p.deck_card_id)
                             }}
                           />
 
                           <ButtonGroup className="ml-2">
                             <TenthEditionButton
-                              onClick={() =>
-                                this.manipulateDeck(
-                                  removeCards("archenemy", [p])
-                                )
-                              }
+                              onClick={() => this.context.removeCards([p])}
                             />
                           </ButtonGroup>
                         </ButtonToolbar>
@@ -640,3 +600,5 @@ export class Archenemy extends Component {
     );
   };
 }
+
+Archenemy.contextType = DeckContext;

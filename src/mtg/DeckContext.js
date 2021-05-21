@@ -8,12 +8,13 @@ export const useDeckContext = () => useContext(DeckContext);
 
 export const DeckProvider = ({ prefix = null, children }) => {
   const [deck, setDeck] = useLocalState(`${prefix}-deck`, []);
+  const [isInit, setInit] = useLocalState(`${prefix}-deck-init`, false);
   const [history, setHistory] = useLocalState(`${prefix}-history`, []);
 
   const initDeck = (cards, reset = false) => {
-    if (deck.length === 0 || reset) {
+    if (!isInit || deck.length === 0 || reset) {
       console.log(`Creating New ${prefix} Deck`);
-      const clonedCards = cards.map(card => {
+      const clonedCards = cards?.map(card => {
         return {
           // Add Deck Card Id so that each card in the deck has a unique value
           deck_card_id: uuidv4(),
@@ -21,10 +22,17 @@ export const DeckProvider = ({ prefix = null, children }) => {
           ...card
         };
       });
-      const newDeck = shuffleArray(clonedCards);
+      const newDeck = clonedCards && shuffleArray(clonedCards);
       setDeck(newDeck);
       resetHistory();
+      setInit(true);
     }
+  };
+
+  const reInit = () => {
+    setDeck([]);
+    setInit(false);
+    resetHistory();
   };
 
   const moveCard = (from, to) => {
@@ -134,6 +142,8 @@ export const DeckProvider = ({ prefix = null, children }) => {
     <DeckContext.Provider
       value={{
         prefix,
+        isInit,
+        reInit,
         deck,
         history,
         initDeck,

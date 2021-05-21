@@ -75,7 +75,7 @@ export class Planechase extends Component {
   };
 
   planeswalk = () => {
-    const currentCard = this.context.drawCard("planechase");
+    const currentCard = this.context.drawCard();
     setCurrentCard("planechase", currentCard);
     let revealedCards = [];
     let additionalCards = [];

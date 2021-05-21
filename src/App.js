@@ -209,7 +209,11 @@ class App extends Component {
               <Route
                 path="/archenemy"
                 exact
-                render={props => <Archenemy {...props} />}
+                render={props => (
+                  <DeckProvider prefix="archenemy">
+                    <Archenemy {...props} />
+                  </DeckProvider>
+                )}
               />
               <Route
                 path="/planechase"
