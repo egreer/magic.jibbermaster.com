@@ -163,7 +163,7 @@ export class Archenemy extends Component {
               </Jumbotron>
             ) : currentCard ? (
               <Fade key={currentCard.deck_card_id} timeout={100}>
-                <Scheme card={currentCard} renderActions="true">
+                <Scheme card={currentCard} displayActions="true">
                   {this.renderAbandon(currentCard)}
                 </Scheme>
               </Fade>
@@ -225,7 +225,7 @@ export class Archenemy extends Component {
           <div className="d-flex justify-content-center flex-wrap ">
             {ongoingSchemes.map(c => (
               <React.Fragment key={c.deck_card_id}>
-                <Scheme card={c} renderActions="true">
+                <Scheme card={c} displayActions="true">
                   {this.renderAbandon(c)}
                 </Scheme>
               </React.Fragment>

@@ -188,7 +188,7 @@ export class Planechase extends Component {
           <div className="mb-2">
             {currentCard ? (
               <Fade key={currentCard.deck_card_id} timeout={100}>
-                <Plane card={currentCard} renderActions="true">
+                <Plane card={currentCard} displayActions="true">
                   {this.renderChaos(currentCard)}
                 </Plane>
               </Fade>
@@ -385,7 +385,7 @@ export class Planechase extends Component {
           </Alert>
           {revealedPlanes.map(c => (
             <React.Fragment key={c.deck_card_id}>
-              <Plane card={c} renderActions="true">
+              <Plane card={c} displayActions="true">
                 {this.renderChaos(c)}
               </Plane>
             </React.Fragment>

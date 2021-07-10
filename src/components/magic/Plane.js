@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Card, ListGroup, Modal } from "react-bootstrap";
 import { gathererImageURL } from "../../mtg/card";
 import back from "../../images/planechase-back.jpg";
@@ -7,73 +7,36 @@ import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
 import { getSetting } from "../../util/settings.js";
+import { CardText } from "./Card";
 
-export class Plane extends Component {
-  state = {
-    modalOpen: false,
-    fullscreen: false
-  };
+export const Plane = ({ listDisplay, card, displayActions, children }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
 
-  toggleModal = () => {
+  const toggleModal = () => {
     console.log("Toggle Modal");
-    this.setState({ modalOpen: !this.state.modalOpen });
+    setModalOpen(isOpen => !isOpen);
   };
 
-  toggleFullScreen = () => {
+  const toggleFullScreen = () => {
     console.log("Toggle FullScreen");
-    this.setState({ fullscreen: !this.state.fullscreen });
+    setFullscreen(isFullscreen => !isFullscreen);
   };
 
-  render() {
-    const { listDisplay, card, children } = this.props;
-    if (listDisplay) {
-      return (
-        <>
-          <ListGroup.Item variant="dark" onClick={this.toggleModal}>
-            <div>{card.name}</div>
-          </ListGroup.Item>
-          <Modal
-            show={this.state.modalOpen}
-            onHide={this.toggleModal}
-            size="md"
-            backdrop={true}
-            dialogClassName="modal-content-no-border"
-          >
-            <Modal.Body className="p-0" centered="true">
-              <Plane card={card} />
-              {children}
-            </Modal.Body>
-          </Modal>
-        </>
-      );
-    } else {
-      return (
-        <Card bg="black" text="light" className="mtg-plane-card">
-          {this.renderImage()}
-          {this.renderCounter()}
-          {this.renderChildren()}
-          {this.renderBody()}
-          {this.renderActions()}
-        </Card>
-      );
-    }
-  }
-
-  renderBody() {
-    const text = this.renderText();
-    const hasBody = text;
+  const renderBody = () => {
+    const text = CardText({ card });
+    const hasBody = !!text;
 
     return hasBody && <Card.Body>{text}</Card.Body>;
-  }
+  };
 
-  renderCounter() {
-    const { card, renderActions } = this.props;
+  const renderCounter = () => {
     const displayImages = getSetting("displayImages");
     const hasCounters = hasCustomProperty("counter", card);
-    if (renderActions && hasCounters) {
+    if (displayActions && hasCounters) {
       if (displayImages) {
         return (
-          <div onDoubleClick={this.toggleFullScreen}>
+          <div onDoubleClick={toggleFullScreen}>
             <Card.ImgOverlay className="text-center plane-overlay counter-overlay">
               <Card.Title className="text-center">
                 <Counter card={card} />
@@ -89,15 +52,14 @@ export class Plane extends Component {
         );
       }
     }
-  }
+  };
 
-  renderChildren() {
-    const { children } = this.props;
+  const renderChildren = () => {
     const displayImages = getSetting("displayImages");
     if (children) {
       if (displayImages) {
         return (
-          <div onDoubleClick={this.toggleFullScreen}>
+          <div onDoubleClick={toggleFullScreen}>
             <Card.ImgOverlay className="text-center plane-overlay child-overlay">
               <Card.Title className="text-center">{children}</Card.Title>
             </Card.ImgOverlay>
@@ -107,10 +69,9 @@ export class Plane extends Component {
         return <Card.Body className="text-center pb-0">{children}</Card.Body>;
       }
     }
-  }
+  };
 
-  renderActions() {
-    const { card } = this.props;
+  const renderActions = () => {
     const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
@@ -125,48 +86,26 @@ export class Plane extends Component {
         </Card.Footer>
       );
     }
-  }
+  };
 
-  renderText() {
-    const { card } = this.props;
-    const displayText = getSetting("displayText");
-    if (displayText) {
-      if (card) {
-        return (
-          <>
-            <Card.Title>
-              <h5>{card.name}</h5>
-            </Card.Title>
-            <Card.Subtitle>{card.type_line}</Card.Subtitle>
-            <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
-          </>
-        );
-      } else {
-        return <Card.Title>None</Card.Title>;
-      }
-    }
-  }
-
-  renderCardImage = () => (
+  const renderCardImage = () => (
     <Card.Img
       variant="top"
       width="100%"
-      src={this.imageURI()}
+      src={imageURI()}
       className="mtg-card mtg-card-plane"
     />
   );
 
-  renderImage() {
+  const renderImage = () => {
     const displayImages = getSetting("displayImages");
     if (displayImages) {
       return (
         <>
-          <div onDoubleClick={this.toggleFullScreen}>
-            {this.renderCardImage()}
-          </div>
+          <div onDoubleClick={toggleFullScreen}>{renderCardImage()}</div>
           <Modal
-            show={this.state.fullscreen}
-            onHide={this.toggleFullScreen}
+            show={fullscreen}
+            onHide={toggleFullScreen}
             backdrop={true}
             dialogClassName="modal-content-full bg-transparent"
             centered={true}
@@ -174,18 +113,17 @@ export class Plane extends Component {
             <Modal.Body
               className="p-0"
               centered="true"
-              onClick={this.toggleFullScreen}
+              onClick={toggleFullScreen}
             >
-              {this.renderCardImage()}
+              {renderCardImage()}
             </Modal.Body>
           </Modal>
         </>
       );
     }
-  }
+  };
 
-  imageURI() {
-    const { card } = this.props;
+  const imageURI = () => {
     if (card) {
       // Use   Scryfall and rotate or use Gatherer
       // scryfall (rotated) card.image_uris["border_crop"]
@@ -193,5 +131,37 @@ export class Plane extends Component {
     } else {
       return back;
     }
+  };
+
+  if (listDisplay) {
+    return (
+      <>
+        <ListGroup.Item variant="dark" onClick={toggleModal}>
+          <div>{card.name}</div>
+        </ListGroup.Item>
+        <Modal
+          show={modalOpen}
+          onHide={toggleModal}
+          size="md"
+          backdrop={true}
+          dialogClassName="modal-content-no-border"
+        >
+          <Modal.Body className="p-0" centered="true">
+            <Plane card={card} />
+            {children}
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  } else {
+    return (
+      <Card bg="black" text="light" className="mtg-plane-card">
+        {renderImage()}
+        {renderCounter()}
+        {renderChildren()}
+        {renderBody()}
+        {renderActions()}
+      </Card>
+    );
   }
-}
+};

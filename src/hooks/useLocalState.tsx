@@ -8,6 +8,21 @@ export const useLocalState = (key: string, defaultValue: any) => {
     const stickyValue = window.localStorage.getItem(key);
     return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue;
   });
+
+  useEffect(() => {
+    const stickyValue = window.localStorage.getItem(key);
+    if (stickyValue === null && defaultValue) {
+      setValue(defaultValue);
+    }
+  }, [key, defaultValue]);
+
+  useEffect(() => {
+    const stickyValue = window.localStorage.getItem(key);
+    if (stickyValue !== null) {
+      setValue(JSON.parse(stickyValue));
+    }
+  }, [key]);
+
   useEffect(() => {
     window.localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);

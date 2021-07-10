@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Card, ListGroup, Modal } from "react-bootstrap";
 import back from "../../images/archenemy-back.jpg";
 import { Counter } from "./Counter";
@@ -6,64 +6,26 @@ import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
 import { getSetting } from "../../util/settings.js";
+import { CardText } from "./Card";
 
-export class Scheme extends Component {
-  state = {
-    modalOpen: false
+export const Scheme = ({ listDisplay, card, displayActions, children }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(isOpen => !isOpen);
   };
 
-  toggleModal = () => {
-    console.log("Toggle Modal");
-    this.setState({ modalOpen: !this.state.modalOpen });
-  };
-
-  render() {
-    const { listDisplay, card, children } = this.props;
-    if (listDisplay) {
-      return (
-        <>
-          <ListGroup.Item variant="dark" onClick={this.toggleModal}>
-            {card.name}
-          </ListGroup.Item>
-          <Modal
-            show={this.state.modalOpen}
-            onHide={this.toggleModal}
-            size="md"
-            backdrop={true}
-            dialogClassName="modal-content-no-border"
-          >
-            <Modal.Body className="p-0" centered="true">
-              <Scheme card={card} />
-              {children}
-            </Modal.Body>
-          </Modal>
-        </>
-      );
-    } else {
-      return (
-        <Card bg="black" text="light" className="mtg-scheme-card">
-          {this.renderImage()}
-          {this.renderCounter()}
-          {this.renderChildren()}
-          {this.renderBody()}
-          {this.renderActions()}
-        </Card>
-      );
-    }
-  }
-
-  renderBody() {
-    const text = this.renderText();
-    const hasBody = text;
+  const renderBody = () => {
+    const text = CardText({ card });
+    const hasBody = !!text;
 
     return hasBody && <Card.Body>{text}</Card.Body>;
-  }
+  };
 
-  renderCounter() {
-    const { card, renderActions } = this.props;
+  const renderCounter = () => {
     const displayImages = getSetting("displayImages");
     const hasCounters = hasCustomProperty("counter", card);
-    if (renderActions && hasCounters) {
+    if (displayActions && hasCounters) {
       if (displayImages) {
         return (
           <Card.ImgOverlay className="text-center scheme-overlay counter-overlay">
@@ -80,10 +42,9 @@ export class Scheme extends Component {
         );
       }
     }
-  }
+  };
 
-  renderChildren() {
-    const { children } = this.props;
+  const renderChildren = () => {
     const displayImages = getSetting("displayImages");
     if (children) {
       if (displayImages) {
@@ -98,10 +59,9 @@ export class Scheme extends Component {
         return <Card.Body className="text-center pb-0">{children}</Card.Body>;
       }
     }
-  }
+  };
 
-  renderActions() {
-    const { card } = this.props;
+  const renderActions = () => {
     const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
@@ -116,48 +76,59 @@ export class Scheme extends Component {
         </Card.Footer>
       );
     }
-  }
+  };
 
-  renderText() {
-    const { card } = this.props;
-    const displayText = getSetting("displayText");
-    if (displayText) {
-      if (card) {
-        return (
-          <>
-            <Card.Title>
-              <h5>{card.name}</h5>
-            </Card.Title>
-            <Card.Subtitle>{card.type_line}</Card.Subtitle>
-            <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
-          </>
-        );
-      } else {
-        return <Card.Title>None</Card.Title>;
-      }
-    }
-  }
-
-  renderImage() {
+  const renderImage = () => {
     const displayImages = getSetting("displayImages");
     if (displayImages) {
       return (
         <Card.Img
           variant="top"
           width="100%"
-          src={this.imageURI()}
+          src={imageURI()}
           className="mtg-card mtg-card-scheme"
         />
       );
     }
-  }
+  };
 
-  imageURI() {
-    const { card } = this.props;
+  const imageURI = () => {
     if (card) {
       return card.image_uris["large"];
     } else {
       return back;
     }
+  };
+
+  if (listDisplay) {
+    return (
+      <>
+        <ListGroup.Item variant="dark" onClick={toggleModal}>
+          {card.name}
+        </ListGroup.Item>
+        <Modal
+          show={modalOpen}
+          onHide={toggleModal}
+          size="md"
+          backdrop={true}
+          dialogClassName="modal-content-no-border"
+        >
+          <Modal.Body className="p-0" centered="true">
+            <Scheme card={card} />
+            {children}
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  } else {
+    return (
+      <Card bg="black" text="light" className="mtg-scheme-card">
+        {renderImage()}
+        {renderCounter()}
+        {renderChildren()}
+        {renderBody()}
+        {renderActions()}
+      </Card>
+    );
   }
-}
+};
