@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Button, Fade, Modal } from "react-bootstrap";
+import { Alert, Button, Fade } from "react-bootstrap";
 import { PlanechaseHelmet } from "./Helmet";
 import { shuffleArray } from "../../mtg/deck.js";
 import {
@@ -23,6 +23,10 @@ import { DeckContext } from "../../mtg/DeckContext";
 import { History } from "../../components/game/History";
 import { Deck } from "../../components/game/Deck";
 import { DevTools } from "../../components/DevTools";
+import { ActionButton } from "../../components/game/ActionButton";
+import { ScryModal } from "./ScryModal";
+import { ChaosButton } from "./ChaosButton";
+import { TripleChaosModal } from "./TripleChaosModal";
 
 export class Planechase extends Component {
   state = {
@@ -148,7 +152,11 @@ export class Planechase extends Component {
       planes,
       currentCard,
       planeswalkDisabled,
-      showPlanarDie
+      showPlanarDie,
+      scryCards,
+      scryModalOpen,
+      tripleChaosModalOpen,
+      revealedCards
     } = this.state;
 
     const deck = this.context.deck;
@@ -157,18 +165,12 @@ export class Planechase extends Component {
     return (
       <div className="planechase">
         <PlanechaseHelmet planes={planes} cardType={Plane} />
-        <div className="fixed-top mt-1 ml-1 w-25 text-left">
-          <Button
-            onClick={this.planeswalk}
-            className="mb-2"
-            variant="success"
-            disabled={planeswalkDisabled || loading}
-            block
-          >
-            <i className="ms ms-planeswalker ms-2x mx-2" />
-            <span className="mx-2 d-none d-md-inline">Planeswalk</span>
-          </Button>
-        </div>
+        <ActionButton
+          text="Planeswalk"
+          onClick={this.planeswalk}
+          disabled={planeswalkDisabled || loading}
+          icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
+        />
         {loading ? (
           <Loading className="text-muted" />
         ) : (
@@ -176,7 +178,7 @@ export class Planechase extends Component {
             {currentCard ? (
               <Fade key={currentCard.deck_card_id} timeout={100}>
                 <Plane card={currentCard} displayActions="true">
-                  {this.renderChaos(currentCard)}
+                  <ChaosButton card={currentCard} onClick={this.triggerChaos} />
                 </Plane>
               </Fade>
             ) : (
@@ -186,11 +188,22 @@ export class Planechase extends Component {
         )}
         {this.renderTwoPlanes()}
         {this.renderFivePlanes()}
-        {this.renderTripleChaosModal()}
-        {this.renderScryModal()}
 
+        <TripleChaosModal
+          open={tripleChaosModalOpen}
+          revealedCards={revealedCards}
+          onHide={this._tripleChaosModalToggle}
+          chaosClick={c => this.triggerChaos(c)}
+          close={this._tripleChaosModalClose}
+        />
+
+        <ScryModal
+          scryCards={scryCards}
+          open={scryModalOpen}
+          onScryTop={() => this._scryTop()}
+          onScryBottom={() => this._scryBottom()}
+        />
         <History history={history} CardType={Plane} />
-
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
@@ -202,7 +215,6 @@ export class Planechase extends Component {
           confirmVariant="danger"
           triggerButtonParams={{ variant: "danger", block: true }}
         />
-
         <DevTools>
           <Button onClick={this.undo} variant="warning" block>
             Undo
@@ -214,7 +226,6 @@ export class Planechase extends Component {
             enabled={this.state.showPlanarDie}
           />
         </DevTools>
-
         {showPlanarDie && !planeswalkDisabled && (
           <div
             className="position-fixed"
@@ -230,23 +241,6 @@ export class Planechase extends Component {
   togglePlanarDie = () => {
     this.setState({ showPlanarDie: !this.state.showPlanarDie });
   };
-
-  renderChaos(card) {
-    const hasChaos = hasCustomProperty("chaos-trigger", card);
-    if (hasChaos) {
-      return (
-        <Button
-          onClick={() => this.triggerChaos(card)}
-          variant="info"
-          size="lg"
-          className="btn-translucent"
-        >
-          <i className="ms ms-chaos ms-2x mx-2" />
-          <span className="mx-2 d-none d-md-inline">Trigger Chaos</span>
-        </Button>
-      );
-    }
-  }
 
   renderTwoPlanes() {
     const { currentCard, additionalCards } = this.state;
@@ -264,7 +258,7 @@ export class Planechase extends Component {
           {revealedPlanes.map(c => (
             <React.Fragment key={c.deck_card_id}>
               <Plane card={c} displayActions="true">
-                {this.renderChaos(c)}
+                <ChaosButton card={c} onClick={this.triggerChaos} />
               </Plane>
             </React.Fragment>
           ))}
@@ -336,56 +330,6 @@ export class Planechase extends Component {
     }
   };
 
-  renderTripleChaosModal() {
-    const { revealedCards, tripleChaosModalOpen } = this.state;
-    if (revealedCards && tripleChaosModalOpen) {
-      const revealedPlanes = revealedCards.filter(
-        c => c.type_line.search("Plane") >= 0
-      );
-      return (
-        <Modal
-          show={!!tripleChaosModalOpen}
-          onHide={this._tripleChaosModalToggle}
-          size="md"
-          backdrop={true}
-          dialogClassName="bg-secondary"
-        >
-          <Modal.Header className="flex-column text-center text-white noselect">
-            <div className="modal-title h5 mx-auto">
-              <i className="ms ms-chaos mr-1" />
-              <i className="ms ms-chaos mr-1" />
-              <i className="ms ms-chaos mr-1" />
-              <span className="mx-1">Triple Chaos</span>
-              <i className="ms ms-chaos ml-1" />
-              <i className="ms ms-chaos ml-1" />
-              <i className="ms ms-chaos ml-1" />
-            </div>
-            <div className="mx-auto">
-              <small className="text-center">You Pick Order</small>
-            </div>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            {revealedPlanes.map(c => (
-              <React.Fragment key={c.deck_card_id}>
-                <Plane card={c}>{this.renderChaos(c)}</Plane>
-              </React.Fragment>
-            ))}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="info"
-              block
-              aria-label="Close"
-              onClick={this._tripleChaosModalClose}
-            >
-              Done
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      );
-    }
-  }
-
   _scryModalClose = () => {
     setScryCards("planechase", []);
     this.setState({
@@ -408,40 +352,6 @@ export class Planechase extends Component {
     console.log("Scry Bottom", scryCards);
     setScryCards("planechase", []);
     this.setState({ scryCards: [], scryModalOpen: false });
-  };
-
-  renderScryModal = () => {
-    const { scryCards, scryModalOpen } = this.state;
-    if (scryCards && scryModalOpen) {
-      return (
-        <Modal
-          show={!!scryModalOpen}
-          size="md"
-          dialogClassName="bg-secondary"
-          variant="secondary"
-          backdrop="static"
-        >
-          <Modal.Header className="justify-content-center text-white noselect">
-            <Modal.Title>
-              <i className="ms ms-chaos mx-4" />
-              Scry Card
-              <i className="ms ms-chaos mx-4" />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Button variant="info" block onClick={this._scryTop}>
-              Top
-            </Button>
-            {scryCards.map(c => (
-              <Plane card={c} key={c.deck_card_id} />
-            ))}
-            <Button variant="info" block onClick={this._scryBottom}>
-              Bottom
-            </Button>
-          </Modal.Body>
-        </Modal>
-      );
-    }
   };
 }
 
