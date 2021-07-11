@@ -4,7 +4,6 @@ import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
 
-import { getSetting } from "../../util/settings.js";
 import { shuffleArray } from "../../mtg/deck.js";
 
 import { SYBHelmet } from "./Helmet";
@@ -15,6 +14,7 @@ import {
   LoyaltyButtonGroup
 } from "../../components/magic/Buttons.js";
 import { useLocalState } from "../../hooks/useLocalState";
+import { DevTools } from "../../components/DevTools.js";
 
 const TABLE_SHAPE_SQUARE = "square";
 const TABLE_SHAPE_CIRCLE = "circle";
@@ -297,32 +297,6 @@ export const SYB = () => {
     regenerateOrder(DEFAULT_PLAYER_COUNT, DEFAULT_PLAYER_TARGETS);
   };
 
-  const renderDevTools = () => {
-    const devTools = getSetting("devTools");
-    if (devTools) {
-      return (
-        <div className="my-4">
-          <h5 className="text-center noselect">Dev Tools</h5>
-          <DoubleFaceButton
-            text="Turn Edges"
-            onClick={() => setShowTurnEdges(!showTurnEdges)}
-            enabled={showTurnEdges}
-          />
-          <DoubleFaceButton
-            text="Screw Edges"
-            onClick={() => setShowScrewEdges(!showScrewEdges)}
-            enabled={showScrewEdges}
-          />
-          <DoubleFaceButton
-            text="Star Turn"
-            onClick={() => setStarTurn(!starTurn)}
-            enabled={starTurn}
-          />
-        </div>
-      );
-    }
-  };
-
   return (
     <div className="syb">
       <SYBHelmet />
@@ -402,7 +376,23 @@ export const SYB = () => {
         Reset
       </Button>
 
-      {renderDevTools()}
+      <DevTools>
+        <DoubleFaceButton
+          text="Turn Edges"
+          onClick={() => setShowTurnEdges(!showTurnEdges)}
+          enabled={showTurnEdges}
+        />
+        <DoubleFaceButton
+          text="Screw Edges"
+          onClick={() => setShowScrewEdges(!showScrewEdges)}
+          enabled={showScrewEdges}
+        />
+        <DoubleFaceButton
+          text="Star Turn"
+          onClick={() => setStarTurn(!starTurn)}
+          enabled={starTurn}
+        />
+      </DevTools>
 
       <Dialog
         ref={component => {

@@ -17,12 +17,12 @@ import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
 import { Confirm } from "../../components/Confirm";
 import { Plane } from "../../components/magic/Plane";
-import { getSetting } from "../../util/settings.js";
 import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
 import { DeckContext } from "../../mtg/DeckContext";
 import { History } from "../../components/game/History";
 import { Deck } from "../../components/game/Deck";
+import { DevTools } from "../../components/DevTools";
 
 export class Planechase extends Component {
   state = {
@@ -202,7 +202,19 @@ export class Planechase extends Component {
           confirmVariant="danger"
           triggerButtonParams={{ variant: "danger", block: true }}
         />
-        {this.renderDevTools()}
+
+        <DevTools>
+          <Button onClick={this.undo} variant="warning" block>
+            Undo
+          </Button>
+          <Deck CardType={Plane} />
+          <DoubleFaceButton
+            text="Planar Die"
+            onClick={this.togglePlanarDie}
+            enabled={this.state.showPlanarDie}
+          />
+        </DevTools>
+
         {showPlanarDie && !planeswalkDisabled && (
           <div
             className="position-fixed"
@@ -214,26 +226,6 @@ export class Planechase extends Component {
       </div>
     );
   }
-
-  renderDevTools = () => {
-    const devTools = getSetting("devTools");
-    if (devTools) {
-      return (
-        <div className="my-4">
-          <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.undo} variant="warning" block>
-            Undo
-          </Button>
-          <Deck CardType={Plane} />
-          <DoubleFaceButton
-            text="Planar Die"
-            onClick={this.togglePlanarDie}
-            enabled={this.state.showPlanarDie}
-          />
-        </div>
-      );
-    }
-  };
 
   togglePlanarDie = () => {
     this.setState({ showPlanarDie: !this.state.showPlanarDie });

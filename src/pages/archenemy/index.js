@@ -19,7 +19,6 @@ import { getAllArchenemyCards } from "../../util/api.js";
 import { Scheme } from "../../components/magic/Scheme";
 import { Confirm } from "../../components/Confirm";
 import { Loading } from "../../components/Loading";
-import { getSetting } from "../../util/settings.js";
 
 import {
   getCurrentCard,
@@ -32,6 +31,7 @@ import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { DeckContext } from "../../mtg/DeckContext";
 import { History } from "../../components/game/History";
 import { Deck } from "../../components/game/Deck";
+import { DevTools } from "../../components/DevTools";
 
 export class Archenemy extends Component {
   state = {
@@ -107,7 +107,7 @@ export class Archenemy extends Component {
     const currentCard = this.context.undoDraw();
     this.setState({ currentCard });
   };
-  // TODO Cards with same id
+
   render() {
     const { loading, schemes, deckSelection } = this.state;
 
@@ -121,7 +121,12 @@ export class Archenemy extends Component {
         ) : (
           this.renderGamePlay()
         )}
-        {this.renderDevTools()}
+        <DevTools>
+          <Button onClick={this.undo} variant="warning" block>
+            Undo
+          </Button>
+          <Deck CardType={Scheme} />
+        </DevTools>
       </div>
     );
   }
@@ -230,21 +235,6 @@ export class Archenemy extends Component {
       );
     }
   }
-
-  renderDevTools = () => {
-    const devTools = getSetting("devTools");
-    if (devTools) {
-      return (
-        <div className="my-4">
-          <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.undo} variant="warning" block>
-            Undo
-          </Button>
-          <Deck CardType={Scheme} />
-        </div>
-      );
-    }
-  };
 
   abandonScheme = card => {
     const { ongoingSchemes, currentCard } = this.state;
