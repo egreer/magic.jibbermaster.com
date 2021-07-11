@@ -5,7 +5,6 @@ import {
   Badge,
   Button,
   ButtonGroup,
-  ButtonToolbar,
   Card,
   Fade,
   ListGroup,
@@ -29,13 +28,10 @@ import {
   setAdditionalCards,
   getAdditionalCards
 } from "../../mtg/card.js";
-import {
-  LoyaltyButtonGroup,
-  TapButtonGroup,
-  TenthEditionButton
-} from "../../components/magic/Buttons";
+import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { DeckContext } from "../../mtg/DeckContext";
 import { History } from "../../components/game/History";
+import { Deck } from "../../components/game/Deck";
 
 export class Archenemy extends Component {
   state = {
@@ -43,8 +39,6 @@ export class Archenemy extends Component {
     currentCard: null,
     ongoingSchemes: [],
     schemes: [],
-    showDeck: false,
-    showDeckImages: false,
     abandonedOngoing: false,
     deckSelection: true,
     customDeck: null
@@ -52,8 +46,6 @@ export class Archenemy extends Component {
 
   componentDidMount = async () => {
     const schemes = await getAllArchenemyCards();
-    // TODO switch to selecting deck
-    // const deck = getCurrentDeck("archenemy");
     const currentCard = getCurrentCard("archenemy");
     const ongoingSchemes = getAdditionalCards("archenemy") || [];
     const abandonedOngoing = !!store.get("archenemy-abandonedOngoing");
@@ -248,7 +240,7 @@ export class Archenemy extends Component {
           <Button onClick={this.undo} variant="warning" block>
             Undo
           </Button>
-          {this.renderDeck()}
+          <Deck CardType={Scheme} />
         </div>
       );
     }
@@ -498,82 +490,6 @@ export class Archenemy extends Component {
       </div>
     </Card.Title>
   );
-
-  toggleDeck = () => {
-    this.setState({ showDeck: !this.state.showDeck });
-  };
-
-  toggleDeckImages = () => {
-    this.setState({ showDeckImages: !this.state.showDeckImages });
-  };
-
-  renderDeck = () => {
-    const { showDeck, showDeckImages } = this.state;
-    const deck = this.context.deck;
-    return (
-      <div className="my-2">
-        <Button onClick={this.toggleDeck} block variant="secondary">
-          {showDeck ? "Hide" : "Show"} Deck
-        </Button>
-        <Fade in={showDeck}>
-          <div>
-            {showDeck && deck && (
-              <>
-                <Button
-                  onClick={this.toggleDeckImages}
-                  block
-                  variant="secondary"
-                >
-                  {showDeckImages ? "Hide" : "Show"} Full Card
-                </Button>
-                <ListGroup>
-                  {deck.map((p, i) => (
-                    <React.Fragment key={p.deck_card_id}>
-                      <Scheme card={p} listDisplay={!showDeckImages} />
-                      <ListGroup.Item className="text-center justify-content-center d-flex">
-                        <ButtonToolbar>
-                          <LoyaltyButtonGroup
-                            reverse
-                            downProps={{
-                              disabled: i === deck.length - 1,
-                              onClick: () => this.context.moveCard(i, i + 1)
-                            }}
-                            upProps={{
-                              disabled: i === 0,
-                              onClick: () => this.context.moveCard(i, i - 1)
-                            }}
-                          />
-                          <TapButtonGroup
-                            className="ml-2"
-                            unTapProps={{
-                              disabled: i === 0,
-                              onClick: () =>
-                                this.context.findAndPutOnTop(p.deck_card_id)
-                            }}
-                            tapProps={{
-                              disabled: i === deck.length - 1,
-                              onClick: () =>
-                                this.context.findAndPutOnBottom(p.deck_card_id)
-                            }}
-                          />
-
-                          <ButtonGroup className="ml-2">
-                            <TenthEditionButton
-                              onClick={() => this.context.removeCards([p])}
-                            />
-                          </ButtonGroup>
-                        </ButtonToolbar>
-                      </ListGroup.Item>
-                    </React.Fragment>
-                  ))}
-                </ListGroup>
-              </>
-            )}
-          </div>
-        </Fade>
-      </div>
-    );
-  };
 }
 
 Archenemy.contextType = DeckContext;
