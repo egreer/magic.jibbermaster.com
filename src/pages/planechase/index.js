@@ -34,6 +34,7 @@ import {
   TenthEditionButton
 } from "../../components/magic/Buttons";
 import { DeckContext } from "../../mtg/DeckContext";
+import { History } from "../../components/game/History";
 
 export class Planechase extends Component {
   state = {
@@ -46,7 +47,6 @@ export class Planechase extends Component {
     tripleChaosModalOpen: false,
     scryModalOpen: false,
     planeswalkDisabled: false,
-    showHistory: false,
     showDeck: false,
     showDeckImages: false,
     showPlanarDie: true
@@ -166,10 +166,11 @@ export class Planechase extends Component {
     } = this.state;
 
     const deck = this.context.deck;
+    const history = this.context.history;
 
     return (
       <div className="planechase">
-        <PlanechaseHelmet planes={planes} />
+        <PlanechaseHelmet planes={planes} cardType={Plane} />
         <div className="fixed-top mt-1 ml-1 w-25 text-left">
           <Button
             onClick={this.planeswalk}
@@ -201,7 +202,9 @@ export class Planechase extends Component {
         {this.renderFivePlanes()}
         {this.renderTripleChaosModal()}
         {this.renderScryModal()}
-        {this.renderHistory()}
+
+        <History history={history} CardType={Plane} />
+
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
@@ -319,33 +322,6 @@ export class Planechase extends Component {
                   ))}
                 </ListGroup>
               </>
-            )}
-          </div>
-        </Fade>
-      </div>
-    );
-  };
-
-  toggleHistory = () => {
-    this.setState({ showHistory: !this.state.showHistory });
-  };
-
-  renderHistory = () => {
-    const { showHistory } = this.state;
-    const history = this.context.history;
-    return (
-      <div className="my-2">
-        <Button onClick={this.toggleHistory} variant="secondary" block>
-          {showHistory ? "Hide" : "Show"} History
-        </Button>
-        <Fade in={showHistory}>
-          <div>
-            {showHistory && history && (
-              <ListGroup>
-                {history.map(p => (
-                  <Plane card={p} key={p.deck_card_id} listDisplay={true} />
-                ))}
-              </ListGroup>
             )}
           </div>
         </Fade>

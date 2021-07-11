@@ -35,6 +35,7 @@ import {
   TenthEditionButton
 } from "../../components/magic/Buttons";
 import { DeckContext } from "../../mtg/DeckContext";
+import { History } from "../../components/game/History";
 
 export class Archenemy extends Component {
   state = {
@@ -42,7 +43,6 @@ export class Archenemy extends Component {
     currentCard: null,
     ongoingSchemes: [],
     schemes: [],
-    showHistory: false,
     showDeck: false,
     showDeckImages: false,
     abandonedOngoing: false,
@@ -137,6 +137,8 @@ export class Archenemy extends Component {
   renderGamePlay() {
     const { loading, currentCard, abandonedOngoing } = this.state;
     const deck = this.context.deck;
+    const history = this.context.history;
+
     return (
       <>
         <div className="fixed-top mt-1 ml-1 w-25 text-left">
@@ -175,7 +177,8 @@ export class Archenemy extends Component {
 
         {this.renderOngoingSchemes()}
 
-        {this.renderHistory()}
+        <History history={history} CardType={Scheme} />
+
         <p className="text-center my-3 noselect">
           There are {deck ? deck.length : 0} cards remaining.
         </p>
@@ -286,34 +289,6 @@ export class Archenemy extends Component {
       );
     }
   }
-
-  toggleHistory = () => {
-    this.setState({ showHistory: !this.state.showHistory });
-  };
-
-  renderHistory = () => {
-    const { showHistory } = this.state;
-    const history = this.context.history;
-    return (
-      <div className="my-2">
-        <Button onClick={this.toggleHistory} block variant="secondary">
-          {showHistory ? "Hide" : "Show"} History
-        </Button>
-        <Fade in={showHistory}>
-          <div>
-            {showHistory && history && (
-              <ListGroup>
-                {history.map(p => (
-                  <Scheme card={p} key={p.deck_card_id} listDisplay={true} />
-                ))}
-              </ListGroup>
-            )}
-          </div>
-        </Fade>
-      </div>
-    );
-  };
-
   selectDeck(name, cards) {
     console.log(`Selected ${name}`, cards);
 
