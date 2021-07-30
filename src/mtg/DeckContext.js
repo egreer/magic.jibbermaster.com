@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import uuidv4 from "uuid/v4";
 import { useLocalState } from "../hooks/useLocalState";
-import { shuffleArray } from "./deck";
+import { shuffleArray } from "../util/shuffleArray";
 
 export const DeckContext = React.createContext({});
 export const useDeckContext = () => useContext(DeckContext);

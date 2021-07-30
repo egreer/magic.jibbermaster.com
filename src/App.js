@@ -21,6 +21,7 @@ import { Formats } from "./pages/formats";
 import { DoubleFaceIcon } from "./components/magic/DoubleFaceIcon";
 import GitInfo from "react-git-info/macro";
 import { DeckProvider } from "./mtg/DeckContext";
+import { GameProvider } from "./mtg/GameContext";
 const gitInfo = GitInfo();
 
 class App extends Component {
@@ -210,18 +211,22 @@ class App extends Component {
                 path="/archenemy"
                 exact
                 render={props => (
-                  <DeckProvider prefix="archenemy">
-                    <Archenemy {...props} />
-                  </DeckProvider>
+                  <GameProvider prefix="archenemy">
+                    <DeckProvider prefix="archenemy">
+                      <Archenemy {...props} />
+                    </DeckProvider>
+                  </GameProvider>
                 )}
               />
               <Route
                 path="/planechase"
                 exact
                 render={props => (
-                  <DeckProvider prefix="planechase">
-                    <Planechase {...props} />
-                  </DeckProvider>
+                  <GameProvider prefix="planechase">
+                    <DeckProvider prefix="planechase">
+                      <Planechase {...props} />
+                    </DeckProvider>
+                  </GameProvider>
                 )}
               />
               <Route path="/syb" exact render={props => <SYB {...props} />} />

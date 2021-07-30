@@ -8,10 +8,23 @@ import "./planes.scss";
 import { hasCustomProperty } from "../../mtg/card.js";
 import { getSetting } from "../../util/settings.js";
 import { CardText } from "./Card";
+import cn from "classnames";
 
 export const Plane = ({ listDisplay, card, displayActions, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+
+  const displayImages = getSetting("displayImages");
+  const displayGatherer = getSetting("displayGatherer");
+
+  const hasCounters = hasCustomProperty("counter", card);
+  const emptyChildren = children?.type === null;
+
+  // Use Scryfall and rotate or use Gatherer
+  // scryfall (rotated) card.image_uris["border_crop"]
+  const imageURI = card ? gathererImageURL(card) : back;
+
+  const counter = displayActions && hasCounters && <Counter card={card} />;
 
   const toggleModal = () => {
     console.log("Toggle Modal");
@@ -30,49 +43,7 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
     return hasBody && <Card.Body>{text}</Card.Body>;
   };
 
-  const renderCounter = () => {
-    const displayImages = getSetting("displayImages");
-    const hasCounters = hasCustomProperty("counter", card);
-    if (displayActions && hasCounters) {
-      if (displayImages) {
-        return (
-          <div onDoubleClick={toggleFullScreen}>
-            <Card.ImgOverlay className="text-center plane-overlay counter-overlay">
-              <Card.Title className="text-center">
-                <Counter card={card} />
-              </Card.Title>
-            </Card.ImgOverlay>
-          </div>
-        );
-      } else {
-        return (
-          <Card.Body className="text-center pb-0">
-            <Counter card={card} />
-          </Card.Body>
-        );
-      }
-    }
-  };
-
-  const renderChildren = () => {
-    const displayImages = getSetting("displayImages");
-    if (children) {
-      if (displayImages) {
-        return (
-          <div onDoubleClick={toggleFullScreen}>
-            <Card.ImgOverlay className="text-center plane-overlay child-overlay">
-              <Card.Title className="text-center">{children}</Card.Title>
-            </Card.ImgOverlay>
-          </div>
-        );
-      } else {
-        return <Card.Body className="text-center pb-0">{children}</Card.Body>;
-      }
-    }
-  };
-
   const renderActions = () => {
-    const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
         <Card.Footer>
@@ -92,13 +63,12 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
     <Card.Img
       variant="top"
       width="100%"
-      src={imageURI()}
+      src={imageURI}
       className="mtg-card mtg-card-plane"
     />
   );
 
   const renderImage = () => {
-    const displayImages = getSetting("displayImages");
     if (displayImages) {
       return (
         <>
@@ -123,13 +93,28 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
     }
   };
 
-  const imageURI = () => {
-    if (card) {
-      // Use   Scryfall and rotate or use Gatherer
-      // scryfall (rotated) card.image_uris["border_crop"]
-      return gathererImageURL(card);
+  const renderComponents = () => {
+    if (displayImages) {
+      return (
+        <Card.ImgOverlay
+          className={cn("text-center plane-overlay", {
+            "child-overlay": !emptyChildren,
+            "counter-overlay": emptyChildren && hasCounters
+          })}
+        >
+          <Card.Title className="text-center">
+            {counter}
+            {children}
+          </Card.Title>
+        </Card.ImgOverlay>
+      );
     } else {
-      return back;
+      return (
+        <Card.Body className="text-center pb-0">
+          {counter}
+          {children}
+        </Card.Body>
+      );
     }
   };
 
@@ -157,8 +142,7 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
     return (
       <Card bg="black" text="light" className="mtg-plane-card">
         {renderImage()}
-        {renderCounter()}
-        {renderChildren()}
+        {renderComponents()}
         {renderBody()}
         {renderActions()}
       </Card>

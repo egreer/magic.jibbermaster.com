@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Fade, Jumbotron, Container } from "react-bootstrap";
-import store from "store";
 
 import { ArchenemyHelmet } from "./Helmet";
 import { getAllArchenemyCards } from "../../util/api.js";
@@ -8,123 +7,86 @@ import { Scheme } from "../../components/magic/Scheme";
 import { Confirm } from "../../components/Confirm";
 import { Loading } from "../../components/Loading";
 
-import {
-  getCurrentCard,
-  setCurrentCard,
-  setAdditionalCards,
-  getAdditionalCards
-} from "../../mtg/card.js";
-import { DeckContext } from "../../mtg/DeckContext";
+import { useDeckContext } from "../../mtg/DeckContext";
 import { History } from "../../components/game/History";
 import { Deck } from "../../components/game/Deck";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
+import { useGameContext } from "../../mtg/GameContext";
+import { useLocalState } from "../../hooks/useLocalState";
 
-export class Archenemy extends Component {
-  state = {
-    loading: true,
-    currentCard: null,
-    ongoingSchemes: [],
-    schemes: [],
-    abandonedOngoing: false,
-    deckSelection: true
-  };
+export const Archenemy = () => {
+  const [loading, setLoading] = useState(true);
+  const [schemes, setSchemes] = useState([]);
+  const [deckSelection, setDeckSelection] = useState(true);
 
-  componentDidMount = async () => {
-    const schemes = await getAllArchenemyCards();
-    const currentCard = getCurrentCard("archenemy");
-    const ongoingSchemes = getAdditionalCards("archenemy") || [];
-    const abandonedOngoing = !!store.get("archenemy-abandonedOngoing");
+  const game = useGameContext();
+  const currentCard = game.currentCard;
+  const ongoingSchemes = game.additionalCards;
 
-    this.setState({
-      currentCard,
-      loading: false,
-      ongoingSchemes,
-      schemes,
-      abandonedOngoing,
-      deckSelection: !this.context.isInit
-    });
-  };
+  const deck = useDeckContext();
 
-  scheme = () => {
-    const { currentCard, ongoingSchemes } = this.state;
+  const [abandonedOngoing, setAbandonedOnGoing] = useLocalState(
+    `archenemy-abandonedOngoing`,
+    false
+  );
 
+  const fetchSchemes = useCallback(async () => {
+    const newSchemes = await getAllArchenemyCards();
+    setSchemes(newSchemes);
+    setLoading(false);
+  }, [setSchemes, setLoading]);
+
+  useEffect(() => {
+    if (schemes && schemes.length <= 0) {
+      fetchSchemes();
+    }
+  }, [schemes, fetchSchemes]);
+
+  useEffect(() => {
+    setDeckSelection(!deck.isInit);
+  }, [deck.isInit]);
+
+  const scheme = () => {
     if (currentCard) {
       if (currentCard.type_line === "Ongoing Scheme") {
         ongoingSchemes.push(currentCard);
       }
     }
-    const newCard = this.context.drawCard();
-    setCurrentCard("archenemy", newCard);
-    setAdditionalCards("archenemy", ongoingSchemes);
-    this.setState({
-      currentCard: newCard,
-      ongoingSchemes,
-      abandonedOngoing: store.set("archenemy-abandonedOngoing", false)
-    });
+    const newCard = deck.drawCard();
+    game.setCurrentCard(newCard);
+    game.setAdditionalCards(ongoingSchemes);
+    game.setCurrentCard(newCard);
+    setAbandonedOnGoing(false);
   };
 
-  reset = async () => {
-    this.setState({ loading: true });
-    const schemes = await getAllArchenemyCards();
-    this.context.reInit();
-    const currentCard = setCurrentCard("archenemy", null);
-    const ongoingSchemes = setAdditionalCards("archenemy", []);
-    const abandonedOngoing = store.set("archenemy-abandonedOngoing", false);
-
-    this.setState({
-      schemes,
-      loading: false,
-      currentCard,
-      ongoingSchemes,
-      abandonedOngoing,
-      deckSelection: true
-    });
+  const reset = async () => {
+    setLoading(true);
+    fetchSchemes();
+    deck.reInit();
+    game.reset();
+    setAbandonedOnGoing(false);
+    setLoading(false);
+    setDeckSelection(true);
   };
 
-  undo = async () => {
-    const currentCard = this.context.undoDraw();
-    this.setState({ currentCard });
+  const undo = async () => {
+    const lastCard = deck.undoDraw();
+    if (lastCard) {
+      game.setCurrentCard(lastCard);
+    }
   };
 
-  render() {
-    const { loading, schemes, deckSelection } = this.state;
-
-    return (
-      <div className="archenemy">
-        <ArchenemyHelmet schemes={schemes} />
-        {loading ? (
-          <Loading className="text-muted" />
-        ) : deckSelection ? (
-          <DeckSelect
-            schemes={schemes}
-            onSelectDeck={(name, cards) => this.selectDeck(name, cards)}
-          />
-        ) : (
-          this.renderGamePlay()
-        )}
-        <DevTools>
-          <Button onClick={this.undo} variant="warning" block>
-            Undo
-          </Button>
-          <Deck CardType={Scheme} />
-        </DevTools>
-      </div>
-    );
-  }
-
-  renderGamePlay() {
-    const { loading, currentCard, abandonedOngoing } = this.state;
-    const deck = this.context.deck;
-    const history = this.context.history;
+  const renderGamePlay = () => {
+    const history = deck.history;
 
     return (
       <>
         <ActionButton
           text="Scheme"
-          onClick={this.scheme}
+          onClick={scheme}
           disabled={loading}
           icon={<i className="ss ss-arc ss-3x mx-2" />}
         />
@@ -140,12 +102,9 @@ export class Archenemy extends Component {
                 </Container>
               </Jumbotron>
             ) : currentCard ? (
-              <Fade key={currentCard.deck_card_id} timeout={100}>
+              <Fade key={currentCard?.deck_card_id} timeout={100}>
                 <Scheme card={currentCard} displayActions="true">
-                  <AbandonButton
-                    card={currentCard}
-                    onClick={this.abandonScheme}
-                  />
+                  <AbandonButton card={currentCard} onClick={abandonScheme} />
                 </Scheme>
               </Fade>
             ) : (
@@ -154,15 +113,15 @@ export class Archenemy extends Component {
           </div>
         )}
 
-        {this.renderOngoingSchemes()}
+        {renderOngoingSchemes()}
 
         <History history={history} CardType={Scheme} />
 
         <p className="text-center my-3 noselect">
-          There are {deck ? deck.length : 0} cards remaining.
+          There are {deck.deck ? deck.deck.length : 0} cards remaining.
         </p>
         <Confirm
-          onConfirm={this.reset}
+          onConfirm={reset}
           headerText="Reset Schemes?"
           triggerText="Reset"
           confirmText="Reset"
@@ -171,10 +130,9 @@ export class Archenemy extends Component {
         />
       </>
     );
-  }
+  };
 
-  renderOngoingSchemes() {
-    const { ongoingSchemes } = this.state;
+  const renderOngoingSchemes = () => {
     if (ongoingSchemes && ongoingSchemes.length > 0) {
       return (
         <>
@@ -185,7 +143,7 @@ export class Archenemy extends Component {
             {ongoingSchemes.map(c => (
               <React.Fragment key={c.deck_card_id}>
                 <Scheme card={c} displayActions="true">
-                  <AbandonButton card={c} onClick={this.abandonScheme} />
+                  <AbandonButton card={c} onClick={abandonScheme} />
                 </Scheme>
               </React.Fragment>
             ))}
@@ -193,26 +151,23 @@ export class Archenemy extends Component {
         </>
       );
     }
-  }
+  };
 
-  abandonScheme = card => {
-    const { ongoingSchemes, currentCard } = this.state;
-    if (currentCard.deck_card_id === card.deck_card_id) {
+  const abandonScheme = card => {
+    if (currentCard?.deck_card_id === card.deck_card_id) {
       console.log("Abandon Current Scheme", card);
-      setCurrentCard("archenemy", null);
-      const abandonedOngoing = store.set("archenemy-abandonedOngoing", true);
-      this.setState({ currentCard: null, abandonedOngoing });
+      game.clearCurrentCard();
+      setAbandonedOnGoing(true);
     } else {
       console.log("Abandon Scheme", card);
-      let newOngoing = ongoingSchemes.filter(
+      const newOngoing = ongoingSchemes.filter(
         s => s.deck_card_id !== card.deck_card_id
       );
-      setAdditionalCards("archenemy", newOngoing);
-      this.setState({ ongoingSchemes: newOngoing });
+      game.setAdditionalCards(newOngoing);
     }
   };
 
-  selectDeck(name, cards) {
+  const selectDeck = (name, cards) => {
     console.log(`Selected ${name}`, cards);
 
     const newCards = name === "All" ? cards : [];
@@ -221,13 +176,28 @@ export class Archenemy extends Component {
         newCards.push(c);
       }
     });
+    deck.initDeck(newCards, true);
+  };
 
-    const deck = this.context.initDeck(newCards, true);
-    this.setState({
-      deck,
-      deckSelection: false
-    });
-  }
-}
-
-Archenemy.contextType = DeckContext;
+  return (
+    <div className="archenemy">
+      <ArchenemyHelmet schemes={schemes} />
+      {loading ? (
+        <Loading className="text-muted" />
+      ) : deckSelection ? (
+        <DeckSelect
+          schemes={schemes}
+          onSelectDeck={(name, cards) => selectDeck(name, cards)}
+        />
+      ) : (
+        renderGamePlay()
+      )}
+      <DevTools>
+        <Button onClick={undo} variant="warning" block>
+          Undo
+        </Button>
+        <Deck CardType={Scheme} />
+      </DevTools>
+    </div>
+  );
+};

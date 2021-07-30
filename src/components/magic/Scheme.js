@@ -7,10 +7,29 @@ import "./planes.scss";
 import { hasCustomProperty } from "../../mtg/card.js";
 import { getSetting } from "../../util/settings.js";
 import { CardText } from "./Card";
+import cn from "classnames";
 
 export const Scheme = ({ listDisplay, card, displayActions, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  const displayImages = getSetting("displayImages");
+  const displayGatherer = getSetting("displayGatherer");
+
+  const hasCounters = hasCustomProperty("counter", card);
+  const emptyChildren = children?.type === null;
+
+  const imageURI = card?.image_uris["large"] || back;
+
+  const counter = displayActions && hasCounters && <Counter card={card} />;
+
+  const image = displayImages && (
+    <Card.Img
+      variant="top"
+      width="100%"
+      src={imageURI}
+      className="mtg-card mtg-card-scheme"
+    />
+  );
   const toggleModal = () => {
     setModalOpen(isOpen => !isOpen);
   };
@@ -22,47 +41,7 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
     return hasBody && <Card.Body>{text}</Card.Body>;
   };
 
-  const renderCounter = () => {
-    const displayImages = getSetting("displayImages");
-    const hasCounters = hasCustomProperty("counter", card);
-    if (displayActions && hasCounters) {
-      if (displayImages) {
-        return (
-          <Card.ImgOverlay className="text-center scheme-overlay counter-overlay">
-            <Card.Title className="text-center pt-5 mt-sm-5">
-              <Counter card={card} />
-            </Card.Title>
-          </Card.ImgOverlay>
-        );
-      } else {
-        return (
-          <Card.Body className="text-center pb-0">
-            <Counter card={card} />
-          </Card.Body>
-        );
-      }
-    }
-  };
-
-  const renderChildren = () => {
-    const displayImages = getSetting("displayImages");
-    if (children) {
-      if (displayImages) {
-        return (
-          <Card.ImgOverlay className="text-center scheme-overlay child-overlay">
-            <Card.Title className="text-center pt-5 mt-sm-5">
-              {children}
-            </Card.Title>
-          </Card.ImgOverlay>
-        );
-      } else {
-        return <Card.Body className="text-center pb-0">{children}</Card.Body>;
-      }
-    }
-  };
-
   const renderActions = () => {
-    const displayGatherer = getSetting("displayGatherer");
     if (displayGatherer && card) {
       return (
         <Card.Footer>
@@ -78,25 +57,28 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
     }
   };
 
-  const renderImage = () => {
-    const displayImages = getSetting("displayImages");
+  const renderComponents = () => {
     if (displayImages) {
       return (
-        <Card.Img
-          variant="top"
-          width="100%"
-          src={imageURI()}
-          className="mtg-card mtg-card-scheme"
-        />
+        <Card.ImgOverlay
+          className={cn("text-center scheme-overlay", {
+            "child-overlay": !emptyChildren,
+            "counter-overlay": emptyChildren && hasCounters
+          })}
+        >
+          <Card.Title className="text-center pt-5 mt-sm-5">
+            {counter}
+            {children}
+          </Card.Title>
+        </Card.ImgOverlay>
       );
-    }
-  };
-
-  const imageURI = () => {
-    if (card) {
-      return card.image_uris["large"];
     } else {
-      return back;
+      return (
+        <Card.Body className="text-center pb-0">
+          {counter}
+          {children}
+        </Card.Body>
+      );
     }
   };
 
@@ -123,9 +105,8 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
   } else {
     return (
       <Card bg="black" text="light" className="mtg-scheme-card">
-        {renderImage()}
-        {renderCounter()}
-        {renderChildren()}
+        {image}
+        {renderComponents()}
         {renderBody()}
         {renderActions()}
       </Card>

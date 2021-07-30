@@ -12,7 +12,7 @@ export const DeckSelect = ({ schemes, onSelectDeck }) => (
         <Button
           block
           variant="success"
-          onClick={() => this.selectDeck("All", schemes)}
+          onClick={() => onSelectDeck("All", schemes)}
         >
           Use All
         </Button>

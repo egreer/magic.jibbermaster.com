@@ -4,7 +4,7 @@ import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
 
-import { shuffleArray } from "../../mtg/deck.js";
+import { shuffleArray } from "../../util/shuffleArray";
 
 import { SYBHelmet } from "./Helmet";
 import { canStar } from "../formats/formats";
