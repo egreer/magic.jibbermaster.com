@@ -76,6 +76,7 @@ export const Archenemy = () => {
     const lastCard = deck.undoDraw();
     if (lastCard) {
       game.setCurrentCard(lastCard);
+      setAbandonedOnGoing(false);
     }
   };
 

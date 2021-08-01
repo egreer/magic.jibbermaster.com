@@ -5,15 +5,15 @@ import { Counter } from "./Counter";
 import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
-import { getSetting } from "../../util/settings.js";
 import { CardText } from "./Card";
 import cn from "classnames";
+import { useSettings } from "../../hooks/useSettings";
 
 export const Scheme = ({ listDisplay, card, displayActions, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const displayImages = getSetting("displayImages");
-  const displayGatherer = getSetting("displayGatherer");
+  const settings = useSettings();
+  const { displayImages, displayGatherer } = settings;
 
   const hasCounters = hasCustomProperty("counter", card);
   const emptyChildren = children?.type === null;

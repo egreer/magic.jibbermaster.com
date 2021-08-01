@@ -1,10 +1,11 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { getSetting } from "../../util/settings.js";
+import { useSettings } from "../../hooks/useSettings";
 
 export const CardText = ({ card }) => {
-  const displayText = getSetting("displayText");
-  if (displayText) {
+  const settings = useSettings();
+
+  if (settings.displayText) {
     if (card) {
       return (
         <>
