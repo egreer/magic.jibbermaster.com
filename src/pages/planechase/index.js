@@ -1,426 +1,141 @@
-import React, { Component } from "react";
-import {
-  Alert,
-  Button,
-  ButtonGroup,
-  ButtonToolbar,
-  Fade,
-  ListGroup,
-  Modal
-} from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert, Button, Fade } from "react-bootstrap";
 import { PlanechaseHelmet } from "./Helmet";
-import {
-  getCurrentDeck,
-  getOrCreateCurrentDeck,
-  drawCard,
-  undoDraw,
-  revealCards,
-  addCardsToBottom,
-  removeCards,
-  shuffle,
-  addCardsToTop,
-  getHistory,
-  updateHistory,
-  findAndPutOnBottom,
-  findAndPutOnTop,
-  moveCard
-} from "../../mtg/deck.js";
-import {
-  getCurrentCard,
-  setCurrentCard,
-  hasCustomProperty,
-  setRevealedCards,
-  getRevealedCards,
-  setAdditionalCards,
-  getAdditionalCards,
-  setScryCards,
-  getScryCards
-} from "../../mtg/card.js";
+import { shuffleArray } from "../../util/shuffleArray";
+import { hasCustomProperty } from "../../mtg/card.js";
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { Loading } from "../../components/Loading";
 import { Confirm } from "../../components/Confirm";
 import { Plane } from "../../components/magic/Plane";
-import { getSetting } from "../../util/settings.js";
 import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
-import {
-  DoubleFaceButton,
-  LoyaltyButtonGroup,
-  TapButtonGroup,
-  TenthEditionButton
-} from "../../components/magic/Buttons";
+import { DoubleFaceButton } from "../../components/magic/Buttons";
+import { useDeckContext } from "../../mtg/DeckContext";
+import { History } from "../../components/game/History";
+import { Deck } from "../../components/game/Deck";
+import { DevTools } from "../../components/DevTools";
+import { ActionButton } from "../../components/game/ActionButton";
+import { ScryModal } from "./ScryModal";
+import { ChaosButton } from "./ChaosButton";
+import { TripleChaosModal } from "./TripleChaosModal";
+import { useGameContext } from "../../mtg/GameContext";
+import { useLocalState } from "../../hooks/useLocalState";
 
-export class Planechase extends Component {
-  state = {
-    loading: false,
-    planes: [],
-    deck: null,
-    currentCard: null,
-    revealedCards: [],
-    additionalCards: [],
-    scryCards: [],
-    tripleChaosModalOpen: false,
-    scryModalOpen: false,
-    planeswalkDisabled: false,
-    showHistory: false,
-    showDeck: false,
-    showDeckImages: false,
-    showPlanarDie: true
-  };
+export const Planechase = () => {
+  const [loading, setLoading] = useState(true);
+  const [planes, setPlanes] = useState([]);
+  const [tripleChaosModalOpen, setTripleChaosModalOpen] = useState(false);
+  const [scryModalOpen, setScryModalOpen] = useState(false);
+  const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
 
-  componentDidMount = async () => {
-    const planes = await getAllPlanechaseCards();
-    const deck = getOrCreateCurrentDeck("planechase", planes);
-    const currentCard = getCurrentCard("planechase");
-    const revealedCards = getRevealedCards("planechase") || [];
-    const scryCards = getScryCards("planechase") || [];
-    const additionalCards = getAdditionalCards("planechase");
-    const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
-    const scryModalOpen =
+  const game = useGameContext();
+  const { currentCard, additionalCards, revealedCards, scryCards } = game;
+
+  const deck = useDeckContext();
+  const history = deck.history;
+
+  const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
+
+  const fetchPlanes = useCallback(async () => {
+    const newPlanes = await getAllPlanechaseCards();
+    deck.initDeck(newPlanes, true);
+    setPlanes(newPlanes);
+    setLoading(false);
+  }, [setPlanes, setLoading, deck]);
+
+  useEffect(() => {
+    if (planes && planes.length <= 0) {
+      fetchPlanes();
+    }
+  }, [planes, fetchPlanes]);
+
+  useEffect(() => {
+    const open =
       scryCards.length > 0 && !!hasCustomProperty("scry-1", currentCard);
-    this.setState({
-      planes,
-      loading: false,
-      deck,
-      currentCard,
-      revealedCards,
-      additionalCards,
-      scryCards,
-      planeswalkDisabled,
-      scryModalOpen
-    });
-  };
+    if (open) {
+      setScryModalOpen(open);
+    }
+  }, [setScryModalOpen, scryCards, currentCard]);
 
-  refreshDeck = () => {
-    const deck = getCurrentDeck("planechase");
-    this.setState({ deck });
-  };
+  useEffect(() => {
+    const open =
+      revealedCards.length > 0 &&
+      !!hasCustomProperty("triple-chaos", currentCard);
+    if (open) {
+      setTripleChaosModalOpen(open);
+    }
+  }, [setTripleChaosModalOpen, revealedCards, currentCard]);
 
-  planeswalk = () => {
-    const currentCard = drawCard("planechase");
-    setCurrentCard("planechase", currentCard);
-    let revealedCards = [];
-    let additionalCards = [];
-    if (hasCustomProperty("two-planes", currentCard)) {
-      revealedCards = revealCards("planechase", 2, true);
-      removeCards("planechase", revealedCards);
-      const revealedPlanes = revealedCards.filter(
+  const planeswalk = ({ card }) => {
+    const newCard = card || deck.drawCard();
+    game.setCurrentCard(newCard);
+    let newRevealedCards = [];
+    let newAdditionalCards = [];
+    if (hasCustomProperty("two-planes", newCard)) {
+      newRevealedCards = deck.revealCards(2, true);
+      deck.removeCards(newRevealedCards);
+      const revealedPlanes = newRevealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      const revealedPhenomenon = revealedCards.filter(
+      const revealedPhenomenon = newRevealedCards.filter(
         c => c.type_line.search("Phenomenon") >= 0
       );
-      revealedPlanes.forEach(c => updateHistory("planechase", c));
-      addCardsToBottom("planechase", revealedPhenomenon);
-      revealedCards = [];
-      additionalCards = revealedPlanes;
+      revealedPlanes.forEach(c => deck.updateHistory(c));
+      deck.addCardsToBottom(revealedPhenomenon);
+      newRevealedCards = [];
+      newAdditionalCards = revealedPlanes;
     }
 
-    if (hasCustomProperty("top-5", currentCard)) {
-      revealedCards = revealCards("planechase", 5, true);
-      removeCards("planechase", revealedCards);
-      this.setState({ planeswalkDisabled: true });
+    if (hasCustomProperty("top-5", newCard)) {
+      newRevealedCards = deck.revealCards(5, true);
+      deck.removeCards(newRevealedCards);
     }
 
-    setRevealedCards("planechase", revealedCards);
-    setAdditionalCards("planechase", additionalCards);
-    this.refreshDeck();
-    this.setState({ currentCard, revealedCards, additionalCards });
+    game.setRevealedCards(newRevealedCards);
+    game.setAdditionalCards(newAdditionalCards);
   };
 
-  reset = async () => {
-    this.setState({ loading: true });
-    const planes = await getAllPlanechaseCards();
-    const deck = getOrCreateCurrentDeck("planechase", planes, true);
-    const currentCard = setCurrentCard("planechase", null);
-    const revealedCards = setRevealedCards("planechase", []);
-    const scryCards = setScryCards("planechase", []);
-    const additionalCards = setAdditionalCards("planechase", []);
-    this.setState({
-      planes,
-      loading: false,
-      deck,
-      currentCard,
-      revealedCards,
-      scryCards,
-      additionalCards,
-      planeswalkDisabled: false,
-      scryModalOpen: false
-    });
+  const reset = async () => {
+    setLoading(true);
+    fetchPlanes();
+    deck.reInit();
+    game.reset();
+    setLoading(false);
   };
 
-  undo = async () => {
-    const currentCard = undoDraw("planechase");
-    this.refreshDeck();
-    this.setState({ currentCard });
+  const undo = async () => {
+    const lastCard = deck.undoDraw();
+    game.reset();
+    if (lastCard) {
+      game.setCurrentCard(lastCard);
+    }
   };
 
-  triggerChaos = card => {
-    const { scryCards } = this.state;
+  const triggerChaos = card => {
     console.log("Chaos Triggered");
     if (hasCustomProperty("triple-chaos", card)) {
-      const newRevealedCards = revealCards("planechase", 3, true);
-      removeCards("planechase", newRevealedCards);
-      const shuffledCards = shuffle(newRevealedCards.slice());
-      addCardsToBottom("planechase", shuffledCards);
-      this.refreshDeck();
-      setRevealedCards("planechase", newRevealedCards);
-      this.setState({
-        revealedCards: newRevealedCards,
-        tripleChaosModalOpen: true
-      });
+      const newRevealedCards = deck.revealCards(3, true);
+      deck.removeCards(newRevealedCards);
+      const shuffledCards = shuffleArray(newRevealedCards.slice());
+      deck.addCardsToBottom(shuffledCards);
+      game.setRevealedCards(newRevealedCards);
+      setTripleChaosModalOpen(true);
     }
 
     if (hasCustomProperty("scry-1", card)) {
       if (!scryCards || scryCards.length === 0) {
-        const newScryCards = revealCards("planechase", 1, false);
-        removeCards("planechase", newScryCards);
-        setScryCards("planechase", newScryCards);
-        this.setState({ scryCards: newScryCards });
+        const newScryCards = deck.revealCards(1, false);
+        deck.removeCards(newScryCards);
+        game.setScryCards(newScryCards);
+        setScryModalOpen(true);
       }
-      this.setState({ scryModalOpen: true });
     }
   };
 
-  render() {
-    const {
-      loading,
-      planes,
-      deck,
-      currentCard,
-      planeswalkDisabled,
-      showPlanarDie
-    } = this.state;
-
-    return (
-      <div className="planechase">
-        <PlanechaseHelmet planes={planes} />
-        <div className="fixed-top mt-1 ml-1 w-25 text-left">
-          <Button
-            onClick={this.planeswalk}
-            className="mb-2"
-            variant="success"
-            disabled={planeswalkDisabled || loading}
-            block
-          >
-            <i className="ms ms-planeswalker ms-2x mx-2" />
-            <span className="mx-2 d-none d-md-inline">Planeswalk</span>
-          </Button>
-        </div>
-        {loading ? (
-          <Loading className="text-muted" />
-        ) : (
-          <div className="mb-2">
-            {currentCard ? (
-              <Fade key={currentCard.deck_card_id} timeout={100}>
-                <Plane card={currentCard} renderActions="true">
-                  {this.renderChaos(currentCard)}
-                </Plane>
-              </Fade>
-            ) : (
-              <Plane />
-            )}
-          </div>
-        )}
-        {this.renderTwoPlanes()}
-        {this.renderFivePlanes()}
-        {this.renderTripleChaosModal()}
-        {this.renderScryModal()}
-        {this.renderHistory()}
-        <p className="text-center my-3 noselect">
-          There are {deck ? deck.length : 0} cards remaining.
-        </p>
-        <Confirm
-          onConfirm={this.reset}
-          headerText="Reset Planes?"
-          triggerText="Reset"
-          confirmText="Reset"
-          confirmVariant="danger"
-          triggerButtonParams={{ variant: "danger", block: true }}
-        />
-        {this.renderDevTools()}
-        {showPlanarDie && !planeswalkDisabled && (
-          <div
-            className="position-fixed"
-            style={{ bottom: "5px", right: "5px" }}
-          >
-            <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  renderDevTools = () => {
-    const devTools = getSetting("devTools");
-    if (devTools) {
-      return (
-        <div className="my-4">
-          <h5 className="text-center noselect">Dev Tools</h5>
-          <Button onClick={this.undo} variant="warning" block>
-            Undo
-          </Button>
-          {this.renderDeck()}
-          <DoubleFaceButton
-            text="Planar Die"
-            onClick={this.togglePlanarDie}
-            enabled={this.state.showPlanarDie}
-          />
-        </div>
-      );
-    }
-  };
-
-  togglePlanarDie = () => {
-    this.setState({ showPlanarDie: !this.state.showPlanarDie });
-  };
-
-  toggleDeck = () => {
-    this.setState({ showDeck: !this.state.showDeck });
-  };
-
-  toggleDeckImages = () => {
-    this.setState({ showDeckImages: !this.state.showDeckImages });
-  };
-
-  manipulateDeck = () => {
-    this.refreshDeck();
-  };
-
-  renderDeck = () => {
-    const { deck, showDeck, showDeckImages } = this.state;
-    return (
-      <div className="my-2">
-        <Button onClick={this.toggleDeck} variant="secondary" block>
-          {showDeck ? "Hide" : "Show"} Deck
-        </Button>
-        <Fade in={showDeck}>
-          <div>
-            {showDeck && (
-              <>
-                <Button
-                  onClick={this.toggleDeckImages}
-                  variant="secondary"
-                  block
-                >
-                  {showDeckImages ? "Hide" : "Show"} Full Card
-                </Button>
-                <ListGroup>
-                  {deck.map((p, i) => (
-                    <React.Fragment key={p.deck_card_id}>
-                      <Plane card={p} listDisplay={!showDeckImages} />
-                      <ListGroup.Item className="text-center justify-content-center d-flex">
-                        <ButtonToolbar>
-                          <LoyaltyButtonGroup
-                            reverse
-                            downProps={{
-                              disabled: i === deck.length - 1,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  moveCard("planechase", i, i + 1)
-                                )
-                            }}
-                            upProps={{
-                              disabled: i === 0,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  moveCard("planechase", i, i - 1)
-                                )
-                            }}
-                          />
-                          <TapButtonGroup
-                            className="ml-2"
-                            unTapProps={{
-                              disabled: i === 0,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  findAndPutOnTop("planechase", p.deck_card_id)
-                                )
-                            }}
-                            tapProps={{
-                              disabled: i === deck.length - 1,
-                              onClick: () =>
-                                this.manipulateDeck(
-                                  findAndPutOnBottom(
-                                    "planechase",
-                                    p.deck_card_id
-                                  )
-                                )
-                            }}
-                          />
-
-                          <ButtonGroup className="ml-2">
-                            <TenthEditionButton
-                              onClick={() =>
-                                this.manipulateDeck(
-                                  removeCards("planechase", [p])
-                                )
-                              }
-                            />
-                          </ButtonGroup>
-                        </ButtonToolbar>
-                      </ListGroup.Item>
-                    </React.Fragment>
-                  ))}
-                </ListGroup>
-              </>
-            )}
-          </div>
-        </Fade>
-      </div>
-    );
-  };
-
-  toggleHistory = () => {
-    this.setState({ showHistory: !this.state.showHistory });
-  };
-
-  renderHistory = () => {
-    const { showHistory } = this.state;
-    const history = getHistory("planechase");
-    return (
-      <div className="my-2">
-        <Button onClick={this.toggleHistory} variant="secondary" block>
-          {showHistory ? "Hide" : "Show"} History
-        </Button>
-        <Fade in={showHistory}>
-          <div>
-            {showHistory && history && (
-              <ListGroup>
-                {history.reverse().map(p => (
-                  <Plane card={p} key={p.deck_card_id} listDisplay={true} />
-                ))}
-              </ListGroup>
-            )}
-          </div>
-        </Fade>
-      </div>
-    );
-  };
-
-  renderChaos(card) {
-    const hasChaos = hasCustomProperty("chaos-trigger", card);
-    if (hasChaos) {
-      return (
-        <Button
-          onClick={() => this.triggerChaos(card)}
-          variant="info"
-          size="lg"
-          className="btn-translucent"
-        >
-          <i className="ms ms-chaos ms-2x mx-2" />
-          <span className="mx-2 d-none d-md-inline">Trigger Chaos</span>
-        </Button>
-      );
-    }
-  }
-
-  renderTwoPlanes() {
-    const { currentCard, additionalCards } = this.state;
+  const renderTwoPlanes = () => {
     if (hasCustomProperty("two-planes", currentCard)) {
       const revealedPlanes = additionalCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      // TODO chaos etc
       return (
         <div>
           <Alert variant="info" className="text-center mb-0">
@@ -430,39 +145,33 @@ export class Planechase extends Component {
           </Alert>
           {revealedPlanes.map(c => (
             <React.Fragment key={c.deck_card_id}>
-              <Plane card={c} renderActions="true">
-                {this.renderChaos(c)}
+              <Plane card={c} displayActions="true">
+                <ChaosButton card={c} onClick={triggerChaos} />
               </Plane>
             </React.Fragment>
           ))}
         </div>
       );
     }
-  }
+  };
 
-  selectPlane = card => {
-    const { revealedCards } = this.state;
-    removeCards("planechase", revealedCards);
-    addCardsToTop("planechase", [card]);
+  const selectPlane = card => {
     const restCards = revealedCards.filter(
       c => c.deck_card_id !== card.deck_card_id
     );
-    const shuffledCards = shuffle(restCards.slice());
-    addCardsToBottom("planechase", shuffledCards);
-    setRevealedCards("planechase", []);
-    this.setState({ planeswalkDisabled: false, revealedCards: [] });
-    this.planeswalk();
+    const shuffledCards = shuffleArray(restCards.slice());
+    deck.addCardsToBottom([...shuffledCards]);
+    game.clearRevealedCards();
+    setTimeout(() => planeswalk({ card }));
   };
 
-  renderFivePlanes() {
-    const { currentCard, revealedCards } = this.state;
+  const renderFivePlanes = () => {
     if (hasCustomProperty("top-5", currentCard)) {
-      console.log(revealedCards);
+      console.log("Render 5 - Revealed Cards", revealedCards);
       const revealedPlanes = revealedCards.filter(
         c => c.type_line.search("Plane") >= 0
       );
-      console.log(revealedPlanes);
-      // TODO Countes, chaos etc
+      console.log("Render 5 - Revealed Planes", revealedPlanes);
       return (
         <div>
           <Alert variant="info" className="text-center mb-0">
@@ -474,7 +183,7 @@ export class Planechase extends Component {
             <div key={c.deck_card_id}>
               <Plane card={c}>
                 <Button
-                  onClick={() => this.selectPlane(c)}
+                  onClick={() => selectPlane(c)}
                   variant="primary"
                   className="btn-translucent"
                   size="lg"
@@ -488,129 +197,96 @@ export class Planechase extends Component {
         </div>
       );
     }
-  }
-
-  _tripleChaosModalClose = () => {
-    setRevealedCards("planechase", []);
-    this.setState({
-      tripleChaosModalOpen: false,
-      revealedCards: []
-    });
   };
 
-  _tripleChaosModalToggle = () => {
-    if (this.state.tripleChaosModalOpen) {
-      this._tripleChaosModalClose();
-    }
+  const _tripleChaosModalClose = () => {
+    game.clearRevealedCards();
+    setTripleChaosModalOpen(false);
   };
 
-  renderTripleChaosModal() {
-    const { revealedCards, tripleChaosModalOpen } = this.state;
-    if (revealedCards && tripleChaosModalOpen) {
-      const revealedPlanes = revealedCards.filter(
-        c => c.type_line.search("Plane") >= 0
-      );
-      return (
-        <Modal
-          show={!!tripleChaosModalOpen}
-          onHide={this._tripleChaosModalToggle}
-          size="md"
-          backdrop={true}
-          dialogClassName="bg-secondary"
-        >
-          <Modal.Header className="flex-column text-center text-white noselect">
-            <div className="modal-title h5 mx-auto">
-              <i className="ms ms-chaos mr-1" />
-              <i className="ms ms-chaos mr-1" />
-              <i className="ms ms-chaos mr-1" />
-              <span className="mx-1">Triple Chaos</span>
-              <i className="ms ms-chaos ml-1" />
-              <i className="ms ms-chaos ml-1" />
-              <i className="ms ms-chaos ml-1" />
-            </div>
-            <div className="mx-auto">
-              <small className="text-center">You Pick Order</small>
-            </div>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            {revealedPlanes.map(c => (
-              <React.Fragment key={c.deck_card_id}>
-                <Plane card={c}>{this.renderChaos(c)}</Plane>
-              </React.Fragment>
-            ))}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="info"
-              block
-              aria-label="Close"
-              onClick={this._tripleChaosModalClose}
-            >
-              Done
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      );
-    }
-  }
-
-  _scryModalClose = () => {
-    setScryCards("planechase", []);
-    this.setState({
-      scryModalOpen: false,
-      scryCards: []
-    });
-  };
-
-  _scryTop = () => {
-    const { scryCards } = this.state;
-    addCardsToTop("planechase", scryCards);
+  const _scryTop = () => {
+    deck.addCardsToTop(scryCards);
     console.log("Scry Top", scryCards);
-    this.refreshDeck();
-    setScryCards("planechase", []);
-    this.setState({ scryCards: [], scryModalOpen: false });
+    game.clearScryCards();
+    setScryModalOpen(false);
   };
 
-  _scryBottom = () => {
-    const { scryCards } = this.state;
-    addCardsToBottom("planechase", scryCards);
+  const _scryBottom = () => {
+    deck.addCardsToBottom(scryCards);
     console.log("Scry Bottom", scryCards);
-    this.refreshDeck();
-    setScryCards("planechase", []);
-    this.setState({ scryCards: [], scryModalOpen: false });
+    game.clearScryCards();
+    setScryModalOpen(false);
   };
 
-  renderScryModal = () => {
-    const { scryCards, scryModalOpen } = this.state;
-    if (scryCards && scryModalOpen) {
-      return (
-        <Modal
-          show={!!scryModalOpen}
-          size="md"
-          dialogClassName="bg-secondary"
-          variant="secondary"
-          backdrop="static"
-        >
-          <Modal.Header className="justify-content-center text-white noselect">
-            <Modal.Title>
-              <i className="ms ms-chaos mx-4" />
-              Scry Card
-              <i className="ms ms-chaos mx-4" />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Button variant="info" block onClick={this._scryTop}>
-              Top
-            </Button>
-            {scryCards.map(c => (
-              <Plane card={c} key={c.deck_card_id} />
-            ))}
-            <Button variant="info" block onClick={this._scryBottom}>
-              Bottom
-            </Button>
-          </Modal.Body>
-        </Modal>
-      );
-    }
-  };
-}
+  return (
+    <div className="planechase">
+      <PlanechaseHelmet planes={planes} cardType={Plane} />
+      <ActionButton
+        text="Planeswalk"
+        onClick={planeswalk}
+        disabled={planeswalkDisabled || loading}
+        icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
+      />
+      {loading ? (
+        <Loading className="text-muted" />
+      ) : (
+        <div className="mb-2">
+          {currentCard ? (
+            <Fade key={currentCard.deck_card_id} timeout={100}>
+              <Plane card={currentCard} displayActions="true">
+                <ChaosButton card={currentCard} onClick={triggerChaos} />
+              </Plane>
+            </Fade>
+          ) : (
+            <Plane />
+          )}
+        </div>
+      )}
+      {renderTwoPlanes()}
+      {renderFivePlanes()}
+
+      <TripleChaosModal
+        open={tripleChaosModalOpen}
+        revealedCards={revealedCards}
+        onHide={_tripleChaosModalClose}
+        chaosClick={c => triggerChaos(c)}
+        close={_tripleChaosModalClose}
+      />
+
+      <ScryModal
+        scryCards={scryCards}
+        open={scryModalOpen}
+        onScryTop={() => _scryTop()}
+        onScryBottom={() => _scryBottom()}
+      />
+      <History history={history} CardType={Plane} />
+      <p className="text-center my-3 noselect">
+        There are {deck.deck ? deck.deck.length : 0} cards remaining.
+      </p>
+      <Confirm
+        onConfirm={reset}
+        headerText="Reset Planes?"
+        triggerText="Reset"
+        confirmText="Reset"
+        confirmVariant="danger"
+        triggerButtonParams={{ variant: "danger", block: true }}
+      />
+      <DevTools>
+        <Button onClick={undo} variant="warning" block>
+          Undo
+        </Button>
+        <Deck CardType={Plane} />
+        <DoubleFaceButton
+          text="Planar Die"
+          onClick={() => setShowPlanarDie(!showPlanarDie)}
+          enabled={showPlanarDie}
+        />
+      </DevTools>
+      {showPlanarDie && !planeswalkDisabled && (
+        <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
+          <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
+        </div>
+      )}
+    </div>
+  );
+};

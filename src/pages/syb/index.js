@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Button, ButtonGroup, Col, Row, Spinner } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import debounce from "lodash/debounce";
-import store from "store";
 
-import { getSetting } from "../../util/settings.js";
-import { shuffle } from "../../mtg/deck.js";
+import { shuffleArray } from "../../util/shuffleArray";
 
 import { SYBHelmet } from "./Helmet";
 import { canStar } from "../formats/formats";
@@ -15,61 +13,73 @@ import {
   DoubleFaceButton,
   LoyaltyButtonGroup
 } from "../../components/magic/Buttons.js";
+import { useLocalState } from "../../hooks/useLocalState";
+import { DevTools } from "../../components/DevTools.js";
+
+const TABLE_SHAPE_SQUARE = "square";
+const TABLE_SHAPE_CIRCLE = "circle";
+const DEFAULT_TABLE_SHAPE = TABLE_SHAPE_CIRCLE;
+const TARGET_OFFSET = 2;
+const DEFAULT_PLAYER_COUNT = 4;
+const DEFAULT_PLAYER_TARGETS = 1;
+const DEFAULT_LABELS = { 0: "J" };
 
 const circleLayout = { name: "circle", nodeDimensionsIncludeLabels: true };
 const gridLayout = { name: "grid", nodeDimensionsIncludeLabels: true, rows: 2 };
-const TARGET_OFFSET = 2;
 
-export class SYB extends Component {
-  state = {
-    playerCount: 4,
-    playerTargets: 1,
-    targets: null,
-    loadingDirection: false,
-    cySet: false,
-    labels: { 0: "J" },
-    showTurnEdges: true,
-    starTurn: false,
-    showScrewEdges: true
-  };
+export const SYB = () => {
+  const [playerCount, setPlayerCount] = useLocalState(
+    "syb-playerCount",
+    DEFAULT_PLAYER_COUNT
+  );
+  const [playerTargets, setPlayerTargets] = useLocalState(
+    "syb-playerTargets",
+    DEFAULT_PLAYER_TARGETS
+  );
+  const [targets, setTargets] = useLocalState("syb-targets", null);
+  const [labels, setLabels] = useLocalState("syb-labels", DEFAULT_LABELS);
+  const [tableShape, setTableShape] = useLocalState(
+    "syb-tableShape",
+    DEFAULT_TABLE_SHAPE
+  );
 
-  cy = null;
-  dialog = null;
+  // Dev Controls: These may only need to be setState
+  const [showTurnEdges, setShowTurnEdges] = useLocalState(
+    "syb-showTurnEdges",
+    true
+  );
+  const [starTurn, setStarTurn] = useLocalState("syb-starTurn", false);
+  const [showScrewEdges, setShowScrewEdges] = useLocalState(
+    "syb-showScrewEdges",
+    true
+  );
 
-  componentDidMount = () => {
-    const playerCount = store.get("syb-playerCount") || 4;
-    const playerTargets = store.get("syb-playerTargets") || 1;
-    const targets = store.get("syb-targets") || null;
-    const tableShape = store.get("syb-tableShape") || "circle";
-    const labels = store.get("syb-labels") || { 0: "J" };
-    this.setState({
-      playerCount,
-      playerTargets,
-      targets,
-      tableShape,
-      labels
+  const [cySet, setCySet] = useState(false);
+  const [loadingDirection, setLoadingDirection] = useState(false);
+
+  const cyContainer = useRef(null);
+  const dialog = useRef(null);
+
+  useEffect(() => {
+    cyContainer.current.nodes().each(d => {
+      const currentLabel = d.data("label");
+      const playerNumber = d.id().split("-")[1];
+      const newLabel = labels[playerNumber] || currentLabel;
+      if (currentLabel !== newLabel) {
+        d.data("label", newLabel);
+      }
     });
-  };
+  }, [cyContainer, labels]);
 
-  generateNodes() {
-    const { playerCount, labels } = this.state;
+  const generateNodes = () => {
     const players = Array.from(Array(playerCount).keys());
     return players.map(p => {
       const label = labels[p] || p;
       return { data: { id: `player-${p}`, label, type: "triangle-tee" } };
     });
-  }
+  };
 
-  generateEdges() {
-    const {
-      targets,
-      playerTargets,
-      playerCount,
-      showTurnEdges,
-      starTurn,
-      showScrewEdges
-    } = this.state;
-
+  const generateEdges = () => {
     if (!targets) return [];
 
     const screwEdges = showScrewEdges
@@ -117,17 +127,15 @@ export class SYB extends Component {
       : [];
 
     return screwEdges.concat(turnEdges);
-  }
+  };
 
-  regenerateOrder(c) {
-    const { playerCount } = this.state;
+  const regenerateOrder = c => {
     const players = Array.from(Array(c || playerCount).keys());
-    const targets = store.set("syb-targets", shuffle(players));
-    this.setState({ targets });
-  }
+    setTargets(shuffleArray(players));
+  };
 
-  handleCy(cy) {
-    const layout = this.isSquare() ? gridLayout : circleLayout;
+  const handleCy = cy => {
+    const layout = isSquare() ? gridLayout : circleLayout;
     const SELECT_THRESHOLD = 100;
 
     // Refresh Layout if needed
@@ -137,10 +145,10 @@ export class SYB extends Component {
 
     const nodeClick = debounce(e => {
       const clickedNode = e.target;
-      this.setLabel(clickedNode.id().split("-")[1]);
+      setLabel(clickedNode.id().split("-")[1]);
     }, SELECT_THRESHOLD);
 
-    if (!this.state.cySet) {
+    if (!cySet) {
       cy.on("add remove", () => {
         refreshLayout();
       });
@@ -172,40 +180,41 @@ export class SYB extends Component {
         );
       });
 
-      this.setState({ cySet: true });
+      setCySet(true);
     }
-    this.cy = cy;
-  }
+    cyContainer.current = cy;
+  };
 
-  setLabel(number) {
-    console.log("Setting label", number);
-    this.dialog.show({
-      title: "Who is this?",
-      bsSize: "sm",
-      actions: [
-        Dialog.CancelAction(),
-        Dialog.OKAction(a => {
-          const { labels } = this.state;
-          labels[number] = a.value;
-          store.set("syb-labels", labels);
-          this.setState({ labels });
-        })
-      ],
-      prompt: Dialog.TextPrompt({ initialValue: number })
-    });
-  }
+  const setLabel = useCallback(
+    number => {
+      console.log("Setting label", number);
+      dialog.current.show({
+        title: "Who is this?",
+        bsSize: "sm",
+        actions: [
+          Dialog.CancelAction(),
+          Dialog.OKAction(a => {
+            labels[number] = a.value;
+            setLabels({ ...labels });
+          })
+        ],
+        prompt: Dialog.TextPrompt({ initialValue: labels[number] || number })
+      });
+    },
+    [dialog, labels, setLabels]
+  );
 
-  renderCyto() {
-    const layout = this.isSquare() ? gridLayout : circleLayout;
+  const renderCyto = () => {
+    const layout = isSquare() ? gridLayout : circleLayout;
     const elements = {
-      nodes: this.generateNodes(),
-      edges: this.generateEdges()
+      nodes: generateNodes(),
+      edges: generateEdges()
     };
-    const stylesheet = cytoStyle({ square: this.isSquare() });
+    const stylesheet = cytoStyle({ square: isSquare() });
 
     return (
       <CytoscapeComponent
-        cy={cy => this.handleCy(cy)}
+        cy={cy => handleCy(cy)}
         elements={CytoscapeComponent.normalizeElements(elements)}
         style={{ width: "100vw", height: "100vh" }}
         className={"flex-grow"}
@@ -214,251 +223,182 @@ export class SYB extends Component {
         layout={layout}
       />
     );
-  }
+  };
 
-  removeListeners() {
-    this.cy.removeListener("add remove");
-    this.cy
+  const removeListeners = () => {
+    cyContainer.current.removeListener("add remove");
+    cyContainer.current
       .nodes()
       .removeListener("click tap touchstart touchend mouseover mouseout");
-    this.setState({ cySet: false });
-  }
+    setCySet(false);
+  };
 
-  isSquare() {
-    const { tableShape } = this.state;
-    return false && tableShape === "square";
-  }
+  const isSquare = () => {
+    return false && tableShape === TABLE_SHAPE_SQUARE;
+  };
 
-  incrementCount() {
-    const { playerCount } = this.state;
-    const newPlayerCount = store.set("syb-playerCount", playerCount + 1);
-    this.adjustTargetCount(newPlayerCount);
-    this.regenerateOrder(newPlayerCount);
-    this.removeListeners();
-    this.setState({ playerCount: newPlayerCount });
-  }
+  const incrementCount = () => {
+    const newPlayerCount = playerCount + 1;
+    adjustTargetCount(newPlayerCount);
+    regenerateOrder(newPlayerCount);
+    removeListeners();
+    setPlayerCount(newPlayerCount);
+  };
 
-  decrementCount() {
-    const { playerCount } = this.state;
-    const newPlayerCount = store.set(
-      "syb-playerCount",
-      Math.max(playerCount - 1, 1)
-    );
-    this.adjustTargetCount(newPlayerCount);
-    this.regenerateOrder(newPlayerCount);
-    this.removeListeners();
-    this.setState({ playerCount: newPlayerCount });
-  }
+  const decrementCount = () => {
+    const newPlayerCount = Math.max(playerCount - 1, 1);
+    adjustTargetCount(newPlayerCount);
+    regenerateOrder(newPlayerCount);
+    removeListeners();
+    setPlayerCount(newPlayerCount);
+  };
 
-  adjustTargetCount(playerCount) {
-    const { playerTargets } = this.state;
+  const adjustTargetCount = playerCount => {
     const newPlayerTargets = Math.min(
       playerTargets,
       Math.max(playerCount - TARGET_OFFSET, 1)
     );
     if (playerTargets !== newPlayerTargets) {
-      this.setState({ playerTargets: newPlayerTargets });
+      setPlayerTargets(newPlayerTargets);
     }
-  }
+  };
 
-  incrementTargetCount() {
-    const { playerCount, playerTargets } = this.state;
-    const newPlayerTargets = store.set(
-      "syb-playerTargets",
-      Math.min(playerTargets + 1, playerCount)
-    );
-    this.regenerateOrder(playerCount, newPlayerTargets);
-    this.removeListeners();
-    this.setState({ playerTargets: newPlayerTargets });
-  }
+  const incrementTargetCount = () => {
+    const newPlayerTargets = Math.min(playerTargets + 1, playerCount);
+    regenerateOrder(playerCount, newPlayerTargets);
+    removeListeners();
+    setPlayerTargets(newPlayerTargets);
+  };
 
-  decrementTargetCount() {
-    const { playerCount, playerTargets } = this.state;
-    const newPlayerTargets = store.set(
-      "syb-playerTargets",
-      Math.max(playerTargets - 1, 1)
-    );
-    this.regenerateOrder(playerCount, newPlayerTargets);
-    this.removeListeners();
-    this.setState({ playerTargets: newPlayerTargets });
-  }
+  const decrementTargetCount = () => {
+    const newPlayerTargets = Math.max(playerTargets - 1, 1);
+    regenerateOrder(playerCount, newPlayerTargets);
+    removeListeners();
+    setPlayerTargets(newPlayerTargets);
+  };
 
-  setTableShape(shape) {
-    const tableShape = store.set("syb-tableShape", shape);
-    this.setState({ tableShape });
-  }
-
-  whichWay = () => {
-    const targets = store.set("syb-targets", null);
-    this.setState({ loadingDirection: true, targets });
+  const whichWay = () => {
+    setTargets(null);
+    setLoadingDirection(true);
 
     setTimeout(() => {
-      this.regenerateOrder();
-      this.setState({ loadingDirection: false });
+      regenerateOrder();
+      setLoadingDirection(false);
     }, 1500);
   };
 
-  reset = async () => {
-    this.setState({ loading: true });
-    const playerCount = store.set("syb-playerCount", 4);
-    const playerTargets = store.set("syb-playerTargets", 1);
-    const targets = store.set("syb-targets", null);
-    const tableShape = store.set("syb-tableShape", "circle");
-    const labels = store.set("syb-labels", { 0: "J" });
-
-    this.removeListeners();
-    this.setState(
-      {
-        playerCount,
-        playerTargets,
-        targets,
-        tableShape,
-        labels
-      },
-      () => this.regenerateOrder(playerCount, playerTargets)
-    );
+  const reset = async () => {
+    setPlayerCount(DEFAULT_PLAYER_COUNT);
+    setPlayerTargets(DEFAULT_PLAYER_TARGETS);
+    setTargets(null);
+    setTableShape(DEFAULT_TABLE_SHAPE);
+    setLabels(DEFAULT_LABELS);
+    removeListeners();
+    regenerateOrder(DEFAULT_PLAYER_COUNT, DEFAULT_PLAYER_TARGETS);
   };
 
-  render() {
-    const {
-      playerCount,
-      playerTargets,
-      tableShape,
-      loadingDirection
-    } = this.state;
-    return (
-      <div className="syb">
-        <SYBHelmet />
+  return (
+    <div className="syb">
+      <SYBHelmet />
 
-        <Row className="my-4 text-center">
-          <Col>
-            <h1>{playerCount} Players</h1>
-            <LoyaltyButtonGroup
-              upProps={{
-                onClick: () => {
-                  this.incrementCount();
-                }
-              }}
-              downProps={{
-                disabled: playerCount <= 1,
-                onClick: () => {
-                  this.decrementCount();
-                }
-              }}
-            />
-          </Col>
-          <Col>
-            <h1>{playerTargets} Targets</h1>
-            <LoyaltyButtonGroup
-              upProps={{
-                disabled: playerTargets >= playerCount - TARGET_OFFSET,
-                onClick: () => {
-                  this.incrementTargetCount();
-                }
-              }}
-              downProps={{
-                disabled: playerTargets <= 1,
-                onClick: () => {
-                  this.decrementTargetCount();
-                }
-              }}
-            />
-          </Col>
-          {false && (
-            <ButtonGroup>
-              <Button
-                active={tableShape === "circle"}
-                onClick={() => this.setTableShape("circle")}
-                variant="secondary"
-              >
-                <i className="ss ss-portal ss-2x" />
-              </Button>
-              <Button
-                active={tableShape === "square"}
-                onClick={() => this.setTableShape("square")}
-                variant="secondary"
-              >
-                <i className="ss ss-bfz ss-2x" />
-              </Button>
-            </ButtonGroup>
-          )}
-        </Row>
-        <div className="text-center my-2">
-          <Button
-            variant="danger"
-            onClick={this.whichWay}
-            block
-            disabled={loadingDirection}
-          >
-            {loadingDirection ? "Calculating..." : "Which way are we screwing?"}
-          </Button>
-        </div>
-        <div className="d-flex">
-          {loadingDirection && (
-            <div
-              className="position-absolute w-75 text-center"
-              style={{ top: "45%", left: "0%" }}
+      <Row className="my-4 text-center">
+        <Col>
+          <h1>{playerCount} Players</h1>
+          <LoyaltyButtonGroup
+            upProps={{
+              onClick: incrementCount
+            }}
+            downProps={{
+              disabled: playerCount <= 1,
+              onClick: decrementCount
+            }}
+          />
+        </Col>
+        <Col>
+          <h1>{playerTargets} Targets</h1>
+          <LoyaltyButtonGroup
+            upProps={{
+              disabled: playerTargets >= playerCount - TARGET_OFFSET,
+              onClick: incrementTargetCount
+            }}
+            downProps={{
+              disabled: playerTargets <= 1,
+              onClick: decrementTargetCount
+            }}
+          />
+        </Col>
+        {false && (
+          <ButtonGroup>
+            <Button
+              active={tableShape === TABLE_SHAPE_CIRCLE}
+              onClick={() => setTableShape(TABLE_SHAPE_CIRCLE)}
+              variant="secondary"
             >
-              <Spinner
-                variant="danger"
-                animation="grow"
-                className="position-absolute"
-                style={{ width: "10rem", height: "10rem" }}
-              />
-            </div>
-          )}
-          {this.renderCyto()}
-        </div>
-        <Button onClick={this.reset} variant="danger" block>
-          Reset
+              <i className="ss ss-portal ss-2x" />
+            </Button>
+            <Button
+              active={tableShape === TABLE_SHAPE_SQUARE}
+              onClick={() => setTableShape(TABLE_SHAPE_SQUARE)}
+              variant="secondary"
+            >
+              <i className="ss ss-bfz ss-2x" />
+            </Button>
+          </ButtonGroup>
+        )}
+      </Row>
+      <div className="text-center my-2">
+        <Button
+          variant="danger"
+          onClick={whichWay}
+          block
+          disabled={loadingDirection}
+        >
+          {loadingDirection ? "Calculating..." : "Which way are we screwing?"}
         </Button>
-
-        {this.renderDevTools()}
-
-        <Dialog
-          ref={component => {
-            this.dialog = component;
-          }}
-        />
       </div>
-    );
-  }
+      <div className="d-flex">
+        {loadingDirection && (
+          <div
+            className="position-absolute w-75 text-center"
+            style={{ top: "45%", left: "0%" }}
+          >
+            <Spinner
+              variant="danger"
+              animation="grow"
+              className="position-absolute"
+              style={{ width: "10rem", height: "10rem" }}
+            />
+          </div>
+        )}
+        {renderCyto()}
+      </div>
+      <Button onClick={reset} variant="danger" block>
+        Reset
+      </Button>
 
-  toggleTurnEdges = () => {
-    this.setState({ showTurnEdges: !this.state.showTurnEdges });
-  };
+      <DevTools>
+        <DoubleFaceButton
+          text="Turn Edges"
+          onClick={() => setShowTurnEdges(!showTurnEdges)}
+          enabled={showTurnEdges}
+        />
+        <DoubleFaceButton
+          text="Screw Edges"
+          onClick={() => setShowScrewEdges(!showScrewEdges)}
+          enabled={showScrewEdges}
+        />
+        <DoubleFaceButton
+          text="Star Turn"
+          onClick={() => setStarTurn(!starTurn)}
+          enabled={starTurn}
+        />
+      </DevTools>
 
-  toggleScrewEdges = () => {
-    this.setState({ showScrewEdges: !this.state.showScrewEdges });
-  };
-
-  toggleStarTurn = () => {
-    this.setState({ starTurn: !this.state.starTurn });
-  };
-
-  renderDevTools = () => {
-    const devTools = getSetting("devTools");
-    if (devTools) {
-      return (
-        <div className="my-4">
-          <h5 className="text-center noselect">Dev Tools</h5>
-          <DoubleFaceButton
-            text="Turn Edges"
-            onClick={this.toggleTurnEdges}
-            enabled={this.state.showTurnEdges}
-          />
-          <DoubleFaceButton
-            text="Screw Edges"
-            onClick={this.toggleScrewEdges}
-            enabled={this.state.showScrewEdges}
-          />
-          <DoubleFaceButton
-            text="Star Turn"
-            onClick={this.toggleStarTurn}
-            enabled={this.state.starTurn}
-          />
-        </div>
-      );
-    }
-  };
-}
+      <Dialog
+        ref={component => {
+          dialog.current = component;
+        }}
+      />
+    </div>
+  );
+};

@@ -1,48 +1,33 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-export class Loading extends Component {
-  constructor(props) {
-    super(props);
+export const Loading = ({
+  label = "Loading",
+  start = 0,
+  numDots = 3,
+  interval = 500,
+  className
+}) => {
+  const [dotsCount, setDotsCount] = useState(start);
 
-    this.state = {
-      dotsCount: props.start || 0
-    };
-  }
-
-  componentDidMount() {
-    const { interval = 500 } = this.props;
-
-    this.dotsInterval = setInterval(() => {
-      this.setState({ dotsCount: this.state.dotsCount + 1 });
+  useEffect(() => {
+    const dotsInterval = setInterval(() => {
+      setDotsCount(dotsCount + 1);
     }, interval);
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.dotsInterval);
-  }
+    return () => {
+      clearInterval(dotsInterval);
+    };
+  });
 
-  getDotString(count, max, char = ".") {
-    let numDots = count % (max + 1);
-    let dots = "";
+  const dots = getDotString(dotsCount, numDots);
+  const classes = `loading-dots ${className}`;
 
-    for (let i = 0; i < numDots; i++) {
-      dots += char;
-    }
+  return (
+    <span className={classes}>
+      {label}
+      {dots}
+    </span>
+  );
+};
 
-    return dots;
-  }
-
-  render() {
-    const { label = "Loading", className, numDots = 3 } = this.props;
-    const { dotsCount } = this.state;
-    let dots = this.getDotString(dotsCount, numDots, ".");
-    let classes = `loading-dots ${className}`;
-
-    return (
-      <span className={classes}>
-        {label}
-        {dots}
-      </span>
-    );
-  }
-}
+const getDotString = (count, max, char = ".") => char.repeat((count % max) + 1);

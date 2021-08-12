@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Button, ButtonGroup, Spinner } from "react-bootstrap";
-import store from "store";
+import React, { useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FORMATS } from "./formats";
 import { Confirm } from "../../components/Confirm";
@@ -15,10 +14,9 @@ import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 import {
   DoubleFaceHighlightButton,
-  LoyaltyDownButton,
-  LoyaltyUpButton
+  LoyaltyButtonGroup
 } from "../../components/magic/Buttons";
-const Handle = Slider.Handle;
+import { useLocalState } from "../../hooks/useLocalState";
 
 const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 9;
@@ -34,70 +32,71 @@ const handle = props => {
       placement="top"
       key={index}
     >
-      <Handle value={value} {...restProps} />
+      <Slider.Handle value={value} {...restProps} />
     </Tooltip>
   );
 };
 
-export class Formats extends Component {
-  state = {
-    playerCount: DEFAULT_PLAYERS,
-    tags: null,
-    currentFormats: null,
-    activeFormat: null,
-    loadingFormat: false,
-    swapTriggered: false
-  };
+const createTags = () => {
+  return TAGS.map(t => {
+    return { name: t.name, enabled: t.defaultEnabled };
+  });
+};
 
-  componentDidMount = () => {
-    const playerCount =
-      store.get("formats-playerCount") ||
-      store.set("formats-playerCount", DEFAULT_PLAYERS);
-    const tags =
-      store.get("formats-tags") || store.set("formats-tags", this.createTags());
-    const currentFormats =
-      store.get("formats-current") ||
-      store.set("formats-current", this.createFormats());
+const createFormats = () => {
+  let formats = {};
 
-    this.setState({
-      playerCount,
-      tags,
-      currentFormats
-    });
-  };
-
-  reset = () => {
-    const playerCount = store.set("formats-playerCount", DEFAULT_PLAYERS);
-    const tags = store.set("formats-tags", this.createTags());
-    const currentFormats = store.set("formats-current", this.createFormats());
-
-    this.setState({
-      playerCount,
-      tags,
-      currentFormats
-    });
-  };
-
-  pickFormat() {
-    console.log("Generate Format");
-    this.setState({ loadingFormat: true, swapTriggered: false });
-    const formats = this.activeFormats();
-    const activeFormat = this.getRandomFormat(formats);
-    console.log("picked item", activeFormat);
-    setTimeout(() => {
-      this.setState({ loadingFormat: false, activeFormat });
-    }, 1000);
+  for (let i = MIN_PLAYERS; i <= MAX_PLAYERS; i++) {
+    formats[i] = cloneDeep(FORMATS.filter(f => f.players && f.players(i)));
+    formats[i].forEach(f => (f.weight = f.initial));
   }
 
-  rand = (min, max) => {
-    return Math.random() * (max - min) + min;
+  return formats;
+};
+
+const rand = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
+export const Formats = () => {
+  const [playerCount, setPlayerCount] = useLocalState(
+    "formats-playerCount",
+    DEFAULT_PLAYERS
+  );
+  const [tags, setTags] = useLocalState("formats-tags", createTags());
+  const [currentFormats, setCurrentFormats] = useLocalState(
+    "formats-current",
+    createFormats()
+  );
+
+  const [activeFormat, setActiveFormat] = useState(null);
+  const [loadingFormat, setLoadingFormat] = useState(false);
+  const [swapTriggered, setSwapTriggered] = useState(false);
+
+  const reset = () => {
+    setPlayerCount(DEFAULT_PLAYERS);
+    setTags(createTags());
+    setCurrentFormats(createFormats());
   };
 
-  getRandomFormat = list => {
+  const pickFormat = () => {
+    console.log("Generate Format");
+    setLoadingFormat(true);
+    setSwapTriggered(false);
+    const formats = activeFormats();
+    const activeFormat = getRandomFormat(formats);
+    console.log("picked item", activeFormat);
+    setTimeout(() => {
+      setLoadingFormat(false);
+      setActiveFormat(activeFormat);
+    }, 1000);
+  };
+
+  const getRandomFormat = list => {
     const totalWeight = list.reduce((result, cur) => {
       return result + cur.weight;
     }, 0);
-    const randomNum = this.rand(0, totalWeight);
+    const randomNum = rand(0, totalWeight);
     let weightSum = 0;
 
     return list.find(item => {
@@ -106,146 +105,26 @@ export class Formats extends Component {
     });
   };
 
-  incrementCount() {
-    const { playerCount } = this.state;
-    const newPlayerCount = store.set(
-      "formats-playerCount",
-      Math.min(playerCount + 1, MAX_PLAYERS)
-    );
+  const incrementCount = () => {
+    setPlayerCount(Math.min(playerCount + 1, MAX_PLAYERS));
+    setActiveFormat(null);
+  };
 
-    this.setState({ playerCount: newPlayerCount, activeFormat: null });
-  }
+  const decrementCount = () => {
+    setPlayerCount(Math.max(playerCount - 1, MIN_PLAYERS));
+    setActiveFormat(null);
+  };
 
-  decrementCount() {
-    const { playerCount } = this.state;
-    const newPlayerCount = store.set(
-      "formats-playerCount",
-      Math.max(playerCount - 1, MIN_PLAYERS)
-    );
-
-    this.setState({ playerCount: newPlayerCount, activeFormat: null });
-  }
-
-  updateFormatValue = (format, value) => {
-    const { playerCount, currentFormats } = this.state;
+  const updateFormatValue = (format, value) => {
     currentFormats[playerCount].forEach(f => {
       if (f.name === format.name) {
         format.weight = value / 100;
       }
     });
-    const updatedCurrentFormats = store.set("formats-current", currentFormats);
-    this.setState({ currentFormats: updatedCurrentFormats });
+    setCurrentFormats({ ...currentFormats });
   };
 
-  render() {
-    const {
-      playerCount,
-      activeFormat,
-      loadingFormat,
-      swapTriggered
-    } = this.state;
-    const showDeckswapButton =
-      !loadingFormat &&
-      !swapTriggered &&
-      activeFormat &&
-      activeFormat.showSwaps &&
-      this.enabledTags().includes("Deck Swaps");
-    return (
-      <div className="formats">
-        <FormatsHelmet />
-        <div className="my-4 noselect">
-          <div className="text-center">
-            <h1>{playerCount} Players</h1>
-            <ButtonGroup className="my-4">
-              <LoyaltyDownButton
-                disabled={playerCount <= MIN_PLAYERS}
-                onClick={() => this.decrementCount()}
-              />
-              <LoyaltyUpButton
-                onClick={() => this.incrementCount()}
-                disabled={playerCount >= MAX_PLAYERS}
-              />
-            </ButtonGroup>
-            <div className="text-center mb-5">
-              <Button
-                block
-                variant="danger"
-                onClick={() => this.pickFormat()}
-                disabled={loadingFormat}
-              >
-                {loadingFormat ? "Computing..." : "Which Format?"}
-              </Button>
-              {loadingFormat ? (
-                <Spinner
-                  size="lg"
-                  animation="border"
-                  variant="primary"
-                  className="mt-3 mb-2"
-                >
-                  <span className="sr-only">Loading...</span>
-                </Spinner>
-              ) : (
-                <h1 className="my-2">{this.renderActiveFormatName()}</h1>
-              )}
-              {showDeckswapButton && (
-                <Button
-                  onClick={this.triggerSwap}
-                  block
-                  className={"w-50 mx-auto"}
-                  variant="success"
-                >
-                  Deckswaps?
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-        <hr className="border-info" />
-        <div className="mb-5">{this.renderFormatToggles()}</div>
-        <div className="mb-5 noselect">{this.renderActiveFormats()}</div>
-        <div className="my-3">
-          <Confirm
-            onConfirm={this.reset}
-            headerText="Reset Formats?"
-            triggerText="Reset"
-            confirmText="Reset"
-            confirmVariant="danger"
-            triggerButtonParams={{ variant: "danger", block: true }}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderActiveFormatName() {
-    const { activeFormat, swapTriggered } = this.state;
-
-    if (!activeFormat) {
-      return "None";
-    } else {
-      return swapTriggered
-        ? activeFormat.name
-        : activeFormat.displayName || activeFormat.name;
-    }
-  }
-
-  triggerSwap = () => {
-    this.setState({ swapTriggered: true });
-  };
-
-  createFormats() {
-    let formats = {};
-
-    for (let i = MIN_PLAYERS; i <= MAX_PLAYERS; i++) {
-      formats[i] = cloneDeep(FORMATS.filter(f => f.players && f.players(i)));
-      formats[i].forEach(f => (f.weight = f.initial));
-    }
-
-    return formats;
-  }
-
-  activeTags() {
-    const { currentFormats, playerCount } = this.state;
+  const activeTags = () => {
     return currentFormats
       ? uniq(
           flatMap(currentFormats[playerCount], f => {
@@ -253,26 +132,32 @@ export class Formats extends Component {
           })
         ).sort()
       : [];
-  }
+  };
 
-  createTags() {
-    return TAGS.map(t => {
-      return { name: t.name, enabled: t.defaultEnabled };
+  const toggleTag = tag => {
+    tags.forEach(t => {
+      if (t.name === tag.name) {
+        t.enabled = !t.enabled;
+      }
     });
-  }
+    setTags([...tags]);
+  };
 
-  renderFormatToggles() {
-    const { tags } = this.state;
+  const enabledTags = () => {
+    return tags ? tags.filter(t => t.enabled).map(t => t.name) : [];
+  };
+
+  const FormatToggles = () => {
     if (tags) {
-      const activeTags = this.activeTags();
-      const tagStates = tags.filter(t => activeTags.includes(t.name));
+      const active = activeTags();
+      const tagStates = tags.filter(t => active.includes(t.name));
 
       const values = tagStates.map((t, i) => {
         return (
           <div className="col-6 col-md-4 col-lg-3 mb-1" key={i}>
             <DoubleFaceHighlightButton
               onClick={() => {
-                this.toggleTag(t);
+                toggleTag(t);
               }}
               enabled={t.enabled}
               text={t.name}
@@ -283,43 +168,35 @@ export class Formats extends Component {
 
       return <div className="row">{values}</div>;
     }
-  }
-
-  toggleTag = tag => {
-    const { tags } = this.state;
-    tags.forEach(t => {
-      if (t.name === tag.name) {
-        t.enabled = !t.enabled;
-      }
-    });
-    const newTags = store.set("formats-tags", tags);
-    this.setState({ tags: newTags });
   };
 
-  enabledTags() {
-    const { tags } = this.state;
-    return tags ? tags.filter(t => t.enabled).map(t => t.name) : [];
-  }
-
-  activeFormats() {
-    const { tags, currentFormats, playerCount } = this.state;
+  const activeFormats = () => {
     let formats = null;
-    console.log(" Player", playerCount);
+    console.log("Player", playerCount);
     console.log("format", currentFormats);
     if (tags && currentFormats && playerCount) {
       formats = currentFormats[playerCount];
-      const enabledTags = this.enabledTags();
-      console.log("enabledTags", enabledTags);
-      formats = formats.filter(f => f.tags.every(t => enabledTags.includes(t)));
+      const enabled = enabledTags();
+      console.log("enabledTags", enabled);
+      formats = formats.filter(f => f.tags.every(t => enabled.includes(t)));
       // formats.forEach(f => f.weight = f.initial) // Store weights
       console.log("Formats", formats);
     }
     return formats;
-  }
+  };
 
-  renderActiveFormats() {
-    const { playerCount } = this.state;
-    const formats = this.activeFormats();
+  const activeFormatName = () => {
+    if (!activeFormat) {
+      return "None";
+    } else {
+      return swapTriggered
+        ? activeFormat.name
+        : activeFormat.displayName || activeFormat.name;
+    }
+  };
+
+  const ActiveFormats = () => {
+    const formats = activeFormats();
     if (formats) {
       const formatTags = formats.map(f => {
         return (
@@ -336,9 +213,7 @@ export class Formats extends Component {
                 defaultValue={f.weight * 100}
                 included={true}
                 handle={handle}
-                onAfterChange={value => {
-                  this.updateFormatValue(f, value);
-                }}
+                onAfterChange={value => updateFormatValue(f, value)}
               />
             </div>
           </div>
@@ -346,5 +221,83 @@ export class Formats extends Component {
       });
       return formatTags;
     }
-  }
-}
+  };
+
+  const showDeckswapButton =
+    !loadingFormat &&
+    !swapTriggered &&
+    activeFormat &&
+    activeFormat.showSwaps &&
+    enabledTags().includes("Deck Swaps");
+
+  return (
+    <div className="formats">
+      <FormatsHelmet />
+      <div className="my-4 noselect">
+        <div className="text-center">
+          <h1>{playerCount} Players</h1>
+          <LoyaltyButtonGroup
+            className="my-4"
+            upProps={{
+              disabled: playerCount >= MAX_PLAYERS,
+              onClick: incrementCount
+            }}
+            downProps={{
+              disabled: playerCount <= MIN_PLAYERS,
+              onClick: decrementCount
+            }}
+          />
+          <div className="text-center mb-5">
+            <Button
+              block
+              variant="danger"
+              onClick={pickFormat}
+              disabled={loadingFormat}
+            >
+              {loadingFormat ? "Computing..." : "Which Format?"}
+            </Button>
+            {loadingFormat ? (
+              <Spinner
+                size="lg"
+                animation="border"
+                variant="primary"
+                className="mt-3 mb-2"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            ) : (
+              <h1 className="my-2">{activeFormatName()}</h1>
+            )}
+            {showDeckswapButton && (
+              <Button
+                onClick={() => setSwapTriggered(true)}
+                block
+                className={"w-50 mx-auto"}
+                variant="success"
+              >
+                Deckswaps?
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+      <hr className="border-info" />
+      <div className="mb-5">
+        <FormatToggles />
+      </div>
+      <div className="mb-5 noselect">
+        <ActiveFormats />
+      </div>
+      <div className="my-3">
+        <Confirm
+          onConfirm={reset}
+          headerText="Reset Formats?"
+          triggerText="Reset"
+          confirmText="Reset"
+          confirmVariant="danger"
+          triggerButtonParams={{ variant: "danger", block: true }}
+        />
+      </div>
+    </div>
+  );
+};
