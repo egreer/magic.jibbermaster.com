@@ -37,16 +37,21 @@ export const Planechase = () => {
 
   const fetchPlanes = useCallback(async () => {
     const newPlanes = await getAllPlanechaseCards();
-    deck.initDeck(newPlanes, true);
     setPlanes(newPlanes);
     setLoading(false);
-  }, [setPlanes, setLoading, deck]);
+  }, [setPlanes, setLoading]);
 
   useEffect(() => {
     if (planes && planes.length <= 0) {
       fetchPlanes();
     }
   }, [planes, fetchPlanes]);
+
+  useEffect(() => {
+    if (planes?.length > 0 && !deck.isInit) {
+      deck.initDeck(planes, true);
+    }
+  }, [planes, deck]);
 
   useEffect(() => {
     const open =
