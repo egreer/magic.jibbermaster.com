@@ -16,7 +16,6 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
   const [customDeck, setCustomDeck] = useState([]);
   const deckName = "Custom Deck";
 
-  // TODO Verify
   useEffect(() => {
     const newCustomDeck = schemes.map(scheme => {
       return { ...scheme, count: 0 };
