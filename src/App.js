@@ -15,6 +15,7 @@ import { GameProvider } from "./mtg/GameContext";
 import { Disclaimer } from "./components/Disclaimer";
 import { Navigation } from "./components/Navigation";
 import { SettingsProvider } from "./hooks/useSettings";
+import { Hike } from "./pages/hike";
 
 const Providers = ({ children }) => {
   return (
@@ -54,6 +55,17 @@ const Main = () => {
       />
       <Route path="/syb" exact render={props => <SYB {...props} />} />
       <Route path="/formats" exact render={props => <Formats {...props} />} />
+      <Route
+        path="/hike"
+        exact
+        render={props => (
+          <GameProvider prefix="hikemode">
+            <DeckProvider prefix="hikemode">
+              <Hike {...props} />
+            </DeckProvider>
+          </GameProvider>
+        )}
+      />
     </Switch>
   );
 };

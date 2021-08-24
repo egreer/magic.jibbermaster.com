@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect } from "react";
 import GitInfo from "react-git-info/macro";
-import store from "store";
+import store from "store/dist/store.modern";
 import { useLocalState } from "../hooks/useLocalState";
 
 const gitInfo = GitInfo();

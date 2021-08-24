@@ -6,7 +6,7 @@ import { Counter } from "./Counter";
 import "./planes.scss";
 
 import { hasCustomProperty } from "../../mtg/card.js";
-import { CardText } from "./Card";
+import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
 
