@@ -21,6 +21,8 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
       return icon("ms-counter-mining");
     case "Flame":
       return icon("ms-counter-flame");
+    case "Fun":
+      return icon("ms-counter-vortex", "bottom");
     default:
       return null;
   }

@@ -7,13 +7,17 @@ export const CardText = ({ card }) => {
 
   if (settings.displayText) {
     if (card) {
+      const html =
+        card.oracle_html ||
+        card.oracle_text ||
+        card.card_faces?.map(f => f.oracle_text).join("<br/>");
       return (
         <>
           <Card.Title>
             <h5>{card.name}</h5>
           </Card.Title>
           <Card.Subtitle>{card.type_line}</Card.Subtitle>
-          <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
+          <Card.Text dangerouslySetInnerHTML={{ __html: html }} />
         </>
       );
     } else {

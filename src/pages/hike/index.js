@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Col, Fade, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
@@ -15,16 +15,16 @@ import { useGameContext } from "../../mtg/GameContext";
 import { ChaosButton } from "../planechase/ChaosButton";
 import { CurrentDie } from "./Die";
 import { HikeHelmet } from "./Helmet";
-import { useSettings } from "../../hooks/useSettings";
 import { Rules } from "./Rules";
-import set from "lodash/set";
 import { CHAOS, CUSTOM_CHAOS } from "./data/chaos";
 import { CUSTOM_PLANES, PLANES } from "./data/planes";
+import { getOrCreateCurrentDeck, drawCard } from "../../mtg/deck";
+
+const PRE_CHAOS = "hikemode-chaos";
 
 export const Hike = () => {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
-  const [chaosDeck, setChaosDeck] = useLocalState("hikemode-chaos-deck", []);
   const [currentChaosCard, setCurrentChaosCard] = useLocalState(
     "hikemode-chaos-current",
     null
@@ -40,29 +40,25 @@ export const Hike = () => {
   );
   const [showRules, setShowRules] = useLocalState("hike-show-rules", true);
 
-  const settings = useSettings();
-
-  // TODO: Shuffle chaos Cards
-  // TODO: Oracle_HTML symbol replacements
-  // TODO: resize cards
-  // TODO: Position text on cards
-  //   the custom actions that don't have cards
-  // the Hike Mode custom errata for these ones
-  // styling & testing
+  // TODOs:
+  // // styling & testing
   // mobile testing
   // Hike mode in SYB selector
+  // Chaos Deck manipulation
+  // Reset planes / Chaos on empty
+  // Hike Die
 
   const game = useGameContext();
-  const { currentCard, additionalCards, revealedCards, scryCards } = game;
+  const { currentCard } = game;
 
   const deck = useDeckContext();
   const history = deck.history;
 
   const fetchCards = useCallback(async () => {
     setCards([...PLANES]);
-    setChaosDeck([...CHAOS]);
+    getOrCreateCurrentDeck(PRE_CHAOS, [...CHAOS]);
     setLoading(false);
-  }, [setCards, setLoading, setChaosDeck]);
+  }, [setCards, setLoading]);
 
   useEffect(() => {
     if (cards && cards.length <= 0) {
@@ -82,8 +78,7 @@ export const Hike = () => {
   };
 
   const chaosWalk = () => {
-    const newCard = chaosDeck.shift();
-    setChaosDeck([...chaosDeck]);
+    const newCard = drawCard(PRE_CHAOS);
     setCurrentChaosCard(newCard);
   };
 
@@ -105,6 +100,7 @@ export const Hike = () => {
     fetchCards();
     deck.reInit();
     game.reset();
+    getOrCreateCurrentDeck(PRE_CHAOS, [...CHAOS], true);
     setLoading(false);
   };
 
@@ -156,15 +152,14 @@ export const Hike = () => {
           <Loading className="text-muted" />
         ) : currentCard ? (
           <>
-            {/* <Fade key={currentCard?.deck_card_id} timeout={100}> */}
             <div className="col-6">
+              <i className="ms ms-planeswalker ms-4x ms-mechanic mb-3" />
               <MtgCard card={currentCard} displayActions="true">
                 <ChaosButton card={currentCard} onClick={triggerChaos} />
               </MtgCard>
             </div>
-            {/* </Fade> */}
-            {/* <Fade key={currentChaosCard?.deck_card_id} timeout={100}> */}
             <div className="col-6">
+              <i className="ms ms-chaos ms-4x ms-mechanic mb-3" />
               <MtgCard
                 card={currentChaosCard}
                 displayActions="true"
@@ -173,7 +168,6 @@ export const Hike = () => {
                 <ChaosButton card={currentChaosCard} onClick={triggerChaos} />
               </MtgCard>
             </div>
-            {/* </Fade> */}
           </>
         ) : (
           <>

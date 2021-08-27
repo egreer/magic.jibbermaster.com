@@ -6,8 +6,11 @@ export const hasCustomProperty = (property, card) => {
 
 export const getCounterType = card => {
   const property = card?.customProperties?.find(p => p.name === "counter");
-  return property.type;
+  return property?.type;
 };
+
+const ROTATED_LAYOUTS = ["planar", "split"];
+export const rotatedLayout = card => ROTATED_LAYOUTS.includes(card?.layout);
 
 export const gathererImageURL = card => {
   return `https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${get(

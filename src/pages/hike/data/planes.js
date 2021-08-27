@@ -1,3 +1,5 @@
+import { addAdditionalProperties } from "../../../util/api";
+
 // Curated and Truncated Scryfall API Results
 export const CUSTOM_PLANES = [
   {
@@ -9,7 +11,7 @@ export const CUSTOM_PLANES = [
   }
 ];
 
-export const NORMAL_PLANES = [
+export const BASE_PLANES = [
   {
     object: "card",
     id: "88d50518-5cfc-45de-a125-acabf97b8743",
@@ -2090,5 +2092,9 @@ export const NORMAL_PLANES = [
     }
   }
 ];
+
+export const NORMAL_PLANES = BASE_PLANES.map(card =>
+  addAdditionalProperties(card)
+);
 
 export const PLANES = [...CUSTOM_PLANES, ...NORMAL_PLANES];

@@ -7,7 +7,7 @@ import blankFront from "../../images/blank-front.png";
 import { Counter } from "./Counter";
 import "./planes.scss";
 
-import { hasCustomProperty } from "../../mtg/card.js";
+import { hasCustomProperty, rotatedLayout } from "../../mtg/card.js";
 import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
@@ -26,11 +26,15 @@ export const MtgCard = ({
   const { displayImages, displayGatherer } = settings;
 
   const hasCounters = hasCustomProperty("counter", card);
+  const errata = hasCustomProperty("errata", card);
+  const token = hasCustomProperty("token", card);
+  const phenomenon = hasCustomProperty("phenomenon", card);
   const emptyChildren = children?.type === null;
 
   const back = altBack ? arenaBack : classicBack;
-  const cardStyle =
-    card?.layout === "planar" ? { transform: "rotate(90deg)" } : {};
+  const cardStyle = rotatedLayout(card)
+    ? { transform: "rotate(90deg) scale(0.7) translate(-50%)" }
+    : {};
   const isBlank = card?.show_blank;
   const imageURI = card
     ? isBlank
@@ -54,7 +58,42 @@ export const MtgCard = ({
     const text = CardText({ card });
     const hasBody = !!text;
 
-    return hasBody && <Card.Body>{text}</Card.Body>;
+    return (
+      hasBody && (
+        <Card>
+          <Card.Body>{text}</Card.Body>
+        </Card>
+      )
+    );
+  };
+
+  const renderAdditionalProps = () => {
+    const hasErrata = !!errata;
+    const hasToken = !!token;
+    const isPhenomenon = !!phenomenon;
+
+    return (
+      (hasErrata || hasToken || isPhenomenon) && (
+        <Card>
+          <Card.Body>
+            {isPhenomenon && (
+              <Card.Text class="h4 font-italic">
+                <i className="ss ss-fw ss-2x ss-fut mx-2"></i>Phenomenon -
+                Planes Hike away after encountering this.
+              </Card.Text>
+            )}
+            {hasToken && (
+              <Card.Text class="h4 font-italic">
+                Create {token.count} {card.name} Token
+              </Card.Text>
+            )}
+            {hasErrata && (
+              <Card.Text class="h4 font-italic">{errata?.text}</Card.Text>
+            )}
+          </Card.Body>
+        </Card>
+      )
+    );
   };
 
   const renderActions = () => {
@@ -78,7 +117,8 @@ export const MtgCard = ({
       variant="top"
       width="100%"
       src={imageURI}
-      className="mtg-card mtg-card-card"
+      className="mtg-card mtg-card-card no-border"
+      style={cardStyle}
     />
   );
 
@@ -107,13 +147,12 @@ export const MtgCard = ({
     }
   };
 
-  // TODO Positioning in card
   const renderCustomText = () => {
     return (
       isBlank && (
         <>
           <div
-            className="text-body text-left position-absolute d-flex align-items-center"
+            className="text-body text-left position-absolute d-flex align-items-center noselect"
             style={{
               top: "4%",
               left: "7%",
@@ -125,21 +164,21 @@ export const MtgCard = ({
             <div className="text-nowrap">{card.name}</div>
           </div>
           <div
-            className="h-100"
+            className="h-100 noselect"
             style={{
               paddingTop: "12%",
               paddingLeft: "4%",
               paddingRight: "4%",
-              paddingBottom: "22%"
+              paddingBottom: "22%",
+              fontSize: "clamp(10px, 3vw, 30px)"
             }}
           >
-            <Textfit mode="multi" style={{ height: "100%" }} max="30">
+            <Textfit mode="multi" style={{ height: "100%" }} max={30}>
               {card.oracle_text}
             </Textfit>
           </div>
-          <Card.Text dangerouslySetInnerHTML={card.oracle_html} />
           <div
-            className="text-body position-absolute d-flex justify-content-center align-items-center "
+            className="text-body position-absolute d-flex justify-content-center align-items-center noselect"
             style={{
               bottom: "10.5%",
               width: "100%",
@@ -204,17 +243,15 @@ export const MtgCard = ({
     );
   } else {
     return (
-      <Card
-        bg="black"
-        text="light"
-        className="mtg-standard-card"
-        style={cardStyle}
-      >
-        {renderImage()}
-        {renderComponents()}
+      <>
+        <Card bg="black" text="light" className="mtg-standard-card">
+          {renderImage()}
+          {renderComponents()}
+          {renderActions()}
+        </Card>
+        {renderAdditionalProps()}
         {renderBody()}
-        {renderActions()}
-      </Card>
+      </>
     );
   }
 };

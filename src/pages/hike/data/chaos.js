@@ -1,3 +1,5 @@
+import { addAdditionalProperties } from "../../../util/api";
+
 // Curated and Truncated Scryfall API Results
 export const CUSTOM_CHAOS = [
   {
@@ -54,7 +56,7 @@ export const CUSTOM_CHAOS = [
   }
 ];
 
-export const NORMAL_CHAOS = [
+const BASE_CHAOS = [
   {
     object: "card",
     id: "aa6e1fb5-a06b-4e10-8cc7-785e0f0b298e",
@@ -1980,5 +1982,9 @@ export const NORMAL_CHAOS = [
     artist: "Doug Chaffee"
   }
 ];
+
+export const NORMAL_CHAOS = BASE_CHAOS.map(card =>
+  addAdditionalProperties(card)
+);
 
 export const CHAOS = [...CUSTOM_CHAOS, ...NORMAL_CHAOS];

@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import store from "store";
+import store from "store/dist/store.modern";
 // TODO use expire store
 export const internet = axios.create();
 
@@ -48,21 +48,90 @@ export const getAllArchenemyCards = async () => {
   }
 };
 
-function addAdditionalProperties(card) {
+export const CHAOS_TRIGGER_PROP = { name: "chaos-trigger" };
+export const PHENOMENON_PROP = { name: "phenomenon" };
+export const counterProp = type => {
+  return { name: "counter", type };
+};
+export const errataProp = text => {
+  return { name: "errata", text };
+};
+export const tokenProp = count => {
+  return { name: "token", count };
+};
+
+export const addAdditionalProperties = card => {
   const properties = {
-    Aretopolis: [{ name: "counter", type: "Scroll" }],
+    Aretopolis: [counterProp("Scroll")],
     "Chaotic Aether": [{ name: "all-chaos" }],
     "Interplanar Tunnel": [{ name: "top-5" }],
-    "Kilnspire District": [{ name: "counter", type: "Charge" }],
-    "Mount Keralia": [{ name: "counter", type: "Pressure" }],
-    "Naar Isle": [{ name: "counter", type: "Flame" }],
+    "Kilnspire District": [counterProp("Charge")],
+    "Mount Keralia": [counterProp("Pressure")],
+    "Naar Isle": [counterProp("Flame")],
     "Spatial Merging": [{ name: "two-planes" }],
-    "Stairs to Infinity": [{ name: "chaos-trigger" }, { name: "scry-1" }],
-    "Pools of Becoming": [{ name: "chaos-trigger" }, { name: "triple-chaos" }],
-    "Your Inescapable Doom": [
-      { name: "unabandonable" },
-      { name: "counter", type: "Doom" }
-    ]
+    "Stairs to Infinity": [CHAOS_TRIGGER_PROP, { name: "scry-1" }],
+    "Pools of Becoming": [CHAOS_TRIGGER_PROP, { name: "triple-chaos" }],
+    // Archenemy
+    "Your Inescapable Doom": [{ name: "unabandonable" }, counterProp("Doom")],
+    // Hike Mode
+    Agyrem: [
+      errataProp(
+        "When you planeswalk to or at the beginning of your upkeep, choose a color at random (replacing White)."
+      )
+    ],
+    "Earl of Squirrel": [
+      errataProp("All creatures you control have Squirrellink.")
+    ],
+    Pramikon: [errataProp("Direction is chosen at random")],
+    "Problematic Volcano": [
+      errataProp("4 damage to any target chosen at random")
+    ],
+    "The Countdown Is at One": [PHENOMENON_PROP],
+    "Psychic Vortex": [
+      errataProp(
+        "When you planeswalk to or at the beginning of your upkeep, put a fun counter on Pyschic Vortex, then draw a card for each fun counter on it. At the beginning of your end step, discard your hand and sacrifice a land."
+      ),
+      counterProp("Fun")
+    ],
+    "Mirror March": [errataProp("All Players")],
+    "Seek Bolas's Counsel": [
+      errataProp(
+        "When you planeswalk to or at the beginning of your upkeep, Seek Bola's Counsel"
+      )
+    ],
+    "Thousand-Year Storm": [errataProp("All Players")],
+    "Chaos Moon": [
+      errataProp(
+        "When you planeswalk to or at the beginning of your upkeep, choose a color at random (replacing Red)."
+      )
+    ],
+    "Conjured Currency": [
+      errataProp(
+        "When you planeswalker to and at the beginning of your upkeep, exchange control of a permanent you own and control and target permanent you neither own nor control."
+      )
+    ],
+    "Tyrant of Discord": [errataProp("Just ETB Effect")],
+    "Rakdos, the Showstopper": [errataProp("Just ETB Effect")],
+    Mirrorweave: [
+      errataProp(
+        "Each other creature permanently becomes a copy of target nonlegendary creature."
+      )
+    ],
+    "Perplexing Chimera": [tokenProp(1)],
+    "Sphinx Ambassador": [errataProp("resolve damage trigger")],
+    Aminatou: [errataProp("The dump, direction at random")],
+    "Nascent Metamorph": [tokenProp(1)],
+    Amplifire: [tokenProp(1)],
+    "Akroan Horse": [tokenProp(1)],
+    "Walking Archive": [tokenProp(1)],
+    "Vulshok Sorceror": [tokenProp(3)],
+    "Serrated Arrows": [tokenProp(1)],
+    "Interplanar Brushwagg": [tokenProp(1)],
+    "Lantern of Undersight": [tokenProp(1)],
+    "Oddly Uneven": [errataProp("Roll a die to choose")],
+    "Naughty // Nice": [errataProp("Both sides")],
+    "Norin the Wary": [errataProp("Conjure a Norin the Wary")],
+    "Haphazard Bombardment": [errataProp("Destroy a permanent at random")]
   };
 
   if (properties[card.name]) {
@@ -71,12 +140,14 @@ function addAdditionalProperties(card) {
     card.customProperties = [];
   }
 
-  card.oracle_html = createMarkup(card.oracle_text);
+  if (card.oracle_text) {
+    card.oracle_html = createMarkup(card.oracle_text);
+  }
 
   return card;
-}
+};
 
-function createMarkup(text) {
+export const createMarkup = text => {
   text = text.replace(/\r\n/g, "<br />").replace(/[\r\n]/g, "<br />");
   text = text.replace(/{CHAOS}/g, '<i class="ms ms-chaos"></i>');
   text = text.replace(/CHAOS/g, '<i class="ms ms-chaos"></i>');
@@ -92,8 +163,8 @@ function createMarkup(text) {
   text = text.replace(/{X}/g, '<i class="ms ms-x ms-cost"></i>');
   text = text.replace(/X/g, '<i class="ms ms-x"></i>');
   text = text.replace(/\((.*)\)/g, "<small><em>($1)</em></small>");
-  return { __html: text };
-}
+  return text;
+};
 
 function cached(prefix) {
   let data = store.get(prefix);
