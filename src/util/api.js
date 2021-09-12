@@ -127,7 +127,6 @@ export const addAdditionalProperties = card => {
     "Vulshok Sorceror": [tokenProp(3)],
     "Serrated Arrows": [tokenProp(1)],
     "Interplanar Brushwagg": [tokenProp(1)],
-    "Lantern of Undersight": [tokenProp(1)],
     "Oddly Uneven": [errataProp("Roll a die to choose")],
     "Naughty // Nice": [errataProp("Both sides")],
     "Norin the Wary": [errataProp("Conjure a Norin the Wary")],

@@ -1599,46 +1599,6 @@ const BASE_CHAOS = [
   },
   {
     object: "card",
-    id: "58080146-9cbb-4872-a348-8fe85848eba1",
-    oracle_id: "5255bad8-23a8-4ec5-860f-b44ca88a5536",
-    multiverse_ids: [476236],
-    name: "Lantern of Undersight",
-    uri: "https://api.scryfall.com/cards/58080146-9cbb-4872-a348-8fe85848eba1",
-    scryfall_uri:
-      "https://scryfall.com/card/cmb1/106/lantern-of-undersight?utm_source=api",
-    layout: "normal",
-    image_uris: {
-      small:
-        "https://c1.scryfall.com/file/scryfall-cards/small/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.jpg?1582667791",
-      normal:
-        "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.jpg?1582667791",
-      large:
-        "https://c1.scryfall.com/file/scryfall-cards/large/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.jpg?1582667791",
-      png:
-        "https://c1.scryfall.com/file/scryfall-cards/png/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.png?1582667791",
-      art_crop:
-        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.jpg?1582667791",
-      border_crop:
-        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/8/58080146-9cbb-4872-a348-8fe85848eba1.jpg?1582667791"
-    },
-    mana_cost: "{1}",
-    cmc: 1,
-    type_line: "Artifact",
-    oracle_text:
-      "You draw cards from the bottom of your library instead of the top of your library.",
-    colors: [],
-    color_identity: [],
-
-    rulings_uri:
-      "https://api.scryfall.com/cards/58080146-9cbb-4872-a348-8fe85848eba1/rulings",
-    artist: "Trick Jarrett",
-    related_uris: {
-      gatherer:
-        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=476236"
-    }
-  },
-  {
-    object: "card",
     id: "a734f1d9-17a1-4dea-bdec-b070ababe31d",
     oracle_id: "69909846-94f9-4b2c-918f-274ba2aa4279",
     multiverse_ids: [476233],
