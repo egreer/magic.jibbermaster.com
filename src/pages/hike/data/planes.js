@@ -8,6 +8,26 @@ export const CUSTOM_PLANES = [
     oracle_text:
       'All spells gain "Clash with an opponent. If you win gain 5 life, draw a card, and create a 1/1 red Hikespawn creature token',
     show_blank: true
+  },
+  {
+    name: "Hike Wall",
+    type_line: "Plane - Hike",
+    oracle_text:
+      "Creatures with defender can attack as though they didn't have it, creatures without defender can't attack. All creatures assign combat damage based on their toughness.",
+    show_blank: true
+  },
+  {
+    name: "Nopalescence",
+    type_line: "Plane - Hike",
+    oracle_text:
+      "All noncreature artifacts, planeswalkers, and enchantments lose all abilities and become X/X creatures where X is their mana value.",
+    show_blank: true
+  },
+  {
+    name: "Nopalescence",
+    type_line: "Plane - Hike",
+    oracle_text: "All creatures have haste and must attack each turn if able",
+    show_blank: true
   }
 ];
 

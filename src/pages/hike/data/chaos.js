@@ -1,4 +1,9 @@
-import { addAdditionalProperties, CHAOSOMENON_PROP } from "../../../util/api";
+import {
+  addAdditionalProperties,
+  CHAOSOMENON_PROP,
+  errataProp,
+  urlProp
+} from "../../../util/api";
 
 // Curated and Truncated Scryfall API Results
 export const CUSTOM_CHAOS = [
@@ -54,6 +59,53 @@ export const CUSTOM_CHAOS = [
     type_line: "Plane - UnHike",
     oracle_text: "Assemble a Contraption",
     show_blank: true
+  },
+  {
+    name: "Gather Party",
+    type_line: "Plane - Faerûn",
+    oracle_text:
+      "Draw 1 card plus 1 additional card for each creature in your party.",
+    show_blank: true,
+    customProperties: [
+      errataProp(
+        "(Your party consists of up to one each of Cleric, Rogue, Warrior, and Wizard.)"
+      )
+    ]
+  },
+  {
+    name: "Summon Goatdrazi",
+    type_line: "Plane - Goatdrazi",
+    oracle_text:
+      "Create a tapped 0/1 White Goat with Annihilator 4, this creature doesn't untap during your untap step, and {8}: Untap all Goats you control",
+    show_blank: true
+  },
+  {
+    name: "Summon Goatdrazi",
+    type_line: "Plane - Goatdrazi",
+    oracle_text:
+      "Choose a D&D Class that you have played as a PC with at least one other player, create a token of the corresponding class.",
+    show_blank: true,
+    customProperties: [
+      urlProp({
+        url:
+          "https://scryfall.com/search?q=t%3Aclass&unique=cards&as=grid&order=name",
+        text: "Classes"
+      })
+    ]
+  },
+  {
+    name: "Shaken, not Stirred",
+    type_line: "Plane - 007",
+    oracle_text:
+      "Create a 3/2 colorless legendary Eldrazi token named 'Sheweena, Martini Princess of the Night'.",
+    show_blank: true,
+    customProperties: [
+      urlProp({
+        url:
+          "https://scryfall.com/search?q=t%3Aclass&unique=cards&as=grid&order=name",
+        text: "Classes"
+      })
+    ]
   }
 ];
 

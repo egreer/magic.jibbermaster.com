@@ -61,6 +61,10 @@ export const tokenProp = count => {
   return { name: "token", count };
 };
 
+export const urlProp = ({ url, text }) => {
+  return { name: "url", url, text };
+};
+
 export const addAdditionalProperties = card => {
   const properties = {
     Aretopolis: [counterProp("Scroll")],
@@ -186,6 +190,40 @@ export const addAdditionalProperties = card => {
       errataProp(
         "Put a creature card from your hand into play under target opponent’s control. That creature is goaded"
       )
+    ],
+    "Stuffy Doll": [tokenProp(1)],
+    "Tempting Wurm": [tokenProp(1)],
+    Phytohydra: [tokenProp(1)],
+    "Nyx-Fleece Ram": [tokenProp(1)],
+    Boomstacker: [tokenProp(1)],
+    "Goldenglow Moth": [tokenProp(1)],
+    "Karplusan Minotaur": [tokenProp(1)],
+    "Goblin Festival": [tokenProp(1)],
+    "Goblin Traprunner": [tokenProp(1)],
+    "Tavern Swindler": [tokenProp(1)],
+    "Urza, Academy Headmaster": [
+      tokenProp(1),
+      urlProp({
+        url: "https://magic.wizards.com/en/products/unstable/askurza",
+        text: "Ask Urza"
+      })
+    ],
+    "Zada's Commando": [tokenProp(2)],
+    "Ondu War Cleric": [tokenProp(2)],
+    "Lord of the Pit": [tokenProp(1)],
+    "Door to Nothingness": [tokenProp(1)],
+    "Relic Robber": [tokenProp(1)],
+    "Poisonbelly Ogre": [tokenProp(1)],
+    "Aetherflux Reservoir": [tokenProp(1)],
+    "Happily Ever After": [tokenProp(1)],
+    "Knight of the Holy Nimbus": [tokenProp(1)],
+    Sharktocrab: [
+      tokenProp(1),
+      errataProp("Create a Sharktocrab token, then put a +1/+1 counter on it.")
+    ],
+    "Spore Frog": [
+      tokenProp(1),
+      errataProp("Landfall - Create a Spore Frog token.")
     ]
   };
 

@@ -220,11 +220,11 @@ export const Hike = () => {
           Undo
         </Button>
         <Deck CardType={MtgCard} />
-        <DoubleFaceButton
+        {/* <DoubleFaceButton
           text="Planar Die"
           onClick={() => setShowPlanarDie(!showPlanarDie)}
           enabled={showPlanarDie}
-        />
+        /> */}
         <DoubleFaceButton
           text="All Effects"
           onClick={() => setShowAllEffect(!showAllEffect)}
@@ -242,11 +242,11 @@ export const Hike = () => {
         />
       </DevTools>
       {/* TODO: Swap Planar Die */}
-      {showPlanarDie && (
+      {/* {showPlanarDie && (
         <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
           <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
