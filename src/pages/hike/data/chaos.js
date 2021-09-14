@@ -1,4 +1,4 @@
-import { addAdditionalProperties } from "../../../util/api";
+import { addAdditionalProperties, CHAOSOMENON_PROP } from "../../../util/api";
 
 // Curated and Truncated Scryfall API Results
 export const CUSTOM_CHAOS = [
@@ -7,7 +7,8 @@ export const CUSTOM_CHAOS = [
     type_line: "Plane - Hike",
     oracle_text:
       "Each player suspend all creatures with time counters equal to their mana value.",
-    show_blank: true
+    show_blank: true,
+    customProperties: [CHAOSOMENON_PROP]
   },
   {
     name: "Hike Handout",
@@ -182,27 +183,27 @@ const BASE_CHAOS = [
   },
   {
     object: "card",
-    id: "664e6656-36a3-4635-9f33-9f8901afd397",
+    id: "caff117f-844b-4d11-a104-930d7f238114",
     oracle_id: "34515b16-c9a4-4f98-8c77-416a7a523407",
     multiverse_ids: [489712],
     name: "Wrath of God",
-    uri: "https://api.scryfall.com/cards/664e6656-36a3-4635-9f33-9f8901afd397",
+    uri: "https://api.scryfall.com/cards/caff117f-844b-4d11-a104-930d7f238114",
     scryfall_uri:
-      "https://scryfall.com/card/2xm/39/wrath-of-god?utm_source=api",
+      "https://scryfall.com/card/sld/185/wrath-of-god?utm_source=api",
     layout: "normal",
     image_uris: {
       small:
-        "https://c1.scryfall.com/file/scryfall-cards/small/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.jpg?1598303688",
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/c/a/caff117f-844b-4d11-a104-930d7f238114.jpg?1619122768",
       normal:
-        "https://c1.scryfall.com/file/scryfall-cards/normal/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.jpg?1598303688",
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/a/caff117f-844b-4d11-a104-930d7f238114.jpg?1619122768",
       large:
-        "https://c1.scryfall.com/file/scryfall-cards/large/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.jpg?1598303688",
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/c/a/caff117f-844b-4d11-a104-930d7f238114.jpg?1619122768",
       png:
-        "https://c1.scryfall.com/file/scryfall-cards/png/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.png?1598303688",
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/c/a/caff117f-844b-4d11-a104-930d7f238114.png?1619122768",
       art_crop:
-        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.jpg?1598303688",
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/a/caff117f-844b-4d11-a104-930d7f238114.jpg?1619122768",
       border_crop:
-        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/6/6/664e6656-36a3-4635-9f33-9f8901afd397.jpg?1598303688"
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/a/caff117f-844b-4d11-a104-930d7f238114.jpg?1619122768"
     },
     mana_cost: "{2}{W}{W}",
     cmc: 4,
@@ -210,16 +211,9 @@ const BASE_CHAOS = [
     oracle_text: "Destroy all creatures. They can't be regenerated.",
     colors: ["W"],
     color_identity: ["W"],
-
     rulings_uri:
       "https://api.scryfall.com/cards/664e6656-36a3-4635-9f33-9f8901afd397/rulings",
-    artist: "Kev Walker",
-    preview: {
-      source: "Wizards of the Coast",
-      source_uri:
-        "https://magic.wizards.com/en/articles/archive/card-preview/three-small-words-one-great-effect-2020-07-22",
-      previewed_at: "2020-07-22"
-    },
+    artist: "Jermaine Rogers",
     related_uris: {
       gatherer:
         "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=489712"

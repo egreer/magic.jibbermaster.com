@@ -32,7 +32,7 @@ export const storeCurrentDeck = (prefix, deck) => {
 
 export const drawCard = prefix => {
   const deck = getCurrentDeck(prefix);
-  const card = deck.shift();
+  const card = deck?.shift();
   if (card) {
     updateHistory(prefix, card);
   }

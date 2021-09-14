@@ -41,7 +41,7 @@ export const SettingsProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     const versionCheck = () => {
       const version = getSetting("version");
-      if (version !== gitInfo.commit.shortHash) {
+      if (version && version !== gitInfo.commit.shortHash) {
         // TODO: Future refine this reset
         store.clearAll();
       }

@@ -20,11 +20,12 @@ import { CHAOS, CUSTOM_CHAOS } from "./data/chaos";
 import { CUSTOM_PLANES, PLANES } from "./data/planes";
 import { getOrCreateCurrentDeck, drawCard } from "../../mtg/deck";
 
-const PRE_CHAOS = "hikemode-chaos";
+const PRE_CHAOS = "hike-chaos";
 
 export const Hike = () => {
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
+  const [chaosCards, setChaosCards] = useState([]);
   const [currentChaosCard, setCurrentChaosCard] = useLocalState(
     "hikemode-chaos-current",
     null
@@ -47,6 +48,7 @@ export const Hike = () => {
   // Chaos Deck manipulation
   // Reset planes / Chaos on empty
   // Hike Die
+  // Coin Flipper link
 
   const game = useGameContext();
   const { currentCard } = game;
@@ -54,9 +56,12 @@ export const Hike = () => {
   const deck = useDeckContext();
   const history = deck.history;
 
-  const fetchCards = useCallback(async () => {
-    setCards([...PLANES]);
-    getOrCreateCurrentDeck(PRE_CHAOS, [...CHAOS]);
+  const fetchCards = useCallback(() => {
+    const planes = [...PLANES];
+    const chaos = [...CHAOS];
+    setCards(planes);
+    setChaosCards(chaos);
+    getOrCreateCurrentDeck(PRE_CHAOS, chaos);
     setLoading(false);
   }, [setCards, setLoading]);
 
@@ -67,19 +72,19 @@ export const Hike = () => {
   }, [cards, fetchCards]);
 
   useEffect(() => {
-    if (cards?.length > 0 && !deck.isInit) {
+    if (cards && cards.length > 0 && !deck.isInit) {
       deck.initDeck(cards, true);
     }
   }, [cards, deck]);
 
   const planeswalk = () => {
     const newCard = deck.drawCard();
-    game.setCurrentCard(newCard);
+    game.setCurrentCard(newCard ?? null);
   };
 
   const chaosWalk = () => {
     const newCard = drawCard(PRE_CHAOS);
-    setCurrentChaosCard(newCard);
+    setCurrentChaosCard(newCard ?? null);
   };
 
   const planesAndChaosWalk = () => {
@@ -111,7 +116,7 @@ export const Hike = () => {
   // TODO: Chaos Card
   return (
     <div className="hikemode">
-      <HikeHelmet cards={cards} />
+      <HikeHelmet cards={cards.concat(chaosCards)} />
       <Row className="my-4 text-center">
         <Col>
           <h1>Hike Mode</h1>

@@ -11,6 +11,7 @@ import { hasCustomProperty, rotatedLayout } from "../../mtg/card.js";
 import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
+import { createMarkup } from "../../util/api";
 
 export const MtgCard = ({
   listDisplay,
@@ -29,6 +30,7 @@ export const MtgCard = ({
   const errata = hasCustomProperty("errata", card);
   const token = hasCustomProperty("token", card);
   const phenomenon = hasCustomProperty("phenomenon", card);
+  const chaosomenon = hasCustomProperty("chaosomenon", card);
   const emptyChildren = children?.type === null;
 
   const back = altBack ? arenaBack : classicBack;
@@ -71,24 +73,35 @@ export const MtgCard = ({
     const hasErrata = !!errata;
     const hasToken = !!token;
     const isPhenomenon = !!phenomenon;
+    const isChaosomenon = !!chaosomenon;
+    const errataHtml = createMarkup(errata?.text);
 
     return (
-      (hasErrata || hasToken || isPhenomenon) && (
+      (hasErrata || hasToken || isPhenomenon || isChaosomenon) && (
         <Card>
           <Card.Body>
             {isPhenomenon && (
-              <Card.Text class="h4 font-italic">
+              <Card.Text className="h5 font-italic">
                 <i className="ss ss-fw ss-2x ss-fut mx-2"></i>Phenomenon -
                 Planes Hike away after encountering this.
               </Card.Text>
             )}
+            {chaosomenon && (
+              <Card.Text className="h5 font-italic">
+                <i className="ms ms-fw ms-2x ms-phenomenon mx-2"></i>Chaosomenon
+                - Chaos Hike away after triggering this.
+              </Card.Text>
+            )}
             {hasToken && (
-              <Card.Text class="h4 font-italic">
+              <Card.Text className="h5 font-italic">
                 Create {token.count} {card.name} Token
               </Card.Text>
             )}
             {hasErrata && (
-              <Card.Text class="h4 font-italic">{errata?.text}</Card.Text>
+              <Card.Text
+                className="h5 font-italic"
+                dangerouslySetInnerHTML={{ __html: errataHtml }}
+              ></Card.Text>
             )}
           </Card.Body>
         </Card>
