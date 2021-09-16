@@ -81,8 +81,8 @@ export const CUSTOM_CHAOS = [
     show_blank: true
   },
   {
-    name: "Summon Goatdrazi",
-    type_line: "Plane - Goatdrazi",
+    name: "Y'All Start In a Tavern",
+    type_line: "Plane - Faerûn",
     oracle_text:
       "Choose a D&D Class that you have played as a PC with at least one other player, create a token of the corresponding class.",
     show_blank: true,
