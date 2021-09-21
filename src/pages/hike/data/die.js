@@ -83,7 +83,7 @@ const FACES = [
     effect: "Venture into the Dungeon up to X Times"
   },
   {
-    icon: "ms ms-fw ms-2x ss-rare ss-grad ms-counter-plus",
+    icon: "ms ms-fw ms-2x ss-rare ss-grad ms-ability-proliferate",
     effect: "Proliferate X Times"
   }
 ];
