@@ -22,6 +22,11 @@ const SPROUT_FACE = {
   effect: "Sprout Sprout - Create a 1/1 green Saproling creature token"
 };
 
+const RERANDOM_FACE = {
+  icon: "ss ss-fw ss-2x ss-foil ss-grad ss-h09",
+  effect: "Re-Randomize Hike Die"
+};
+
 const FACES = [
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut",
@@ -80,6 +85,7 @@ export const ALL_FACES = [
   SQUAK_FACE,
   CHAOS_FACE,
   SPROUT_FACE,
+  RERANDOM_FACE,
   ...FACES
 ];
 
@@ -92,7 +98,7 @@ export const createDie = () => {
     SPROUT_FACE,
     SQUAK_FACE,
     SQUAK_FACE,
-    SQUAK_FACE,
+    RERANDOM_FACE,
     ...shuffleArray(FACES).slice(0, 6)
   ];
 

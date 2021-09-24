@@ -49,12 +49,6 @@ export const CUSTOM_CHAOS = [
     show_blank: true
   },
   {
-    name: "Hike's Great Ax",
-    type_line: "Plane - Hike",
-    oracle_text: "Re-randomize the d12 Hike die effects",
-    show_blank: true
-  },
-  {
     name: "Sproket Sproket",
     type_line: "Plane - UnHike",
     oracle_text: "Assemble a Contraption",
