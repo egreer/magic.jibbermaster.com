@@ -38,7 +38,7 @@ export const HikeHelmet = ({ cards }) => {
             rel="preload"
             href={gathererImageURL(p)}
             as="image"
-            key={p.id || p.name}
+            key={p.id ?? p.name}
           />
         ))}
     </Helmet>

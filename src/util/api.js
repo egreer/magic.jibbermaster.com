@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import pick from "lodash/pick";
 import store from "store/dist/store.modern";
 // TODO use expire store
 export const internet = axios.create();
@@ -10,6 +11,34 @@ const PLANES_URL =
 const SCHEMES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Ascheme&unique=cards";
 
+export const filterAPI = card =>
+  pick(card, [
+    "object",
+    "id",
+    "oracle_id",
+    "multiverse_ids",
+    "name",
+    "uri",
+    "scryfall_uri",
+    "layout",
+    "image_uris",
+    "mana_cost",
+    "set",
+    "cmc",
+    "type_line",
+    "oracle_text",
+    "colors",
+    "color_identity",
+    "rulings_uri",
+    "artist",
+    "flavor_text",
+    "related_uris.gatherer",
+    // Custom Properties
+    "customProperties",
+    "oracle_html",
+    "show_blank"
+  ]);
+
 export const getAllPlanechaseCards = async () => {
   try {
     let planes = cached("planes");
@@ -17,7 +46,7 @@ export const getAllPlanechaseCards = async () => {
       console.log("Loading from Axios");
       let response = await internet.get(PLANES_URL);
       planes = response.data.data;
-      planes = planes.map(p => addAdditionalProperties(p));
+      planes = planes.map(p => addAdditionalProperties(filterAPI(p)));
       cache("planes", planes);
       // TODO use the expire store parameter
     } else {

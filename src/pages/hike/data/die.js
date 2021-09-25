@@ -77,6 +77,14 @@ const FACES = [
   {
     icon: "ms ms-fw ms-2x ss-mythic ss-grad ms-scheme",
     effect: "Scheme"
+  },
+  {
+    icon: "ss ss-fw ss-2x ss-foil ss-afr",
+    effect: "Venture into the Dungeon"
+  },
+  {
+    icon: "ms ms-fw ms-2x ss-rare ss-grad ms-counter-plus",
+    effect: "Proliferate X Times"
   }
 ];
 

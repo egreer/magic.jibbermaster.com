@@ -193,7 +193,7 @@ export const Hike = () => {
         <Row className="mb-4 text-center">
           {[...CUSTOM_PLANES, ...CUSTOM_CHAOS].map((c, i) => {
             return (
-              <div className="col-6" key={i}>
+              <div className="col-6 mb-2" key={i}>
                 <MtgCard card={c} displayActions="true">
                   <ChaosButton card={c} onClick={triggerChaos} />
                 </MtgCard>
