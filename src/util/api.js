@@ -114,7 +114,9 @@ export const addAdditionalProperties = card => {
       )
     ],
     "Earl of Squirrel": [
-      errataProp("All creatures you control have Squirrellink.")
+      errataProp(
+        "All creature tokens are Squirrels in addition to their other types.\n All Squirrels get +1/+1\n All nontoken creatures gain Squirrellink (whenever they deal damage, create that many 1/1 green squirrel tokens)"
+      )
     ],
     Pramikon: [
       errataProp(
@@ -126,21 +128,66 @@ export const addAdditionalProperties = card => {
         "When you planeswalk to Problematic Volcano or at the beginning of your upkeep, deal 4 damage to any target chosen at random.\n Then if you planeswalked to Problematic Volcano, starting with you, each player assigns their creatures to the left or right of the volcano.\nCreatures enter the battlefield to the left or right of the volcano.\nCreatures can't block creatures on the other side of the volcano."
       )
     ],
+    "Omen Machine": [
+      errataProp(
+        "Players can't draw cards.\nWhen you planeswalk to Omen machine and at the beginning of your upkeep, exile the top card of your library. If it's a land, put it onto the battlefield. Otherwise, cast it without paying its mana cost if able"
+      )
+    ],
+    Timesifter: [
+      errataProp(
+        "When you planeswalk to Timesifter and at the beginning of each upkeep, each player exiles the top card of their library. The player who exiled the card with the highest mana value takes an extra turn after this one. If two or more players' cards are tied for highest, the tied players repeat this process until the tie is broken."
+      )
+    ],
+    "Teferi's Puzzle Box": [
+      errataProp(
+        "When you planeswalk to Teferi's Puzzle Box and at the beginning of your draw step, put the cards from your hand onto the bottom of your library, then draw that many cards."
+      )
+    ],
+    "Goblin Grappler": [
+      errataProp(
+        "All creatures gain Provoke",
+        urlProp({
+          text: "GET OVER HERE",
+          url: "https://www.youtube.com/watch?v=3C3poU_0sK4"
+        })
+      )
+    ],
+    "Swirl the Mists": [
+      errataProp(
+        "When you planeswalk to Swirl the Mists, choose a color word and a basic land type at random.  All instances of color words in the text of spells and permanents are changed to the chosen color word. All instances of basic land types are replaced with the chosen basic land type"
+      )
+    ],
+    "Teferi's Realm": [
+      errataProp(
+        "When you planeswalk to Teferi's Realm and at the beginning of your upkeep, choose artifact, creature, land, or non-Aura enchantment. All nontoken permanents of that type phase out."
+      )
+    ],
     "The Countdown Is at One": [PHENOMENON_PROP],
+    "Enter the Dungeon": [PHENOMENON_PROP],
+    Necropotence: [
+      errataProp(
+        "Players skip their draw step.\n Whenever a player discards a card, exile that card from their graveyard.\n All players have: 'Pay 1 life to exile the top card of your library face down, and then put it into your hand at the beginning of your next end step."
+      )
+    ],
     "Psychic Vortex": [
       errataProp(
-        "When you planeswalk to or at the beginning of your upkeep, put a fun counter on Pyschic Vortex, then draw a card for each fun counter on it. At the beginning of your end step, discard your hand and sacrifice a land."
+        "When you planeswalk to or at the beginning of your upkeep, put a fun counter on Psychic Vortex, then draw a card for each fun counter on it. At the beginning of your end step, discard your hand and sacrifice a land."
       ),
       counterProp("Fun")
     ],
     "Mirror March": [errataProp("All Players")],
+    "Wild Evocation": [
+      errataProp(
+        "When you planeswalk to Wild Evocation and at the beginning of your upkeep, reveal a card at random from your hand. If it's a land, put it onto the battlefield. Otherwise, cast it without paying its mana cost if able"
+      )
+    ],
     Fatespinner: [
       errataProp(
         "At the beginning of each player's upkeep, they choose draw step, main phase, or combat phase. The player skips each instance of the chosen step or phase this turn."
       )
     ],
     "Forced Fruition": [
-      errataProp("Whenever a player casts a spell, they draw 7 cards")
+      errataProp("Whenever a player casts a spell, they draw 7 cards.")
     ],
     "Frankie Peanuts": [
       errataProp(
@@ -152,12 +199,26 @@ export const addAdditionalProperties = card => {
         "Whenever a player casts a spell from their hand, it gains cascade."
       )
     ],
+    "Tombstone Stairwell": [
+      errataProp(
+        "When you planeswalk to Tombstone Stairwell and at the beginning of each upkeep, each player creates a 2/2 black Zombie creature token with haste named Tombspawn for each creature card in their graveyard.\nAt the beginning of each end step or if you planeswalk away from Tombstone Stairwell, destroy all tokens created with Tombstone Stairwell. They can't be regenerated."
+      )
+    ],
     "Seek Bolas's Counsel": [
       errataProp(
         "When you planeswalk to or at the beginning of your upkeep, Seek Bola's Counsel choosing a mode at random."
       )
     ],
-    "Thousand-Year Storm": [errataProp("All Players")],
+    "Thousand-Year Storm": [
+      errataProp(
+        "Whenever any player casts an instant or sorcery spell, they copy it for each instant or sorcery spell cast before it this turn."
+      )
+    ],
+    "Free-for-All": [
+      errataProp(
+        "When you planeswalk to Free-For-All, exile all creatures AND PLANESWALKERS face down. The active player chooses one card at random from what they exiled and puts it into play.\nAt the beginning of each player's upkeep, that player chooses a card exiled with Free-for-All at random and puts it onto the battlefield.\nWhen you planeswalk away from Free-For-All, put all cards exiled with it into their owners' graveyards."
+      )
+    ],
     "Chaos Moon": [
       errataProp(
         "When you planeswalk to Chaos Moon and at the beginning of each upkeep, select a color at random then count the number of permanents in play. If the number is odd, all creatures of the chosen color get +1/+1 and whenever a permanent is tapped for mana of the chosen color add one additional mana of that type. If even, creatures of the chosen color get -1/-1 and whenever a permanent is tapped for mana of the chosen color, add {C}"

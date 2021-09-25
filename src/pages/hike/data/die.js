@@ -38,7 +38,7 @@ const FACES = [
   },
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-plc",
-    effect: "Chaos X Times"
+    effect: "Chaos X Times *"
   },
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-pls",
