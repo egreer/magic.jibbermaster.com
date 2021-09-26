@@ -22,12 +22,6 @@ export const CUSTOM_PLANES = [
     oracle_text:
       "All noncreature artifacts, planeswalkers, and enchantments lose all abilities and become X/X creatures where X is their mana value.",
     show_blank: true
-  },
-  {
-    name: "Nopalescence",
-    type_line: "Plane - Hike",
-    oracle_text: "All creatures have haste and must attack each turn if able",
-    show_blank: true
   }
 ];
 
@@ -2150,1001 +2144,1009 @@ export const BASE_PLANES = [
         "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=476236"
     }
   },
-  [
-    {
-      object: "card",
-      id: "fdc7aeed-ce95-4fc6-b7ef-0697f850fa90",
-      oracle_id: "561e8ecc-1f2b-4fd4-8f92-a0acea449816",
-      multiverse_ids: [531506],
-      name: "Netherese Puzzle-Ward",
-      uri:
-        "https://api.scryfall.com/cards/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90",
-      scryfall_uri:
-        "https://scryfall.com/card/afc/286/netherese-puzzle-ward?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.png?1626127510",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510"
-      },
-      mana_cost: "{3}{U}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "Focus Beam — At the beginning of your upkeep, roll a d4. Scry X, where X is the result.\nPerfect Illumination — Whenever you roll a die's highest natural result, draw a card.",
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90/rulings",
-      artist: "Ralph Horsley",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=531506"
-      }
+
+  {
+    object: "card",
+    id: "fdc7aeed-ce95-4fc6-b7ef-0697f850fa90",
+    oracle_id: "561e8ecc-1f2b-4fd4-8f92-a0acea449816",
+    multiverse_ids: [531506],
+    name: "Netherese Puzzle-Ward",
+    uri: "https://api.scryfall.com/cards/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90",
+    scryfall_uri:
+      "https://scryfall.com/card/afc/286/netherese-puzzle-ward?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.png?1626127510",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/f/d/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90.jpg?1626127510"
     },
-    {
-      object: "card",
-      id: "0b09315c-d6ff-4fdb-8774-c6402b45e959",
-      oracle_id: "1a4c03ab-519a-4840-893a-769dfc5cf161",
-      multiverse_ids: [39663],
-      name: "Risky Move",
-      uri:
-        "https://api.scryfall.com/cards/0b09315c-d6ff-4fdb-8774-c6402b45e959",
-      scryfall_uri:
-        "https://scryfall.com/card/ons/223/risky-move?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.png?1562897507",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507"
-      },
-      mana_cost: "{3}{R}{R}{R}",
-      cmc: 6,
-      type_line: "Enchantment",
-      oracle_text:
-        "At the beginning of each player's upkeep, that player gains control of Risky Move.\nWhen you gain control of Risky Move from another player, choose a creature you control and an opponent. Flip a coin. If you lose the flip, that opponent gains control of that creature.",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/0b09315c-d6ff-4fdb-8774-c6402b45e959/rulings",
-      artist: "Jerry Tiritilli",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=39663"
-      }
-    },
-    {
-      object: "card",
-      id: "4afa3367-eb7e-4c92-96a1-2b6865b24f52",
-      oracle_id: "fd4236e5-6a2c-45ec-afb3-cd4fc516fbf1",
-      multiverse_ids: [89109],
-      name: "Concerted Effort",
-      uri:
-        "https://api.scryfall.com/cards/4afa3367-eb7e-4c92-96a1-2b6865b24f52",
-      scryfall_uri:
-        "https://scryfall.com/card/rav/8/concerted-effort?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.png?1598913524",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524"
-      },
-      mana_cost: "{2}{W}{W}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "At the beginning of each upkeep, creatures you control gain flying until end of turn if a creature you control has flying. The same is true for fear, first strike, double strike, landwalk, protection, trample, and vigilance.",
-      colors: ["W"],
-      color_identity: ["W"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/4afa3367-eb7e-4c92-96a1-2b6865b24f52/rulings",
-      artist: "Michael Sutfin",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=89109"
-      }
-    },
-    {
-      object: "card",
-      id: "c6d4ab45-ab42-4144-9c57-ba046b76860c",
-      oracle_id: "c30e89fa-8993-468d-b2ee-093c3950f520",
-      multiverse_ids: [386327],
-      name: "Hellraiser Goblin",
-      uri:
-        "https://api.scryfall.com/cards/c6d4ab45-ab42-4144-9c57-ba046b76860c",
-      scryfall_uri:
-        "https://scryfall.com/card/ddn/7/hellraiser-goblin?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.png?1592754617",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617"
-      },
-      mana_cost: "{2}{R}",
-      cmc: 3,
-      type_line: "Creature — Goblin Berserker",
-      oracle_text:
-        "Creatures you control have haste and attack each combat if able.",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/c6d4ab45-ab42-4144-9c57-ba046b76860c/rulings",
-      artist: "Karl Kopinski",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=386327"
-      }
-    },
-    {
-      object: "card",
-      id: "393454c2-b256-4a6e-9bc2-56a47cab5073",
-      oracle_id: "cb53bd72-dee8-46fa-b0f9-1eee3a99379a",
-      multiverse_ids: [214035],
-      name: "Knowledge Pool",
-      uri:
-        "https://api.scryfall.com/cards/393454c2-b256-4a6e-9bc2-56a47cab5073",
-      scryfall_uri:
-        "https://scryfall.com/card/mbs/111/knowledge-pool?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.png?1562610637",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637"
-      },
-      mana_cost: "{6}",
-      cmc: 6,
-      type_line: "Artifact",
-      oracle_text:
-        "Imprint — When Knowledge Pool enters the battlefield, each player exiles the top three cards of their library.\nWhenever a player casts a spell from their hand, that player exiles it. If the player does, they may cast a spell from among other cards exiled with Knowledge Pool without paying its mana cost.",
-      colors: [],
-      color_identity: [],
-      rulings_uri:
-        "https://api.scryfall.com/cards/393454c2-b256-4a6e-9bc2-56a47cab5073/rulings",
-      artist: "Mike Bierek",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=214035"
-      }
-    },
-    {
-      object: "card",
-      id: "b41983cb-c4e4-4384-bd69-df3fc6e74cd0",
-      oracle_id: "44e8d51e-0885-49df-a77c-cf4a88e41bc1",
-      multiverse_ids: [78854],
-      name: "Horobi, Death's Wail",
-      uri:
-        "https://api.scryfall.com/cards/b41983cb-c4e4-4384-bd69-df3fc6e74cd0",
-      scryfall_uri:
-        "https://scryfall.com/card/chk/117/horobi-deaths-wail?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.png?1593860738",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738"
-      },
-      mana_cost: "{2}{B}{B}",
-      cmc: 4,
-      type_line: "Legendary Creature — Spirit",
-      oracle_text:
-        "Flying\nWhenever a creature becomes the target of a spell or ability, destroy that creature.",
-      colors: ["B"],
-      color_identity: ["B"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/b41983cb-c4e4-4384-bd69-df3fc6e74cd0/rulings",
-      artist: "John Bolton",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=78854"
-      }
-    },
-    {
-      object: "card",
-      id: "fbafc838-7458-4542-86f3-594326ec0691",
-      oracle_id: "7c59ad65-ad1f-4dc4-bcf2-ea6b2b48fad8",
-      multiverse_ids: [3790],
-      name: "Infinite Hourglass",
-      uri:
-        "https://api.scryfall.com/cards/fbafc838-7458-4542-86f3-594326ec0691",
-      scryfall_uri:
-        "https://scryfall.com/card/5ed/378/infinite-hourglass?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.png?1562595427",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427"
-      },
-      mana_cost: "{4}",
-      cmc: 4,
-      type_line: "Artifact",
-      oracle_text:
-        "At the beginning of your upkeep, put a time counter on Infinite Hourglass.\nAll creatures get +1/+0 for each time counter on Infinite Hourglass.\n{3}: Remove a time counter from Infinite Hourglass. Any player may activate this ability but only during any upkeep step.",
-      colors: [],
-      color_identity: [],
-      rulings_uri:
-        "https://api.scryfall.com/cards/fbafc838-7458-4542-86f3-594326ec0691/rulings",
-      artist: "Adam Rex",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=3790"
-      }
-    },
-    {
-      object: "card",
-      id: "a971b3d5-9a78-437f-a385-3390e64c53de",
-      oracle_id: "cc4f1023-09e4-4f27-8712-be72e9694a80",
-      multiverse_ids: [521674],
-      name: "Tempting Contract",
-      uri:
-        "https://api.scryfall.com/cards/a971b3d5-9a78-437f-a385-3390e64c53de",
-      scryfall_uri:
-        "https://scryfall.com/card/c21/405/tempting-contract?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.png?1625983896",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896"
-      },
-      mana_cost: "{4}",
-      cmc: 4,
-      type_line: "Artifact",
-      oracle_text:
-        "At the beginning of your upkeep, each opponent may create a Treasure token. For each opponent who does, you create a Treasure token.",
-      colors: [],
-      color_identity: [],
-      rulings_uri:
-        "https://api.scryfall.com/cards/a971b3d5-9a78-437f-a385-3390e64c53de/rulings",
-      artist: "Tomas Duchek",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=521674"
-      }
-    },
-    {
-      object: "card",
-      id: "b902b972-3a93-4e4e-aa77-02ada81e6b95",
-      oracle_id: "b18b8415-a0b1-459d-8c6b-896381184935",
-      multiverse_ids: [4493],
-      name: "Pendrell Mists",
-      uri:
-        "https://api.scryfall.com/cards/b902b972-3a93-4e4e-aa77-02ada81e6b95",
-      scryfall_uri:
-        "https://scryfall.com/card/wth/47/pendrell-mists?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.png?1562802967",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967"
-      },
-      mana_cost: "{3}{U}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        'All creatures have "At the beginning of your upkeep, sacrifice this creature unless you pay {1}."',
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/b902b972-3a93-4e4e-aa77-02ada81e6b95/rulings",
-      artist: "Andrew Robinson",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=4493"
-      }
-    },
-    {
-      object: "card",
-      id: "70511f69-8615-4e45-bd4e-76acfe9e4278",
-      oracle_id: "94a844d2-0574-45a7-b347-e0e329767c42",
-      multiverse_ids: [],
-      name: "Necropotence",
-      uri:
-        "https://api.scryfall.com/cards/70511f69-8615-4e45-bd4e-76acfe9e4278",
-      scryfall_uri:
-        "https://scryfall.com/card/dkm/7/necropotence?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.png?1562921448",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448"
-      },
-      mana_cost: "{B}{B}{B}",
-      cmc: 3,
-      type_line: "Enchantment",
-      oracle_text:
-        "Skip your draw step.\nWhenever you discard a card, exile that card from your graveyard.\nPay 1 life: Exile the top card of your library face down. Put that card into your hand at the beginning of your next end step.",
-      colors: ["B"],
-      color_identity: ["B"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/70511f69-8615-4e45-bd4e-76acfe9e4278/rulings",
-      artist: "Mark Tedin"
-    },
-    {
-      object: "card",
-      id: "d7f0e720-3c32-4040-b663-7f99ad5bc810",
-      oracle_id: "68715465-6cf9-4006-87e9-31f227fe9ed3",
-      multiverse_ids: [205268],
-      name: "Furnace of Rath",
-      uri:
-        "https://api.scryfall.com/cards/d7f0e720-3c32-4040-b663-7f99ad5bc810",
-      scryfall_uri:
-        "https://scryfall.com/card/hop/55/furnace-of-rath?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.png?1562843335",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335"
-      },
-      mana_cost: "{1}{R}{R}{R}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "If a source would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/d7f0e720-3c32-4040-b663-7f99ad5bc810/rulings",
-      artist: "John Matson",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=205268"
-      }
-    },
-    {
-      object: "card",
-      id: "c1c48c58-3532-4022-9eec-1a870385cbf3",
-      oracle_id: "4d52c4a5-e5c8-4fb4-be50-78d5482dd1ae",
-      multiverse_ids: [25816],
-      name: "Overgrown Estate",
-      uri:
-        "https://api.scryfall.com/cards/c1c48c58-3532-4022-9eec-1a870385cbf3",
-      scryfall_uri:
-        "https://scryfall.com/card/apc/113/overgrown-estate?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.png?1562940749",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749"
-      },
-      mana_cost: "{W}{B}{G}",
-      cmc: 3,
-      type_line: "Enchantment",
-      oracle_text: "Sacrifice a land: You gain 3 life.",
-      colors: ["B", "G", "W"],
-      color_identity: ["B", "G", "W"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/c1c48c58-3532-4022-9eec-1a870385cbf3/rulings",
-      artist: "Brian Snõddy",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=25816"
-      }
-    },
-    {
-      object: "card",
-      id: "2ea50e09-4ab3-439e-83d7-d584f8af8f16",
-      oracle_id: "eed742c3-006f-475c-aa62-41f971d328cb",
-      multiverse_ids: [80276],
-      name: "Swirl the Mists",
-      uri:
-        "https://api.scryfall.com/cards/2ea50e09-4ab3-439e-83d7-d584f8af8f16",
-      scryfall_uri:
-        "https://scryfall.com/card/chk/94/swirl-the-mists?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.png?1562758889",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889"
-      },
-      mana_cost: "{2}{U}{U}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "As Swirl the Mists enters the battlefield, choose a color word.\nAll instances of color words in the text of spells and permanents are changed to the chosen color word.",
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/2ea50e09-4ab3-439e-83d7-d584f8af8f16/rulings",
-      artist: "Arnie Swekel",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=80276"
-      }
-    },
-    {
-      object: "card",
-      id: "2c6606d1-619f-4cc9-8d5b-771c4b4d9615",
-      oracle_id: "d901e17f-a5f4-49d9-8a6d-ab771949af24",
-      multiverse_ids: [397553],
-      name: "Dream Halls",
-      uri:
-        "https://api.scryfall.com/cards/2c6606d1-619f-4cc9-8d5b-771c4b4d9615",
-      scryfall_uri:
-        "https://scryfall.com/card/tpr/46/dream-halls?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.png?1562428864",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864"
-      },
-      mana_cost: "{3}{U}{U}",
-      cmc: 5,
-      type_line: "Enchantment",
-      oracle_text:
-        "Rather than pay the mana cost for a spell, its controller may discard a card that shares a color with that spell.",
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/2c6606d1-619f-4cc9-8d5b-771c4b4d9615/rulings",
-      artist: "Matthew D. Wilson",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=397553"
-      }
-    },
-    {
-      object: "card",
-      id: "ab01d871-ba50-400a-95e7-09af9e34405f",
-      oracle_id: "6835bf6d-7197-481b-ac26-276ce363b4ad",
-      multiverse_ids: [227287],
-      name: "Rooftop Storm",
-      uri:
-        "https://api.scryfall.com/cards/ab01d871-ba50-400a-95e7-09af9e34405f",
-      scryfall_uri:
-        "https://scryfall.com/card/isd/71/rooftop-storm?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.png?1562835323",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323"
-      },
-      mana_cost: "{5}{U}",
-      cmc: 6,
-      type_line: "Enchantment",
-      oracle_text:
-        "You may pay {0} rather than pay the mana cost for Zombie creature spells you cast.",
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/ab01d871-ba50-400a-95e7-09af9e34405f/rulings",
-      artist: "John Stanko",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=227287"
-      }
-    },
-    {
-      object: "card",
-      id: "2721724d-92ae-4c0c-88dd-628888c468bf",
-      oracle_id: "d0d7250b-70d2-43f9-ae15-837227061ccb",
-      multiverse_ids: [509580],
-      name: "Life and Limb",
-      uri:
-        "https://api.scryfall.com/cards/2721724d-92ae-4c0c-88dd-628888c468bf",
-      scryfall_uri:
-        "https://scryfall.com/card/tsr/215/life-and-limb?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.png?1619398301",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301"
-      },
-      mana_cost: "{3}{G}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "All Forests and all Saprolings are 1/1 green Saproling creatures and Forest lands in addition to their other types. (They're affected by summoning sickness.)",
-      colors: ["G"],
-      color_identity: ["G"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/2721724d-92ae-4c0c-88dd-628888c468bf/rulings",
-      artist: "Jim Nelson",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=509580"
-      }
-    },
-    {
-      object: "card",
-      id: "2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5",
-      oracle_id: "9cf44db4-627a-4197-9588-6da72e41f03d",
-      multiverse_ids: [438],
-      name: "Camouflage",
-      uri:
-        "https://api.scryfall.com/cards/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5",
-      scryfall_uri:
-        "https://scryfall.com/card/leb/188/camouflage?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.png?1559591858",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858"
-      },
-      mana_cost: "{G}",
-      cmc: 1,
-      type_line: "Instant",
-      oracle_text:
-        "Cast this spell only during your declare attackers step.\nThis turn, instead of declaring blockers, each defending player chooses any number of creatures they control and divides them into a number of piles equal to the number of attacking creatures for whom that player is the defending player. Creatures those players control that can block additional creatures may likewise be put into additional piles. Assign each pile to a different one of those attacking creatures at random. Each creature in a pile that can block the creature that pile is assigned to does so. (Piles can be empty.)",
-      colors: ["G"],
-      color_identity: ["G"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5/rulings",
-      artist: "Jesper Myrfors",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=438"
-      }
-    },
-    {
-      object: "card",
-      id: "ea993e57-b72f-48f8-9132-0693f2e78ce4",
-      oracle_id: "6fef4204-8fa8-4225-96c7-2394ed3a9ed5",
-      multiverse_ids: [9756],
-      name: "Ricochet",
-      uri:
-        "https://api.scryfall.com/cards/ea993e57-b72f-48f8-9132-0693f2e78ce4",
-      scryfall_uri: "https://scryfall.com/card/ugl/50/ricochet?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.png?1562799184",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184"
-      },
-      mana_cost: "{R}",
-      cmc: 1,
-      type_line: "Enchantment",
-      oracle_text:
-        "Whenever a player casts a spell that targets a single player, each player rolls a six-sided die. Change the target of that spell to the player with the lowest result. Reroll to break ties, if necessary.",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/ea993e57-b72f-48f8-9132-0693f2e78ce4/rulings",
-      artist: "David A. Cherry",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=9756"
-      }
-    },
-    {
-      object: "card",
-      id: "55ad6a45-a840-45ba-89ad-066e20e983f3",
-      oracle_id: "ed7bdb3e-5c51-4547-9266-76a791e0b2b0",
-      multiverse_ids: [397614],
-      name: "Humility",
-      uri:
-        "https://api.scryfall.com/cards/55ad6a45-a840-45ba-89ad-066e20e983f3",
-      scryfall_uri: "https://scryfall.com/card/tpr/16/humility?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.png?1562429370",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370"
-      },
-      mana_cost: "{2}{W}{W}",
-      cmc: 4,
-      type_line: "Enchantment",
-      oracle_text:
-        "All creatures lose all abilities and have base power and toughness 1/1.",
-      colors: ["W"],
-      color_identity: ["W"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/55ad6a45-a840-45ba-89ad-066e20e983f3/rulings",
-      artist: "Phil Foglio",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=397614"
-      }
-    },
-    {
-      object: "card",
-      id: "bd41cb92-578b-4fc8-b1e6-56604088fcd5",
-      oracle_id: "ed01d5d7-8f34-47b3-9ca8-d82c242d38b4",
-      multiverse_ids: [3435],
-      name: "Chaosphere",
-      uri:
-        "https://api.scryfall.com/cards/bd41cb92-578b-4fc8-b1e6-56604088fcd5",
-      scryfall_uri:
-        "https://scryfall.com/card/mir/164/chaosphere?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.png?1562721439",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439"
-      },
-      mana_cost: "{2}{R}",
-      cmc: 3,
-      type_line: "World Enchantment",
-      oracle_text:
-        "Creatures with flying can block only creatures with flying.\nCreatures without flying have reach. (They can block creatures with flying.)",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/bd41cb92-578b-4fc8-b1e6-56604088fcd5/rulings",
-      artist: "Steve Luke",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=3435"
-      }
-    },
-    {
-      object: "card",
-      id: "5480d92e-5c03-49b8-8bdd-fbcce80de998",
-      oracle_id: "d22ff377-d282-4a28-9dce-96f25913dc96",
-      multiverse_ids: [530488],
-      name: "Grazilaxx, Illithid Scholar",
-      uri:
-        "https://api.scryfall.com/cards/5480d92e-5c03-49b8-8bdd-fbcce80de998",
-      scryfall_uri:
-        "https://scryfall.com/card/afr/367/grazilaxx-illithid-scholar?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.png?1625105070",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070"
-      },
-      mana_cost: "{1}{U}{U}",
-      cmc: 3,
-      type_line: "Legendary Creature — Horror",
-      oracle_text:
-        "Whenever a creature you control becomes blocked, you may return it to its owner's hand.\nWhenever one or more creatures you control deal combat damage to a player, draw a card.",
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/5480d92e-5c03-49b8-8bdd-fbcce80de998/rulings",
-      artist: "Alexander Mokhov",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=530488"
-      }
-    },
-    {
-      object: "card",
-      id: "5c948872-295c-41b9-8094-db7db7578b0d",
-      oracle_id: "48c1c84c-f690-42ce-9c5a-dd09b1e4197c",
-      multiverse_ids: [45125],
-      name: "Goblin Grappler",
-      uri:
-        "https://api.scryfall.com/cards/5c948872-295c-41b9-8094-db7db7578b0d",
-      scryfall_uri:
-        "https://scryfall.com/card/lgn/100/goblin-grappler?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.png?1562913803",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803"
-      },
-      mana_cost: "{R}",
-      cmc: 1,
-      type_line: "Creature — Goblin",
-      oracle_text:
-        "Provoke (Whenever this creature attacks, you may have target creature defending player controls untap and block it if able.)",
-      colors: ["R"],
-      color_identity: ["R"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/5c948872-295c-41b9-8094-db7db7578b0d/rulings",
-      artist: "Christopher Moeller",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=45125"
-      }
-    },
-    {
-      object: "card",
-      id: "6d42fd52-34ea-4d1b-80dc-58fb0593bb5b",
-      oracle_id: "97db6c39-e690-49b6-93a6-e51b8dfad10b",
-      multiverse_ids: [464129],
-      name: "Spore Frog",
-      uri:
-        "https://api.scryfall.com/cards/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b",
-      scryfall_uri:
-        "https://scryfall.com/card/mh1/180/spore-frog?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.png?1562202192",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192"
-      },
-      mana_cost: "{G}",
-      cmc: 1,
-      type_line: "Creature — Frog",
-      oracle_text:
-        "Sacrifice Spore Frog: Prevent all combat damage that would be dealt this turn.",
-      colors: ["G"],
-      color_identity: ["G"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b/rulings",
-      artist: "Donato Giancola",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=464129"
-      }
-    },
-    {
-      object: "card",
-      id: "aa9f4787-9b29-4f57-b105-1f9eb4bb8861",
-      oracle_id: "1ef07ae5-3b04-45c8-a080-852b84da4fef",
-      multiverse_ids: [19677],
-      name: "Shoving Match",
-      uri:
-        "https://api.scryfall.com/cards/aa9f4787-9b29-4f57-b105-1f9eb4bb8861",
-      scryfall_uri:
-        "https://scryfall.com/card/mmq/103/shoving-match?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.png?1562382533",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533"
-      },
-      mana_cost: "{2}{U}",
-      cmc: 3,
-      type_line: "Instant",
-      oracle_text:
-        'Until end of turn, all creatures gain "{T}: Tap target creature."',
-      colors: ["U"],
-      color_identity: ["U"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/aa9f4787-9b29-4f57-b105-1f9eb4bb8861/rulings",
-      artist: "Dave Dorman",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=19677"
-      }
-    },
-    {
-      object: "card",
-      id: "5edddcbb-0e01-4473-b7a8-1e59cf7ee506",
-      oracle_id: "fb5ec55d-4a35-432a-be6e-c295f1b2e603",
-      multiverse_ids: [202412],
-      name: "Naked Singularity",
-      uri:
-        "https://api.scryfall.com/cards/5edddcbb-0e01-4473-b7a8-1e59cf7ee506",
-      scryfall_uri:
-        "https://scryfall.com/card/me4/216/naked-singularity?utm_source=api",
-      layout: "normal",
-      image_uris: {
-        small:
-          "https://c1.scryfall.com/file/scryfall-cards/small/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
-        normal:
-          "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
-        large:
-          "https://c1.scryfall.com/file/scryfall-cards/large/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
-        png:
-          "https://c1.scryfall.com/file/scryfall-cards/png/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.png?1562917327",
-        art_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
-        border_crop:
-          "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327"
-      },
-      mana_cost: "{5}",
-      cmc: 5,
-      type_line: "Artifact",
-      oracle_text:
-        "Cumulative upkeep {3} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)\nIf tapped for mana, Plains produce {R}, Islands produce {G}, Swamps produce {W}, Mountains produce {U}, and Forests produce {B} instead of any other type.",
-      colors: [],
-      color_identity: ["B", "G", "R", "U", "W"],
-      rulings_uri:
-        "https://api.scryfall.com/cards/5edddcbb-0e01-4473-b7a8-1e59cf7ee506/rulings",
-      artist: "Mark Tedin",
-      related_uris: {
-        gatherer:
-          "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=202412"
-      }
+    mana_cost: "{3}{U}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "Focus Beam — At the beginning of your upkeep, roll a d4. Scry X, where X is the result.\nPerfect Illumination — Whenever you roll a die's highest natural result, draw a card.",
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/fdc7aeed-ce95-4fc6-b7ef-0697f850fa90/rulings",
+    artist: "Ralph Horsley",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=531506"
     }
-  ]
+  },
+  {
+    object: "card",
+    id: "0b09315c-d6ff-4fdb-8774-c6402b45e959",
+    oracle_id: "1a4c03ab-519a-4840-893a-769dfc5cf161",
+    multiverse_ids: [39663],
+    name: "Risky Move",
+    uri: "https://api.scryfall.com/cards/0b09315c-d6ff-4fdb-8774-c6402b45e959",
+    scryfall_uri: "https://scryfall.com/card/ons/223/risky-move?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.png?1562897507",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/0/b/0b09315c-d6ff-4fdb-8774-c6402b45e959.jpg?1562897507"
+    },
+    mana_cost: "{3}{R}{R}{R}",
+    cmc: 6,
+    type_line: "Enchantment",
+    oracle_text:
+      "At the beginning of each player's upkeep, that player gains control of Risky Move.\nWhen you gain control of Risky Move from another player, choose a creature you control and an opponent. Flip a coin. If you lose the flip, that opponent gains control of that creature.",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/0b09315c-d6ff-4fdb-8774-c6402b45e959/rulings",
+    artist: "Jerry Tiritilli",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=39663"
+    }
+  },
+  {
+    object: "card",
+    id: "4afa3367-eb7e-4c92-96a1-2b6865b24f52",
+    oracle_id: "fd4236e5-6a2c-45ec-afb3-cd4fc516fbf1",
+    multiverse_ids: [89109],
+    name: "Concerted Effort",
+    uri: "https://api.scryfall.com/cards/4afa3367-eb7e-4c92-96a1-2b6865b24f52",
+    scryfall_uri:
+      "https://scryfall.com/card/rav/8/concerted-effort?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.png?1598913524",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/4/a/4afa3367-eb7e-4c92-96a1-2b6865b24f52.jpg?1598913524"
+    },
+    mana_cost: "{2}{W}{W}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "At the beginning of each upkeep, creatures you control gain flying until end of turn if a creature you control has flying. The same is true for fear, first strike, double strike, landwalk, protection, trample, and vigilance.",
+    colors: ["W"],
+    color_identity: ["W"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/4afa3367-eb7e-4c92-96a1-2b6865b24f52/rulings",
+    artist: "Michael Sutfin",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=89109"
+    }
+  },
+  {
+    object: "card",
+    id: "c6d4ab45-ab42-4144-9c57-ba046b76860c",
+    oracle_id: "c30e89fa-8993-468d-b2ee-093c3950f520",
+    multiverse_ids: [386327],
+    name: "Hellraiser Goblin",
+    uri: "https://api.scryfall.com/cards/c6d4ab45-ab42-4144-9c57-ba046b76860c",
+    scryfall_uri:
+      "https://scryfall.com/card/ddn/7/hellraiser-goblin?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.png?1592754617",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/6/c6d4ab45-ab42-4144-9c57-ba046b76860c.jpg?1592754617"
+    },
+    mana_cost: "{2}{R}",
+    cmc: 3,
+    type_line: "Creature — Goblin Berserker",
+    oracle_text:
+      "Creatures you control have haste and attack each combat if able.",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/c6d4ab45-ab42-4144-9c57-ba046b76860c/rulings",
+    artist: "Karl Kopinski",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=386327"
+    }
+  },
+  {
+    object: "card",
+    id: "393454c2-b256-4a6e-9bc2-56a47cab5073",
+    oracle_id: "cb53bd72-dee8-46fa-b0f9-1eee3a99379a",
+    multiverse_ids: [214035],
+    name: "Knowledge Pool",
+    uri: "https://api.scryfall.com/cards/393454c2-b256-4a6e-9bc2-56a47cab5073",
+    scryfall_uri:
+      "https://scryfall.com/card/mbs/111/knowledge-pool?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.png?1562610637",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/3/9/393454c2-b256-4a6e-9bc2-56a47cab5073.jpg?1562610637"
+    },
+    mana_cost: "{6}",
+    cmc: 6,
+    type_line: "Artifact",
+    oracle_text:
+      "Imprint — When Knowledge Pool enters the battlefield, each player exiles the top three cards of their library.\nWhenever a player casts a spell from their hand, that player exiles it. If the player does, they may cast a spell from among other cards exiled with Knowledge Pool without paying its mana cost.",
+    colors: [],
+    color_identity: [],
+    rulings_uri:
+      "https://api.scryfall.com/cards/393454c2-b256-4a6e-9bc2-56a47cab5073/rulings",
+    artist: "Mike Bierek",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=214035"
+    }
+  },
+  {
+    object: "card",
+    id: "b41983cb-c4e4-4384-bd69-df3fc6e74cd0",
+    oracle_id: "44e8d51e-0885-49df-a77c-cf4a88e41bc1",
+    multiverse_ids: [78854],
+    name: "Horobi, Death's Wail",
+    uri: "https://api.scryfall.com/cards/b41983cb-c4e4-4384-bd69-df3fc6e74cd0",
+    scryfall_uri:
+      "https://scryfall.com/card/chk/117/horobi-deaths-wail?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.png?1593860738",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/4/b41983cb-c4e4-4384-bd69-df3fc6e74cd0.jpg?1593860738"
+    },
+    mana_cost: "{2}{B}{B}",
+    cmc: 4,
+    type_line: "Legendary Creature — Spirit",
+    oracle_text:
+      "Flying\nWhenever a creature becomes the target of a spell or ability, destroy that creature.",
+    colors: ["B"],
+    color_identity: ["B"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/b41983cb-c4e4-4384-bd69-df3fc6e74cd0/rulings",
+    artist: "John Bolton",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=78854"
+    }
+  },
+  {
+    object: "card",
+    id: "fbafc838-7458-4542-86f3-594326ec0691",
+    oracle_id: "7c59ad65-ad1f-4dc4-bcf2-ea6b2b48fad8",
+    multiverse_ids: [3790],
+    name: "Infinite Hourglass",
+    uri: "https://api.scryfall.com/cards/fbafc838-7458-4542-86f3-594326ec0691",
+    scryfall_uri:
+      "https://scryfall.com/card/5ed/378/infinite-hourglass?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.png?1562595427",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/f/b/fbafc838-7458-4542-86f3-594326ec0691.jpg?1562595427"
+    },
+    mana_cost: "{4}",
+    cmc: 4,
+    type_line: "Artifact",
+    oracle_text:
+      "At the beginning of your upkeep, put a time counter on Infinite Hourglass.\nAll creatures get +1/+0 for each time counter on Infinite Hourglass.\n{3}: Remove a time counter from Infinite Hourglass. Any player may activate this ability but only during any upkeep step.",
+    colors: [],
+    color_identity: [],
+    rulings_uri:
+      "https://api.scryfall.com/cards/fbafc838-7458-4542-86f3-594326ec0691/rulings",
+    artist: "Adam Rex",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=3790"
+    }
+  },
+  {
+    object: "card",
+    id: "a971b3d5-9a78-437f-a385-3390e64c53de",
+    oracle_id: "cc4f1023-09e4-4f27-8712-be72e9694a80",
+    multiverse_ids: [521674],
+    name: "Tempting Contract",
+    uri: "https://api.scryfall.com/cards/a971b3d5-9a78-437f-a385-3390e64c53de",
+    scryfall_uri:
+      "https://scryfall.com/card/c21/405/tempting-contract?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.png?1625983896",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/9/a971b3d5-9a78-437f-a385-3390e64c53de.jpg?1625983896"
+    },
+    mana_cost: "{4}",
+    cmc: 4,
+    type_line: "Artifact",
+    oracle_text:
+      "At the beginning of your upkeep, each opponent may create a Treasure token. For each opponent who does, you create a Treasure token.",
+    colors: [],
+    color_identity: [],
+    rulings_uri:
+      "https://api.scryfall.com/cards/a971b3d5-9a78-437f-a385-3390e64c53de/rulings",
+    artist: "Tomas Duchek",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=521674"
+    }
+  },
+  {
+    object: "card",
+    id: "b902b972-3a93-4e4e-aa77-02ada81e6b95",
+    oracle_id: "b18b8415-a0b1-459d-8c6b-896381184935",
+    multiverse_ids: [4493],
+    name: "Pendrell Mists",
+    uri: "https://api.scryfall.com/cards/b902b972-3a93-4e4e-aa77-02ada81e6b95",
+    scryfall_uri:
+      "https://scryfall.com/card/wth/47/pendrell-mists?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.png?1562802967",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/9/b902b972-3a93-4e4e-aa77-02ada81e6b95.jpg?1562802967"
+    },
+    mana_cost: "{3}{U}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      'All creatures have "At the beginning of your upkeep, sacrifice this creature unless you pay {1}."',
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/b902b972-3a93-4e4e-aa77-02ada81e6b95/rulings",
+    artist: "Andrew Robinson",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=4493"
+    }
+  },
+  {
+    object: "card",
+    id: "70511f69-8615-4e45-bd4e-76acfe9e4278",
+    oracle_id: "94a844d2-0574-45a7-b347-e0e329767c42",
+    multiverse_ids: [],
+    name: "Necropotence",
+    uri: "https://api.scryfall.com/cards/70511f69-8615-4e45-bd4e-76acfe9e4278",
+    scryfall_uri: "https://scryfall.com/card/dkm/7/necropotence?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.png?1562921448",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/7/0/70511f69-8615-4e45-bd4e-76acfe9e4278.jpg?1562921448"
+    },
+    mana_cost: "{B}{B}{B}",
+    cmc: 3,
+    type_line: "Enchantment",
+    oracle_text:
+      "Skip your draw step.\nWhenever you discard a card, exile that card from your graveyard.\nPay 1 life: Exile the top card of your library face down. Put that card into your hand at the beginning of your next end step.",
+    colors: ["B"],
+    color_identity: ["B"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/70511f69-8615-4e45-bd4e-76acfe9e4278/rulings",
+    artist: "Mark Tedin"
+  },
+  {
+    object: "card",
+    id: "d7f0e720-3c32-4040-b663-7f99ad5bc810",
+    oracle_id: "68715465-6cf9-4006-87e9-31f227fe9ed3",
+    multiverse_ids: [205268],
+    name: "Furnace of Rath",
+    uri: "https://api.scryfall.com/cards/d7f0e720-3c32-4040-b663-7f99ad5bc810",
+    scryfall_uri:
+      "https://scryfall.com/card/hop/55/furnace-of-rath?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.png?1562843335",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/d/7/d7f0e720-3c32-4040-b663-7f99ad5bc810.jpg?1562843335"
+    },
+    mana_cost: "{1}{R}{R}{R}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "If a source would deal damage to a permanent or player, it deals double that damage to that permanent or player instead.",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/d7f0e720-3c32-4040-b663-7f99ad5bc810/rulings",
+    artist: "John Matson",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=205268"
+    }
+  },
+  {
+    object: "card",
+    id: "c1c48c58-3532-4022-9eec-1a870385cbf3",
+    oracle_id: "4d52c4a5-e5c8-4fb4-be50-78d5482dd1ae",
+    multiverse_ids: [25816],
+    name: "Overgrown Estate",
+    uri: "https://api.scryfall.com/cards/c1c48c58-3532-4022-9eec-1a870385cbf3",
+    scryfall_uri:
+      "https://scryfall.com/card/apc/113/overgrown-estate?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.png?1562940749",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/1/c1c48c58-3532-4022-9eec-1a870385cbf3.jpg?1562940749"
+    },
+    mana_cost: "{W}{B}{G}",
+    cmc: 3,
+    type_line: "Enchantment",
+    oracle_text: "Sacrifice a land: You gain 3 life.",
+    colors: ["B", "G", "W"],
+    color_identity: ["B", "G", "W"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/c1c48c58-3532-4022-9eec-1a870385cbf3/rulings",
+    artist: "Brian Snõddy",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=25816"
+    }
+  },
+  {
+    object: "card",
+    id: "2ea50e09-4ab3-439e-83d7-d584f8af8f16",
+    oracle_id: "eed742c3-006f-475c-aa62-41f971d328cb",
+    multiverse_ids: [80276],
+    name: "Swirl the Mists",
+    uri: "https://api.scryfall.com/cards/2ea50e09-4ab3-439e-83d7-d584f8af8f16",
+    scryfall_uri:
+      "https://scryfall.com/card/chk/94/swirl-the-mists?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.png?1562758889",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/e/2ea50e09-4ab3-439e-83d7-d584f8af8f16.jpg?1562758889"
+    },
+    mana_cost: "{2}{U}{U}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "As Swirl the Mists enters the battlefield, choose a color word.\nAll instances of color words in the text of spells and permanents are changed to the chosen color word.",
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/2ea50e09-4ab3-439e-83d7-d584f8af8f16/rulings",
+    artist: "Arnie Swekel",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=80276"
+    }
+  },
+  {
+    object: "card",
+    id: "2c6606d1-619f-4cc9-8d5b-771c4b4d9615",
+    oracle_id: "d901e17f-a5f4-49d9-8a6d-ab771949af24",
+    multiverse_ids: [397553],
+    name: "Dream Halls",
+    uri: "https://api.scryfall.com/cards/2c6606d1-619f-4cc9-8d5b-771c4b4d9615",
+    scryfall_uri: "https://scryfall.com/card/tpr/46/dream-halls?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.png?1562428864",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/c/2c6606d1-619f-4cc9-8d5b-771c4b4d9615.jpg?1562428864"
+    },
+    mana_cost: "{3}{U}{U}",
+    cmc: 5,
+    type_line: "Enchantment",
+    oracle_text:
+      "Rather than pay the mana cost for a spell, its controller may discard a card that shares a color with that spell.",
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/2c6606d1-619f-4cc9-8d5b-771c4b4d9615/rulings",
+    artist: "Matthew D. Wilson",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=397553"
+    }
+  },
+  {
+    object: "card",
+    id: "ab01d871-ba50-400a-95e7-09af9e34405f",
+    oracle_id: "6835bf6d-7197-481b-ac26-276ce363b4ad",
+    multiverse_ids: [227287],
+    name: "Rooftop Storm",
+    uri: "https://api.scryfall.com/cards/ab01d871-ba50-400a-95e7-09af9e34405f",
+    scryfall_uri:
+      "https://scryfall.com/card/isd/71/rooftop-storm?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.png?1562835323",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/b/ab01d871-ba50-400a-95e7-09af9e34405f.jpg?1562835323"
+    },
+    mana_cost: "{5}{U}",
+    cmc: 6,
+    type_line: "Enchantment",
+    oracle_text:
+      "You may pay {0} rather than pay the mana cost for Zombie creature spells you cast.",
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/ab01d871-ba50-400a-95e7-09af9e34405f/rulings",
+    artist: "John Stanko",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=227287"
+    }
+  },
+  {
+    object: "card",
+    id: "2721724d-92ae-4c0c-88dd-628888c468bf",
+    oracle_id: "d0d7250b-70d2-43f9-ae15-837227061ccb",
+    multiverse_ids: [509580],
+    name: "Life and Limb",
+    uri: "https://api.scryfall.com/cards/2721724d-92ae-4c0c-88dd-628888c468bf",
+    scryfall_uri:
+      "https://scryfall.com/card/tsr/215/life-and-limb?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.png?1619398301",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/7/2721724d-92ae-4c0c-88dd-628888c468bf.jpg?1619398301"
+    },
+    mana_cost: "{3}{G}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "All Forests and all Saprolings are 1/1 green Saproling creatures and Forest lands in addition to their other types. (They're affected by summoning sickness.)",
+    colors: ["G"],
+    color_identity: ["G"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/2721724d-92ae-4c0c-88dd-628888c468bf/rulings",
+    artist: "Jim Nelson",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=509580"
+    }
+  },
+  {
+    object: "card",
+    id: "2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5",
+    oracle_id: "9cf44db4-627a-4197-9588-6da72e41f03d",
+    multiverse_ids: [438],
+    name: "Camouflage",
+    uri: "https://api.scryfall.com/cards/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5",
+    scryfall_uri: "https://scryfall.com/card/leb/188/camouflage?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.png?1559591858",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/2/f/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5.jpg?1559591858"
+    },
+    mana_cost: "{G}",
+    cmc: 1,
+    type_line: "Instant",
+    oracle_text:
+      "Cast this spell only during your declare attackers step.\nThis turn, instead of declaring blockers, each defending player chooses any number of creatures they control and divides them into a number of piles equal to the number of attacking creatures for whom that player is the defending player. Creatures those players control that can block additional creatures may likewise be put into additional piles. Assign each pile to a different one of those attacking creatures at random. Each creature in a pile that can block the creature that pile is assigned to does so. (Piles can be empty.)",
+    colors: ["G"],
+    color_identity: ["G"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/2f55ff95-32a3-43ba-82e5-a5a3bc2cc9e5/rulings",
+    artist: "Jesper Myrfors",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=438"
+    }
+  },
+  {
+    object: "card",
+    id: "ea993e57-b72f-48f8-9132-0693f2e78ce4",
+    oracle_id: "6fef4204-8fa8-4225-96c7-2394ed3a9ed5",
+    multiverse_ids: [9756],
+    name: "Ricochet",
+    uri: "https://api.scryfall.com/cards/ea993e57-b72f-48f8-9132-0693f2e78ce4",
+    scryfall_uri: "https://scryfall.com/card/ugl/50/ricochet?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.png?1562799184",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/e/a/ea993e57-b72f-48f8-9132-0693f2e78ce4.jpg?1562799184"
+    },
+    mana_cost: "{R}",
+    cmc: 1,
+    type_line: "Enchantment",
+    oracle_text:
+      "Whenever a player casts a spell that targets a single player, each player rolls a six-sided die. Change the target of that spell to the player with the lowest result. Reroll to break ties, if necessary.",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/ea993e57-b72f-48f8-9132-0693f2e78ce4/rulings",
+    artist: "David A. Cherry",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=9756"
+    }
+  },
+  {
+    object: "card",
+    id: "55ad6a45-a840-45ba-89ad-066e20e983f3",
+    oracle_id: "ed7bdb3e-5c51-4547-9266-76a791e0b2b0",
+    multiverse_ids: [397614],
+    name: "Humility",
+    uri: "https://api.scryfall.com/cards/55ad6a45-a840-45ba-89ad-066e20e983f3",
+    scryfall_uri: "https://scryfall.com/card/tpr/16/humility?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.png?1562429370",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/5/55ad6a45-a840-45ba-89ad-066e20e983f3.jpg?1562429370"
+    },
+    mana_cost: "{2}{W}{W}",
+    cmc: 4,
+    type_line: "Enchantment",
+    oracle_text:
+      "All creatures lose all abilities and have base power and toughness 1/1.",
+    colors: ["W"],
+    color_identity: ["W"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/55ad6a45-a840-45ba-89ad-066e20e983f3/rulings",
+    artist: "Phil Foglio",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=397614"
+    }
+  },
+  {
+    object: "card",
+    id: "bd41cb92-578b-4fc8-b1e6-56604088fcd5",
+    oracle_id: "ed01d5d7-8f34-47b3-9ca8-d82c242d38b4",
+    multiverse_ids: [3435],
+    name: "Chaosphere",
+    uri: "https://api.scryfall.com/cards/bd41cb92-578b-4fc8-b1e6-56604088fcd5",
+    scryfall_uri: "https://scryfall.com/card/mir/164/chaosphere?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.png?1562721439",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/b/d/bd41cb92-578b-4fc8-b1e6-56604088fcd5.jpg?1562721439"
+    },
+    mana_cost: "{2}{R}",
+    cmc: 3,
+    type_line: "World Enchantment",
+    oracle_text:
+      "Creatures with flying can block only creatures with flying.\nCreatures without flying have reach. (They can block creatures with flying.)",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/bd41cb92-578b-4fc8-b1e6-56604088fcd5/rulings",
+    artist: "Steve Luke",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=3435"
+    }
+  },
+  {
+    object: "card",
+    id: "5480d92e-5c03-49b8-8bdd-fbcce80de998",
+    oracle_id: "d22ff377-d282-4a28-9dce-96f25913dc96",
+    multiverse_ids: [530488],
+    name: "Grazilaxx, Illithid Scholar",
+    uri: "https://api.scryfall.com/cards/5480d92e-5c03-49b8-8bdd-fbcce80de998",
+    scryfall_uri:
+      "https://scryfall.com/card/afr/367/grazilaxx-illithid-scholar?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.png?1625105070",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/4/5480d92e-5c03-49b8-8bdd-fbcce80de998.jpg?1625105070"
+    },
+    mana_cost: "{1}{U}{U}",
+    cmc: 3,
+    type_line: "Legendary Creature — Horror",
+    oracle_text:
+      "Whenever a creature you control becomes blocked, you may return it to its owner's hand.\nWhenever one or more creatures you control deal combat damage to a player, draw a card.",
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/5480d92e-5c03-49b8-8bdd-fbcce80de998/rulings",
+    artist: "Alexander Mokhov",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=530488"
+    }
+  },
+  {
+    object: "card",
+    id: "5c948872-295c-41b9-8094-db7db7578b0d",
+    oracle_id: "48c1c84c-f690-42ce-9c5a-dd09b1e4197c",
+    multiverse_ids: [45125],
+    name: "Goblin Grappler",
+    uri: "https://api.scryfall.com/cards/5c948872-295c-41b9-8094-db7db7578b0d",
+    scryfall_uri:
+      "https://scryfall.com/card/lgn/100/goblin-grappler?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.png?1562913803",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/c/5c948872-295c-41b9-8094-db7db7578b0d.jpg?1562913803"
+    },
+    mana_cost: "{R}",
+    cmc: 1,
+    type_line: "Creature — Goblin",
+    oracle_text:
+      "Provoke (Whenever this creature attacks, you may have target creature defending player controls untap and block it if able.)",
+    colors: ["R"],
+    color_identity: ["R"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/5c948872-295c-41b9-8094-db7db7578b0d/rulings",
+    artist: "Christopher Moeller",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=45125"
+    }
+  },
+  {
+    object: "card",
+    id: "6d42fd52-34ea-4d1b-80dc-58fb0593bb5b",
+    oracle_id: "97db6c39-e690-49b6-93a6-e51b8dfad10b",
+    multiverse_ids: [464129],
+    name: "Spore Frog",
+    uri: "https://api.scryfall.com/cards/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b",
+    scryfall_uri: "https://scryfall.com/card/mh1/180/spore-frog?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.png?1562202192",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/6/d/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b.jpg?1562202192"
+    },
+    mana_cost: "{G}",
+    cmc: 1,
+    type_line: "Creature — Frog",
+    oracle_text:
+      "Sacrifice Spore Frog: Prevent all combat damage that would be dealt this turn.",
+    colors: ["G"],
+    color_identity: ["G"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/6d42fd52-34ea-4d1b-80dc-58fb0593bb5b/rulings",
+    artist: "Donato Giancola",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=464129"
+    }
+  },
+  {
+    object: "card",
+    id: "aa9f4787-9b29-4f57-b105-1f9eb4bb8861",
+    oracle_id: "1ef07ae5-3b04-45c8-a080-852b84da4fef",
+    multiverse_ids: [19677],
+    name: "Shoving Match",
+    uri: "https://api.scryfall.com/cards/aa9f4787-9b29-4f57-b105-1f9eb4bb8861",
+    scryfall_uri:
+      "https://scryfall.com/card/mmq/103/shoving-match?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.png?1562382533",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/a/aa9f4787-9b29-4f57-b105-1f9eb4bb8861.jpg?1562382533"
+    },
+    mana_cost: "{2}{U}",
+    cmc: 3,
+    type_line: "Instant",
+    oracle_text:
+      'Until end of turn, all creatures gain "{T}: Tap target creature."',
+    colors: ["U"],
+    color_identity: ["U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/aa9f4787-9b29-4f57-b105-1f9eb4bb8861/rulings",
+    artist: "Dave Dorman",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=19677"
+    }
+  },
+  {
+    object: "card",
+    id: "5edddcbb-0e01-4473-b7a8-1e59cf7ee506",
+    oracle_id: "fb5ec55d-4a35-432a-be6e-c295f1b2e603",
+    multiverse_ids: [202412],
+    name: "Naked Singularity",
+    uri: "https://api.scryfall.com/cards/5edddcbb-0e01-4473-b7a8-1e59cf7ee506",
+    scryfall_uri:
+      "https://scryfall.com/card/me4/216/naked-singularity?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.png?1562917327",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/5/e/5edddcbb-0e01-4473-b7a8-1e59cf7ee506.jpg?1562917327"
+    },
+    mana_cost: "{5}",
+    cmc: 5,
+    type_line: "Artifact",
+    oracle_text:
+      "Cumulative upkeep {3} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)\nIf tapped for mana, Plains produce {R}, Islands produce {G}, Swamps produce {W}, Mountains produce {U}, and Forests produce {B} instead of any other type.",
+    colors: [],
+    color_identity: ["B", "G", "R", "U", "W"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/5edddcbb-0e01-4473-b7a8-1e59cf7ee506/rulings",
+    artist: "Mark Tedin",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=202412"
+    }
+  },
+  {
+    object: "card",
+    id: "ca6cf5ba-0bad-4f7d-83b9-c092c2586131",
+    oracle_id: "17a59d3d-9e01-48cd-bb4a-3eaaa077751c",
+    multiverse_ids: [433109],
+    name: "Marchesa, the Black Rose",
+    uri: "https://api.scryfall.com/cards/ca6cf5ba-0bad-4f7d-83b9-c092c2586131",
+    scryfall_uri:
+      "https://scryfall.com/card/c17/177/marchesa-the-black-rose?utm_source=api",
+    layout: "normal",
+    image_uris: {
+      small:
+        "https://c1.scryfall.com/file/scryfall-cards/small/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.jpg?1562623376",
+      normal:
+        "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.jpg?1562623376",
+      large:
+        "https://c1.scryfall.com/file/scryfall-cards/large/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.jpg?1562623376",
+      png:
+        "https://c1.scryfall.com/file/scryfall-cards/png/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.png?1562623376",
+      art_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.jpg?1562623376",
+      border_crop:
+        "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/a/ca6cf5ba-0bad-4f7d-83b9-c092c2586131.jpg?1562623376"
+    },
+    mana_cost: "{1}{U}{B}{R}",
+    set: "c17",
+    cmc: 4,
+    type_line: "Legendary Creature — Human Wizard",
+    oracle_text:
+      "Dethrone (Whenever this creature attacks the player with the most life or tied for most life, put a +1/+1 counter on it.)\nOther creatures you control have dethrone.\nWhenever a creature you control with a +1/+1 counter on it dies, return that card to the battlefield under your control at the beginning of the next end step.",
+    colors: ["B", "R", "U"],
+    color_identity: ["B", "R", "U"],
+    rulings_uri:
+      "https://api.scryfall.com/cards/ca6cf5ba-0bad-4f7d-83b9-c092c2586131/rulings",
+    artist: "Matt Stewart",
+    related_uris: {
+      gatherer:
+        "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=433109"
+    }
+  }
 ];
 
 export const NORMAL_PLANES = BASE_PLANES.map(card =>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, ListGroup, Modal } from "react-bootstrap";
+import { Button, Card, ListGroup, Modal } from "react-bootstrap";
 import { Textfit } from "react-textfit";
 import classicBack from "../../images/classic-back.jpg";
 import arenaBack from "../../images/arena-back.png";
@@ -31,6 +31,8 @@ export const MtgCard = ({
   const token = hasCustomProperty("token", card);
   const phenomenon = hasCustomProperty("phenomenon", card);
   const chaosomenon = hasCustomProperty("chaosomenon", card);
+  const chaosX = hasCustomProperty("chaos_x", card);
+  const urlProp = hasCustomProperty("url", card);
   const emptyChildren = children?.type === null;
 
   const back = altBack ? arenaBack : classicBack;
@@ -72,29 +74,62 @@ export const MtgCard = ({
   const renderAdditionalProps = () => {
     const hasErrata = !!errata;
     const hasToken = !!token;
+    const hasChaosX = !!chaosX;
+    const hasUrl = !!urlProp;
     const isPhenomenon = !!phenomenon;
     const isChaosomenon = !!chaosomenon;
     const errataHtml = createMarkup(errata?.text);
 
     return (
-      (hasErrata || hasToken || isPhenomenon || isChaosomenon) && (
+      (hasErrata ||
+        hasToken ||
+        hasChaosX ||
+        hasUrl ||
+        isPhenomenon ||
+        isChaosomenon) && (
         <Card>
-          <Card.Body>
+          <Card.Body className="px-1">
             {isPhenomenon && (
-              <Card.Text className="h5 font-italic">
-                <i className="ss ss-fw ss-2x ss-fut mx-2"></i>Phenomenon -
-                Planes Hike away after encountering this.
+              <Card.Text className="h5 font-italic mb-3">
+                <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut mx-2"></i>
+                Phenomenon <i className="ss ss-btd rotate-180 mr-1"></i>Planes
+                Hike away after encountering this.
               </Card.Text>
             )}
             {chaosomenon && (
-              <Card.Text className="h5 font-italic">
-                <i className="ms ms-fw ms-2x ms-phenomenon mx-2"></i>Chaosomenon
-                - Chaos Hike away after triggering this.
+              <Card.Text className="h5 font-italic mb-3">
+                <i className="ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon mx-2"></i>
+                Chaosomenon <i className="ss ss-btd rotate-180 mr-1"></i>Chaos
+                Hike away after triggering this.
               </Card.Text>
             )}
             {hasToken && (
-              <Card.Text className="h5 font-italic">
-                Create {token.count} {card.name} Token
+              <Card.Text className="h5 font-italic mb-3">
+                <i className="ms ms-fw ms-2x ss-uncommon ss-grad ms-token"></i>
+                <i className="ss ss-btd rotate-180 mr-1"></i>
+                Create{" "}
+                <strong>
+                  {token.count} {card.name}
+                </strong>{" "}
+                Token
+              </Card.Text>
+            )}
+            {hasChaosX && (
+              <Card.Text className="h5 font-italic mb-3">
+                <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-plc"></i>
+                Chaos <i className="ms ms-x"></i>{" "}
+                <i className="ss ss-btd rotate-180 mr-1"></i>
+                {chaosX.text}
+              </Card.Text>
+            )}
+            {hasUrl && (
+              <Card.Text className="h5 font-italic mb-3">
+                <a href={urlProp.url} target="_blank" rel="noreferrer">
+                  <Button variant="outline-info">
+                    <i className="fa fa-link mr-2"></i>
+                    {urlProp.text}
+                  </Button>
+                </a>
               </Card.Text>
             )}
             {hasErrata && (

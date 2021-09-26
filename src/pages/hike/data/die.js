@@ -79,8 +79,8 @@ const FACES = [
     effect: "Scheme"
   },
   {
-    icon: "ss ss-fw ss-2x ss-foil ss-afr",
-    effect: "Venture into the Dungeon"
+    icon: "ms ms-fw ms-2x ss-rare ss-grad ms-ability-dungeon",
+    effect: "Venture into the Dungeon up to X Times"
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-counter-plus",

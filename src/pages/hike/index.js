@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
@@ -10,7 +10,7 @@ import { DoubleFaceButton } from "../../components/magic/Buttons";
 import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
-import { useDeckContext } from "../../mtg/DeckContext";
+import { DeckProvider, useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
 import { ChaosButton } from "../planechase/ChaosButton";
 import { CurrentDie } from "./Die";
@@ -19,6 +19,9 @@ import { Rules } from "./Rules";
 import { CHAOS, CUSTOM_CHAOS } from "./data/chaos";
 import { CUSTOM_PLANES, PLANES } from "./data/planes";
 import { getOrCreateCurrentDeck, drawCard } from "../../mtg/deck";
+import { hasCustomProperty } from "../../mtg/card";
+import { filterAPI, internet } from "../../util/api";
+import { RandomTokenModal } from "./RandomTokenModal";
 
 const PRE_CHAOS = "hike-chaos";
 
@@ -40,12 +43,12 @@ export const Hike = () => {
     false
   );
   const [showRules, setShowRules] = useLocalState("hike-show-rules", true);
-
+  const [randomTokenModalOpen, setRandomTokenModalOpen] = useState(false);
+  const [randomTokenProps, setRandomTokenProps] = useState(null);
   // TODOs:
   // // styling & testing
   // mobile testing
   // Hike mode in SYB selector
-  // Chaos Deck manipulation
   // Reset planes / Chaos on empty
   // Hike Die
   // Coin Flipper link
@@ -92,14 +95,35 @@ export const Hike = () => {
     chaosWalk();
   };
 
-  const triggerChaos = () => {
-    console.log(
-      "🚀 TODO: ~ file: index.js ~ line 23 ~ triggerChaos ~ triggerChaos"
+  const triggerChaos = c => {
+    console.log("Chaos Triggered");
+    const randomTokenProp = hasCustomProperty(
+      "random-token",
+      c || currentChaosCard
     );
+    if (!!randomTokenProp) {
+      console.log("fetching random token");
+      const getToken = async () => {
+        let response = await internet.get(randomTokenProp.url);
+        let tokenCard = filterAPI(response.data);
+        console.log("Random Token", tokenCard);
+
+        game.setAdditionalCards([tokenCard]);
+        setRandomTokenProps(randomTokenProp);
+        setRandomTokenModalOpen(true);
+      };
+      getToken();
+    }
+  };
+
+  const _randomTokenModalClose = () => {
+    game.clearAdditionalCards();
+    setRandomTokenProps(null);
+    setRandomTokenModalOpen(false);
   };
 
   const reset = () => {
-    console.log("🚀 TODO: ~ file: index.js ~ line 23 ~ reset ~ reset");
+    console.log("Resetting");
     setLoading(true);
     setCurrentChaosCard(null);
     fetchCards();
@@ -195,13 +219,22 @@ export const Hike = () => {
             return (
               <div className="col-6 mb-2" key={i}>
                 <MtgCard card={c} displayActions="true">
-                  <ChaosButton card={c} onClick={triggerChaos} />
+                  <ChaosButton card={c} onClick={() => triggerChaos(c)} />
                 </MtgCard>
               </div>
             );
           })}
         </Row>
       )}
+
+      <RandomTokenModal
+        open={randomTokenModalOpen}
+        additionalCards={game.additionalCards}
+        onHide={_randomTokenModalClose}
+        chaosClick={c => triggerChaos(c)}
+        close={_randomTokenModalClose}
+        randomTokenProps={randomTokenProps}
+      />
 
       <History history={history} CardType={MtgCard} />
       <p className="text-center my-3 noselect">
@@ -219,7 +252,13 @@ export const Hike = () => {
         <Button onClick={undo} variant="warning" block>
           Undo
         </Button>
-        <Deck CardType={MtgCard} />
+        <Deck CardType={MtgCard} name="Plane" />
+        <DeckProvider
+          prefix={PRE_CHAOS}
+          key={currentChaosCard?.id ?? currentChaosCard?.name}
+        >
+          <Deck CardType={MtgCard} name="Chaos" />
+        </DeckProvider>
         {/* <DoubleFaceButton
           text="Planar Die"
           onClick={() => setShowPlanarDie(!showPlanarDie)}

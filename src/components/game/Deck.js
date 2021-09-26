@@ -13,7 +13,7 @@ import {
   TenthEditionButton
 } from "../magic/Buttons";
 
-export const Deck = ({ CardType }) => {
+export const Deck = ({ CardType, name = "" }) => {
   const [showDeck, setShowDeck] = useState(false);
   const [showDeckImages, setShowDeckImages] = useState(false);
   const context = useDeckContext();
@@ -22,7 +22,7 @@ export const Deck = ({ CardType }) => {
   return (
     <div className="my-2">
       <Button onClick={() => setShowDeck(!showDeck)} variant="secondary" block>
-        {showDeck ? "Hide" : "Show"} Deck
+        {showDeck ? "Hide" : "Show"} {name} Deck
       </Button>
       <Fade in={showDeck}>
         <div>
