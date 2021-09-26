@@ -119,7 +119,7 @@ export const CUSTOM_CHAOS = [
     customProperties: [CHAOS_MAX_PROP]
   },
   {
-    name: "Mirror Mirror",
+    name: "Double Trouble",
     type_line: "Plane - Hike",
     oracle_text:
       "Until end of turn, whenever you cast a nonlegenday spell, you may copy it",
@@ -133,7 +133,7 @@ export const CUSTOM_CHAOS = [
     ]
   },
   {
-    name: "Random Sliver",
+    name: "New Ones are Less Fun",
     type_line: "Plane - Hike",
     oracle_text: "Each player creates a random Sliver token",
     show_blank: true,
@@ -148,7 +148,7 @@ export const CUSTOM_CHAOS = [
     ]
   },
   {
-    name: "Random Legendary ",
+    name: "Stangg and Friends",
     type_line: "Plane - Hike",
     oracle_text: "Create a random Legandary Creature token",
     show_blank: true,

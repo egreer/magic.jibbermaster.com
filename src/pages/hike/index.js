@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
@@ -46,7 +46,6 @@ export const Hike = () => {
   const [randomTokenModalOpen, setRandomTokenModalOpen] = useState(false);
   const [randomTokenProps, setRandomTokenProps] = useState(null);
   // TODOs:
-  // // styling & testing
   // mobile testing
   // Hike mode in SYB selector
   // Reset planes / Chaos on empty
@@ -146,7 +145,6 @@ export const Hike = () => {
           <h1>Hike Mode</h1>
         </Col>
       </Row>
-      {/* TODO: Action Button Name */}
       <ActionButton
         text="Hike Hike"
         onClick={planesAndChaosWalk}

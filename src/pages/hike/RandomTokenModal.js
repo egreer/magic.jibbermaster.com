@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { MtgCard } from "../../components/magic/Card";
 
 export const RandomTokenModal = ({
@@ -16,7 +16,6 @@ export const RandomTokenModal = ({
         size="md"
         dialogClassName="bg-secondary"
         variant="secondary"
-        backdrop="static"
         backdrop={true}
       >
         <Modal.Header className="justify-content-center text-white noselect">

@@ -12,6 +12,7 @@ import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
 import { createMarkup } from "../../util/api";
+import ReactDOMServer from "react-dom/server";
 
 export const MtgCard = ({
   listDisplay,
@@ -33,12 +34,15 @@ export const MtgCard = ({
   const chaosomenon = hasCustomProperty("chaosomenon", card);
   const chaosX = hasCustomProperty("chaos_x", card);
   const urlProp = hasCustomProperty("url", card);
-  const emptyChildren = children?.type === null;
+  const emptyChildren = !Boolean(ReactDOMServer.renderToStaticMarkup(children));
 
   const back = altBack ? arenaBack : classicBack;
-  const cardStyle = rotatedLayout(card)
+  const isRotated = rotatedLayout(card);
+  const cardStyle = isRotated
     ? { transform: "rotate(90deg) scale(0.7) translate(-50%)" }
     : {};
+
+  const counterStyle = isRotated ? { transform: "translateY(110%)" } : {};
   const isBlank = card?.show_blank;
   const imageURI = card
     ? isBlank
@@ -46,7 +50,9 @@ export const MtgCard = ({
       : card.image_uris.border_crop
     : back;
 
-  const counter = displayActions && hasCounters && <Counter card={card} />;
+  const counter = displayActions && hasCounters && (
+    <Counter card={card} style={counterStyle} />
+  );
 
   const toggleModal = () => {
     console.log("Toggle Modal");
@@ -59,7 +65,7 @@ export const MtgCard = ({
   };
 
   const renderBody = () => {
-    const text = CardText({ card });
+    const text = CardText({ card, showText: isRotated });
     const hasBody = !!text;
 
     return (
@@ -72,6 +78,7 @@ export const MtgCard = ({
   };
 
   const renderAdditionalProps = () => {
+    const hasChildren = !emptyChildren;
     const hasErrata = !!errata;
     const hasToken = !!token;
     const hasChaosX = !!chaosX;
@@ -81,7 +88,8 @@ export const MtgCard = ({
     const errataHtml = createMarkup(errata?.text);
 
     return (
-      (hasErrata ||
+      (hasChildren ||
+        hasErrata ||
         hasToken ||
         hasChaosX ||
         hasUrl ||
@@ -89,6 +97,7 @@ export const MtgCard = ({
         isChaosomenon) && (
         <Card>
           <Card.Body className="px-1">
+            {hasChildren && children}
             {isPhenomenon && (
               <Card.Text className="h5 font-italic mb-3">
                 <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut mx-2"></i>
@@ -254,7 +263,7 @@ export const MtgCard = ({
           <Card.Title className={cn("text-center", { "h-100": isBlank })}>
             {counter}
             {renderCustomText()}
-            {children}
+            {!isBlank && children}
           </Card.Title>
         </Card.ImgOverlay>
       );
@@ -263,7 +272,7 @@ export const MtgCard = ({
         <Card.Body className="text-center pb-0">
           {counter}
           {renderCustomText()}
-          {children}
+          {!isBlank && children}
         </Card.Body>
       );
     }

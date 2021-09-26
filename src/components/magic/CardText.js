@@ -2,10 +2,10 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { useSettings } from "../../hooks/useSettings";
 
-export const CardText = ({ card }) => {
+export const CardText = ({ card, showText = false }) => {
   const settings = useSettings();
 
-  if (settings.displayText) {
+  if (showText || settings.displayText) {
     if (card) {
       const html =
         card.oracle_html ||
