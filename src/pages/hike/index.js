@@ -27,6 +27,7 @@ import {
   internet,
 } from "../../util/api";
 import { RandomTokenModal } from "./RandomTokenModal";
+import { useSettings } from "../../hooks/useSettings";
 
 const PRE_CHAOS = "hike-chaos";
 
@@ -58,6 +59,7 @@ export const Hike = () => {
   // Coin Flipper link
 
   const game = useGameContext();
+  const { hikeMode, setHikeMode } = useSettings();
   const { currentCard } = game;
 
   const deck = useDeckContext();
@@ -287,6 +289,11 @@ export const Hike = () => {
           enabled={showRules}
         />
       </DevTools>
+      <DoubleFaceButton
+        text="Hike Mode"
+        onClick={() => setHikeMode(!hikeMode)}
+        enabled={hikeMode}
+      />
       {/* TODO: Swap Planar Die */}
       {/* {showPlanarDie && (
         <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>

@@ -24,6 +24,7 @@ export const SettingsProvider = ({ children }: { children: any }) => {
     s("displayGatherer"),
     false
   );
+  const [hikeMode, setHikeMode] = useLocalState(s("hike-mode"), false);
 
   const getSetting = useCallback((setting: string) => {
     return store.get(s(setting));
@@ -66,7 +67,9 @@ export const SettingsProvider = ({ children }: { children: any }) => {
         devTools,
         setDevTools,
         displayGatherer,
-        setDisplayGatherer
+        setDisplayGatherer,
+        hikeMode,
+        setHikeMode,
       }}
     >
       {children}
