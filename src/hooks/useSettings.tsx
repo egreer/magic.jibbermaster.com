@@ -40,11 +40,11 @@ export const SettingsProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const versionCheck = () => {
-      const version = getSetting("version");
-      if (version && version !== gitInfo.commit.shortHash) {
-        // TODO: Future refine this reset
-        store.clearAll();
-      }
+      // const version = getSetting("version");
+      // if (version && version !== gitInfo.commit.shortHash) {
+      //   // TODO: Future refine this reset
+      //   store.clearAll();
+      // }
       setSetting("version", gitInfo.commit.shortHash);
     };
 

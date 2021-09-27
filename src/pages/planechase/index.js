@@ -37,7 +37,7 @@ export const Planechase = () => {
 
   const fetchPlanes = useCallback(async () => {
     const newPlanes = await getAllPlanechaseCards();
-    setPlanes(newPlanes);
+    setPlanes([...newPlanes]);
     setLoading(false);
   }, [setPlanes, setLoading]);
 
