@@ -19,7 +19,7 @@ export const Navigation = () => {
     setDisplayText,
     setDisplayImages,
     setDevTools,
-    setDisplayGatherer
+    setDisplayGatherer,
   } = settings;
 
   const toggle = () => setOpen(!open);
@@ -62,7 +62,7 @@ export const Navigation = () => {
           <NavItem to="/archenemy" text="Archenemy" />
           <NavItem to="/syb" text="SYB" />
           <NavItem to="/formats" text="Formats" />
-          <Dropdown navbar onToggle={open => !open && closeNavbar()}>
+          <Dropdown navbar onToggle={(open) => !open && closeNavbar()}>
             <Dropdown.Toggle as={Nav.Link}>Settings</Dropdown.Toggle>
             <Dropdown.Menu alignRight>
               <Toggler

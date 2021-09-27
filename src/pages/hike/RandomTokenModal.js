@@ -6,7 +6,7 @@ export const RandomTokenModal = ({
   additionalCards,
   onHide,
   open,
-  randomTokenProps
+  randomTokenProps,
 }) => {
   if (additionalCards && open && randomTokenProps) {
     return (
@@ -26,7 +26,7 @@ export const RandomTokenModal = ({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {additionalCards.map(c => (
+          {additionalCards.map((c) => (
             <MtgCard card={c} key={c.id} />
           ))}
         </Modal.Body>

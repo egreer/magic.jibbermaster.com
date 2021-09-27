@@ -11,16 +11,16 @@ export const cytoStyle = ({ square } = { square: false }) => [
       "background-color": SOURCE_COLOR,
       "text-valign": "center",
       "text-halign": "center",
-      content: "data(label)"
-    }
+      content: "data(label)",
+    },
   },
   {
     selector: "node[label]",
     style: {
       label: "data(label)",
       "font-size": "2em",
-      color: "white"
-    }
+      color: "white",
+    },
   },
   {
     selector: ".screw",
@@ -32,8 +32,8 @@ export const cytoStyle = ({ square } = { square: false }) => [
       "target-arrow-color": TARGET_COLOR,
       "line-fill": "linear-gradient",
       "line-gradient-stop-colors": [SOURCE_COLOR, TARGET_COLOR],
-      "z-index": 2
-    }
+      "z-index": 2,
+    },
   },
   {
     selector: ".turn",
@@ -48,49 +48,49 @@ export const cytoStyle = ({ square } = { square: false }) => [
       "target-arrow-color": "#707070",
       "line-color": "#707070",
       opacity: 0.5,
-      "z-index": 1
-    }
+      "z-index": 1,
+    },
   },
   {
     selector: "node.highlight",
     style: {
       "background-color": "#218838",
       "border-color": "#218838",
-      "border-width": "2px"
-    }
+      "border-width": "2px",
+    },
   },
   {
     selector: "node.highlight.incoming",
     style: {
       "background-color": SOURCE_COLOR,
       "border-color": SOURCE_COLOR,
-      "border-width": "2px"
-    }
+      "border-width": "2px",
+    },
   },
   {
     selector: "node.highlight.outgoing",
     style: {
       "background-color": TARGET_COLOR,
       "border-color": TARGET_COLOR,
-      "border-width": "2px"
-    }
+      "border-width": "2px",
+    },
   },
   {
     selector: "node.highlight.outgoing.incoming",
     style: {
       "border-color": SOURCE_COLOR,
-      "border-width": "2px"
-    }
+      "border-width": "2px",
+    },
   },
   {
     selector: "node.semitransparent",
-    style: { opacity: "0.5" }
+    style: { opacity: "0.5" },
   },
   {
     selector: "edge.highlight",
     style: {
-      "curve-style": "unbundled-bezier"
-    }
+      "curve-style": "unbundled-bezier",
+    },
   },
   {
     selector: "edge.highlight.incoming",
@@ -98,19 +98,19 @@ export const cytoStyle = ({ square } = { square: false }) => [
       "curve-style": "unbundled-bezier",
       "target-arrow-color": SOURCE_COLOR,
       "line-gradient-stop-colors": [SOURCE_COLOR, SOURCE_COLOR],
-      "z-index": 3
-    }
+      "z-index": 3,
+    },
   },
   {
     selector: "edge.highlight.outgoing",
     style: {
       "target-arrow-color": TARGET_COLOR,
       "line-gradient-stop-colors": [TARGET_COLOR, TARGET_COLOR],
-      "z-index": 4
-    }
+      "z-index": 4,
+    },
   },
   {
     selector: "edge.semitransparent",
-    style: { opacity: "0.2" }
-  }
+    style: { opacity: "0.2" },
+  },
 ];

@@ -5,7 +5,7 @@ export const Loading = ({
   start = 0,
   numDots = 3,
   interval = 500,
-  className
+  className,
 }) => {
   const [dotsCount, setDotsCount] = useState(start);
 

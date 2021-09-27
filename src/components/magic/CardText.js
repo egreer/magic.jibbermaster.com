@@ -10,7 +10,7 @@ export const CardText = ({ card, showText = false }) => {
       const html =
         card.oracle_html ||
         card.oracle_text ||
-        card.card_faces?.map(f => f.oracle_text).join("<br/>");
+        card.card_faces?.map((f) => f.oracle_text).join("<br/>");
       return (
         <>
           <Card.Title>

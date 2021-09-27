@@ -11,7 +11,7 @@ import { canStar } from "../formats/formats";
 import { cytoStyle } from "./Cyto";
 import {
   DoubleFaceButton,
-  LoyaltyButtonGroup
+  LoyaltyButtonGroup,
 } from "../../components/magic/Buttons.js";
 import { useLocalState } from "../../hooks/useLocalState";
 import { DevTools } from "../../components/DevTools.js";
@@ -61,7 +61,7 @@ export const SYB = () => {
   const dialog = useRef(null);
 
   useEffect(() => {
-    cyContainer.current.nodes().each(d => {
+    cyContainer.current.nodes().each((d) => {
       const currentLabel = d.data("label");
       const playerNumber = d.id().split("-")[1];
       const newLabel = labels[playerNumber] || currentLabel;
@@ -73,7 +73,7 @@ export const SYB = () => {
 
   const generateNodes = () => {
     const players = Array.from(Array(playerCount).keys());
-    return players.map(p => {
+    return players.map((p) => {
       const label = labels[p] || p;
       return { data: { id: `player-${p}`, label, type: "triangle-tee" } };
     });
@@ -93,9 +93,9 @@ export const SYB = () => {
                 data: {
                   source: `player-${player}`,
                   target: `player-${target}`,
-                  label: `Edge from ${player} to ${target}`
+                  label: `Edge from ${player} to ${target}`,
                 },
-                classes: "screw"
+                classes: "screw",
               };
             });
         })
@@ -119,9 +119,9 @@ export const SYB = () => {
             data: {
               source: `player-${i}`,
               target: `player-${target}`,
-              label: `Turn from ${i} to ${target}`
+              label: `Turn from ${i} to ${target}`,
             },
-            classes: "turn"
+            classes: "turn",
           };
         })
       : [];
@@ -129,12 +129,12 @@ export const SYB = () => {
     return screwEdges.concat(turnEdges);
   };
 
-  const regenerateOrder = c => {
+  const regenerateOrder = (c) => {
     const players = Array.from(Array(c || playerCount).keys());
     setTargets(shuffleArray(players));
   };
 
-  const handleCy = cy => {
+  const handleCy = (cy) => {
     const layout = isSquare() ? gridLayout : circleLayout;
     const SELECT_THRESHOLD = 100;
 
@@ -143,7 +143,7 @@ export const SYB = () => {
       cy.layout(layout).run();
     }, SELECT_THRESHOLD);
 
-    const nodeClick = debounce(e => {
+    const nodeClick = debounce((e) => {
       const clickedNode = e.target;
       setLabel(clickedNode.id().split("-")[1]);
     }, SELECT_THRESHOLD);
@@ -155,7 +155,7 @@ export const SYB = () => {
 
       cy.nodes().on("tap click", nodeClick);
 
-      cy.on("mouseover touchstart", "node", function(e) {
+      cy.on("mouseover touchstart", "node", function (e) {
         let sel = e.target;
 
         sel.addClass("highlight");
@@ -174,7 +174,7 @@ export const SYB = () => {
           .addClass("semitransparent");
       });
 
-      cy.on("mouseout touchend", "node", function(e) {
+      cy.on("mouseout touchend", "node", function (e) {
         cy.elements().removeClass(
           "semitransparent highlight incoming outgoing"
         );
@@ -186,19 +186,19 @@ export const SYB = () => {
   };
 
   const setLabel = useCallback(
-    number => {
+    (number) => {
       console.log("Setting label", number);
       dialog.current.show({
         title: "Who is this?",
         bsSize: "sm",
         actions: [
           Dialog.CancelAction(),
-          Dialog.OKAction(a => {
+          Dialog.OKAction((a) => {
             labels[number] = a.value;
             setLabels({ ...labels });
-          })
+          }),
         ],
-        prompt: Dialog.TextPrompt({ initialValue: labels[number] || number })
+        prompt: Dialog.TextPrompt({ initialValue: labels[number] || number }),
       });
     },
     [dialog, labels, setLabels]
@@ -208,13 +208,13 @@ export const SYB = () => {
     const layout = isSquare() ? gridLayout : circleLayout;
     const elements = {
       nodes: generateNodes(),
-      edges: generateEdges()
+      edges: generateEdges(),
     };
     const stylesheet = cytoStyle({ square: isSquare() });
 
     return (
       <CytoscapeComponent
-        cy={cy => handleCy(cy)}
+        cy={(cy) => handleCy(cy)}
         elements={CytoscapeComponent.normalizeElements(elements)}
         style={{ width: "100vw", height: "100vh" }}
         className={"flex-grow"}
@@ -253,7 +253,7 @@ export const SYB = () => {
     setPlayerCount(newPlayerCount);
   };
 
-  const adjustTargetCount = playerCount => {
+  const adjustTargetCount = (playerCount) => {
     const newPlayerTargets = Math.min(
       playerTargets,
       Math.max(playerCount - TARGET_OFFSET, 1)
@@ -306,11 +306,11 @@ export const SYB = () => {
           <h1>{playerCount} Players</h1>
           <LoyaltyButtonGroup
             upProps={{
-              onClick: incrementCount
+              onClick: incrementCount,
             }}
             downProps={{
               disabled: playerCount <= 1,
-              onClick: decrementCount
+              onClick: decrementCount,
             }}
           />
         </Col>
@@ -319,11 +319,11 @@ export const SYB = () => {
           <LoyaltyButtonGroup
             upProps={{
               disabled: playerTargets >= playerCount - TARGET_OFFSET,
-              onClick: incrementTargetCount
+              onClick: incrementTargetCount,
             }}
             downProps={{
               disabled: playerTargets <= 1,
-              onClick: decrementTargetCount
+              onClick: decrementTargetCount,
             }}
           />
         </Col>
@@ -395,7 +395,7 @@ export const SYB = () => {
       </DevTools>
 
       <Dialog
-        ref={component => {
+        ref={(component) => {
           dialog.current = component;
         }}
       />

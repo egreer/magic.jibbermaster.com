@@ -141,7 +141,7 @@ export const Archenemy = () => {
             <h5>Ongoing Schemes</h5>
           </Alert>
           <div className="d-flex justify-content-center flex-wrap ">
-            {ongoingSchemes.map(c => (
+            {ongoingSchemes.map((c) => (
               <React.Fragment key={c.deck_card_id}>
                 <Scheme card={c} displayActions="true">
                   <AbandonButton card={c} onClick={abandonScheme} />
@@ -154,7 +154,7 @@ export const Archenemy = () => {
     }
   };
 
-  const abandonScheme = card => {
+  const abandonScheme = (card) => {
     if (currentCard?.deck_card_id === card.deck_card_id) {
       console.log("Abandon Current Scheme", card);
       game.clearCurrentCard();
@@ -162,7 +162,7 @@ export const Archenemy = () => {
     } else {
       console.log("Abandon Scheme", card);
       const newOngoing = ongoingSchemes.filter(
-        s => s.deck_card_id !== card.deck_card_id
+        (s) => s.deck_card_id !== card.deck_card_id
       );
       game.setAdditionalCards(newOngoing);
     }
@@ -172,7 +172,7 @@ export const Archenemy = () => {
     console.log(`Selected ${name}`, cards);
 
     const newCards = name === "All" ? cards : [];
-    cards.forEach(c => {
+    cards.forEach((c) => {
       for (let i = 0; i < c.count; i++) {
         newCards.push(c);
       }

@@ -8,11 +8,11 @@ export const TripleChaosModal = ({
   revealedCards,
   onHide,
   chaosClick,
-  close
+  close,
 }) => {
   if (revealedCards && open) {
     const revealedPlanes = revealedCards.filter(
-      c => c.type_line.search("Plane") >= 0
+      (c) => c.type_line.search("Plane") >= 0
     );
     return (
       <Modal
@@ -37,10 +37,10 @@ export const TripleChaosModal = ({
           </div>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {revealedPlanes.map(c => (
+          {revealedPlanes.map((c) => (
             <React.Fragment key={c.deck_card_id}>
               <Plane card={c}>
-                <ChaosButton card={c} onClick={c => chaosClick(c)} />
+                <ChaosButton card={c} onClick={(c) => chaosClick(c)} />
               </Plane>
             </React.Fragment>
           ))}

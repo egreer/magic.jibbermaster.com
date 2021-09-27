@@ -17,7 +17,7 @@ const SCHEMES_URL =
 
 const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
 
-export const filterAPI = card =>
+export const filterAPI = (card) =>
   pick(card, [
     "object",
     "id",
@@ -42,7 +42,7 @@ export const filterAPI = card =>
     // Custom Properties
     "customProperties",
     "oracle_html",
-    "show_blank"
+    "show_blank",
   ]);
 
 export const getAllPlanechaseCards = async () => {
@@ -52,7 +52,7 @@ export const getAllPlanechaseCards = async () => {
       console.log("Loading from Axios");
       let response = await internet.get(PLANES_URL);
       planes = response.data.data;
-      planes = planes.map(p => addAdditionalProperties(filterAPI(p)));
+      planes = planes.map((p) => addAdditionalProperties(filterAPI(p)));
       cache("planes", planes);
       // TODO use the expire store parameter
     } else {
@@ -71,7 +71,7 @@ export const getAllArchenemyCards = async () => {
       console.log("Loading from Axios");
       let response = await internet.get(SCHEMES_URL);
       schemes = response.data.data;
-      schemes = schemes.map(p => addAdditionalProperties(p));
+      schemes = schemes.map((p) => addAdditionalProperties(p));
       cache("schemes", schemes);
       // TODO use the expire store parameter
     } else {
@@ -86,7 +86,7 @@ export const getAllArchenemyCards = async () => {
 export const getAllHikeModePlaneCards = async () => {
   try {
     let hikePlanes = cached("hikePlanes");
-    let ids = BASE_PLANES.map(c => pick(c, "id"));
+    let ids = BASE_PLANES.map((c) => pick(c, "id"));
     if (!hikePlanes || hikePlanes.length !== ids.length) {
       console.log("Loading from Axios");
       hikePlanes = await fetchAllCards(ids);
@@ -104,7 +104,7 @@ export const getAllHikeModePlaneCards = async () => {
 export const getAllHikeModeChaosCards = async () => {
   try {
     let hikeChaos = cached("hikeChaos");
-    let ids = BASE_CHAOS.map(c => pick(c, "id"));
+    let ids = BASE_CHAOS.map((c) => pick(c, "id"));
     if (!hikeChaos || hikeChaos.length !== ids.length) {
       console.log("Loading from Axios");
       hikeChaos = await fetchAllCards(ids);
@@ -119,16 +119,16 @@ export const getAllHikeModeChaosCards = async () => {
   }
 };
 
-const fetchAllCards = async ids => {
+const fetchAllCards = async (ids) => {
   const chunks = chunk(ids, 75);
   let cards = [];
   for (let identifiers of chunks) {
     let response = await internet.post(COLLECTION_URL, {
-      identifiers
+      identifiers,
     });
     cards = cards.concat([...response?.data?.data]);
   }
-  return cards.map(p => addAdditionalProperties(filterAPI(p)));
+  return cards.map((p) => addAdditionalProperties(filterAPI(p)));
 };
 
 function cached(prefix) {

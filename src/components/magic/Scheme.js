@@ -31,7 +31,7 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
     />
   );
   const toggleModal = () => {
-    setModalOpen(isOpen => !isOpen);
+    setModalOpen((isOpen) => !isOpen);
   };
 
   const renderBody = () => {
@@ -63,7 +63,7 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
         <Card.ImgOverlay
           className={cn("text-center scheme-overlay", {
             "child-overlay": !emptyChildren,
-            "counter-overlay": emptyChildren && hasCounters
+            "counter-overlay": emptyChildren && hasCounters,
           })}
         >
           <Card.Title className="text-center pt-5 mt-sm-5">

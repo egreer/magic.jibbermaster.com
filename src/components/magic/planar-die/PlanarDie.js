@@ -4,7 +4,7 @@ import "react-dice-complete/dist/react-dice-complete.css";
 import "./planar-die.scss";
 import noop from "lodash/noop";
 
-const translateRoll = roll => {
+const translateRoll = (roll) => {
   switch (roll) {
     case 1:
       return "Planeswalk";
@@ -20,7 +20,7 @@ export const PlanarDie = ({ rollDone = noop }) => {
     <div className="planar">
       <ReactDice
         numDice={1}
-        rollDone={r => rollDone(translateRoll(r))}
+        rollDone={(r) => rollDone(translateRoll(r))}
         defaultRoll={1}
         outline={true}
         outlineColor="#808080"

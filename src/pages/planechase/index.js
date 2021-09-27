@@ -79,12 +79,12 @@ export const Planechase = () => {
       newRevealedCards = deck.revealCards(2, true);
       deck.removeCards(newRevealedCards);
       const revealedPlanes = newRevealedCards.filter(
-        c => c.type_line.search("Plane") >= 0
+        (c) => c.type_line.search("Plane") >= 0
       );
       const revealedPhenomenon = newRevealedCards.filter(
-        c => c.type_line.search("Phenomenon") >= 0
+        (c) => c.type_line.search("Phenomenon") >= 0
       );
-      revealedPlanes.forEach(c => deck.updateHistory(c));
+      revealedPlanes.forEach((c) => deck.updateHistory(c));
       deck.addCardsToBottom(revealedPhenomenon);
       newRevealedCards = [];
       newAdditionalCards = revealedPlanes;
@@ -115,7 +115,7 @@ export const Planechase = () => {
     }
   };
 
-  const triggerChaos = card => {
+  const triggerChaos = (card) => {
     console.log("Chaos Triggered");
     if (hasCustomProperty("triple-chaos", card)) {
       const newRevealedCards = deck.revealCards(3, true);
@@ -139,7 +139,7 @@ export const Planechase = () => {
   const renderTwoPlanes = () => {
     if (hasCustomProperty("two-planes", currentCard)) {
       const revealedPlanes = additionalCards.filter(
-        c => c.type_line.search("Plane") >= 0
+        (c) => c.type_line.search("Plane") >= 0
       );
       return (
         <div>
@@ -148,7 +148,7 @@ export const Planechase = () => {
             You Are On Both Planes
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
-          {revealedPlanes.map(c => (
+          {revealedPlanes.map((c) => (
             <React.Fragment key={c.deck_card_id}>
               <Plane card={c} displayActions="true">
                 <ChaosButton card={c} onClick={triggerChaos} />
@@ -160,9 +160,9 @@ export const Planechase = () => {
     }
   };
 
-  const selectPlane = card => {
+  const selectPlane = (card) => {
     const restCards = revealedCards.filter(
-      c => c.deck_card_id !== card.deck_card_id
+      (c) => c.deck_card_id !== card.deck_card_id
     );
     const shuffledCards = shuffleArray(restCards.slice());
     deck.addCardsToBottom([...shuffledCards]);
@@ -174,7 +174,7 @@ export const Planechase = () => {
     if (hasCustomProperty("top-5", currentCard)) {
       console.log("Render 5 - Revealed Cards", revealedCards);
       const revealedPlanes = revealedCards.filter(
-        c => c.type_line.search("Plane") >= 0
+        (c) => c.type_line.search("Plane") >= 0
       );
       console.log("Render 5 - Revealed Planes", revealedPlanes);
       return (
@@ -184,7 +184,7 @@ export const Planechase = () => {
             Pick a Plane to Planeswalk To
             <i className="ms ms-planeswalker mx-2" />
           </Alert>
-          {revealedPlanes.map(c => (
+          {revealedPlanes.map((c) => (
             <div key={c.deck_card_id}>
               <Plane card={c}>
                 <Button
@@ -254,7 +254,7 @@ export const Planechase = () => {
         open={tripleChaosModalOpen}
         revealedCards={revealedCards}
         onHide={_tripleChaosModalClose}
-        chaosClick={c => triggerChaos(c)}
+        chaosClick={(c) => triggerChaos(c)}
         close={_tripleChaosModalClose}
       />
 
@@ -289,7 +289,7 @@ export const Planechase = () => {
       </DevTools>
       {showPlanarDie && !planeswalkDisabled && (
         <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
-          <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
+          <PlanarDie rollDone={(face) => console.log(`Rolled: ${face}`)} />
         </div>
       )}
     </div>

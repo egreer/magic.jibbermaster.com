@@ -14,12 +14,12 @@ export const DeckProvider = ({ prefix = null, children }) => {
   const initDeck = (cards, reset = false) => {
     if (!isInit || deck.length === 0 || reset) {
       console.log(`Creating New ${prefix} Deck`);
-      const clonedCards = cards?.map(card => {
+      const clonedCards = cards?.map((card) => {
         return {
           // Add Deck Card Id so that each card in the deck has a unique value
           deck_card_id: uuidv4(),
           // Clone all the cards so that we aren't modifying original objects
-          ...card
+          ...card,
         };
       });
       const newDeck = clonedCards && shuffleArray(clonedCards);
@@ -49,7 +49,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
     return card;
   };
 
-  const updateHistory = card => {
+  const updateHistory = (card) => {
     setHistory([card, ...history]);
   };
 
@@ -67,23 +67,23 @@ export const DeckProvider = ({ prefix = null, children }) => {
     return lastCard;
   };
 
-  const addCardsToTop = topCards => {
-    setDeck(prevDeck => [...topCards, ...prevDeck]);
+  const addCardsToTop = (topCards) => {
+    setDeck((prevDeck) => [...topCards, ...prevDeck]);
   };
 
-  const addCardsToBottom = bottomCards => {
-    setDeck(prevDeck => [...prevDeck, ...bottomCards]);
+  const addCardsToBottom = (bottomCards) => {
+    setDeck((prevDeck) => [...prevDeck, ...bottomCards]);
   };
 
-  const findCard = card => {
+  const findCard = (card) => {
     return findCardByDeckCardId(card.deck_card_id);
   };
 
-  const findCardByDeckCardId = deckCardId => {
-    return deck.find(c => c.deck_card_id === deckCardId);
+  const findCardByDeckCardId = (deckCardId) => {
+    return deck.find((c) => c.deck_card_id === deckCardId);
   };
 
-  const findAndPutOnTop = deckCardId => {
+  const findAndPutOnTop = (deckCardId) => {
     const tmpCard = findCardByDeckCardId(deckCardId);
 
     if (tmpCard) {
@@ -92,7 +92,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
     }
   };
 
-  const findAndPutOnBottom = deckCardId => {
+  const findAndPutOnBottom = (deckCardId) => {
     const tmpCard = findCardByDeckCardId(deckCardId);
 
     if (tmpCard) {
@@ -101,10 +101,10 @@ export const DeckProvider = ({ prefix = null, children }) => {
     }
   };
 
-  const removeCards = cardsToRemove => {
-    setDeck(prevDeck => {
+  const removeCards = (cardsToRemove) => {
+    setDeck((prevDeck) => {
       const filteredDeck = [...prevDeck].filter(
-        c => !cardsToRemove.find(r => r.deck_card_id === c.deck_card_id)
+        (c) => !cardsToRemove.find((r) => r.deck_card_id === c.deck_card_id)
       );
       return filteredDeck;
     });
@@ -160,7 +160,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
         findAndPutOnBottom,
         removeCards,
         revealCards,
-        shuffle
+        shuffle,
       }}
     >
       {children}

@@ -23,7 +23,7 @@ export const ScryModal = ({ scryCards, open, onScryTop, onScryBottom }) => {
           <Button variant="info" block onClick={onScryTop}>
             Top
           </Button>
-          {scryCards.map(c => (
+          {scryCards.map((c) => (
             <Plane card={c} key={c.deck_card_id} />
           ))}
           <Button variant="info" block onClick={onScryBottom}>

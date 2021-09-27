@@ -1,73 +1,73 @@
 export const TAGS = [
   {
     name: "Chode Mode",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Deck Swaps",
-    defaultEnabled: false
+    defaultEnabled: false,
   },
   {
     name: "Planechase",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "EDH",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "2 Headed Giant",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "SYB",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Range 1",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Free for All",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Pentacle",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Secret Partners",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Archenemy",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Emperor",
-    defaultEnabled: true
+    defaultEnabled: true,
   },
   {
     name: "Teams",
-    defaultEnabled: false
+    defaultEnabled: false,
   },
   {
     name: "Star",
-    defaultEnabled: false
-  }
+    defaultEnabled: false,
+  },
 ];
 
-const canAny = p => true;
-const canEven = p => p % 2 === 0;
-const canOdd = p => p % 2 === 1;
-const can2Hg = p => p > 2 && canEven(p);
-const canFreeForAll = p => p > 2;
-const canEmperor = p => p >= 6 && p % 3 === 0;
-const canSecretPartner = p => p >= 6 && canEven(p);
-const canRange1 = p => p > 3;
-const canPentacle = p => p >= 5;
-export const canStar = p => p >= 5 && canOdd(p);
-const canTeams = p => p > 2 && canEven(p);
+const canAny = (p) => true;
+const canEven = (p) => p % 2 === 0;
+const canOdd = (p) => p % 2 === 1;
+const can2Hg = (p) => p > 2 && canEven(p);
+const canFreeForAll = (p) => p > 2;
+const canEmperor = (p) => p >= 6 && p % 3 === 0;
+const canSecretPartner = (p) => p >= 6 && canEven(p);
+const canRange1 = (p) => p > 3;
+const canPentacle = (p) => p >= 5;
+export const canStar = (p) => p >= 5 && canOdd(p);
+const canTeams = (p) => p > 2 && canEven(p);
 
 export const FORMATS = [
   {
@@ -75,28 +75,28 @@ export const FORMATS = [
     name: "Chode Mode",
     initial: 0.5,
     tags: ["Chode Mode"],
-    players: canAny
+    players: canAny,
   },
   {
     id: 2,
     name: "Planechase ",
     initial: 0.5,
     tags: ["Planechase"],
-    players: canAny
+    players: canAny,
   },
   {
     id: 3,
     name: "Planechase EDH",
     initial: 0.5,
     tags: ["Planechase", "EDH"],
-    players: canAny
+    players: canAny,
   },
   {
     id: 4,
     name: "EDH Free for All",
     initial: 0.5,
     tags: ["EDH", "Free for All"],
-    players: canFreeForAll
+    players: canFreeForAll,
   },
   {
     id: 5,
@@ -104,7 +104,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["EDH", "SYB"],
     showSwaps: true,
-    players: canAny
+    players: canAny,
   },
   {
     id: 6,
@@ -113,7 +113,7 @@ export const FORMATS = [
     initial: 0,
     tags: ["EDH", "SYB", "Deck Swaps"],
     showSwaps: true,
-    players: canAny
+    players: canAny,
   },
   {
     id: 7,
@@ -121,7 +121,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["EDH", "Emperor"],
     showSwaps: true,
-    players: canEmperor
+    players: canEmperor,
   },
   {
     id: 8,
@@ -130,21 +130,21 @@ export const FORMATS = [
     initial: 0,
     tags: ["EDH", "Emperor", "Deck Swaps"],
     showSwaps: true,
-    players: canEmperor
+    players: canEmperor,
   },
   {
     id: 9,
     name: "2 Headed Giant SYB",
     initial: 0.5,
     tags: ["2 Headed Giant"],
-    players: can2Hg
+    players: can2Hg,
   },
   {
     id: 10,
     name: "2 Headed Giant Free for All",
     initial: 0.5,
     tags: ["2 Headed Giant", "Free for All"],
-    players: p => can2Hg(p) && canFreeForAll(p) && p > 4
+    players: (p) => can2Hg(p) && canFreeForAll(p) && p > 4,
   },
   {
     id: 11,
@@ -152,7 +152,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Emperor"],
     showSwaps: true,
-    players: canEmperor
+    players: canEmperor,
   },
   {
     id: 12,
@@ -161,21 +161,21 @@ export const FORMATS = [
     initial: 0,
     tags: ["Emperor", "Deck Swaps"],
     showSwaps: true,
-    players: canEmperor
+    players: canEmperor,
   },
   {
     id: 13,
     name: "Range 1",
     initial: 0.5,
     tags: ["Range 1"],
-    players: canRange1
+    players: canRange1,
   },
   {
     id: 14,
     name: "Free for All",
     initial: 0.5,
     tags: ["Free for All"],
-    players: canFreeForAll
+    players: canFreeForAll,
   },
   {
     id: 15,
@@ -183,7 +183,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["SYB"],
     showSwaps: true,
-    players: canAny
+    players: canAny,
   },
   {
     id: 16,
@@ -192,7 +192,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["SYB", "Deck Swaps"],
     showSwaps: true,
-    players: canAny
+    players: canAny,
   },
   {
     id: 17,
@@ -200,7 +200,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Secret Partners"],
     showSwaps: true,
-    players: canSecretPartner
+    players: canSecretPartner,
   },
   {
     id: 18,
@@ -209,7 +209,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Secret Partners", "Deck Swaps"],
     showSwaps: true,
-    players: canSecretPartner
+    players: canSecretPartner,
   },
   {
     id: 19,
@@ -217,7 +217,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["EDH", "Secret Partners"],
     showSwaps: true,
-    players: canSecretPartner
+    players: canSecretPartner,
   },
   {
     id: 20,
@@ -226,7 +226,7 @@ export const FORMATS = [
     initial: 0,
     tags: ["EDH", "Secret Partners", "Deck Swaps"],
     showSwaps: true,
-    players: canSecretPartner
+    players: canSecretPartner,
   },
   {
     id: 21,
@@ -234,7 +234,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["EDH", "Pentacle"],
     showSwaps: true,
-    players: canPentacle
+    players: canPentacle,
   },
   {
     id: 22,
@@ -242,7 +242,7 @@ export const FORMATS = [
     displayName: "EDH Pentacle",
     initial: 0,
     tags: ["EDH", "Pentacle", "Deck Swaps"],
-    players: canPentacle
+    players: canPentacle,
   },
   {
     id: 23,
@@ -250,7 +250,7 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Pentacle"],
     showSwaps: true,
-    players: canPentacle
+    players: canPentacle,
   },
   {
     id: 24,
@@ -259,62 +259,62 @@ export const FORMATS = [
     initial: 0.5,
     tags: ["Pentacle", "Deck Swaps"],
     showSwaps: true,
-    players: canPentacle
+    players: canPentacle,
   },
   {
     id: 25,
     name: "Archenemy",
     initial: 0.5,
     tags: ["Archenemy"],
-    players: p => p === 4
+    players: (p) => p === 4,
   },
   {
     id: 26,
     name: "EDH 2 Headed Giant SYB",
     initial: 0.1,
     tags: ["EDH", "2 Headed Giant"],
-    players: can2Hg
+    players: can2Hg,
   },
   {
     id: 27,
     name: "EDH 2 Headed Giant FFA",
     initial: 0.1,
     tags: ["EDH", "2 Headed Giant", "Free for All"],
-    players: p => can2Hg(p) && canFreeForAll(p) && p > 4
+    players: (p) => can2Hg(p) && canFreeForAll(p) && p > 4,
   },
   {
     id: 28,
     name: "EDH Range 1",
     initial: 0.5,
     tags: ["EDH", "Range 1"],
-    players: canRange1
+    players: canRange1,
   },
   {
     id: 29,
     name: "Teams",
     initial: 0.5,
     tags: ["Teams"],
-    players: canTeams
+    players: canTeams,
   },
   {
     id: 30,
     name: "EDH Teams",
     initial: 0.5,
     tags: ["Teams", "EDH"],
-    players: canTeams
+    players: canTeams,
   },
   {
     id: 31,
     name: "Star",
     initial: 0.5,
     tags: ["Star"],
-    players: canStar
+    players: canStar,
   },
   {
     id: 32,
     name: "EDH Star",
     initial: 0.5,
     tags: ["Star", "EDH"],
-    players: canStar
-  }
+    players: canStar,
+  },
 ];

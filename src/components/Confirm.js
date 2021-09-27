@@ -9,10 +9,10 @@ export const Confirm = ({
   headerText = "Confirm?",
   bodyText,
   confirmText = "Save",
-  confirmVariant = "primary"
+  confirmVariant = "primary",
 }) => {
   const [open, setOpen] = useState(false);
-  const close = confirmed => {
+  const close = (confirmed) => {
     setOpen(false);
     if (confirmed) {
       onConfirm();

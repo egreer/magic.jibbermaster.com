@@ -17,7 +17,7 @@ export const History = ({ history, CardType }) => {
         <div>
           {showHistory && history && (
             <ListGroup>
-              {history.map(p => (
+              {history.map((p) => (
                 <CardType card={p} key={p.deck_card_id} listDisplay={true} />
               ))}
             </ListGroup>

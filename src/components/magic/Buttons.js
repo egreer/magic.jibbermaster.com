@@ -2,12 +2,12 @@ import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import { DoubleFaceIcon } from "./DoubleFaceIcon";
 
-export const LoyaltyDownButton = props => (
+export const LoyaltyDownButton = (props) => (
   <Button {...props} variant="secondary">
     <i className="ms ms-loyalty-down ms-loyalty-1 ms-2x" />
   </Button>
 );
-export const LoyaltyUpButton = props => (
+export const LoyaltyUpButton = (props) => (
   <Button {...props} variant="secondary">
     <i className="ms ms-loyalty-up ms-loyalty-1 ms-2x" />
   </Button>
@@ -34,13 +34,13 @@ export const LoyaltyButtonGroup = ({
   </ButtonGroup>
 );
 
-export const UnTapButton = props => (
+export const UnTapButton = (props) => (
   <Button {...props} variant="secondary">
     <i className="ms ms-untap ms-2x ss-mythic ss-grad" />
   </Button>
 );
 
-export const TapButton = props => (
+export const TapButton = (props) => (
   <Button {...props} variant="secondary">
     <i className="ms ms-tap ms-2x ss-mythic ss-grad" />
   </Button>
@@ -78,7 +78,7 @@ export const DoubleFaceHighlightButton = ({ enabled, text, ...props }) => (
   </Button>
 );
 
-export const TenthEditionButton = props => (
+export const TenthEditionButton = (props) => (
   <Button variant="danger" {...props}>
     <i className="ss ss-x ss-10e ss-rare ss-grad ss-2x" />
   </Button>

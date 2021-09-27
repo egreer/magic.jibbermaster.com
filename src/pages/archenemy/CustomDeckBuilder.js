@@ -6,7 +6,7 @@ import {
   Button,
   ButtonGroup,
   Card,
-  ListGroup
+  ListGroup,
 } from "react-bootstrap";
 import { Scheme } from "../../components/magic/Scheme";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -17,7 +17,7 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
   const deckName = "Custom Deck";
 
   useEffect(() => {
-    const newCustomDeck = schemes.map(scheme => {
+    const newCustomDeck = schemes.map((scheme) => {
       return { ...scheme, count: 0 };
     });
     setCustomDeck(newCustomDeck);
@@ -25,16 +25,16 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
 
   const customDeckSize = () => {
     const reducer = (a, b) => a + b;
-    return customDeck.map(c => c.count).reduce(reducer, 0);
+    return customDeck.map((c) => c.count).reduce(reducer, 0);
   };
 
   const resetCustomDeck = () => {
-    customDeck.forEach(c => (c.count = 0));
+    customDeck.forEach((c) => (c.count = 0));
     setCustomDeck([...customDeck]);
   };
 
-  const incrementCount = card => {
-    customDeck.forEach(c => {
+  const incrementCount = (card) => {
+    customDeck.forEach((c) => {
       if (c.id === card.id) {
         c.count += 1;
         c.count = Math.min(c.count, 2);
@@ -43,8 +43,8 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
     setCustomDeck([...customDeck]);
   };
 
-  const decrementCount = card => {
-    customDeck.forEach(c => {
+  const decrementCount = (card) => {
+    customDeck.forEach((c) => {
       if (c.id === card.id) {
         c.count -= 1;
         c.count = Math.max(c.count, 0);
@@ -53,7 +53,7 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
     setCustomDeck([...customDeck]);
   };
 
-  const cardListItems = customDeck.map(card => (
+  const cardListItems = customDeck.map((card) => (
     <ListGroup.Item key={card.id} variant="dark" className="noselect">
       <Scheme card={card} />
       <div className="text-center">
@@ -65,11 +65,11 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
         <LoyaltyButtonGroup
           downProps={{
             disabled: card.count <= 0,
-            onClick: () => decrementCount(card)
+            onClick: () => decrementCount(card),
           }}
           upProps={{
             disabled: card.count >= 2,
-            onClick: () => incrementCount(card)
+            onClick: () => incrementCount(card),
           }}
         />
       </div>

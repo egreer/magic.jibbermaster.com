@@ -46,7 +46,7 @@ export const GameProvider = ({ prefix = null, children }) => {
         clearRevealedCards,
         clearAdditionalCards,
         clearScryCards,
-        reset
+        reset,
       }}
     >
       {children}

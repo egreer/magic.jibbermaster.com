@@ -28,12 +28,12 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
 
   const toggleModal = () => {
     console.log("Toggle Modal");
-    setModalOpen(isOpen => !isOpen);
+    setModalOpen((isOpen) => !isOpen);
   };
 
   const toggleFullScreen = () => {
     console.log("Toggle FullScreen");
-    setFullscreen(isFullscreen => !isFullscreen);
+    setFullscreen((isFullscreen) => !isFullscreen);
   };
 
   const renderBody = () => {
@@ -99,7 +99,7 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
         <Card.ImgOverlay
           className={cn("text-center plane-overlay", {
             "child-overlay": !emptyChildren,
-            "counter-overlay": emptyChildren && hasCounters
+            "counter-overlay": emptyChildren && hasCounters,
           })}
         >
           <Card.Title className="text-center">

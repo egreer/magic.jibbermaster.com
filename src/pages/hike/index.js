@@ -24,7 +24,7 @@ import {
   filterAPI,
   getAllHikeModeChaosCards,
   getAllHikeModePlaneCards,
-  internet
+  internet,
 } from "../../util/api";
 import { RandomTokenModal } from "./RandomTokenModal";
 
@@ -102,7 +102,7 @@ export const Hike = () => {
     chaosWalk();
   };
 
-  const triggerChaos = c => {
+  const triggerChaos = (c) => {
     console.log("Chaos Triggered");
     const randomTokenProp = hasCustomProperty(
       "random-token",
@@ -238,7 +238,7 @@ export const Hike = () => {
         open={randomTokenModalOpen}
         additionalCards={game.additionalCards}
         onHide={_randomTokenModalClose}
-        chaosClick={c => triggerChaos(c)}
+        chaosClick={(c) => triggerChaos(c)}
         close={_randomTokenModalClose}
         randomTokenProps={randomTokenProps}
       />

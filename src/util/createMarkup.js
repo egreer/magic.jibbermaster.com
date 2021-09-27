@@ -1,4 +1,4 @@
-export const createMarkup = text => {
+export const createMarkup = (text) => {
   if (!text) {
     return text;
   }

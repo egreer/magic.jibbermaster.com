@@ -19,7 +19,7 @@ export const MtgCard = ({
   card,
   displayActions,
   children,
-  altBack = false
+  altBack = false,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -56,12 +56,12 @@ export const MtgCard = ({
 
   const toggleModal = () => {
     console.log("Toggle Modal");
-    setModalOpen(isOpen => !isOpen);
+    setModalOpen((isOpen) => !isOpen);
   };
 
   const toggleFullScreen = () => {
     console.log("Toggle FullScreen");
-    setFullscreen(isFullscreen => !isFullscreen);
+    setFullscreen((isFullscreen) => !isFullscreen);
   };
 
   const renderBody = () => {
@@ -215,7 +215,7 @@ export const MtgCard = ({
               left: "7%",
               fontSize: "clamp(10px, 3vw, 22px)",
               height: "5%",
-              width: "90%"
+              width: "90%",
             }}
           >
             <div className="text-nowrap">{card.name}</div>
@@ -227,7 +227,7 @@ export const MtgCard = ({
               paddingLeft: "4%",
               paddingRight: "4%",
               paddingBottom: "22%",
-              fontSize: "clamp(10px, 3vw, 30px)"
+              fontSize: "clamp(10px, 3vw, 30px)",
             }}
           >
             <Textfit mode="multi" style={{ height: "100%" }} max={30}>
@@ -241,7 +241,7 @@ export const MtgCard = ({
               width: "100%",
               fontSize: "clamp(10px, 3vw, 22px)",
               marginLeft: "-1.25rem",
-              height: "5%"
+              height: "5%",
             }}
           >
             <div>{card.type_line}</div>
@@ -257,7 +257,7 @@ export const MtgCard = ({
         <Card.ImgOverlay
           className={cn("text-center card-overlay", {
             "child-overlay": !emptyChildren && !isBlank,
-            "counter-overlay": emptyChildren && hasCounters
+            "counter-overlay": emptyChildren && hasCounters,
           })}
         >
           <Card.Title className={cn("text-center", { "h-100": isBlank })}>

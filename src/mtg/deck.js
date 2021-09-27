@@ -14,7 +14,7 @@ export const getOrCreateCurrentDeck = (prefix, cards, reset = false) => {
     // Clone all the cards so that we aren't modifying original objects
     const clonedCard = JSON.parse(JSON.stringify(cards));
     // Add Deck Card Id so that each card in the deck has a unique value
-    clonedCard.forEach(c => (c.deck_card_id = uuidv4()));
+    clonedCard.forEach((c) => (c.deck_card_id = uuidv4()));
     deck = shuffle(clonedCard);
     store.set(`${prefix}-history`, []);
     storeCurrentDeck(prefix, deck);
@@ -22,7 +22,7 @@ export const getOrCreateCurrentDeck = (prefix, cards, reset = false) => {
   return deck;
 };
 
-export const getCurrentDeck = prefix => {
+export const getCurrentDeck = (prefix) => {
   return store.get(`${prefix}-deck`);
 };
 
@@ -30,7 +30,7 @@ export const storeCurrentDeck = (prefix, deck) => {
   return store.set(`${prefix}-deck`, deck);
 };
 
-export const drawCard = prefix => {
+export const drawCard = (prefix) => {
   const deck = getCurrentDeck(prefix);
   const card = deck?.shift();
   if (card) {
@@ -50,7 +50,7 @@ export const getHistory = (prefix, card) => {
   return store.get(`${prefix}-history`);
 };
 
-export const undoDraw = prefix => {
+export const undoDraw = (prefix) => {
   const history = store.get(`${prefix}-history`);
   const card = history.pop();
   if (card) {
@@ -70,7 +70,7 @@ export const addCardsToBottom = (prefix, bottomCards) => {
   storeCurrentDeck(prefix, deck.concat(bottomCards));
 };
 
-export const deckSize = prefix => {
+export const deckSize = (prefix) => {
   return getCurrentDeck(prefix).length;
 };
 
@@ -80,7 +80,7 @@ export const findCard = (prefix, card) => {
 
 export const findCardByDeckCardId = (prefix, deckCardId) => {
   const deck = getCurrentDeck(prefix);
-  return deck.find(c => c.deck_card_id === deckCardId);
+  return deck.find((c) => c.deck_card_id === deckCardId);
 };
 
 export const findAndPutOnTop = (prefix, deckCardId) => {
@@ -104,7 +104,7 @@ export const findAndPutOnBottom = (prefix, deckCardId) => {
 export const removeCards = (prefix, cardsToRemove) => {
   const deck = getCurrentDeck(prefix);
   const filteredDeck = deck.filter(
-    c => !cardsToRemove.find(r => r.deck_card_id === c.deck_card_id)
+    (c) => !cardsToRemove.find((r) => r.deck_card_id === c.deck_card_id)
   );
   storeCurrentDeck(prefix, filteredDeck);
 };
@@ -133,7 +133,7 @@ export const revealCards = (prefix, numReveal, onlyPlanes = false) => {
   return revealedCards;
 };
 
-export const shuffle = array => {
+export const shuffle = (array) => {
   let currentIndex = array.length,
     temporaryValue,
     randomIndex;

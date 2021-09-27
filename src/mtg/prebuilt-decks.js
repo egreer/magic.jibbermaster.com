@@ -1,11 +1,11 @@
 export const getDeckList = () => {
-  return DECKS.map(s => s.name);
+  return DECKS.map((s) => s.name);
 };
 
 export const getCardList = (deckname, schemes) => {
-  const deck = DECKS.find(s => s.name === deckname);
-  return deck.cards.map(c => {
-    const scheme = schemes.find(s => s.name === c[0]);
+  const deck = DECKS.find((s) => s.name === deckname);
+  return deck.cards.map((c) => {
+    const scheme = schemes.find((s) => s.name === c[0]);
     const clonedCard = JSON.parse(JSON.stringify(scheme));
     clonedCard.count = c[1];
     return clonedCard;
@@ -29,8 +29,8 @@ const DECKS = [
       ["The Pieces Are Coming Together", 2],
       ["Realms Befitting My Majesty", 1],
       ["Your Fate Is Thrice Sealed", 1],
-      ["Your Puny Minds Cannot Fathom", 1]
-    ]
+      ["Your Puny Minds Cannot Fathom", 1],
+    ],
   },
   {
     name: "Scorch the World with Dragonfire",
@@ -49,8 +49,8 @@ const DECKS = [
       ["Tooth, Claw, and Tail", 1],
       ["Which of You Burns Brightest?", 2],
       ["Your Fate Is Thrice Sealed", 1],
-      ["Your Puny Minds Cannot Fathom", 1]
-    ]
+      ["Your Puny Minds Cannot Fathom", 1],
+    ],
   },
   {
     name: "Trample Civilization Underfoot",
@@ -69,8 +69,8 @@ const DECKS = [
       ["The Very Soil Shall Shake", 1],
       ["Your Fate Is Thrice Sealed", 1],
       ["Your Puny Minds Cannot Fathom", 1],
-      ["Your Will Is Not Your Own", 2]
-    ]
+      ["Your Will Is Not Your Own", 2],
+    ],
   },
   {
     name: "Bring About the Undead Apocalypse",
@@ -88,8 +88,8 @@ const DECKS = [
       ["Rotted Ones, Lay Siege", 2],
       ["Surrender Your Thoughts", 1],
       ["Your Fate Is Thrice Sealed", 1],
-      ["Your Puny Minds Cannot Fathom", 1]
-    ]
+      ["Your Puny Minds Cannot Fathom", 1],
+    ],
   },
   {
     name: "Archenemy Nicol Bolas",
@@ -113,7 +113,7 @@ const DECKS = [
       ["There Is No Refuge", 1],
       ["This World Belongs to Me", 1],
       ["What's Yours Is Now Mine", 1],
-      ["When Will You Learn?", 1]
-    ]
-  }
+      ["When Will You Learn?", 1],
+    ],
+  },
 ];

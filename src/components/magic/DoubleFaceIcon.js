@@ -5,14 +5,14 @@ export const DoubleFaceIcon = ({
   enabled,
   backdrop = false,
   invert = false,
-  style = {}
+  style = {},
 }) => {
   const classes = {
     "ms-dfc-day": enabled,
     "ms-dfc-night": !enabled,
     "text-light": enabled && invert,
     "text-dark": !enabled && invert,
-    "bg-white": backdrop
+    "bg-white": backdrop,
   };
   return (
     <span>

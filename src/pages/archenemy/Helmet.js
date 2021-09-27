@@ -32,7 +32,7 @@ export const ArchenemyHelmet = ({ schemes }) => {
         href={process.env.PUBLIC_URL + "/archenemy-manifest.json"}
       />
       {schemes &&
-        schemes.map(p => (
+        schemes.map((p) => (
           <link
             rel="preload"
             href={p.image_uris["large"]}

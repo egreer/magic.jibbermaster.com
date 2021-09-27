@@ -33,7 +33,7 @@ export const PlanechaseHelmet = ({ planes }) => {
         href={process.env.PUBLIC_URL + "/planechase-manifest.json"}
       />
       {planes &&
-        planes.map(p => (
+        planes.map((p) => (
           <link
             rel="preload"
             href={gathererImageURL(p)}

@@ -4,13 +4,13 @@ import {
   ButtonGroup,
   ButtonToolbar,
   Fade,
-  ListGroup
+  ListGroup,
 } from "react-bootstrap";
 import { useDeckContext } from "../../mtg/DeckContext";
 import {
   LoyaltyButtonGroup,
   TapButtonGroup,
-  TenthEditionButton
+  TenthEditionButton,
 } from "../magic/Buttons";
 
 export const Deck = ({ CardType, name = "" }) => {
@@ -45,11 +45,11 @@ export const Deck = ({ CardType, name = "" }) => {
                           reverse
                           downProps={{
                             disabled: i === deck.length - 1,
-                            onClick: () => context.moveCard(i, i + 1)
+                            onClick: () => context.moveCard(i, i + 1),
                           }}
                           upProps={{
                             disabled: i === 0,
-                            onClick: () => context.moveCard(i, i - 1)
+                            onClick: () => context.moveCard(i, i - 1),
                           }}
                         />
                         <TapButtonGroup
@@ -57,12 +57,12 @@ export const Deck = ({ CardType, name = "" }) => {
                           unTapProps={{
                             disabled: i === 0,
                             onClick: () =>
-                              context.findAndPutOnTop(card.deck_card_id)
+                              context.findAndPutOnTop(card.deck_card_id),
                           }}
                           tapProps={{
                             disabled: i === deck.length - 1,
                             onClick: () =>
-                              context.findAndPutOnBottom(card.deck_card_id)
+                              context.findAndPutOnBottom(card.deck_card_id),
                           }}
                         />
 

@@ -30,11 +30,11 @@ const Providers = ({ children }) => {
 const Main = () => {
   return (
     <Switch>
-      <Route path="/" exact render={props => <Home {...props} />} />
+      <Route path="/" exact render={(props) => <Home {...props} />} />
       <Route
         path="/archenemy"
         exact
-        render={props => (
+        render={(props) => (
           <GameProvider prefix="archenemy">
             <DeckProvider prefix="archenemy">
               <Archenemy {...props} />
@@ -45,7 +45,7 @@ const Main = () => {
       <Route
         path="/planechase"
         exact
-        render={props => (
+        render={(props) => (
           <GameProvider prefix="planechase">
             <DeckProvider prefix="planechase">
               <Planechase {...props} />
@@ -53,12 +53,12 @@ const Main = () => {
           </GameProvider>
         )}
       />
-      <Route path="/syb" exact render={props => <SYB {...props} />} />
-      <Route path="/formats" exact render={props => <Formats {...props} />} />
+      <Route path="/syb" exact render={(props) => <SYB {...props} />} />
+      <Route path="/formats" exact render={(props) => <Formats {...props} />} />
       <Route
         path="/hike"
         exact
-        render={props => (
+        render={(props) => (
           <GameProvider prefix="hikemode">
             <DeckProvider prefix="hikemode">
               <Hike {...props} />
