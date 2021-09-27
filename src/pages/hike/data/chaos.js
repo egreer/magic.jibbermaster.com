@@ -59,7 +59,7 @@ export const CUSTOM_CHAOS = [
   {
     name: "Sproket Sproket",
     type_line: "Plane - UnHike",
-    oracle_text: "Assemble a Contraption",
+    oracle_text: "Assemble a Random Contraption",
     show_blank: true,
     customProperties: [
       CHAOS_TRIGGER_PROP,
