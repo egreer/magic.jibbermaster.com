@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useSettings } from "../../hooks/useSettings";
-import { randFace, createDie, ALL_FACES } from "./data/die";
+import { createDie, ALL_FACES } from "./data/die";
 
 export const CurrentDie = ({ showAllEffect }) => {
   const [die, setDie] = useLocalState("hike-die", {});

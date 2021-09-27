@@ -7,7 +7,7 @@ import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
 import { Loading } from "../../components/Loading";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
-import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
+// import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
 import { DeckProvider, useDeckContext } from "../../mtg/DeckContext";
@@ -33,7 +33,7 @@ export const Hike = () => {
     "hikemode-chaos-current",
     null
   );
-  const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
+  // const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
   const [showAllEffect, setShowAllEffect] = useLocalState(
     "hike-all-effects",
     false
