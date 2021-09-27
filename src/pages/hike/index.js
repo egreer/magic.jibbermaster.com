@@ -53,7 +53,6 @@ export const Hike = () => {
   const [randomTokenProps, setRandomTokenProps] = useState(null);
   // TODOs:
   // mobile testing
-  // Hike mode in SYB selector
   // Reset planes / Chaos on empty
   // Hike Die
   // Coin Flipper link

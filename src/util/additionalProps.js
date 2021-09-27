@@ -243,7 +243,7 @@ export const addAdditionalProperties = (card) => {
     Amplifire: [tokenProp(1), CHAOS_MAX_PROP],
     "Akroan Horse": [tokenProp(1), CHAOS_MAX_PROP],
     "Walking Archive": [tokenProp(1), CHAOS_MAX_PROP],
-    "Vulshok Sorceror": [tokenProp(3), CHAOS_MAX_PROP],
+    "Vulshok Sorcerer": [tokenProp(3), CHAOS_MAX_PROP],
     "Serrated Arrows": [tokenProp(1), CHAOS_MAX_PROP],
     "Interplanar Brushwagg": [tokenProp(1), CHAOS_MAX_PROP],
     "Illicit Auction": [CHAOS_MAX_PROP],
