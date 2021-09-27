@@ -16,11 +16,16 @@ import { ChaosButton } from "../planechase/ChaosButton";
 import { CurrentDie } from "./Die";
 import { HikeHelmet } from "./Helmet";
 import { Rules } from "./Rules";
-import { CHAOS, CUSTOM_CHAOS } from "./data/chaos";
-import { CUSTOM_PLANES, PLANES } from "./data/planes";
+import { CUSTOM_CHAOS } from "./data/chaos";
+import { CUSTOM_PLANES } from "./data/planes";
 import { getOrCreateCurrentDeck, drawCard } from "../../mtg/deck";
 import { hasCustomProperty } from "../../mtg/card";
-import { filterAPI, internet } from "../../util/api";
+import {
+  filterAPI,
+  getAllHikeModeChaosCards,
+  getAllHikeModePlaneCards,
+  internet
+} from "../../util/api";
 import { RandomTokenModal } from "./RandomTokenModal";
 
 const PRE_CHAOS = "hike-chaos";
@@ -58,9 +63,12 @@ export const Hike = () => {
   const deck = useDeckContext();
   const history = deck.history;
 
-  const fetchCards = useCallback(() => {
-    const planes = [...PLANES];
-    const chaos = [...CHAOS];
+  const fetchCards = useCallback(async () => {
+    const hikePLanes = getAllHikeModePlaneCards();
+    const hikeChaos = getAllHikeModeChaosCards();
+
+    const planes = [...CUSTOM_PLANES, ...(await hikePLanes)];
+    const chaos = [...CUSTOM_CHAOS, ...(await hikeChaos)];
     setCards(planes);
     setChaosCards(chaos);
     getOrCreateCurrentDeck(PRE_CHAOS, chaos);
@@ -121,14 +129,15 @@ export const Hike = () => {
     setRandomTokenModalOpen(false);
   };
 
-  const reset = () => {
+  const reset = async () => {
     console.log("Resetting");
     setLoading(true);
     setCurrentChaosCard(null);
     fetchCards();
     deck.reInit();
     game.reset();
-    getOrCreateCurrentDeck(PRE_CHAOS, [...CHAOS], true);
+    const hikeChaos = await getAllHikeModeChaosCards();
+    getOrCreateCurrentDeck(PRE_CHAOS, [...CUSTOM_CHAOS, ...hikeChaos], true);
     setLoading(false);
   };
 

@@ -11,7 +11,7 @@ import { hasCustomProperty, rotatedLayout } from "../../mtg/card.js";
 import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
-import { createMarkup } from "../../util/api";
+import { createMarkup } from "../../util/createMarkup";
 import ReactDOMServer from "react-dom/server";
 
 export const MtgCard = ({
