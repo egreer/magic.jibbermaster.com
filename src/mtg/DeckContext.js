@@ -41,7 +41,7 @@ export const DeckProvider = ({ prefix = null, children }) => {
   };
 
   const drawCard = () => {
-    const card = deck.shift();
+    const card = deck?.shift();
     setDeck([...deck]);
     if (card) {
       updateHistory(card);

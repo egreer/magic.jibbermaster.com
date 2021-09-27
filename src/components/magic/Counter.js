@@ -21,12 +21,14 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
       return icon("ms-counter-mining");
     case "Flame":
       return icon("ms-counter-flame");
+    case "Fun":
+      return icon("ms-counter-vortex", "bottom");
     default:
       return null;
   }
 };
 
-export const Counter = ({ card }) => {
+export const Counter = ({ card, style = {} }) => {
   const [counter, setCounter] = useState(card?.counter || 0);
   const type = getCounterType(card);
   const incrementCounter = () => {
@@ -34,7 +36,7 @@ export const Counter = ({ card }) => {
     setCounter(counter + 1);
   };
   return (
-    <div>
+    <div style={style}>
       <h1 className="text-shadow noselect">
         {counter} <CounterIcon type={type} />
       </h1>

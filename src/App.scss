@@ -15,6 +15,10 @@ $dark-trans: rgba($dark, 0.8);
   border-radius: 8%;
   border-style: solid;
   border-width: 1px;
+
+  &.no-border {
+    border-radius: 0;
+  }
 }
 
 .btn-translucent {
@@ -86,4 +90,12 @@ $dark-trans: rgba($dark, 0.8);
   .modal-content {
     border: 0;
   }
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
 }
