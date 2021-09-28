@@ -28,8 +28,12 @@ import {
 } from "../../util/api";
 import { RandomTokenModal } from "./RandomTokenModal";
 import { useSettings } from "../../hooks/useSettings";
+import { addAdditionalProperties } from "../../util/additionalProps";
 
 const PRE_CHAOS = "hike-chaos";
+
+const customPlanes = CUSTOM_PLANES.map((c) => addAdditionalProperties(c));
+const customChaos = CUSTOM_CHAOS.map((c) => addAdditionalProperties(c));
 
 export const Hike = () => {
   const [loading, setLoading] = useState(true);
@@ -68,8 +72,8 @@ export const Hike = () => {
     const hikePLanes = getAllHikeModePlaneCards();
     const hikeChaos = getAllHikeModeChaosCards();
 
-    const planes = [...CUSTOM_PLANES, ...(await hikePLanes)];
-    const chaos = [...CUSTOM_CHAOS, ...(await hikeChaos)];
+    const planes = [...customPlanes, ...(await hikePLanes)];
+    const chaos = [...customChaos, ...(await hikeChaos)];
     setCards(planes);
     setChaosCards(chaos);
     getOrCreateCurrentDeck(PRE_CHAOS, chaos);
@@ -138,7 +142,7 @@ export const Hike = () => {
     deck.reInit();
     game.reset();
     const hikeChaos = await getAllHikeModeChaosCards();
-    getOrCreateCurrentDeck(PRE_CHAOS, [...CUSTOM_CHAOS, ...hikeChaos], true);
+    getOrCreateCurrentDeck(PRE_CHAOS, [...customChaos, ...hikeChaos], true);
     setLoading(false);
   };
 
@@ -223,7 +227,7 @@ export const Hike = () => {
       {showRules && <Rules />}
       {showAllCustom && (
         <Row className="mb-4 text-center">
-          {[...CUSTOM_PLANES, ...CUSTOM_CHAOS].map((c, i) => {
+          {[...customPlanes, ...customChaos].map((c, i) => {
             return (
               <div className="col-6 mb-2" key={i}>
                 <MtgCard card={c} displayActions="true">

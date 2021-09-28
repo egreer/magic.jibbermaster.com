@@ -128,7 +128,7 @@ export const CUSTOM_CHAOS = [
     ],
   },
   {
-    name: "New Ones are Less Fun",
+    name: "MTG Borg",
     type_line: "Plane - Hike",
     oracle_text: "Each player creates a random Sliver token",
     show_blank: true,

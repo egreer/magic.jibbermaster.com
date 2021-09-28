@@ -231,7 +231,7 @@ export const MtgCard = ({
             }}
           >
             <Textfit mode="multi" style={{ height: "100%" }} max={30}>
-              {card.oracle_text}
+              <span dangerouslySetInnerHTML={{ __html: card.oracle_html }} />
             </Textfit>
           </div>
           <div

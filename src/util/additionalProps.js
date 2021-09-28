@@ -341,7 +341,7 @@ export const addAdditionalProperties = (card) => {
     ],
     "Spore Frog": [
       tokenProp(1),
-      errataProp("Landfall - Create a Spore Frog token."),
+      errataProp("{ability-landfall} Landfall - Create a Spore Frog token."),
     ],
   };
 

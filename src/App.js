@@ -16,6 +16,7 @@ import { Disclaimer } from "./components/Disclaimer";
 import { Navigation } from "./components/Navigation";
 import { SettingsProvider } from "./hooks/useSettings";
 import { Hike } from "./pages/hike";
+import { DebugPage } from "./pages/DebugPage";
 
 const Providers = ({ children }) => {
   return (
@@ -66,6 +67,7 @@ const Main = () => {
           </GameProvider>
         )}
       />
+      <Route path="/debug" exact render={(props) => <DebugPage {...props} />} />
     </Switch>
   );
 };
