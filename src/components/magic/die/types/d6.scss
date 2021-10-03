@@ -1,0 +1,41 @@
+.d6 {
+  --width: 50px;
+  font-size: 2rem;
+  width: calc(2 * var(--width));
+  height: calc(2 * var(--width));
+  --luminance: 50%;
+  background-color: hsla(280, 100%, var(--luminance), 0.4);
+  position: absolute;
+}
+.d6::after {
+  position: absolute;
+  content: attr(data-side);
+  top: calc(50% - 0.5em);
+  text-align: center;
+  left: 0;
+  right: 0;
+}
+.d6[data-side="1"] {
+  --luminance: 30%;
+  transform: rotateY(90deg) translateZ(var(--width));
+}
+.d6[data-side="2"] {
+  --luminance: 40%;
+  transform: rotateX(90deg) translateZ(var(--width));
+}
+.d6[data-side="3"] {
+  --luminance: 50%;
+  transform: translateZ(var(--width));
+}
+.d6[data-side="4"] {
+  --luminance: 60%;
+  transform: rotateY(180deg) translateZ(var(--width));
+}
+.d6[data-side="5"] {
+  --luminance: 70%;
+  transform: rotateX(-90deg) translateZ(var(--width));
+}
+.d6[data-side="6"] {
+  --luminance: 80%;
+  transform: rotateY(-90deg) translateZ(var(--width));
+}

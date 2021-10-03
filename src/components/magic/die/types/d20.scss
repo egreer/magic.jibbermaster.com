@@ -1,0 +1,139 @@
+.d20 {
+  background-color: rgba(0, 0, 255, 0.3);
+  --width: 40px;
+  --height: calc(0.8660254 * var(--width));
+  --center: 0.288675;
+  --center-height: calc(var(--height) * var(--center));
+  --co-center: calc((0.5 - var(--center)) * var(--height));
+  --offset: 1.1;
+  --dihedral-angle: 38deg;
+  --co-dihedral: calc(90deg - var(--dihedral-angle));
+  --extrude: calc(var(--width) * var(--offset));
+
+  --sidedown: -30px;
+  --rotatex: -10deg;
+  --ex: 60px;
+  --down: -40px;
+  --luminance: 50%;
+  font-size: 1rem;
+  width: calc(2 * var(--width));
+  height: calc(2 * var(--height));
+  background-color: hsla(240, 100%, var(--luminance), 0.4);
+  position: absolute;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+.d20[data-side="1"] {
+  --luminance: 30%;
+  transform: rotateY(72deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d20[data-side="2"] {
+  --luminance: 25%;
+  transform: rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d20[data-side="3"] {
+  --luminance: 30%;
+  transform: rotateY(144deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d20[data-side="4"] {
+  --luminance: 35%;
+  transform: rotateY(216deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d20[data-side="5"] {
+  --luminance: 40%;
+  transform: rotateY(288deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d20[data-side="6"] {
+  --luminance: 45%;
+  transform: rotateX(180deg) rotateY(36deg) translateY(var(--sidedown))
+    rotateX(var(--rotatex)) translateZ(var(--ex));
+}
+.d20[data-side="7"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) rotateY(108deg) translateY(var(--sidedown))
+    rotateX(var(--rotatex)) translateZ(var(--ex));
+}
+.d20[data-side="8"] {
+  --luminance: 35%;
+  transform: rotateX(180deg) rotateY(180deg) translateY(var(--sidedown))
+    rotateX(var(--rotatex)) translateZ(var(--ex));
+}
+.d20[data-side="9"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) rotateY(252deg) translateY(var(--sidedown))
+    rotateX(var(--rotatex)) translateZ(var(--ex));
+}
+.d20[data-side="10"] {
+  --luminance: 40%;
+  transform: rotateX(180deg) rotateY(324deg) translateY(var(--sidedown))
+    rotateX(var(--rotatex)) translateZ(var(--ex));
+}
+.d20[data-side="11"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateY(72deg)
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d20[data-side="12"] {
+  --luminance: 25%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d20[data-side="13"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateY(144deg)
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d20[data-side="14"] {
+  --luminance: 35%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateY(216deg)
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d20[data-side="15"] {
+  --luminance: 40%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateY(288deg)
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d20[data-side="16"] {
+  --luminance: 45%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(180deg)
+    rotateY(36deg) translateY(var(--sidedown)) rotateX(var(--rotatex))
+    translateZ(var(--ex));
+}
+.d20[data-side="17"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(180deg)
+    rotateY(108deg) translateY(var(--sidedown)) rotateX(var(--rotatex))
+    translateZ(var(--ex));
+}
+.d20[data-side="18"] {
+  --luminance: 35%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(180deg)
+    rotateY(180deg) translateY(var(--sidedown)) rotateX(var(--rotatex))
+    translateZ(var(--ex));
+}
+.d20[data-side="19"] {
+  --luminance: 30%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(180deg)
+    rotateY(252deg) translateY(var(--sidedown)) rotateX(var(--rotatex))
+    translateZ(var(--ex));
+}
+.d20[data-side="20"] {
+  --luminance: 40%;
+  transform: rotateX(180deg) translateY(var(--down)) rotateX(180deg)
+    rotateY(324deg) translateY(var(--sidedown)) rotateX(var(--rotatex))
+    translateZ(var(--ex));
+}
+.d20::after {
+  background-color: transparent;
+  position: absolute;
+  content: attr(data-side);
+  bottom: calc((100% * var(--center)) - 0.5em);
+  text-align: center;
+  left: 0;
+  right: 0;
+}

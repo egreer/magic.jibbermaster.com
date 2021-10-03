@@ -1,0 +1,73 @@
+.d8 {
+  --width: 50px;
+  --height: calc(0.8660254 * var(--width));
+  --center: 0.288675;
+  --center-height: calc(var(--height) * var(--center));
+  --co-center: calc((0.5 - var(--center)) * var(--height));
+  --offset: 0.33;
+  --dihedral-angle: 54deg;
+  --co-dihedral: calc(90deg - var(--dihedral-angle));
+  --extrude: calc(var(--width) * var(--offset));
+  --luminance: 100%;
+  font-size: 1.5rem;
+  width: calc(2 * var(--width));
+  height: calc(2 * var(--height));
+  background-color: hsla(190, 10%, var(--luminance), 0.3);
+  position: absolute;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform-origin: 50% 28.8675%;
+  transform-style: preserve-3d;
+}
+
+.d8[data-side="1"] {
+  --luminance: 65%;
+  transform: rotateY(90deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d8[data-side="2"] {
+  --luminance: 70%;
+  transform: rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d8[data-side="3"] {
+  --luminance: 75%;
+  transform: rotateY(180deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d8[data-side="4"] {
+  --luminance: 80%;
+  transform: rotateY(270deg) rotateX(var(--co-dihedral))
+    translateZ(var(--extrude));
+}
+.d8[data-side="5"] {
+  --luminance: 85%;
+  transform: rotateX(180deg)
+    translateY(calc(var(--co-center) - (2 * var(--height))))
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d8[data-side="6"] {
+  --luminance: 90%;
+  transform: rotateX(180deg) rotateY(90deg)
+    translateY(calc(var(--co-center) - (2 * var(--height))))
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d8[data-side="7"] {
+  --luminance: 95%;
+  transform: rotateX(180deg) rotateY(180deg)
+    translateY(calc(var(--co-center) - (2 * var(--height))))
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d8[data-side="8"] {
+  --luminance: 100%;
+  transform: rotateX(180deg) rotateY(270deg)
+    translateY(calc(var(--co-center) - (2 * var(--height))))
+    rotateX(var(--co-dihedral)) translateZ(var(--extrude));
+}
+.d8::after {
+  background-color: transparent;
+  position: absolute;
+  content: attr(data-side);
+  bottom: calc((100% * var(--center)) - 0.5em);
+  text-align: center;
+  left: 0;
+  right: 0;
+}
