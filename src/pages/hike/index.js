@@ -243,7 +243,6 @@ export const Hike = () => {
         open={randomTokenModalOpen}
         additionalCards={game.additionalCards}
         onHide={_randomTokenModalClose}
-        chaosClick={(c) => triggerChaos(c)}
         close={_randomTokenModalClose}
         randomTokenProps={randomTokenProps}
       />

@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import { createMarkup } from "./createMarkup";
 
 export const CHAOS_TRIGGER_PROP = { name: "chaos-trigger" };
@@ -347,7 +348,7 @@ export const addAdditionalProperties = (card) => {
 
   if (properties[card.name]) {
     card.customProperties = properties[card.name];
-  } else {
+  } else if (isEmpty(card.customProperties)) {
     card.customProperties = [];
   }
 
