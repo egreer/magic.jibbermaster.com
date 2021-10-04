@@ -7,6 +7,7 @@ import {
   CHAOS_MAX_PROP,
   randomTokenProp,
   CHAOS_TRIGGER_PROP,
+  ASSEMBLE_PROP,
 } from "../../../util/additionalProps";
 
 export const CUSTOM_CHAOS = [
@@ -61,14 +62,7 @@ export const CUSTOM_CHAOS = [
     type_line: "Plane - UnHike",
     oracle_text: "Assemble a Random Contraption",
     show_blank: true,
-    customProperties: [
-      CHAOS_TRIGGER_PROP,
-      randomTokenProp({
-        text: "Assemble a Contraption",
-        symbol: "ss ss-ust ss-rare ss-grad ss-2x mx-4",
-        url: "https://api.scryfall.com/cards/random?q=t%3Acontraption%20include%3Aextras",
-      }),
-    ],
+    customProperties: [CHAOS_TRIGGER_PROP, ASSEMBLE_PROP],
   },
   {
     name: "Gather Party",

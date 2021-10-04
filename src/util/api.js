@@ -15,6 +15,9 @@ const PLANES_URL =
 const SCHEMES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Ascheme&unique=cards";
 
+const CONTRAPTIONS_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Acontraption&unique=cards";
+
 const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
 
 export const filterAPI = (card) =>
@@ -49,14 +52,14 @@ export const getAllPlanechaseCards = async () => {
   try {
     let planes = cached("planes");
     if (!planes) {
-      console.log("Loading from Axios");
+      console.log("Loading planes from Axios");
       let response = await internet.get(PLANES_URL);
       planes = response.data.data;
       planes = planes.map((p) => addAdditionalProperties(filterAPI(p)));
       cache("planes", planes);
       // TODO use the expire store parameter
     } else {
-      console.log("Loaded from store");
+      console.log("Loaded planes from store");
     }
     return planes;
   } catch (e) {
@@ -68,16 +71,37 @@ export const getAllArchenemyCards = async () => {
   try {
     let schemes = cached("schemes");
     if (!schemes) {
-      console.log("Loading from Axios");
+      console.log("Loading archenemy from Axios");
       let response = await internet.get(SCHEMES_URL);
       schemes = response.data.data;
-      schemes = schemes.map((p) => addAdditionalProperties(p));
+      schemes = schemes.map((p) => addAdditionalProperties(filterAPI(p)));
       cache("schemes", schemes);
       // TODO use the expire store parameter
     } else {
-      console.log("Loaded from store");
+      console.log("Loaded archenemy from store");
     }
     return schemes;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getAllContraptionsCards = async () => {
+  try {
+    let contraptions = cached("contraptions");
+    if (!contraptions) {
+      console.log("Loading contraptions from Axios");
+      let response = await internet.get(CONTRAPTIONS_URL);
+      contraptions = response.data.data;
+      contraptions = contraptions.map((p) =>
+        addAdditionalProperties(filterAPI(p))
+      );
+      cache("contraptions", contraptions);
+      // TODO use the expire store parameter
+    } else {
+      console.log("Loaded contraptions from store");
+    }
+    return contraptions;
   } catch (e) {
     console.error(e);
   }
@@ -88,12 +112,12 @@ export const getAllHikeModePlaneCards = async () => {
     let hikePlanes = cached("hikePlanes");
     let ids = BASE_PLANES.map((c) => pick(c, "id"));
     if (!hikePlanes || hikePlanes.length !== ids.length) {
-      console.log("Loading from Axios");
+      console.log("Loading hike planes from Axios");
       hikePlanes = await fetchAllCards(ids);
       cache("hikePlanes", hikePlanes);
       // TODO use the expire store parameter
     } else {
-      console.log("Loaded from store");
+      console.log("Loaded hike planes from store");
     }
     return hikePlanes;
   } catch (e) {
@@ -106,12 +130,12 @@ export const getAllHikeModeChaosCards = async () => {
     let hikeChaos = cached("hikeChaos");
     let ids = BASE_CHAOS.map((c) => pick(c, "id"));
     if (!hikeChaos || hikeChaos.length !== ids.length) {
-      console.log("Loading from Axios");
+      console.log("Loading hike chaos from Axios");
       hikeChaos = await fetchAllCards(ids);
       cache("hikeChaos", hikeChaos);
       // TODO use the expire store parameter
     } else {
-      console.log("Loaded from store");
+      console.log("Loaded hike chaos from store");
     }
     return hikeChaos;
   } catch (e) {

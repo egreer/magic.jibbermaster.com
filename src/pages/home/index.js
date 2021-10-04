@@ -49,6 +49,17 @@ export const Home = () => {
           <i className="ss ss-evg ss-3x mx-2 d-block" />
           <span className="d-block">Formats</span>
         </Button>
+        <Button
+          as={NavLink}
+          exact
+          to="/contraptions"
+          block
+          variant="secondary"
+          size="lg"
+        >
+          <i className="ss ss-ust ss-3x mx-2 d-block" />
+          <span className="d-block">Contraptions</span>
+        </Button>
         {hikeMode && (
           <Button
             as={NavLink}

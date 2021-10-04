@@ -20,6 +20,7 @@ export const MtgCard = ({
   displayActions,
   children,
   altBack = false,
+  displayChildrenBelow = true,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -78,7 +79,7 @@ export const MtgCard = ({
   };
 
   const renderAdditionalProps = () => {
-    const hasChildren = !emptyChildren;
+    const hasChildren = !emptyChildren && displayChildrenBelow;
     const hasErrata = !!errata;
     const hasToken = !!token;
     const hasChaosX = !!chaosX;

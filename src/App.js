@@ -17,6 +17,7 @@ import { Navigation } from "./components/Navigation";
 import { SettingsProvider } from "./hooks/useSettings";
 import { Hike } from "./pages/hike";
 import { DebugPage } from "./pages/DebugPage";
+import { Contraptions } from "./pages/contraptions/Contraptions";
 
 const Providers = ({ children }) => {
   return (
@@ -57,6 +58,11 @@ const Main = () => {
       <Route path="/syb" exact render={(props) => <SYB {...props} />} />
       <Route path="/formats" exact render={(props) => <Formats {...props} />} />
       <Route
+        path="/contraptions"
+        exact
+        render={(props) => <Contraptions {...props} />}
+      />
+      <Route
         path="/hike"
         exact
         render={(props) => (
@@ -77,7 +83,7 @@ const App = () => {
     <Providers>
       <Helmet titleTemplate="%s - Jibbermaster" />
       <Navigation />
-      <div className="app text-light bg-dark col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+      <div className="app text-light bg-dark col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
         <Main />
         <Disclaimer />
       </div>

@@ -7,6 +7,7 @@ export const RandomTokenModal = ({
   onHide,
   open,
   randomTokenProps,
+  closeText = "Done",
 }) => {
   if (additionalCards && open && randomTokenProps) {
     return (
@@ -32,7 +33,7 @@ export const RandomTokenModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="info" block aria-label="Close" onClick={onHide}>
-            Done
+            {closeText}
           </Button>
         </Modal.Footer>
       </Modal>

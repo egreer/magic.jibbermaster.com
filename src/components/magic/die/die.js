@@ -10,7 +10,7 @@ export const Die = ({ sides = 20, initialSide = 1 }) => {
   const [lastFace, setLastFace] = useState(null);
 
   var timeoutId,
-    transitionDuration = 500,
+    // transitionDuration = 500,
     animationDuration = 3000;
 
   const randomFace = () => {
@@ -40,15 +40,15 @@ export const Die = ({ sides = 20, initialSide = 1 }) => {
   };
 
   const die = `d${sides}`;
-  const faces = Array(sides)
-    .fill(1)
-    .map((_, i) => (
-      <figure
-        key={i}
-        className={`d-face d-face-${i + 1}`}
-        data-side={i + 1}
-      ></figure>
-    ));
+  // const _faces = Array(sides)
+  //   .fill(1)
+  //   .map((_, i) => (
+  //     <figure
+  //       key={i}
+  //       className={`d-face d-face-${i + 1}`}
+  //       data-side={i + 1}
+  //     ></figure>
+  //   ));
   const faces2 = Array(sides)
     .fill(1)
     .map((_, i) => <div key={i} className={`${die}`} data-side={i + 1}></div>);

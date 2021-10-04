@@ -31,6 +31,12 @@ export const randomTokenProp = ({ url, symbol, text }) => {
   return { name: "random-token", url, symbol, text };
 };
 
+export const ASSEMBLE_PROP = randomTokenProp({
+  text: "Assemble Contraption",
+  symbol: "ss ss-ust ss-rare ss-grad ss-2x mx-1 mx-md-4",
+  url: "https://api.scryfall.com/cards/random?q=t%3Acontraption%20include%3Aextras",
+});
+
 export const addAdditionalProperties = (card) => {
   const properties = {
     Aretopolis: [counterProp("Scroll")],
