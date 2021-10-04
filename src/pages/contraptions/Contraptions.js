@@ -15,7 +15,7 @@ import contraptionBack from "../../images/contraption-back.jpg";
 import { ContraptionListModal } from "./ContraptionListModal";
 import { ASSEMBLE_PROP } from "../../util/additionalProps";
 
-const DEFAULT_PLAYER_COUNT = 1;
+const DEFAULT_PLAYER_COUNT = 5;
 const MAX_SPROKETS = 3;
 
 export const Contraptions = () => {
