@@ -13,6 +13,7 @@ import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
 import { createMarkup } from "../../util/createMarkup";
 import ReactDOMServer from "react-dom/server";
+import { CardLinks } from "./CardLinks";
 
 export const MtgCard = ({
   listDisplay,
@@ -25,8 +26,7 @@ export const MtgCard = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
 
-  const settings = useSettings();
-  const { displayImages, displayGatherer } = settings;
+  const { displayImages } = useSettings();
 
   const hasCounters = hasCustomProperty("counter", card);
   const errata = hasCustomProperty("errata", card);
@@ -71,7 +71,7 @@ export const MtgCard = ({
 
     return (
       hasBody && (
-        <Card>
+        <Card text="light">
           <Card.Body>{text}</Card.Body>
         </Card>
       )
@@ -152,22 +152,6 @@ export const MtgCard = ({
         </Card>
       )
     );
-  };
-
-  const renderActions = () => {
-    if (displayGatherer && card) {
-      return (
-        <Card.Footer>
-          <Card.Link
-            href={card.related_uris["gatherer"]}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Gatherer
-          </Card.Link>
-        </Card.Footer>
-      );
-    }
   };
 
   const renderCardImage = () => (
@@ -305,7 +289,7 @@ export const MtgCard = ({
         <Card bg="black" text="light" className="mtg-standard-card">
           {renderImage()}
           {renderComponents()}
-          {renderActions()}
+          <CardLinks card={card} />
         </Card>
         {renderAdditionalProps()}
         {renderBody()}

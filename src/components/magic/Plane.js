@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, ListGroup, Modal } from "react-bootstrap";
+import ReactDOMServer from "react-dom/server";
 import { gathererImageURL } from "../../mtg/card";
 import back from "../../images/planechase-back.jpg";
 import { Counter } from "./Counter";
@@ -9,16 +10,16 @@ import { hasCustomProperty } from "../../mtg/card.js";
 import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
+import { CardLinks } from "./CardLinks";
 
 export const Plane = ({ listDisplay, card, displayActions, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
 
-  const settings = useSettings();
-  const { displayImages, displayGatherer } = settings;
+  const { displayImages } = useSettings();
 
   const hasCounters = hasCustomProperty("counter", card);
-  const emptyChildren = children?.type === null;
+  const emptyChildren = !Boolean(ReactDOMServer.renderToStaticMarkup(children));
 
   // Use Scryfall and rotate or use Gatherer
   // scryfall (rotated) card.image_uris["border_crop"]
@@ -41,22 +42,6 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
     const hasBody = !!text;
 
     return hasBody && <Card.Body>{text}</Card.Body>;
-  };
-
-  const renderActions = () => {
-    if (displayGatherer && card) {
-      return (
-        <Card.Footer>
-          <Card.Link
-            href={card.related_uris["gatherer"]}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Gatherer
-          </Card.Link>
-        </Card.Footer>
-      );
-    }
   };
 
   const renderCardImage = () => (
@@ -96,17 +81,19 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
   const renderComponents = () => {
     if (displayImages) {
       return (
-        <Card.ImgOverlay
-          className={cn("text-center plane-overlay", {
-            "child-overlay": !emptyChildren,
-            "counter-overlay": emptyChildren && hasCounters,
-          })}
-        >
-          <Card.Title className="text-center">
-            {counter}
-            {children}
-          </Card.Title>
-        </Card.ImgOverlay>
+        <Card>
+          <Card.ImgOverlay
+            className={cn("text-center plane-overlay", {
+              "child-overlay": !emptyChildren,
+              "counter-overlay": emptyChildren && hasCounters,
+            })}
+          >
+            <Card.Title className="text-center">
+              {counter}
+              {children}
+            </Card.Title>
+          </Card.ImgOverlay>
+        </Card>
       );
     } else {
       return (
@@ -144,7 +131,7 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
         {renderImage()}
         {renderComponents()}
         {renderBody()}
-        {renderActions()}
+        <CardLinks card={card} />
       </Card>
     );
   }

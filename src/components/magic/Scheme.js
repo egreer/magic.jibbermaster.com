@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, ListGroup, Modal } from "react-bootstrap";
+import ReactDOMServer from "react-dom/server";
 import back from "../../images/archenemy-back.jpg";
 import { Counter } from "./Counter";
 import "./planes.scss";
@@ -8,15 +9,15 @@ import { hasCustomProperty } from "../../mtg/card.js";
 import { CardText } from "./CardText";
 import cn from "classnames";
 import { useSettings } from "../../hooks/useSettings";
+import { CardLinks } from "./CardLinks";
 
 export const Scheme = ({ listDisplay, card, displayActions, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const settings = useSettings();
-  const { displayImages, displayGatherer } = settings;
+  const { displayImages } = useSettings();
 
   const hasCounters = hasCustomProperty("counter", card);
-  const emptyChildren = children?.type === null;
+  const emptyChildren = !Boolean(ReactDOMServer.renderToStaticMarkup(children));
 
   const imageURI = card?.image_uris["large"] || back;
 
@@ -39,22 +40,6 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
     const hasBody = !!text;
 
     return hasBody && <Card.Body>{text}</Card.Body>;
-  };
-
-  const renderActions = () => {
-    if (displayGatherer && card) {
-      return (
-        <Card.Footer>
-          <Card.Link
-            href={card.related_uris["gatherer"]}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Gatherer
-          </Card.Link>
-        </Card.Footer>
-      );
-    }
   };
 
   const renderComponents = () => {
@@ -108,7 +93,7 @@ export const Scheme = ({ listDisplay, card, displayActions, children }) => {
         {image}
         {renderComponents()}
         {renderBody()}
-        {renderActions()}
+        <CardLinks card={card} />
       </Card>
     );
   }
