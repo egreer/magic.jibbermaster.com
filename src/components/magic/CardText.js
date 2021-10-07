@@ -3,9 +3,9 @@ import { Card } from "react-bootstrap";
 import { useSettings } from "../../hooks/useSettings";
 
 export const CardText = ({ card, showText = false }) => {
-  const settings = useSettings();
+  const { displayText } = useSettings();
 
-  if (showText || settings.displayText) {
+  if (showText || displayText) {
     if (card) {
       const html =
         card.oracle_html ||

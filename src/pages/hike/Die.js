@@ -8,7 +8,7 @@ import { createDie, ALL_FACES } from "./data/die";
 
 export const CurrentDie = ({ showAllEffect }) => {
   const [die, setDie] = useLocalState("hike-die", {});
-  const settings = useSettings();
+  const { devTools } = useSettings();
 
   const regenDie = useCallback(() => {
     setDie({ ...createDie() });
@@ -25,21 +25,37 @@ export const CurrentDie = ({ showAllEffect }) => {
       <h3>Hike Die</h3>
       <Table size="sm" variant="dark" borderless striped>
         <tbody>
-          {map(die, (v, k) => (
-            <tr key={k}>
-              <td className="text-center pr-2">
-                <i className={`ms ms-${k} ms-cost ms-shadow ms-fw`}></i>
-              </td>
-              <td className="text-center">
-                <i className={v?.icon}></i>
-              </td>
-              <td>{v?.effect}</td>
-            </tr>
-          ))}
+          {map(die, (face, k) => {
+            const currentIndex = parseInt(k, 10);
+            const adjacentIndex = currentIndex + 6;
+            const adjacentFace = die[adjacentIndex];
+            return currentIndex < 7 ? (
+              <tr key={k}>
+                <td className="text-center pr-2">
+                  <i
+                    className={`ms ms-${currentIndex} ms-cost ms-shadow ms-fw`}
+                  ></i>
+                </td>
+                <td className="text-center">
+                  <i className={face?.icon}></i>
+                </td>
+                <td className="w-50">{face?.effect}</td>
+                <td className="text-center pr-2">
+                  <i
+                    className={`ms ms-${adjacentIndex} ms-cost ms-shadow ms-fw`}
+                  ></i>
+                </td>
+                <td className="text-center">
+                  <i className={adjacentFace?.icon}></i>
+                </td>
+                <td className="w-50">{adjacentFace?.effect}</td>
+              </tr>
+            ) : null;
+          })}
         </tbody>
       </Table>
 
-      {settings.devTools && showAllEffect && (
+      {devTools && showAllEffect && (
         <>
           <h3>All Effects</h3>
           <Table size="sm" variant="dark" borderless striped>

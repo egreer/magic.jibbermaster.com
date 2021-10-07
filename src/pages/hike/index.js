@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
+import { HideOn } from "react-hide-on-scroll";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
@@ -159,34 +160,36 @@ export const Hike = () => {
           <h1>Hike Mode</h1>
         </Col>
       </Row>
-      <ActionButton
-        text="Hike Hike"
-        onClick={planesAndChaosWalk}
-        disabled={loading}
-        className="btn-translucent"
-        icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
-      >
-        <Button
-          onClick={planeswalk}
-          className="btn-translucent my-3"
-          variant="info"
+      <HideOn divID="end-actions" offset={-150}>
+        <ActionButton
+          text="Hike Hike"
+          onClick={planesAndChaosWalk}
           disabled={loading}
-          block
+          className="btn-translucent"
+          icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
         >
-          <i className="ss ss-fw ss-2x ss-fut mx-2" />
-          <span className="mx-2 d-none d-md-inline">Planes Hike</span>
-        </Button>
-        <Button
-          onClick={chaosWalk}
-          className="btn-translucent my-3"
-          variant="warning"
-          disabled={loading}
-          block
-        >
-          <i className="ms ms-fw ms-2x ms-phenomenon mx-2" />
-          <span className="mx-2 d-none d-md-inline">Chaos Hike</span>
-        </Button>
-      </ActionButton>
+          <Button
+            onClick={planeswalk}
+            className="btn-translucent my-3"
+            variant="info"
+            disabled={loading}
+            block
+          >
+            <i className="ss ss-fw ss-2x ss-fut mx-2" />
+            <span className="mx-2 d-none d-md-inline">Planes Hike</span>
+          </Button>
+          <Button
+            onClick={chaosWalk}
+            className="btn-translucent my-3"
+            variant="warning"
+            disabled={loading}
+            block
+          >
+            <i className="ms ms-fw ms-2x ms-phenomenon mx-2" />
+            <span className="mx-2 d-none d-md-inline">Chaos Hike</span>
+          </Button>
+        </ActionButton>
+      </HideOn>
 
       <Row className="mb-4 text-center">
         {loading ? (
@@ -221,7 +224,7 @@ export const Hike = () => {
           </>
         )}
       </Row>
-
+      <div id="end-actions" />
       <CurrentDie showAllEffect={showAllEffect} />
 
       {showRules && <Rules />}
