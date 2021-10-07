@@ -18,6 +18,9 @@ const SCHEMES_URL =
 const CONTRAPTIONS_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Acontraption&unique=cards";
 
+const SLIVERS_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Asliver&unique=cards";
+
 const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
 
 export const filterAPI = (card) =>
@@ -102,6 +105,25 @@ export const getAllContraptionsCards = async () => {
       console.log("Loaded contraptions from store");
     }
     return contraptions;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getAllSliversCards = async () => {
+  try {
+    let slivers = cached("slivers");
+    if (!slivers) {
+      console.log("Loading slivers from Axios");
+      let response = await internet.get(SLIVERS_URL);
+      slivers = response.data.data;
+      slivers = slivers.map((p) => addAdditionalProperties(filterAPI(p)));
+      cache("slivers", slivers);
+      // TODO use the expire store parameter
+    } else {
+      console.log("Loaded slivers from store");
+    }
+    return slivers;
   } catch (e) {
     console.error(e);
   }

@@ -1,8 +1,17 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useSettings } from "../../hooks/useSettings";
+
+const HomeButton = ({ path, text, children, variant = "secondary" }) => (
+  <Col xs={6} sm={4} lg={6} className="my-2">
+    <Button as={NavLink} exact to={path} block variant={variant} size="lg">
+      {children}
+      <span className="d-block">{text}</span>
+    </Button>
+  </Col>
+);
 
 export const Home = () => {
   const { hikeMode } = useSettings();
@@ -12,67 +21,37 @@ export const Home = () => {
         <link rel="manifest" href={process.env.PUBLIC_URL + "/manifest.json"} />
       </Helmet>
       <div className="mt-4">
-        <Button
-          as={NavLink}
-          exact
-          to="/planechase"
-          block
-          variant="info"
-          size="lg"
-        >
-          <i className="ms ms-planeswalker ms-4x mx-2 d-block" />
-          <span className="d-block">Planechase</span>
-        </Button>
-        <Button
-          as={NavLink}
-          exact
-          to="/archenemy"
-          block
-          variant="danger"
-          size="lg"
-        >
-          <i className="ss ss-arc ss-3x mx-2 d-block" />
-          <span className="d-block">Archenemy</span>
-        </Button>
-        <Button as={NavLink} exact to="/syb" block variant="success" size="lg">
-          <i className="ss ss-s00 ss-3x mx-2 d-block" />
-          <span className="d-block">SYB</span>
-        </Button>
-        <Button
-          as={NavLink}
-          exact
-          to="/formats"
-          block
-          variant="primary"
-          size="lg"
-        >
-          <i className="ss ss-evg ss-3x mx-2 d-block" />
-          <span className="d-block">Formats</span>
-        </Button>
-        <Button
-          as={NavLink}
-          exact
-          to="/contraptions"
-          block
-          variant="secondary"
-          size="lg"
-        >
-          <i className="ss ss-ust ss-3x mx-2 d-block" />
-          <span className="d-block">Contraptions</span>
-        </Button>
-        {hikeMode && (
-          <Button
-            as={NavLink}
-            exact
-            to="/hike"
-            block
-            variant="warning"
-            size="lg"
-          >
-            <i className="ss ss-h17 ss-3x mx-2 d-block" />
-            <span className="d-block">Hike Mode</span>
-          </Button>
-        )}
+        <Container>
+          <Row>
+            <HomeButton path={"/planechase"} text="Planechase" variant="info">
+              <i className="ms ms-planeswalker ms-4x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton path={"/archenemy"} text="Archenemy" variant="danger">
+              <i className="ss ss-arc ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton path={"/syb"} text="SYB" variant="success">
+              <i className="ss ss-s00 ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton path={"/formats"} text="Formats" variant="primary">
+              <i className="ss ss-evg ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton
+              path={"/contraptions"}
+              text="Contraptions"
+              variant="secondary"
+            >
+              <i className="ss ss-ust ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton path={"/slivers"} text="Slivers" variant="success">
+              <i className="ss ss-h09 ss-3x mx-2 d-block" />
+            </HomeButton>
+            {hikeMode && (
+              <HomeButton path={"/hike"} text="Hike Mode" variant="warning">
+                <i className="ss ss-h17 ss-3x mx-2 d-block" />
+              </HomeButton>
+            )}
+          </Row>
+        </Container>
       </div>
     </div>
   );

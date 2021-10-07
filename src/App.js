@@ -18,6 +18,7 @@ import { SettingsProvider } from "./hooks/useSettings";
 import { Hike } from "./pages/hike";
 import { DebugPage } from "./pages/DebugPage";
 import { Contraptions } from "./pages/contraptions/Contraptions";
+import { Slivers } from "./pages/slivers/Slivers";
 
 const Providers = ({ children }) => {
   return (
@@ -62,6 +63,7 @@ const Main = () => {
         exact
         render={(props) => <Contraptions {...props} />}
       />
+      <Route path="/slivers" exact render={(props) => <Slivers {...props} />} />
       <Route
         path="/hike"
         exact
