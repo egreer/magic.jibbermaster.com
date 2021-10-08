@@ -61,9 +61,15 @@ export const createMarkup = (text) => {
 
   // TODO: Can add \d but 1/1 looks weird need bigger /
   text = text.replace(
-    /([XYZ])\/([XYZ])/g,
+    /([XYZ0-9])\/([XYZ0-9])/g,
     (_match, p1, p2) =>
-      `<i class="ms ms-${p2.toLowerCase()}"></i>/<i class="ms ms-${p2.toLowerCase()}"></i>`
+      `<i class="ms ms-${p1.toLowerCase()}"></i> / <i class="ms ms-${p2.toLowerCase()}"></i>`
+  );
+
+  text = text.replace(
+    /\+([XYZ0-9])\/\+([XYZ0-9])/g,
+    (_match, p1, p2) =>
+      `<i class="fa fa-plus fa-xs"></i><i class="ms ms-${p1.toLowerCase()}"></i> / <i class="fa fa-plus fa-xs"></i><i class="ms ms-${p2.toLowerCase()}"></i>`
   );
 
   text = text.replace(
@@ -190,6 +196,10 @@ Y/Y
 Z/Z
 X/Z
 X/Y
+X/0
+Y/0
+Z/0
++X/+0
 
 (Symbols)
 {PW}

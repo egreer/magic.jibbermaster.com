@@ -1,6 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Accordion, Badge, Card, Col, Form, Row } from "react-bootstrap";
-import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
+import pluralize from "pluralize";
+import {
+  Accordion,
+  Badge,
+  Card,
+  Col,
+  Form,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
+import {
+  DoubleFaceButton,
+  LoyaltyButtonGroup,
+} from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
 import { hasCustomProperty } from "../../mtg/card";
@@ -55,7 +67,8 @@ const sliverProps = {
 export const Slivers = () => {
   const [slivers, setSlivers] = useState([]);
   const [search, setSearch] = useState("");
-  const [filteredSlivers, setFilterdSlivers] = useState([]);
+  const [filteredSlivers, setFilteredSlivers] = useState([]);
+  const [activeOnly, setActiveOnly] = useState(false);
   const [sliverCounts, setSliverCounts] = useLocalState("sliver-counts", {});
 
   useEffect(() => {
@@ -67,29 +80,26 @@ export const Slivers = () => {
             sliverProps[s.name] ?? []
           ))
       );
-      console.log("🚀 ~ file: Slivers.js ~ line 64 ~ getSlivers ~ s", s);
 
       setSlivers(s);
     };
     getSlivers();
   }, [setSlivers]);
 
-  // const filteredSlivers = slivers.filter((c) =>
-  //   c.name.toLowerCase().includes(search.toLowerCase() || "")
-  // );
-
-  useEffect(() => {
-    setFilterdSlivers(
-      slivers.filter((c) =>
-        c.name.toLowerCase().includes(search.toLowerCase() || "")
-      )
-    );
-  }, [slivers, search, setFilterdSlivers]);
-
   const currentSliverCount = useCallback(
     ({ card }) => sliverCounts[card.id] || 0,
     [sliverCounts]
   );
+
+  useEffect(() => {
+    setFilteredSlivers(
+      slivers.filter(
+        (card) =>
+          card.name.toLowerCase().includes(search.toLowerCase() || "") &&
+          (activeOnly ? currentSliverCount({ card }) > 0 : true)
+      )
+    );
+  }, [slivers, search, activeOnly, currentSliverCount, setFilteredSlivers]);
 
   const incrementSliverCount = useCallback(
     ({ card }) => {
@@ -112,10 +122,40 @@ export const Slivers = () => {
     () => Object.entries(sliverCounts),
     [sliverCounts]
   );
+
   console.log(
     "🚀 ~ file: Slivers.js ~ line 115 ~ Slivers ~ abilities",
     abilities
   );
+
+  const SliverCard = useCallback(
+    ({ card }) => {
+      const count = currentSliverCount({ card });
+      return (
+        <Col xs="6" md="4" className="my-2">
+          <MtgCard card={card} displayChildrenBelow={false} />
+          <div className="text-center">
+            <h1>
+              <Badge pill variant={count > 0 ? "success" : "dark"}>
+                x{count}
+              </Badge>
+            </h1>
+            <LoyaltyButtonGroup
+              upProps={{
+                onClick: () => incrementSliverCount({ card }),
+              }}
+              downProps={{
+                disabled: count < 1,
+                onClick: () => decrementSliverCount({ card }),
+              }}
+            />
+          </div>
+        </Col>
+      );
+    },
+    [currentSliverCount, incrementSliverCount, decrementSliverCount]
+  );
+
   return (
     <div className="slivers">
       <div className="mb-3">
@@ -129,7 +169,12 @@ export const Slivers = () => {
               return (
                 card &&
                 card.oracle_html && (
-                  <Card key={`ability-${card.id}`} text="light" bg="secondary">
+                  <Card
+                    key={`ability-${card.id}`}
+                    text="light"
+                    bg="dark"
+                    border="secondary"
+                  >
                     <Accordion.Toggle as={Card.Header} eventKey={card.id}>
                       <Row>
                         <Col xs={1}>
@@ -147,7 +192,9 @@ export const Slivers = () => {
                       </Row>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={card.id}>
-                      <Card.Body>TODO: Show Cards Here</Card.Body>
+                      <Card.Body>
+                        <SliverCard card={card} />
+                      </Card.Body>
                     </Accordion.Collapse>
                   </Card>
                 )
@@ -157,38 +204,31 @@ export const Slivers = () => {
           })}
         </Accordion>
       </div>
-      <Form.Control
-        placeholder="Search..."
-        value={search}
-        onChange={(a) => setSearch(a.target.value)}
-      />
-      <p className="text-right text-light">{filteredSlivers?.length} Matches</p>
-      <Row>
-        {filteredSlivers?.map((card) => {
-          const count = currentSliverCount({ card });
+      <InputGroup>
+        <Form.Control
+          placeholder="Search..."
+          value={search}
+          onChange={(a) => setSearch(a.target.value)}
+        />
+        <InputGroup.Append>
+          <DoubleFaceButton
+            onClick={() => {
+              setActiveOnly(!activeOnly);
+            }}
+            enabled={activeOnly}
+            text="Only Active"
+            highlight
+          />
+        </InputGroup.Append>
+      </InputGroup>
+      <Form.Text>
+        {pluralize("Match", filteredSlivers?.length ?? 0, true)}
+      </Form.Text>
 
-          return (
-            <Col key={`col-${card.id}`} xs="6" md="4" className="my-2">
-              <MtgCard card={card} displayChildrenBelow={false} />
-              <div className="text-center">
-                <h1>
-                  <Badge pill variant={count > 0 ? "success" : "dark"}>
-                    x{count}
-                  </Badge>
-                </h1>
-                <LoyaltyButtonGroup
-                  upProps={{
-                    onClick: () => incrementSliverCount({ card }),
-                  }}
-                  downProps={{
-                    disabled: count < 1,
-                    onClick: () => decrementSliverCount({ card }),
-                  }}
-                />
-              </div>
-            </Col>
-          );
-        })}
+      <Row>
+        {filteredSlivers?.map((card) => (
+          <SliverCard card={card} key={`col-${card.id}`} />
+        ))}
       </Row>
     </div>
   );

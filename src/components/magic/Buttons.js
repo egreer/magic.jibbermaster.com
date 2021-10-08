@@ -62,8 +62,17 @@ export const TapButtonGroup = ({ unTapProps, tapProps, reverse, ...props }) => (
   </ButtonGroup>
 );
 
-export const DoubleFaceButton = ({ enabled, text, ...props }) => (
-  <Button {...props} block variant="secondary">
+export const DoubleFaceButton = ({
+  enabled,
+  text,
+  highlight = false,
+  ...props
+}) => (
+  <Button
+    {...props}
+    block
+    variant={highlight && enabled ? "info" : "secondary"}
+  >
     <span className="mr-2">{text}</span>
     <DoubleFaceIcon enabled={enabled} backdrop />
   </Button>
