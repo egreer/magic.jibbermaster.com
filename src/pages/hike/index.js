@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { HideOn } from "react-hide-on-scroll";
+import pluralize from "pluralize";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
@@ -252,7 +253,7 @@ export const Hike = () => {
 
       <History history={history} CardType={MtgCard} />
       <p className="text-center my-3 noselect">
-        There are {deck.deck ? deck.deck.length : 0} cards remaining.
+        There are {pluralize("card", deck?.deck?.length ?? 0, true)} remaining.
       </p>
       <Confirm
         onConfirm={reset}

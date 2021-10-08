@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Fade, Jumbotron, Container } from "react-bootstrap";
+import pluralize from "pluralize";
 
 import { ArchenemyHelmet } from "./Helmet";
 import { getAllArchenemyCards } from "../../util/api.js";
@@ -119,7 +120,8 @@ export const Archenemy = () => {
         <History history={history} CardType={Scheme} />
 
         <p className="text-center my-3 noselect">
-          There are {deck.deck ? deck.deck.length : 0} cards remaining.
+          There are {pluralize("card", deck?.deck?.length ?? 0, true)}{" "}
+          remaining.
         </p>
         <Confirm
           onConfirm={reset}

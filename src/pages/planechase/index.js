@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Fade } from "react-bootstrap";
+import pluralize from "pluralize";
 import { PlanechaseHelmet } from "./Helmet";
 import { shuffleArray } from "../../util/shuffleArray";
 import { hasCustomProperty } from "../../mtg/card.js";
@@ -266,7 +267,7 @@ export const Planechase = () => {
       />
       <History history={history} CardType={Plane} />
       <p className="text-center my-3 noselect">
-        There are {deck.deck ? deck.deck.length : 0} cards remaining.
+        There are {pluralize("card", deck?.deck?.length ?? 0, true)} remaining.
       </p>
       <Confirm
         onConfirm={reset}
