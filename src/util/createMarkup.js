@@ -84,6 +84,83 @@ export const createMarkup = (text) => {
   return text;
 };
 
+const ABILITY_ICONS = {
+  activated: "ability-activated",
+  adamant: "ability-adamant",
+  adapt: "ability-adapt",
+  addendum: "ability-addendum",
+  adventure: "ability-adventure",
+  afflict: "ability-afflict",
+  afterlife: "ability-afterlife",
+  aftermath: "ability-aftermath",
+  amass: "ability-amass",
+  ascend: "ability-ascend",
+  boast: "ability-boast",
+  companion: "ability-companion",
+  constellation: "ability-constellation",
+  convoke: "ability-convoke",
+  d20: "ability-d20",
+  deathtouch: "ability-deathtouch",
+  defender: "ability-defender",
+  devotion: "ability-devotion",
+  "double Strike": "ability-double-strike",
+  dungeon: "ability-dungeon",
+  embalm: "ability-embalm",
+  enrage: "ability-enrage",
+  escape: "ability-escape",
+  eternalize: "ability-eternalize",
+  explore: "ability-explore",
+  "first Strike": "ability-first-strike",
+  flash: "ability-flash",
+  flying: "ability-flying",
+  foretell: "ability-foretell",
+  haste: "ability-haste",
+  hexproof: "ability-hexproof",
+  "hexproof: white": "ability-hexproof-white",
+  "hexproof: blue": "ability-hexproof-blue",
+  "hexproof: black": "ability-hexproof-black",
+  "hexproof: red": "ability-hexproof-red",
+  "hexproof: green": "ability-hexproof-green",
+  indestructible: "ability-indestructible",
+  jumpstart: "ability-jumpstart",
+  kicker: "ability-kicker",
+  landfall: "ability-landfall",
+  learn: "ability-learn",
+  lifelink: "ability-lifelink",
+  magecraft: "ability-magecraft",
+  menace: "ability-menace",
+  mutate: "ability-mutate",
+  party: "ability-party",
+  proliferate: "ability-proliferate",
+  prowess: "ability-prowess",
+  raid: "ability-raid",
+  reach: "ability-reach",
+  revolt: "ability-revolt",
+  riot: "ability-riot",
+  spectacle: "ability-spectacle",
+  "static Ability": "ability-static",
+  "summoning Sickness": "ability-summoning-sickness",
+  surveil: "ability-surveil",
+  trample: "ability-trample",
+  transform: "ability-transform",
+  "triggered Ability": "ability-triggered",
+  undergrowth: "ability-undergrowth",
+  vigilance: "ability-vigilance",
+  ward: "ability-ward",
+};
+
+export const hasAbilityIcon = (ability) =>
+  ABILITY_ICONS?.[ability?.toLowerCase()];
+export const AbilityIcon = ({ ability, className, ...props }) =>
+  hasAbilityIcon(ability) ? (
+    <i
+      className={`ms ms-fw ms-${
+        ABILITY_ICONS[ability.toLowerCase()]
+      } ${className}`}
+      {...props}
+    ></i>
+  ) : null;
+
 export const MARKUP_TEXT = `
 {W}
 {U}

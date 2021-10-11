@@ -1,10 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import pluralize from "pluralize";
+import Case from "case";
 import {
   Accordion,
   Badge,
+  Button,
   Card,
   Col,
+  Fade,
   Form,
   InputGroup,
   Row,
@@ -18,6 +21,10 @@ import { useLocalState } from "../../hooks/useLocalState";
 import { hasCustomProperty } from "../../mtg/card";
 import { ABILITIY_STACKS_PROP } from "../../util/additionalProps";
 import { getAllSliversCards } from "../../util/api";
+import { AbilityIcon } from "../../util/createMarkup";
+import { Confirm } from "../../components/Confirm";
+import numeralPrefix from "numeral-prefix";
+import compact from "lodash/compact";
 
 // ABILITIY_STACKS_PROP
 const sliverProps = {
@@ -64,22 +71,123 @@ const sliverProps = {
   "Watcher Sliver": [ABILITIY_STACKS_PROP],
 };
 
+const AbilityHeader = ({ ...props }) => (
+  <Card.Header className="py-1 px-2" {...props} />
+);
+
+const parsedAbility = ({ card }) => {
+  let allPlayers = false;
+  let youControl = false;
+  let stacks = false;
+  let reminderText = null;
+  let matchOrder = 10;
+  const abilities = [];
+
+  const words = card?.oracle_html?.split("<br />");
+  words?.forEach((word) => {
+    let parsed = false;
+
+    // TODO Break on New line for checks
+    let matches = word.match('All Slivers?(?: creatures)? have "(.*)"');
+    if (!parsed && matches) {
+      abilities.push(matches[1]);
+      allPlayers = true;
+      parsed = true;
+      matchOrder = Math.min(3, matchOrder);
+    }
+
+    matches = word.match(
+      /All Slivers?(?: creatures)? have (.+?)\.( <small><em>\(.*)?/
+    );
+    if (!parsed && matches) {
+      abilities.push(Case.capital(matches[1]));
+      allPlayers = true;
+      reminderText = matches[2];
+      parsed = true;
+      matchOrder = Math.min(1, matchOrder);
+    }
+
+    matches = word.match(/All Slivers?(?: creatures)? get (.+?)\./);
+    if (!parsed && matches) {
+      abilities.push(matches[1]);
+      allPlayers = true;
+      stacks = true;
+      parsed = true;
+      matchOrder = Math.min(5, matchOrder);
+    }
+
+    matches = word.match('Slivers?(?: creatures)? you control have "(.*)"');
+    if (!parsed && matches) {
+      abilities.push(matches[1]);
+      youControl = true;
+      parsed = true;
+      matchOrder = Math.min(4, matchOrder);
+    }
+
+    matches = word.match(
+      /Slivers?(?: creatures)? you control have (.+?)\.( <small><em>\(.*)?/
+    );
+    if (!parsed && matches) {
+      abilities.push(
+        ...matches[1]?.split(" and ")?.map((m) => {
+          let r = m.replace(/(^"|"$)/g, "");
+          return r.includes(":") ? r : Case.sentence(r);
+        })
+      );
+      youControl = true;
+      reminderText = matches[2];
+      parsed = true;
+      matchOrder = Math.min(2, matchOrder);
+    }
+
+    matches = word.match(/Slivers?(?: creatures)? you control get (.+?)\./);
+    if (!parsed && matches) {
+      abilities.push(matches[1]);
+      youControl = true;
+      stacks = true;
+      parsed = true;
+      matchOrder = Math.min(6, matchOrder);
+    }
+    // When in doubt throw it on
+    if (!parsed) {
+      abilities.push(word);
+    }
+  });
+
+  return {
+    abilities,
+    stacks,
+    allPlayers,
+    youControl,
+    reminderText,
+    matchOrder,
+  };
+};
+
+const sliverName = (name, count) => {
+  let newName = name.replace("Sliver", "").trim();
+  newName = count > 1 ? numeralPrefix(count, `-${newName}`) : newName;
+  return count > 0 ? newName : null;
+};
+
 export const Slivers = () => {
   const [slivers, setSlivers] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredSlivers, setFilteredSlivers] = useState([]);
   const [activeOnly, setActiveOnly] = useState(false);
+  const [showFlavorText, setShowFlavorText] = useState(false);
+  const [showName, setShowName] = useState(false);
   const [sliverCounts, setSliverCounts] = useLocalState("sliver-counts", {});
 
   useEffect(() => {
     const getSlivers = async () => {
       const s = await getAllSliversCards();
-      s.forEach(
-        (s) =>
-          (s.customProperties = s.customProperties.concat(
-            sliverProps[s.name] ?? []
-          ))
-      );
+      s.forEach((card) => {
+        card.customProperties = card.customProperties.concat(
+          sliverProps[card.name] ?? []
+        );
+        card.parsedAbility = parsedAbility({ card });
+      });
 
       setSlivers(s);
     };
@@ -117,20 +225,39 @@ export const Slivers = () => {
     [sliverCounts, setSliverCounts, currentSliverCount]
   );
 
-  const sliverById = (id) => slivers.find((c) => c.id === id);
-  const abilities = useCallback(
-    () => Object.entries(sliverCounts),
-    [sliverCounts]
+  const sliverById = useCallback(
+    (id) => slivers.find((c) => c.id === id),
+    [slivers]
   );
 
-  console.log(
-    "🚀 ~ file: Slivers.js ~ line 115 ~ Slivers ~ abilities",
-    abilities
-  );
+  const orderedSlivers = useMemo(() => {
+    const s = Object.entries(sliverCounts).map(([key, count]) => {
+      const card = sliverById(key);
+      return {
+        key,
+        card,
+        count,
+      };
+    });
+    s.sort(
+      (first, second) =>
+        (first.card?.parsedAbility?.matchOrder || 10) -
+        (second?.card?.parsedAbility?.matchOrder || 10)
+    );
+    return s;
+  }, [sliverCounts, sliverById]);
+
+  const reset = () => {
+    setFilteredSlivers([]);
+    setSearch("");
+    setActiveOnly(false);
+    setSliverCounts([]);
+  };
 
   const SliverCard = useCallback(
     ({ card }) => {
       const count = currentSliverCount({ card });
+
       return (
         <Col xs="6" md="4" className="my-2">
           <MtgCard card={card} displayChildrenBelow={false} />
@@ -159,13 +286,15 @@ export const Slivers = () => {
   return (
     <div className="slivers">
       <div className="mb-3">
-        <h1 className="text-center">Sliver Abilities</h1>
+        <h1 className="text-center">Sliver Calculator</h1>
         <Accordion defaultActiveKey="0">
-          {Object.entries(sliverCounts).map(([key, value]) => {
-            if (value > 0) {
-              const card = sliverById(key);
+          {orderedSlivers.map((group) => {
+            const { card, count } = group;
 
+            if (count > 0) {
               const abilityStacks = hasCustomProperty("ability-stacks", card);
+              const { allPlayers, youControl, abilities, reminderText } =
+                card?.parsedAbility || {};
               return (
                 card &&
                 card.oracle_html && (
@@ -175,19 +304,38 @@ export const Slivers = () => {
                     bg="dark"
                     border="secondary"
                   >
-                    <Accordion.Toggle as={Card.Header} eventKey={card.id}>
+                    <Accordion.Toggle as={AbilityHeader} eventKey={card.id}>
                       <Row>
                         <Col xs={1}>
+                          {!!allPlayers && <Badge variant="primary">ALL</Badge>}
+                          {!!youControl && <Badge variant="warning">YOU</Badge>}
+                          {!youControl && !allPlayers && (
+                            <Badge variant="secondary">* * *</Badge>
+                          )}
+                        </Col>
+                        <Col xs={1}>
                           {!!abilityStacks && (
-                            <Badge variant="success">{`${value} x `}</Badge>
+                            <Badge variant="success">{`${count} x `}</Badge>
                           )}
                         </Col>
                         <Col>
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: card.oracle_html,
-                            }}
-                          ></span>
+                          {abilities?.map((ability, index) => (
+                            <div key={index}>
+                              <AbilityIcon ability={ability} className="mr-2" />
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: ability,
+                                }}
+                              ></span>
+                            </div>
+                          ))}
+                          {reminderText && (
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: reminderText,
+                              }}
+                            ></div>
+                          )}
                         </Col>
                       </Row>
                     </Accordion.Toggle>
@@ -203,7 +351,63 @@ export const Slivers = () => {
             return null;
           })}
         </Accordion>
+        <Button
+          onClick={() => setShowName(!showName)}
+          variant="secondary"
+          block
+        >
+          {showName ? "Hide" : "Show"} Name
+        </Button>
+        <Fade in={showName}>
+          <div className="font-italic">
+            {showName && (
+              <>
+                {Case.title(
+                  compact(
+                    orderedSlivers.map((group) => {
+                      const { card, count } = group;
+                      return card && count > 0
+                        ? sliverName(card.name, count)
+                        : null;
+                    })
+                  ).join(", ")
+                )}
+                <span> Sliver</span>
+              </>
+            )}
+          </div>
+        </Fade>
+        <Button
+          onClick={() => setShowFlavorText(!showFlavorText)}
+          variant="secondary"
+          block
+        >
+          {showFlavorText ? "Hide" : "Show"} Flavor Text
+        </Button>
+        <Fade in={showFlavorText}>
+          <div className="font-italic">
+            {showFlavorText &&
+              orderedSlivers.map((group) => {
+                const { card, count } = group;
+                return card && count > 0 ? (
+                  <div key={card.id}>{card.flavor_text}</div>
+                ) : null;
+              })}
+          </div>
+        </Fade>
       </div>
+
+      <div className="my-5">
+        <Confirm
+          onConfirm={reset}
+          headerText="Reset Slivers?"
+          triggerText="Reset"
+          confirmText="Reset"
+          confirmVariant="danger"
+          triggerButtonParams={{ variant: "danger", block: true }}
+        />
+      </div>
+
       <InputGroup>
         <Form.Control
           placeholder="Search..."

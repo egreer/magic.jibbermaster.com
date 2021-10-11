@@ -5,11 +5,13 @@
   "dependencies": {
     "axios": "^0.21.4",
     "bootstrap": "^4.6.0",
+    "case": "^1.6.3",
     "classnames": "^2.3.1",
     "cytoscape": "^3.19.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "numeral-prefix": "^1.0.0",
     "pluralize": "^8.0.0",
     "popper.js": "^1.16.1",
     "rc-slider": "^8.7.1",
