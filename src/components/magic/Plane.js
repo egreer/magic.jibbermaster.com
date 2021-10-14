@@ -81,19 +81,17 @@ export const Plane = ({ listDisplay, card, displayActions, children }) => {
   const renderComponents = () => {
     if (displayImages) {
       return (
-        <Card>
-          <Card.ImgOverlay
-            className={cn("text-center plane-overlay", {
-              "child-overlay": !emptyChildren,
-              "counter-overlay": emptyChildren && hasCounters,
-            })}
-          >
-            <Card.Title className="text-center">
-              {counter}
-              {children}
-            </Card.Title>
-          </Card.ImgOverlay>
-        </Card>
+        <Card.ImgOverlay
+          className={cn("text-center plane-overlay", {
+            "child-overlay": !emptyChildren,
+            "counter-overlay": emptyChildren && hasCounters,
+          })}
+        >
+          <Card.Title className="text-center">
+            {counter}
+            {children}
+          </Card.Title>
+        </Card.ImgOverlay>
       );
     } else {
       return (
