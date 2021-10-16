@@ -38,6 +38,12 @@ export const ASSEMBLE_PROP = randomTokenProp({
   url: "https://api.scryfall.com/cards/random?q=t%3Acontraption%20include%3Aextras",
 });
 
+export const AVATAR_PROP = randomTokenProp({
+  text: "Summon Avatar",
+  symbol: "ss ss-van ss-mythic ss-grad ss-2x mx-1 mx-md-4",
+  url: "https://api.scryfall.com/cards/random?q=t%3Avanguard%20include%3Aextras",
+});
+
 export const addAdditionalProperties = (card) => {
   const properties = {
     Aretopolis: [counterProp("Scroll")],

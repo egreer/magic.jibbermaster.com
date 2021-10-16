@@ -64,6 +64,7 @@ export const Navigation = () => {
           <NavItem to="/formats" text="Formats" />
           <NavItem to="/contraptions" text="Contraptions" />
           <NavItem to="/slivers" text="Slivers" />
+          <NavItem to="/vanguard" text="Vanguard" />
           <Dropdown navbar onToggle={(open) => !open && closeNavbar()}>
             <Dropdown.Toggle as={Nav.Link}>Settings</Dropdown.Toggle>
             <Dropdown.Menu alignRight>

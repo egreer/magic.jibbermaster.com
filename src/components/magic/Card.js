@@ -14,6 +14,7 @@ import { useSettings } from "../../hooks/useSettings";
 import { createMarkup } from "../../util/createMarkup";
 import ReactDOMServer from "react-dom/server";
 import { CardLinks } from "./CardLinks";
+import { EmDashIcon } from "./Icons";
 
 export const MtgCard = ({
   listDisplay,
@@ -102,21 +103,21 @@ export const MtgCard = ({
             {isPhenomenon && (
               <Card.Text className="h5 font-italic mb-3">
                 <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut mx-2"></i>
-                Phenomenon <i className="ss ss-btd rotate-180 mr-1"></i>Planes
-                Hike away after encountering this.
+                Phenomenon <EmDashIcon />
+                Planes Hike away after encountering this.
               </Card.Text>
             )}
             {chaosomenon && (
               <Card.Text className="h5 font-italic mb-3">
                 <i className="ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon mx-2"></i>
-                Chaosomenon <i className="ss ss-btd rotate-180 mr-1"></i>Chaos
-                Hike away after triggering this.
+                Chaosomenon <EmDashIcon />
+                Chaos Hike away after triggering this.
               </Card.Text>
             )}
             {hasToken && (
               <Card.Text className="h5 font-italic mb-3">
                 <i className="ms ms-fw ms-2x ss-uncommon ss-grad ms-token"></i>
-                <i className="ss ss-btd rotate-180 mr-1"></i>
+                <EmDashIcon />
                 Create{" "}
                 <strong>
                   {token.count} {card.name}
@@ -127,8 +128,7 @@ export const MtgCard = ({
             {hasChaosX && (
               <Card.Text className="h5 font-italic mb-3">
                 <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-plc"></i>
-                Chaos <i className="ms ms-x"></i>{" "}
-                <i className="ss ss-btd rotate-180 mr-1"></i>
+                Chaos <i className="ms ms-x"></i> <EmDashIcon />
                 {chaosX.text}
               </Card.Text>
             )}

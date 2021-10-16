@@ -21,6 +21,9 @@ const CONTRAPTIONS_URL =
 const SLIVERS_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Asliver&unique=cards";
 
+const VANGUARD_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Avanguard&unique=cards";
+
 const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
 
 export const filterAPI = (card) =>
@@ -124,6 +127,25 @@ export const getAllSliversCards = async () => {
       console.log("Loaded slivers from store");
     }
     return slivers;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getAllVanguardCards = async () => {
+  try {
+    let vanguard = cached("vanguard");
+    if (!vanguard) {
+      console.log("Loading vanguard from Axios");
+      let response = await internet.get(VANGUARD_URL);
+      vanguard = response.data.data;
+      vanguard = vanguard.map((p) => addAdditionalProperties(filterAPI(p)));
+      cache("vanguard", vanguard);
+      // TODO use the expire store parameter
+    } else {
+      console.log("Loaded vanguard from store");
+    }
+    return vanguard;
   } catch (e) {
     console.error(e);
   }

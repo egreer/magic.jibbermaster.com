@@ -100,7 +100,16 @@ $dark-trans: rgba($dark, 0.8);
   transform: rotate(180deg);
 }
 
-.contraptions {
+.flip-x {
+  transform: scaleX(-1);
+}
+
+.flip-y {
+  transform: scaleY(-1);
+}
+
+.contraptions,
+.vanguard {
   .carousel-control-prev,
   .carousel-control-next {
     align-items: self-start;

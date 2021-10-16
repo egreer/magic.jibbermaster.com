@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { DeleteIcon } from "../../components/magic/Icons.js";
 import { hasCustomProperty } from "../../mtg/card.js";
 
 export const AbandonButton = ({ card, onClick }) => {
@@ -13,7 +14,7 @@ export const AbandonButton = ({ card, onClick }) => {
         className="btn-translucent"
       >
         <h2 className="mb-0">
-          <i className="ss ss-bok ss-2x ss-grad ss-rare mx-2" />
+          <DeleteIcon />
           <span className="mx-2 d-none d-md-inline">Abandon Scheme</span>
         </h2>
       </Button>

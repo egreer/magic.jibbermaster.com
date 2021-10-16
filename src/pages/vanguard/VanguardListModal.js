@@ -2,28 +2,28 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import pluralize from "pluralize";
 import { MtgCard } from "../../components/magic/Card";
-import { getAllContraptionsCards } from "../../util/api";
+import { getAllVanguardCards } from "../../util/api";
 
-export const ContraptionListModal = ({
+export const VanguardListModal = ({
   onHide,
   onSelect,
   open,
   randomTokenProps,
 }) => {
-  const [contraptions, setContraptions] = useState([]);
+  const [avatars, setAvatars] = useState([]);
   const [search, setSearch] = useState("");
   useEffect(() => {
-    const getContraps = async () => {
-      setContraptions(await getAllContraptionsCards());
+    const getAvatars = async () => {
+      setAvatars(await getAllVanguardCards());
     };
-    getContraps();
-  }, [setContraptions]);
+    getAvatars();
+  }, [setAvatars]);
 
-  const filteredContraps = contraptions.filter((c) =>
+  const filteredAvatars = avatars.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase() || "")
   );
 
-  if (contraptions && open) {
+  if (avatars && open) {
     return (
       <Modal
         show={!!open}
@@ -35,7 +35,7 @@ export const ContraptionListModal = ({
       >
         <Modal.Header className="justify-content-center text-white noselect">
           <Modal.Title>
-            <i className={randomTokenProps.symbol} />
+            <i className={`flip-x ${randomTokenProps.symbol}`} />
             {randomTokenProps.text}
             <i className={randomTokenProps.symbol} />
           </Modal.Title>
@@ -47,10 +47,10 @@ export const ContraptionListModal = ({
             onChange={(a) => setSearch(a.target.value)}
           />
           <p className="text-right text-light">
-            {pluralize("Match", filteredContraps?.length ?? 0, true)}
+            {pluralize("Match", filteredAvatars?.length ?? 0, true)}
           </p>
           <Row>
-            {filteredContraps?.map((card) => (
+            {filteredAvatars?.map((card) => (
               <Col md={6} key={card.id}>
                 <MtgCard card={card} displayChildrenBelow={false}>
                   <Button
@@ -60,8 +60,8 @@ export const ContraptionListModal = ({
                     className="btn-translucent"
                   >
                     <h2 className="mb-0">
-                      <i className="ss ss-ust ss-2x ss-grad ss-rare mx-2" />
-                      <span className="mx-2 d-none d-md-inline">Assemble</span>
+                      <i className={"ss ss-van ss-2x ss-grad ss-mythic mx-2"} />
+                      <span className="mx-2 d-none d-md-inline">Select</span>
                     </h2>
                   </Button>
                 </MtgCard>

@@ -130,7 +130,7 @@ export const CUSTOM_CHAOS = [
       CHAOS_TRIGGER_PROP,
       randomTokenProp({
         text: "Create A Token",
-        symbol: "ms ms-token ss-rare ss-grad ms-2x mx-4",
+        symbol: "ss ss-h09 ss-rare ss-grad ss-2x mx-4",
         url: "https://api.scryfall.com/cards/random?q=t%3Asliver%20t%3Acreature%20include%3Aextras",
       }),
     ],

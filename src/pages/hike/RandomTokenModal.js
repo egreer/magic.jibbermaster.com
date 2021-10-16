@@ -21,7 +21,7 @@ export const RandomTokenModal = ({
       >
         <Modal.Header className="justify-content-center text-white noselect">
           <Modal.Title>
-            <i className={randomTokenProps.symbol} />
+            <i className={`flip-x ${randomTokenProps.symbol}`} />
             {randomTokenProps.text}
             <i className={randomTokenProps.symbol} />
           </Modal.Title>

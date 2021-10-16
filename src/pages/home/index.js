@@ -45,6 +45,9 @@ export const Home = () => {
             <HomeButton path={"/slivers"} text="Slivers" variant="success">
               <i className="ss ss-h09 ss-3x mx-2 d-block" />
             </HomeButton>
+            <HomeButton path={"/vanguard"} text="Vanguard" variant="light">
+              <i className="ss ss-van ss-3x mx-2 d-block" />
+            </HomeButton>
             {hikeMode && (
               <HomeButton path={"/hike"} text="Hike Mode" variant="warning">
                 <i className="ss ss-h17 ss-3x mx-2 d-block" />

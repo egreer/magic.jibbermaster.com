@@ -14,6 +14,7 @@ import { Confirm } from "../../components/Confirm";
 import contraptionBack from "../../images/contraption-back.jpg";
 import { ContraptionListModal } from "./ContraptionListModal";
 import { ASSEMBLE_PROP } from "../../util/additionalProps";
+import { DeleteIcon } from "../../components/magic/Icons";
 
 const DEFAULT_PLAYER_COUNT = 5;
 const MAX_SPROKETS = 3;
@@ -28,7 +29,7 @@ export const Contraptions = () => {
   const [selectContraptionModalOpen, setSelectContraptionModalOpen] =
     useState(false);
   const [additionalCards, setAdditionalCards] = useState([]);
-  const [currentPlayer, setCurrentPlayer] = useState(null);
+  const [currentPlayer, setCurrentPlayer] = useState(0);
   const [labels, setLabels] = useLocalState("contraption-labels", {});
 
   const dialog = useRef(null);
@@ -61,7 +62,6 @@ export const Contraptions = () => {
       console.log("Random Token", tokenCard);
 
       setAdditionalCards([tokenCard]);
-      setCurrentPlayer(player);
       setRandomTokenModalOpen(true);
     };
     getToken();
@@ -74,7 +74,6 @@ export const Contraptions = () => {
       actions: [
         Dialog.CancelAction(() => {
           setAdditionalCards([]);
-          setCurrentPlayer(null);
           setRandomTokenModalOpen(false);
         }),
         Dialog.OKAction((a) => {
@@ -94,7 +93,6 @@ export const Contraptions = () => {
           setSprokets(newSprokets);
 
           setAdditionalCards([]);
-          setCurrentPlayer(null);
           setRandomTokenModalOpen(false);
         }),
       ],
@@ -108,62 +106,66 @@ export const Contraptions = () => {
     setAdditionalCards,
     setRandomTokenModalOpen,
     currentPlayer,
-    setCurrentPlayer,
   ]);
 
-  const _selectContraptionModalOpen = (player) => {
-    setCurrentPlayer(player);
+  const _selectContraptionModalOpen = () => {
     setSelectContraptionModalOpen(true);
   };
 
   const _hideSelectContraption = () => {
-    setCurrentPlayer(null);
     setSelectContraptionModalOpen(false);
   };
 
-  const _selectContraption = ({ card }) => {
-    dialog.current.show({
-      title: "Which Sproket?",
-      bsSize: "sm",
-      actions: [
-        Dialog.CancelAction(() => {
-          _hideSelectContraption();
-        }),
-        Dialog.OKAction((a) => {
-          const newSprokets = { ...sprokets };
-          set(
-            newSprokets,
-            [`player${currentPlayer}`, `sproket${a.value}`],
-            concat(
-              get(
-                newSprokets,
-                [`player${currentPlayer}`, `sproket${a.value}`],
-                []
-              ),
-              [{ deck_card_id: uuidv4(), ...card }]
-            )
-          );
-          setSprokets(newSprokets);
+  const _selectContraption = useCallback(
+    ({ card }) => {
+      dialog.current.show({
+        title: "Which Sproket?",
+        bsSize: "sm",
+        actions: [
+          Dialog.CancelAction(() => {
+            _hideSelectContraption();
+          }),
+          Dialog.OKAction((a) => {
+            const newSprokets = { ...sprokets };
+            set(
+              newSprokets,
+              [`player${currentPlayer}`, `sproket${a.value}`],
+              concat(
+                get(
+                  newSprokets,
+                  [`player${currentPlayer}`, `sproket${a.value}`],
+                  []
+                ),
+                [{ deck_card_id: uuidv4(), ...card }]
+              )
+            );
+            setSprokets(newSprokets);
 
-          setCurrentPlayer(null);
-          _hideSelectContraption();
-        }),
-      ],
-      prompt: Dialog.TextPrompt({ initialValue: 1 }),
-    });
-  };
+            _hideSelectContraption();
+          }),
+        ],
+        prompt: Dialog.TextPrompt({ initialValue: 1 }),
+      });
+    },
+    [currentPlayer, setSprokets, sprokets]
+  );
 
-  const incrementPlayerCount = () => {
+  const incrementPlayerCount = useCallback(() => {
     const newPlayerCount = playerCount + 1;
-    setSprokets({});
     setPlayerCount(newPlayerCount);
-  };
+  }, [playerCount, setPlayerCount]);
 
-  const decrementPlayerCount = () => {
+  const decrementPlayerCount = useCallback(() => {
     const newPlayerCount = Math.max(playerCount - 1, 1);
-    setSprokets({});
+    setSprokets((s) => {
+      const newSprokets = { ...s };
+      delete newSprokets[`player${newPlayerCount}`];
+      return newSprokets;
+    });
+
+    setCurrentPlayer((c) => Math.min(c, newPlayerCount - 1));
     setPlayerCount(newPlayerCount);
-  };
+  }, [setCurrentPlayer, playerCount, setPlayerCount, setSprokets]);
 
   const unsproket = ({ card, sproket, player }) => {
     const newSprokets = { ...sprokets };
@@ -185,6 +187,10 @@ export const Contraptions = () => {
     setPlayerCount(DEFAULT_PLAYER_COUNT);
   };
 
+  const carouselSelect = (selectedIndex) => {
+    setCurrentPlayer(selectedIndex);
+  };
+
   return (
     <div className="contraptions">
       <Row className="my-4 text-center">
@@ -201,9 +207,14 @@ export const Contraptions = () => {
           />
         </Col>
       </Row>
-      <Carousel interval={null} touch={false}>
-        {[...Array(playerCount)].map((_v, p) => {
-          const player = p + 1;
+      <Carousel
+        activeIndex={currentPlayer}
+        onSelect={carouselSelect}
+        interval={null}
+        touch={false}
+      >
+        {[...Array(playerCount)].map((_v, player) => {
+          const playerLabel = player + 1;
           return (
             <Carousel.Item
               key={player}
@@ -211,7 +222,7 @@ export const Contraptions = () => {
               style={{ minHeight: "1vh" }}
             >
               <h2 className="text-center mb-3" onClick={() => setLabel(player)}>
-                {labels[player] || `Player ${player}`}
+                {labels[player] || `Player ${playerLabel}`}
                 <sup>
                   <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
                 </sup>
@@ -268,7 +279,7 @@ export const Contraptions = () => {
                               size="lg"
                               className="btn-translucent mb-2"
                             >
-                              <i className="ss ss-bok ss-2x ss-grad ss-rare mx-2" />
+                              <DeleteIcon />
                             </Button>
                           </MtgCard>
                         </React.Fragment>
