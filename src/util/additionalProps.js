@@ -268,7 +268,10 @@ export const addAdditionalProperties = (card) => {
       CHAOS_ONCE_PROP,
     ],
     Gerrymandering: [CHAOS_PLAYER_CHOICE_PROP],
-    "Naughty // Nice": [errataProp("Both sides"), CHAOS_MAX_PROP],
+    "Naughty // Nice": [
+      errataProp("Both sides and same player"),
+      CHAOS_MAX_PROP,
+    ],
     "Norin the Wary": [errataProp("Conjure a Norin the Wary"), CHAOS_MAX_PROP],
     "Wrath of Sod": [CHAOSOMENON_PROP, CHAOS_ONCE_PROP],
     "Haphazard Bombardment": [

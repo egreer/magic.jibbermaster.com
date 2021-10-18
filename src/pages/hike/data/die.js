@@ -18,7 +18,7 @@ const CHAOS_FACE = {
 };
 
 const SPROUT_FACE = {
-  icon: "ms ms-fw ms-2x ms-counter-fungus",
+  icon: "ms ms-fw ms-2x text-success ms-counter-fungus",
   effect: "Sprout Sprout - Create a 1/1 green Saproling creature token",
 };
 
@@ -42,7 +42,7 @@ const FACES = [
   },
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-pls",
-    effect: "Chaos + Next X Chaos Abilities",
+    effect: "Chaos + Next 2 Chaos Abilities",
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-land",
@@ -52,12 +52,14 @@ const FACES = [
     icon: "ms ms-fw ms-2x ss-foil ss-grad ms-ability-d20",
     effect: "Roll 2 More Times",
   },
-  // {
-  //   effect: "Gain X Life",
-  // },
-  // {
-  //   effect: "Lose X Life",
-  // },
+  {
+    icon: "ss ss-fw ss-2x ss-grad ss-pd3",
+    effect: "Roll a d6, you lose that much life",
+  },
+  {
+    icon: "ss ss-fw ss-2x text-danger ss-pd2",
+    effect: "Roll a d6, each opponent takes that much damage",
+  },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-dfc-modal-back",
     effect: "Scry X",

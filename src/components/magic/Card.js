@@ -79,6 +79,16 @@ export const MtgCard = ({
     );
   };
 
+  const RulesDivider = () => (
+    <hr className="border-top border-dark mx-3 py-0" />
+  );
+  const RulesText = ({ children }) => (
+    <>
+      <Card.Text>{children}</Card.Text>
+      <RulesDivider />
+    </>
+  );
+
   const renderAdditionalProps = () => {
     const hasChildren = !emptyChildren && displayChildrenBelow;
     const hasErrata = !!errata;
@@ -100,22 +110,23 @@ export const MtgCard = ({
         <Card>
           <Card.Body className="px-1">
             {hasChildren && children}
+            <RulesDivider />
             {isPhenomenon && (
-              <Card.Text className="h5 font-italic mb-3">
+              <RulesText>
                 <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut mx-2"></i>
                 Phenomenon <EmDashIcon />
                 Planes Hike away after encountering this.
-              </Card.Text>
+              </RulesText>
             )}
             {chaosomenon && (
-              <Card.Text className="h5 font-italic mb-3">
+              <RulesText>
                 <i className="ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon mx-2"></i>
                 Chaosomenon <EmDashIcon />
                 Chaos Hike away after triggering this.
-              </Card.Text>
+              </RulesText>
             )}
             {hasToken && (
-              <Card.Text className="h5 font-italic mb-3">
+              <RulesText>
                 <i className="ms ms-fw ms-2x ss-uncommon ss-grad ms-token"></i>
                 <EmDashIcon />
                 Create{" "}
@@ -123,24 +134,24 @@ export const MtgCard = ({
                   {token.count} {card.name}
                 </strong>{" "}
                 Token
-              </Card.Text>
+              </RulesText>
             )}
             {hasChaosX && (
-              <Card.Text className="h5 font-italic mb-3">
+              <RulesText>
                 <i className="ss ss-fw ss-2x ss-timeshifted ss-grad ss-plc"></i>
                 Chaos <i className="ms ms-x"></i> <EmDashIcon />
                 {chaosX.text}
-              </Card.Text>
+              </RulesText>
             )}
             {hasUrl && (
-              <Card.Text className="h5 font-italic mb-3">
+              <RulesText>
                 <a href={urlProp.url} target="_blank" rel="noreferrer">
                   <Button variant="outline-info">
                     <i className="fa fa-link mr-2"></i>
                     {urlProp.text}
                   </Button>
                 </a>
-              </Card.Text>
+              </RulesText>
             )}
             {hasErrata && (
               <Card.Text
