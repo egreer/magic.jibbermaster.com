@@ -55,6 +55,10 @@ export const TAGS = [
     name: "Star",
     defaultEnabled: false,
   },
+  {
+    name: "Hike Mode",
+    defaultEnabled: false,
+  },
 ];
 
 const canAny = (p) => true;
@@ -317,9 +321,6 @@ export const FORMATS = [
     tags: ["Star", "EDH"],
     players: canStar,
   },
-];
-
-export const HIKE_FORMATS = [
   {
     id: 33,
     name: "Hike Mode",

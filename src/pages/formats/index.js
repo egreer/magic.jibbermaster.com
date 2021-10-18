@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { FormatsHelmet } from "./Helmet";
-import { TAGS, FORMATS, HIKE_FORMATS } from "./formats";
+import { TAGS, FORMATS } from "./formats";
 import { Confirm } from "../../components/Confirm";
 
 import cloneDeep from "lodash/cloneDeep";
@@ -17,7 +17,6 @@ import {
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
 import { useLocalState } from "../../hooks/useLocalState";
-import { useSettings } from "../../hooks/useSettings";
 
 const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 9;
@@ -74,8 +73,6 @@ export const Formats = () => {
   const [loadingFormat, setLoadingFormat] = useState(false);
   const [swapTriggered, setSwapTriggered] = useState(false);
 
-  const { hikeMode } = useSettings();
-
   const reset = () => {
     setPlayerCount(DEFAULT_PLAYERS);
     setTags(createTags());
@@ -86,7 +83,7 @@ export const Formats = () => {
     console.log("Generate Format");
     setLoadingFormat(true);
     setSwapTriggered(false);
-    const formats = hikeMode ? HIKE_FORMATS : activeFormats();
+    const formats = activeFormats();
     const activeFormat = getRandomFormat(formats);
     console.log("picked item", activeFormat);
     setTimeout(() => {

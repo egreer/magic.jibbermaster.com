@@ -2,7 +2,6 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { useSettings } from "../../hooks/useSettings";
 
 const HomeButton = ({ path, text, children, variant = "secondary" }) => (
   <Col xs={6} sm={4} lg={6} className="my-2">
@@ -14,7 +13,6 @@ const HomeButton = ({ path, text, children, variant = "secondary" }) => (
 );
 
 export const Home = () => {
-  const { hikeMode } = useSettings();
   return (
     <div className="home">
       <Helmet title="Magic">
@@ -48,11 +46,9 @@ export const Home = () => {
             <HomeButton path={"/vanguard"} text="Vanguard" variant="light">
               <i className="ss ss-van ss-3x mx-2 d-block" />
             </HomeButton>
-            {hikeMode && (
-              <HomeButton path={"/hike"} text="Hike Mode" variant="warning">
-                <i className="ss ss-h17 ss-3x mx-2 d-block" />
-              </HomeButton>
-            )}
+            <HomeButton path={"/hike"} text="Hike Mode" variant="warning">
+              <i className="ss ss-h17 ss-3x mx-2 d-block" />
+            </HomeButton>
           </Row>
         </Container>
       </div>
