@@ -59,6 +59,10 @@ export const TAGS = [
     name: "Hike Mode",
     defaultEnabled: false,
   },
+  {
+    name: "Vanguard",
+    defaultEnabled: false,
+  },
 ];
 
 const canAny = (p) => true;
@@ -357,6 +361,26 @@ export const FORMATS = [
     weight: 0.5,
     tags: ["EDH", "Hike Mode", "Deck Swaps"],
     showSwaps: true,
+    players: canAny,
+  },
+  {
+    id: 37,
+    name: "Vanguard",
+    displayName: "Vanguard",
+    initial: 0.5,
+    weight: 0.5,
+    tags: ["Vanguard"],
+    showSwaps: false,
+    players: canAny,
+  },
+  {
+    id: 38,
+    name: "EDH Vanguard",
+    displayName: " EDH Vanguard",
+    initial: 0.5,
+    weight: 0.5,
+    tags: ["EDH", "Vanguard"],
+    showSwaps: false,
     players: canAny,
   },
 ];
