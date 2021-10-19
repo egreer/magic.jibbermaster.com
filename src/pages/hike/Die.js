@@ -63,7 +63,11 @@ export const CurrentDie = ({ showAllEffect }) => {
               {map(ALL_FACES, (v, k) => (
                 <tr key={k}>
                   <td className="text-center pr-2">
-                    <i className={`ms ms-${k} ms-cost ms-shadow ms-fw`}></i>
+                    {k > 20 ? (
+                      k
+                    ) : (
+                      <i className={`ms ms-${k} ms-cost ms-shadow ms-fw`}></i>
+                    )}
                   </td>
                   <td className="text-center">
                     <i className={v?.icon}></i>

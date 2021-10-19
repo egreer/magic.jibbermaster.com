@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { HideOn } from "react-hide-on-scroll";
+import { HideBetween } from "react-hide-on-scroll";
 import pluralize from "pluralize";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
@@ -159,7 +159,18 @@ export const Hike = () => {
           <h1>Hike Mode</h1>
         </Col>
       </Row>
-      <HideOn divID="end-actions" offset={-150}>
+
+      <CurrentDie showAllEffect={showAllEffect} />
+
+      <div id="begin-actions" />
+
+      <HideBetween
+        startDivID="begin-actions"
+        endDivID="end-actions"
+        startDivOffset={-150}
+        endDivOffset={-150}
+        inverse
+      >
         <ActionButton
           text="Hike Hike"
           onClick={planesAndChaosWalk}
@@ -188,7 +199,7 @@ export const Hike = () => {
             <span className="mx-2 d-none d-md-inline">Chaos Hike</span>
           </Button>
         </ActionButton>
-      </HideOn>
+      </HideBetween>
 
       <Row className="mb-4 text-center">
         {loading ? (
@@ -224,7 +235,6 @@ export const Hike = () => {
         )}
       </Row>
       <div id="end-actions" />
-      <CurrentDie showAllEffect={showAllEffect} />
 
       {showRules && <Rules />}
       {showAllCustom && (

@@ -13,7 +13,7 @@ const SQUAK_FACE = {
 };
 
 const CHAOS_FACE = {
-  icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-chaos",
+  icon: "ms ms-fw ms-2x ss-mythic ms-chaos",
   effect: "Chaos",
 };
 
@@ -23,8 +23,8 @@ const SPROUT_FACE = {
 };
 
 const RERANDOM_FACE = {
-  icon: "ss ss-fw ss-2x ss-foil ss-grad ss-h09",
-  effect: "Re-Randomize Hike Die",
+  icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-xren",
+  effect: "Re-Randomize Hike Die & Planeswalk",
 };
 
 const FACES = [
@@ -34,14 +34,26 @@ const FACES = [
   },
   {
     icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon",
-    effect: "Change Chaos",
+    effect: "Change Chaos, Keep Plane",
   },
   {
-    icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-plc",
+    icon: "ss ss-fw ss-2x ss-foil ss-grad ss-h09",
+    effect: "Re-Randomize Hike Die",
+  },
+  {
+    icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut",
+    effect: "Re-Randomize Hike Die & Change Plane, Keep Chaos",
+  },
+  {
+    icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon",
+    effect: "Re-Randomize Hike Die & Change Chaos, Keep Plane",
+  },
+  {
+    icon: "ss ss-fw ss-2x ss-mythic ss-grad ss-plc",
     effect: "Chaos X Times *",
   },
   {
-    icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-pls",
+    icon: "ss ss-fw ss-2x ss-mythic ss-grad ss-pls",
     effect: "Chaos + Next 2 Chaos Abilities",
   },
   {
@@ -58,7 +70,11 @@ const FACES = [
   },
   {
     icon: "ss ss-fw ss-2x text-danger ss-pd2",
-    effect: "Roll a d6, each opponent takes that much damage",
+    effect: "Roll a d4, each opponent takes that much damage",
+  },
+  {
+    icon: "ss ss-fw ss-2x ss-foil ss-shm",
+    effect: "Each opponent loses 1 life, you gain that much life",
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-dfc-modal-back",
@@ -70,7 +86,7 @@ const FACES = [
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-guild-selesnya",
-    effect: "Populate X Times",
+    effect: "Populate X Times (Moar Tokens)",
   },
   {
     icon: "ss ss-fw ss-2x ss-rare ss-grad ss-arb",
@@ -86,7 +102,11 @@ const FACES = [
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-ability-proliferate",
-    effect: "Proliferate X Times",
+    effect: "Proliferate X Times (Moar Counters)",
+  },
+  {
+    icon: "ss ss-fw ss-2x ss-rare ss-grad ss-leg",
+    effect: "Support X Times",
   },
 ];
 
