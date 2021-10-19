@@ -9,7 +9,7 @@
   "display": "fullscreen",
   "orientation": "any",
   "theme_color": "#000000",
-  "background_color": "#1e7e34",
+  "background_color": "#6610f2",
   "icons": [
     {
       "src": "./mtg/icon/starter_64.png",

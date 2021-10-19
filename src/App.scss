@@ -1,4 +1,14 @@
 @import "styles/colors";
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$theme-colors: (
+  "indigo": $indigo,
+  "teal": $teal,
+);
+
 @import "~bootstrap/scss/bootstrap";
 
 $primary-trans: rgba($primary, 0.8);

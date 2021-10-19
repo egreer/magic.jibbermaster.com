@@ -27,7 +27,7 @@ export const Home = () => {
             <HomeButton path={"/archenemy"} text="Archenemy" variant="danger">
               <i className="ss ss-arc ss-3x mx-2 d-block" />
             </HomeButton>
-            <HomeButton path={"/syb"} text="SYB" variant="success">
+            <HomeButton path={"/syb"} text="SYB" variant="indigo">
               <i className="ss ss-s00 ss-3x mx-2 d-block" />
             </HomeButton>
             <HomeButton path={"/formats"} text="Formats" variant="primary">
