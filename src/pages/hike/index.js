@@ -53,7 +53,7 @@ export const Hike = () => {
     "hike-all-custom",
     false
   );
-  const [showRules, setShowRules] = useLocalState("hike-show-rules", true);
+  const [showRules, setShowRules] = useLocalState("hike-show-rules", false);
   const [randomTokenModalOpen, setRandomTokenModalOpen] = useState(false);
   const [randomTokenProps, setRandomTokenProps] = useState(null);
   // TODOs:
@@ -236,7 +236,6 @@ export const Hike = () => {
       </Row>
       <div id="end-actions" />
 
-      {showRules && <Rules />}
       {showAllCustom && (
         <Row className="mb-4 text-center">
           {[...customPlanes, ...customChaos].map((c, i) => {
@@ -263,6 +262,14 @@ export const Hike = () => {
       <p className="text-center my-3 noselect">
         There are {pluralize("card", deck?.deck?.length ?? 0, true)} remaining.
       </p>
+
+      <DoubleFaceButton
+        text="Show Rules"
+        onClick={() => setShowRules(!showRules)}
+        enabled={showRules}
+      />
+      {showRules && <Rules />}
+
       <Confirm
         onConfirm={reset}
         headerText="Reset Cards?"
@@ -271,6 +278,7 @@ export const Hike = () => {
         confirmVariant="danger"
         triggerButtonParams={{ variant: "danger", block: true }}
       />
+
       <DevTools>
         <Button onClick={undo} variant="warning" block>
           Undo
@@ -296,11 +304,6 @@ export const Hike = () => {
           text="All Custom"
           onClick={() => setShowAllCustom(!showAllCustom)}
           enabled={showAllCustom}
-        />
-        <DoubleFaceButton
-          text="Show Rules"
-          onClick={() => setShowRules(!showRules)}
-          enabled={showRules}
         />
       </DevTools>
       {/* TODO: Swap Planar Die */}
