@@ -167,7 +167,7 @@ export const Hike = () => {
       <HideBetween
         startDivID="begin-actions"
         endDivID="end-actions"
-        startDivOffset={-150}
+        startDivOffset={-250}
         endDivOffset={-150}
         inverse
       >
