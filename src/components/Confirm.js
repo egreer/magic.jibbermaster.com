@@ -20,7 +20,7 @@ export const Confirm = ({
   };
 
   const header = (
-    <Modal.Header>
+    <Modal.Header className="justify-content-center">
       <Modal.Title>{headerText}</Modal.Title>
     </Modal.Header>
   );

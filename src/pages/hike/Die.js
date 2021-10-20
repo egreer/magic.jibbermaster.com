@@ -1,12 +1,13 @@
 import map from "lodash/map";
 import keys from "lodash/keys";
-import { useCallback, useEffect } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useSettings } from "../../hooks/useSettings";
 import { createDie, ALL_FACES } from "./data/die";
+import { createMarkup } from "../../util/createMarkup";
 
-export const CurrentDie = ({ showAllEffect }) => {
+export const CurrentDie = forwardRef(({ showAllEffect, onClick }, ref) => {
   const [die, setDie] = useLocalState("hike-die", {});
   const { devTools } = useSettings();
 
@@ -14,11 +15,28 @@ export const CurrentDie = ({ showAllEffect }) => {
     setDie({ ...createDie() });
   }, [setDie]);
 
+  useImperativeHandle(ref, () => ({
+    regenDie,
+  }));
+
   useEffect(() => {
     if (keys(die).length === 0) {
       regenDie();
     }
   }, [die, regenDie]);
+
+  const faceClick = useCallback(
+    ({ face }) => {
+      const { tags = [] } = face;
+
+      if (tags.includes("randomize")) {
+        regenDie();
+      }
+
+      onClick?.({ tags });
+    },
+    [onClick, regenDie]
+  );
 
   return (
     <div className="my-5">
@@ -29,26 +47,40 @@ export const CurrentDie = ({ showAllEffect }) => {
             const currentIndex = parseInt(k, 10);
             const adjacentIndex = currentIndex + 6;
             const adjacentFace = die[adjacentIndex];
+            const face1Click = () => faceClick({ face });
+            const face2Click = () => faceClick({ face: adjacentFace });
             return currentIndex < 7 ? (
               <tr key={k}>
-                <td className="text-center pr-2">
+                <td className="text-center pr-2" onClick={face1Click}>
                   <i
                     className={`ms ms-${currentIndex} ms-cost ms-shadow ms-fw`}
                   ></i>
                 </td>
-                <td className="text-center">
+                <td className="text-center" onClick={face1Click}>
                   <i className={face?.icon}></i>
                 </td>
-                <td className="w-50">{face?.effect}</td>
-                <td className="text-center pr-2">
+                <td
+                  className="w-50"
+                  onClick={face1Click}
+                  dangerouslySetInnerHTML={{
+                    __html: createMarkup(face?.effect),
+                  }}
+                ></td>
+                <td className="text-center pr-2" onClick={face2Click}>
                   <i
                     className={`ms ms-${adjacentIndex} ms-cost ms-shadow ms-fw`}
                   ></i>
                 </td>
-                <td className="text-center">
+                <td className="text-center" onClick={face2Click}>
                   <i className={adjacentFace?.icon}></i>
                 </td>
-                <td className="w-50">{adjacentFace?.effect}</td>
+                <td
+                  className="w-50"
+                  onClick={face2Click}
+                  dangerouslySetInnerHTML={{
+                    __html: createMarkup(adjacentFace?.effect),
+                  }}
+                ></td>
               </tr>
             ) : null;
           })}
@@ -85,4 +117,4 @@ export const CurrentDie = ({ showAllEffect }) => {
       </Button>
     </div>
   );
-};
+});

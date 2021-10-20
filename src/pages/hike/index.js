@@ -1,15 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { HideBetween } from "react-hide-on-scroll";
 import pluralize from "pluralize";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
-import { ActionButton } from "../../components/game/ActionButton";
 import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
 import { Loading } from "../../components/Loading";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
-// import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
 import { DeckProvider, useDeckContext } from "../../mtg/DeckContext";
@@ -44,7 +41,6 @@ export const Hike = () => {
     "hikemode-chaos-current",
     null
   );
-  // const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
   const [showAllEffect, setShowAllEffect] = useLocalState(
     "hike-all-effects",
     false
@@ -61,7 +57,7 @@ export const Hike = () => {
   // Reset planes / Chaos on empty
   // Hike Die
   // Coin Flipper link
-
+  const die = useRef();
   const game = useGameContext();
   const { currentCard } = game;
 
@@ -92,20 +88,20 @@ export const Hike = () => {
     }
   }, [cards, deck]);
 
-  const planeswalk = () => {
+  const planeshift = useCallback(() => {
     const newCard = deck.drawCard();
     game.setCurrentCard(newCard ?? null);
-  };
+  }, [deck, game]);
 
-  const chaosWalk = () => {
+  const chaosshift = useCallback(() => {
     const newCard = drawCard(PRE_CHAOS);
     setCurrentChaosCard(newCard ?? null);
-  };
+  }, [setCurrentChaosCard]);
 
-  const planesAndChaosWalk = () => {
-    planeswalk();
-    chaosWalk();
-  };
+  const planeswalk = useCallback(() => {
+    planeshift();
+    chaosshift();
+  }, [planeshift, chaosshift]);
 
   const triggerChaos = (c) => {
     console.log("Chaos Triggered");
@@ -141,6 +137,7 @@ export const Hike = () => {
     fetchCards();
     deck.reInit();
     game.reset();
+    die?.current?.regenDie();
     const hikeChaos = await getAllHikeModeChaosCards();
     getOrCreateCurrentDeck(PRE_CHAOS, [...customChaos, ...hikeChaos], true);
     setLoading(false);
@@ -149,6 +146,21 @@ export const Hike = () => {
   const undo = () => {
     console.log("🚀 TODO: ~ file: index.js ~ line 23 ~ undo ~ undo");
   };
+
+  const onDieClick = useCallback(
+    ({ tags = [] }) => {
+      if (tags?.includes("planeswalk")) {
+        planeswalk();
+      }
+      if (tags?.includes("planeshift")) {
+        planeshift();
+      }
+      if (tags?.includes("chaosshift")) {
+        chaosshift();
+      }
+    },
+    [planeswalk, planeshift, chaosshift]
+  );
 
   // TODO: Chaos Card
   return (
@@ -160,59 +172,63 @@ export const Hike = () => {
         </Col>
       </Row>
 
-      <CurrentDie showAllEffect={showAllEffect} />
+      <CurrentDie
+        ref={die}
+        showAllEffect={showAllEffect}
+        onClick={onDieClick}
+      />
 
-      <div id="begin-actions" />
-
-      <HideBetween
-        startDivID="begin-actions"
-        endDivID="end-actions"
-        startDivOffset={-250}
-        endDivOffset={-150}
-        inverse
-      >
-        <ActionButton
-          text="Hike Hike"
-          onClick={planesAndChaosWalk}
-          disabled={loading}
-          className="btn-translucent"
-          icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
-        >
+      <Row>
+        <Col>
           <Button
             onClick={planeswalk}
+            disabled={loading}
+            className="btn-translucent my-3"
+            block
+          >
+            <i className="ms ms-planeswalker ms-2x mx-2" />
+            <span className="mx-2 d-none d-sm-inline">Planeswalk</span>
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <Button
+            onClick={planeshift}
             className="btn-translucent my-3"
             variant="info"
             disabled={loading}
             block
           >
             <i className="ss ss-fw ss-2x ss-fut mx-2" />
-            <span className="mx-2 d-none d-md-inline">Planes Hike</span>
+            <span className="mx-2 d-none d-sm-inline">Planes Hike</span>
           </Button>
+        </Col>
+        <Col xs={6}>
           <Button
-            onClick={chaosWalk}
+            onClick={chaosshift}
             className="btn-translucent my-3"
             variant="warning"
             disabled={loading}
             block
           >
             <i className="ms ms-fw ms-2x ms-phenomenon mx-2" />
-            <span className="mx-2 d-none d-md-inline">Chaos Hike</span>
+            <span className="mx-2 d-none d-sm-inline">Chaos Hike</span>
           </Button>
-        </ActionButton>
-      </HideBetween>
-
+        </Col>
+      </Row>
       <Row className="mb-4 text-center">
         {loading ? (
           <Loading className="text-muted" />
         ) : currentCard ? (
           <>
-            <div className="col-6">
+            <Col xs={6}>
               <i className="ms ms-planeswalker ms-4x ms-mechanic mb-3" />
               <MtgCard card={currentCard} displayActions="true">
                 <ChaosButton card={currentCard} onClick={triggerChaos} />
               </MtgCard>
-            </div>
-            <div className="col-6">
+            </Col>
+            <Col xs={6}>
               <i className="ms ms-chaos ms-4x ms-mechanic mb-3" />
               <MtgCard
                 card={currentChaosCard}
@@ -221,7 +237,7 @@ export const Hike = () => {
               >
                 <ChaosButton card={currentChaosCard} onClick={triggerChaos} />
               </MtgCard>
-            </div>
+            </Col>
           </>
         ) : (
           <>
@@ -272,7 +288,7 @@ export const Hike = () => {
 
       <Confirm
         onConfirm={reset}
-        headerText="Reset Cards?"
+        headerText="Reset All The Things?"
         triggerText="Reset"
         confirmText="Reset"
         confirmVariant="danger"
@@ -290,11 +306,6 @@ export const Hike = () => {
         >
           <Deck CardType={MtgCard} name="Chaos" />
         </DeckProvider>
-        {/* <DoubleFaceButton
-          text="Planar Die"
-          onClick={() => setShowPlanarDie(!showPlanarDie)}
-          enabled={showPlanarDie}
-        /> */}
         <DoubleFaceButton
           text="All Effects"
           onClick={() => setShowAllEffect(!showAllEffect)}
@@ -306,12 +317,6 @@ export const Hike = () => {
           enabled={showAllCustom}
         />
       </DevTools>
-      {/* TODO: Swap Planar Die */}
-      {/* {showPlanarDie && (
-        <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
-          <PlanarDie rollDone={face => console.log(`Rolled: ${face}`)} />
-        </div>
-      )} */}
     </div>
   );
 };

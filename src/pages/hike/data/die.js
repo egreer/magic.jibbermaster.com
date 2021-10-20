@@ -5,6 +5,7 @@ import { shuffleArray } from "../../../util/shuffleArray";
 const PLANESWALK_FACE = {
   icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-planeswalker",
   effect: "Planeswalk",
+  tags: ["planeswalk"],
 };
 
 const SQUAK_FACE = {
@@ -25,28 +26,34 @@ const SPROUT_FACE = {
 const RERANDOM_FACE = {
   icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-xren",
   effect: "Re-Randomize Hike Die & Planeswalk",
+  tags: ["randomize", "planeswalk"],
 };
 
 const FACES = [
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut",
     effect: "Change Plane, Keep Chaos",
+    tags: ["planeshift"],
   },
   {
     icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon",
     effect: "Change Chaos, Keep Plane",
+    tags: ["chaosshift"],
   },
   {
     icon: "ss ss-fw ss-2x ss-foil ss-grad ss-h09",
     effect: "Re-Randomize Hike Die",
+    tags: ["randomize"],
   },
   {
     icon: "ss ss-fw ss-2x ss-timeshifted ss-grad ss-fut",
     effect: "Re-Randomize Hike Die & Change Plane, Keep Chaos",
+    tags: ["randomize", "planeshift"],
   },
   {
     icon: "ms ms-fw ms-2x ss-timeshifted ss-grad ms-phenomenon",
     effect: "Re-Randomize Hike Die & Change Chaos, Keep Plane",
+    tags: ["randomize", "chaosshift"],
   },
   {
     icon: "ss ss-fw ss-2x ss-mythic ss-grad ss-plc",
@@ -58,7 +65,7 @@ const FACES = [
   },
   {
     icon: "ms ms-fw ms-2x ss-rare ss-grad ms-land",
-    effect: "Add X Mana of Any Color",
+    effect: "Add X Mana of Any Combination of Colors",
   },
   {
     icon: "ms ms-fw ms-2x ss-foil ss-grad ms-ability-d20",

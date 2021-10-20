@@ -489,4 +489,8 @@ export const BASE_CHAOS = [
     name: "Allure of the Unknown",
     id: "c543e785-2c6b-4347-a9c3-25940bbadcff",
   },
+  {
+    name: "Burning Inquiry",
+    id: "a448bc9e-f5db-4507-ac40-7d8ee3598585",
+  },
 ];
