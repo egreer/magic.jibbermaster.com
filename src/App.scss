@@ -10,6 +10,7 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
+@import "styles/mtg";
 
 $primary-trans: rgba($primary, 0.8);
 $secondary-trans: rgba($secondary, 0.8);

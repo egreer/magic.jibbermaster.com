@@ -39,8 +39,8 @@ export const CurrentDie = forwardRef(({ showAllEffect, onClick }, ref) => {
   );
 
   return (
-    <div className="my-5">
-      <h3>Hike Die</h3>
+    <div className="mt-2 mb-5">
+      <h3 className="mtg-text-uncommon mtg-grad">Hike Die</h3>
       <Table size="sm" variant="dark" borderless striped>
         <tbody>
           {map(die, (face, k) => {
@@ -112,8 +112,9 @@ export const CurrentDie = forwardRef(({ showAllEffect, onClick }, ref) => {
         </>
       )}
 
-      <Button onClick={regenDie} block>
-        Regenerate Die
+      <Button onClick={regenDie} block variant="outline-danger">
+        <i className="ss ss-fw ss-2x ss-h09" />
+        <span className="mx-2">Re-Randomize Die</span>
       </Button>
     </div>
   );

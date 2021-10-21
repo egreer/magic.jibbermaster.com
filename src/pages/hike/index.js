@@ -168,7 +168,7 @@ export const Hike = () => {
       <HikeHelmet cards={cards.concat(chaosCards)} />
       <Row className="my-4 text-center">
         <Col>
-          <h1>Hike Mode</h1>
+          <h1 className="mtg-text-mythic mtg-grad">Hike Mode</h1>
         </Col>
       </Row>
 

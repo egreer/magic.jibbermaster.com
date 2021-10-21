@@ -1,0 +1,61 @@
+@import "~keyrune/sass/_variables";
+
+@each $rarity, $text, $left, $right, $stroke in $keyrune_palette {
+  /* Rarity Background */
+  .mtg-bg-#{$rarity} {
+    background: $text;
+    &.mtg-grad {
+      background: -webkit-linear-gradient(
+        135deg,
+        #{$left},
+        #{$right},
+        #{$left}
+      );
+    }
+  }
+  /* Rarity Text */
+  .mtg-text-#{$rarity} {
+    color: $text;
+    &.mtg-grad {
+      background: -webkit-linear-gradient(
+        135deg,
+        #{$left} 0%,
+        #{$right} 50%,
+        #{$left} 100%
+      );
+      -webkit-text-stroke: 0.01em #{$stroke};
+      -webkit-text-fill-color: $keyrune_text_fill;
+      -webkit-background-clip: $keyrune_background_clip;
+      background-clip: $keyrune_background_clip;
+    }
+  }
+
+  /* Rarity Border */
+  .mtg-border-#{$rarity} {
+    border-color: $text;
+    &.mtg-grad {
+      // TODO: Fix Boarder
+      // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+      // http://jsfiddle.net/hkb7pd9g/28/
+      border-image: linear-gradient(
+          135deg,
+          #{$left} 0%,
+          #{$right} 50%,
+          #{$left} 100%
+        )
+        1
+        round;
+
+      // background: -webkit-linear-gradient(
+      //   135deg,
+      //   #{$left} 0%,
+      //   #{$right} 50%,
+      //   #{$left} 100%
+      // );
+      // -webkit-text-stroke: 0.01em #{$stroke};
+      // -webkit-text-fill-color: $keyrune_text_fill;
+      // -webkit-background-clip: $keyrune_background_clip;
+      // background-clip: $keyrune_background_clip;
+    }
+  }
+}
