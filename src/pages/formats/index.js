@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { FormatsHelmet } from "./Helmet";
 import { TAGS, FORMATS } from "./formats";
@@ -13,6 +13,7 @@ import "rc-tooltip/assets/bootstrap.css";
 import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 import {
+  DoubleFaceButton,
   DoubleFaceHighlightButton,
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
@@ -72,6 +73,7 @@ export const Formats = () => {
   const [activeFormat, setActiveFormat] = useState(null);
   const [loadingFormat, setLoadingFormat] = useState(false);
   const [swapTriggered, setSwapTriggered] = useState(false);
+  const [showFormatDescriptions, setShowFormatDescriptions] = useState(false);
 
   const reset = () => {
     setPlayerCount(DEFAULT_PLAYERS);
@@ -202,7 +204,7 @@ export const Formats = () => {
         return (
           <div
             className="row mb-2"
-            key={`${playerCount}-${f.id}-${f.weight * 100}`}
+            key={`${playerCount}-${f.name}-${f.weight * 100}`}
           >
             <div className="col-5">{f.name}</div>
             <div className="col-7">
@@ -221,6 +223,32 @@ export const Formats = () => {
       });
       return formatTags;
     }
+  };
+
+  const FormatDescriptions = () => {
+    const formatDescriptions = useMemo(
+      () =>
+        TAGS.map((t) => {
+          return (
+            <div className="row mb-2" key={`${t.name}`}>
+              <div className="col-4">{t.name}</div>
+              <div className="col-8">{t.description}</div>
+            </div>
+          );
+        }),
+      []
+    );
+
+    return (
+      <>
+        <DoubleFaceButton
+          text="Format Descriptions"
+          onClick={() => setShowFormatDescriptions(!showFormatDescriptions)}
+          enabled={showFormatDescriptions}
+        />
+        {showFormatDescriptions && formatDescriptions}
+      </>
+    );
   };
 
   const showDeckswapButton =
@@ -287,6 +315,9 @@ export const Formats = () => {
       </div>
       <div className="mb-5 noselect">
         <ActiveFormats />
+      </div>
+      <div className="mb-5 noselect">
+        <FormatDescriptions />
       </div>
       <div className="my-3">
         <Confirm
