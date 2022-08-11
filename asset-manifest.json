@@ -1,29 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.a132fe41.chunk.css",
-    "main.js": "/static/js/main.108e8a7c.chunk.js",
-    "main.js.map": "/static/js/main.108e8a7c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c3bde9df.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c3bde9df.js.map",
-    "static/css/2.cca2402b.chunk.css": "/static/css/2.cca2402b.chunk.css",
-    "static/js/2.e670e878.chunk.js": "/static/js/2.e670e878.chunk.js",
-    "static/js/2.e670e878.chunk.js.map": "/static/js/2.e670e878.chunk.js.map",
+    "main.css": "/static/css/main.71fcd720.css",
+    "main.js": "/static/js/main.08ade9bc.js",
+    "static/media/blank-front.png": "/static/media/blank-front.16e3055fda4409ee868d.png",
+    "static/media/contraption-back.jpg": "/static/media/contraption-back.782864c5e498989f89ba.jpg",
+    "static/media/arena-back.png": "/static/media/arena-back.8aa7dc1faa00e74910e8.png",
+    "static/media/planechase-back.jpg": "/static/media/planechase-back.e5e428e7ea8d2e2a4db1.jpg",
+    "static/media/archenemy-back.jpg": "/static/media/archenemy-back.db7ab2505710cecb40d1.jpg",
+    "static/media/classic-back.jpg": "/static/media/classic-back.a8e7574b2243b8e49377.jpg",
     "index.html": "/index.html",
-    "static/css/2.cca2402b.chunk.css.map": "/static/css/2.cca2402b.chunk.css.map",
-    "static/css/main.a132fe41.chunk.css.map": "/static/css/main.a132fe41.chunk.css.map",
-    "static/js/2.e670e878.chunk.js.LICENSE.txt": "/static/js/2.e670e878.chunk.js.LICENSE.txt",
-    "static/media/archenemy-back.db7ab250.jpg": "/static/media/archenemy-back.db7ab250.jpg",
-    "static/media/arena-back.8aa7dc1f.png": "/static/media/arena-back.8aa7dc1f.png",
-    "static/media/blank-front.16e3055f.png": "/static/media/blank-front.16e3055f.png",
-    "static/media/classic-back.a8e7574b.jpg": "/static/media/classic-back.a8e7574b.jpg",
-    "static/media/contraption-back.782864c5.jpg": "/static/media/contraption-back.782864c5.jpg",
-    "static/media/planechase-back.e5e428e7.jpg": "/static/media/planechase-back.e5e428e7.jpg"
+    "main.71fcd720.css.map": "/static/css/main.71fcd720.css.map",
+    "main.08ade9bc.js.map": "/static/js/main.08ade9bc.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.c3bde9df.js",
-    "static/css/2.cca2402b.chunk.css",
-    "static/js/2.e670e878.chunk.js",
-    "static/css/main.a132fe41.chunk.css",
-    "static/js/main.108e8a7c.chunk.js"
+    "static/css/main.71fcd720.css",
+    "static/js/main.08ade9bc.js"
   ]
 }
