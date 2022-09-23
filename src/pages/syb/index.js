@@ -1,20 +1,19 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import debounce from "lodash/debounce";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup, Col, Row, Spinner } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
-import debounce from "lodash/debounce";
-
-import { shuffleArray } from "../../util/shuffleArray";
-
-import { SYBHelmet } from "./Helmet";
-import { canStar } from "../formats/formats";
-import { cytoStyle } from "./Cyto";
+import { Confirm } from "../../components/Confirm";
+import { DevTools } from "../../components/DevTools.js";
 import {
   DoubleFaceButton,
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons.js";
 import { useLocalState } from "../../hooks/useLocalState";
-import { DevTools } from "../../components/DevTools.js";
+import { shuffleArray } from "../../util/shuffleArray";
+import { canStar } from "../formats/formats";
+import { cytoStyle } from "./Cyto";
+import { SYBHelmet } from "./Helmet";
 
 const TABLE_SHAPE_SQUARE = "square";
 const TABLE_SHAPE_CIRCLE = "circle";
@@ -372,9 +371,15 @@ export const SYB = () => {
         )}
         {renderCyto()}
       </div>
-      <Button onClick={reset} variant="danger" block>
-        Reset
-      </Button>
+
+      <Confirm
+        onConfirm={reset}
+        headerText="Reset Targets?"
+        triggerText="Reset"
+        confirmText="Reset"
+        confirmVariant="danger"
+        triggerButtonParams={{ variant: "danger", block: true }}
+      />
 
       <DevTools>
         <DoubleFaceButton

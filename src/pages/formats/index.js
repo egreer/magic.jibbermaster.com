@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import { FormatsHelmet } from "./Helmet";
-import { TAGS, FORMATS } from "./formats";
 import { Confirm } from "../../components/Confirm";
+import { FORMATS, TAGS } from "./formats";
+import { FormatsHelmet } from "./Helmet";
 
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
@@ -10,6 +10,7 @@ import uniq from "lodash/uniq";
 
 import "rc-slider/assets/index.css";
 import "rc-tooltip/assets/bootstrap.css";
+
 import Slider from "rc-slider";
 import Tooltip from "rc-tooltip";
 import {
