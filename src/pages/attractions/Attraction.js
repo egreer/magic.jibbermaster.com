@@ -15,7 +15,7 @@ import { useLocalState } from "../../hooks/useLocalState";
 import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
 import { filterAPI, internet } from "../../util/api";
-import { RandomTokenModal } from "../hike/RandomTokenModal";
+import { RandomTokenModal } from "../../components/RandomTokenModal";
 import { AttractionListModal } from "./AttractionListModal";
 
 const DEFAULT_PLAYER_COUNT = 5;

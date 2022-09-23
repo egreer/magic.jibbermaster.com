@@ -7,7 +7,7 @@ import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
 import { filterAPI, internet } from "../../util/api";
-import { RandomTokenModal } from "../hike/RandomTokenModal";
+import { RandomTokenModal } from "../../components/RandomTokenModal";
 import Dialog from "react-bootstrap-dialog";
 import uuidv4 from "uuid/v4";
 import { Confirm } from "../../components/Confirm";

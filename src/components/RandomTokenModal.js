@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { MtgCard } from "../../components/magic/Card";
+import { MtgCard } from "./magic/Card";
 
 export const RandomTokenModal = ({
   additionalCards,

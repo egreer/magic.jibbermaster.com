@@ -25,7 +25,7 @@ import {
   getAllHikeModePlaneCards,
   internet,
 } from "../../util/api";
-import { RandomTokenModal } from "./RandomTokenModal";
+import { RandomTokenModal } from "../../components/RandomTokenModal";
 import { addAdditionalProperties } from "../../util/additionalProps";
 
 const PRE_CHAOS = "hike-chaos";
