@@ -15,7 +15,7 @@ import { useLocalState } from "../../hooks/useLocalState";
 import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
 import { filterAPI, internet } from "../../util/api";
-import { RandomTokenModal } from "../../components/RandomTokenModal";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { AttractionListModal } from "./AttractionListModal";
 
 const DEFAULT_PLAYER_COUNT = 5;
@@ -266,7 +266,7 @@ export const Attractions = () => {
           className: "my-3",
         }}
       />
-      <RandomTokenModal
+      <RandomCardModal
         open={randomTokenModalOpen}
         additionalCards={additionalCards}
         onHide={_randomTokenModalClose}
