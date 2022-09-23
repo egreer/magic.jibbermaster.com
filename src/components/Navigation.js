@@ -62,6 +62,7 @@ export const Navigation = () => {
           <NavItem to="/archenemy" text="Archenemy" />
           <NavItem to="/syb" text="SYB" />
           <NavItem to="/formats" text="Formats" />
+          <NavItem to="/attractions" text="Attractions" />
           <NavItem to="/contraptions" text="Contraptions" />
           <NavItem to="/slivers" text="Slivers" />
           <NavItem to="/vanguard" text="Vanguard" />

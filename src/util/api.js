@@ -9,6 +9,9 @@ import { addAdditionalProperties } from "./additionalProps";
 // TODO use expire store
 export const internet = axios.create();
 
+const ATTRACTIONS_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aattraction&unique=cards";
+
 const PLANES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aplane+or+t%3Aphenomenon&unique=cards";
 
@@ -87,6 +90,27 @@ export const getAllArchenemyCards = async () => {
       console.log("Loaded archenemy from store");
     }
     return schemes;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getAllAttractionsCards = async () => {
+  try {
+    let attractions = cached("attractions");
+    if (!attractions) {
+      console.log("Loading attractions from Axios");
+      let response = await internet.get(ATTRACTIONS_URL);
+      attractions = response.data.data;
+      attractions = attractions.map((p) =>
+        addAdditionalProperties(filterAPI(p))
+      );
+      cache("attractions", attractions);
+      // TODO use the expire store parameter
+    } else {
+      console.log("Loaded attractions from store");
+    }
+    return attractions;
   } catch (e) {
     console.error(e);
   }

@@ -34,6 +34,13 @@ export const Home = () => {
               <i className="ss ss-evg ss-3x mx-2 d-block" />
             </HomeButton>
             <HomeButton
+              path={"/attractions"}
+              text="Attractions"
+              variant="orange"
+            >
+              <i className="ss ss-unf ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton
               path={"/contraptions"}
               text="Contraptions"
               variant="secondary"

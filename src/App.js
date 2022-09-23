@@ -20,6 +20,7 @@ import { DebugPage } from "./pages/DebugPage";
 import { Contraptions } from "./pages/contraptions/Contraptions";
 import { Slivers } from "./pages/slivers/Slivers";
 import { Vanguard } from "./pages/vanguard/Vanguard";
+import { Attractions } from "./pages/attractions/Attraction";
 
 const Providers = ({ children }) => {
   return (
@@ -59,6 +60,11 @@ const Main = () => {
       />
       <Route path="/syb" exact render={(props) => <SYB {...props} />} />
       <Route path="/formats" exact render={(props) => <Formats {...props} />} />
+      <Route
+        path="/attractions"
+        exact
+        render={(props) => <Attractions {...props} />}
+      />
       <Route
         path="/contraptions"
         exact
