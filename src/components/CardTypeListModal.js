@@ -1,29 +1,30 @@
 import pluralize from "pluralize";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { MtgCard } from "../../components/magic/Card";
-import { getAllAttractionsCards } from "../../util/api";
+import { MtgCard } from "./magic/Card";
 
-export const AttractionListModal = ({
+export const CardTypeListModal = ({
   onHide,
   onSelect,
   open,
   randomTokenProps,
+  fetchCards,
 }) => {
-  const [attractions, setAttractions] = useState([]);
+  const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
-  useEffect(() => {
-    const getAttractions = async () => {
-      setAttractions(await getAllAttractionsCards());
-    };
-    getAttractions();
-  }, [setAttractions]);
 
-  const filteredAttractions = attractions.filter((c) =>
+  useEffect(() => {
+    const getCards = async () => {
+      setCards(await fetchCards());
+    };
+    getCards();
+  }, [setCards, fetchCards]);
+
+  const filteredCards = cards.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase() || "")
   );
 
-  if (attractions && open) {
+  if (cards && open) {
     return (
       <Modal
         show={!!open}
@@ -47,15 +48,15 @@ export const AttractionListModal = ({
             onChange={(a) => setSearch(a.target.value)}
           />
           <p className="text-right text-light">
-            {pluralize("Match", filteredAttractions?.length ?? 0, true)}
+            {pluralize("Match", filteredCards?.length ?? 0, true)}
           </p>
           <Row>
-            {filteredAttractions?.map((card) => (
+            {filteredCards?.map((card) => (
               <Col md={6} key={card.id}>
                 <MtgCard card={card} displayChildrenBelow={false}>
                   <Button
                     onClick={() => onSelect({ card })}
-                    variant="primary"
+                    variant="info"
                     size="lg"
                     className="btn-translucent"
                   >

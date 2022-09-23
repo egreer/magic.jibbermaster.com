@@ -1,20 +1,20 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Image, Row } from "react-bootstrap";
+import concat from "lodash/concat";
 import get from "lodash/get";
 import set from "lodash/set";
-import concat from "lodash/concat";
-import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
-import { MtgCard } from "../../components/magic/Card";
-import { useLocalState } from "../../hooks/useLocalState";
-import { filterAPI, internet } from "../../util/api";
-import { RandomCardModal } from "../../components/RandomCardModal";
+import React, { useCallback, useRef, useState } from "react";
+import { Button, Carousel, Col, Image, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import uuidv4 from "uuid/v4";
+import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
-import contraptionBack from "../../images/contraption-back.jpg";
-import { ContraptionListModal } from "./ContraptionListModal";
-import { ASSEMBLE_PROP } from "../../util/additionalProps";
+import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
+import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
+import { RandomCardModal } from "../../components/RandomCardModal";
+import { useLocalState } from "../../hooks/useLocalState";
+import contraptionBack from "../../images/contraption-back.jpg";
+import { ASSEMBLE_PROP } from "../../util/additionalProps";
+import { filterAPI, getAllContraptionsCards, internet } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 const MAX_SPROKETS = 3;
@@ -318,11 +318,12 @@ export const Contraptions = () => {
         randomTokenProps={ASSEMBLE_PROP}
         closeText="Assemble Contraption"
       />
-      <ContraptionListModal
+      <CardTypeListModal
         open={selectContraptionModalOpen}
         onHide={_hideSelectContraption}
         onSelect={_selectContraption}
         randomTokenProps={ASSEMBLE_PROP}
+        fetchCards={getAllContraptionsCards}
       />
       <Dialog
         ref={(component) => {

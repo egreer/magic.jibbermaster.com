@@ -49,14 +49,14 @@ export const ATTRACTION_PROP = randomTokenProp({
 export const ASSEMBLE_PROP = randomTokenProp({
   action: "Assemble",
   type: "Contraption",
-  symbol: "ss ss-ust ss-rare ss-grad ss-2x mx-1 mx-md-4",
+  symbol: "ss ss-ust ss-rare ss-grad ss-2x",
   url: "https://api.scryfall.com/cards/random?q=t%3Acontraption%20include%3Aextras",
 });
 
 export const AVATAR_PROP = randomTokenProp({
   action: "Summon",
   type: "Avatar",
-  symbol: "ss ss-van ss-mythic ss-grad ss-2x mx-1 mx-md-4",
+  symbol: "ss ss-van ss-mythic ss-grad ss-2x",
   url: "https://api.scryfall.com/cards/random?q=t%3Avanguard%20include%3Aextras",
 });
 

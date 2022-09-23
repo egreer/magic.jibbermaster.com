@@ -16,7 +16,8 @@ import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
 import { filterAPI, internet } from "../../util/api";
 import { RandomCardModal } from "../../components/RandomCardModal";
-import { AttractionListModal } from "./AttractionListModal";
+import { CardTypeListModal } from "../../components/CardTypeListModal";
+import { getAllAttractionsCards } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 
@@ -274,11 +275,12 @@ export const Attractions = () => {
         randomTokenProps={ATTRACTION_PROP}
         closeText={ATTRACTION_PROP.text}
       />
-      <AttractionListModal
+      <CardTypeListModal
         open={selectAttractionModalOpen}
         onHide={_hideSelectAttraction}
         onSelect={_selectAttraction}
         randomTokenProps={ATTRACTION_PROP}
+        fetchCards={getAllAttractionsCards}
       />
       <Dialog
         ref={(component) => {

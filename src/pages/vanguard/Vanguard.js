@@ -1,18 +1,18 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Row } from "react-bootstrap";
 import get from "lodash/get";
 import set from "lodash/set";
-import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
-import { MtgCard } from "../../components/magic/Card";
-import { useLocalState } from "../../hooks/useLocalState";
-import { filterAPI, internet } from "../../util/api";
-import { RandomCardModal } from "../../components/RandomCardModal";
+import React, { useCallback, useRef, useState } from "react";
+import { Button, Carousel, Col, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import uuidv4 from "uuid/v4";
+import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
-import { VanguardListModal } from "./VanguardListModal";
-import { AVATAR_PROP } from "../../util/additionalProps";
+import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
+import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
+import { RandomCardModal } from "../../components/RandomCardModal";
+import { useLocalState } from "../../hooks/useLocalState";
+import { AVATAR_PROP } from "../../util/additionalProps";
+import { filterAPI, getAllVanguardCards, internet } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 
@@ -241,11 +241,12 @@ export const Vanguard = () => {
         randomTokenProps={AVATAR_PROP}
         closeText="Summon Avatar"
       />
-      <VanguardListModal
+      <CardTypeListModal
         open={selectAvatarModalOpen}
         onHide={_hideSelectVanguard}
         onSelect={_selectVanguard}
         randomTokenProps={AVATAR_PROP}
+        fetchCards={getAllVanguardCards}
       />
       <Dialog
         ref={(component) => {
