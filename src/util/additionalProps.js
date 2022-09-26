@@ -28,19 +28,35 @@ export const CHAOS_MAX_PROP = chaosXProp("Max");
 export const CHAOS_EACH_OP_PROP = chaosXProp("Each Opponent");
 export const CHAOS_PLAYER_CHOICE_PROP = chaosXProp("Player's Choice");
 
-export const randomTokenProp = ({ url, symbol, text }) => {
-  return { name: "random-token", url, symbol, text };
+export const randomTokenProp = ({ type, action, ...props }) => {
+  return {
+    name: "random-token",
+    text: `${action} ${type}`,
+    type,
+    action,
+    ...props,
+  };
 };
 
+// TODO: update symbols to not include mx
+export const ATTRACTION_PROP = randomTokenProp({
+  action: `"Open"`,
+  type: "Attraction",
+  symbol: "ss ss-unf ss-rare ss-grad ss-2x",
+  url: "https://api.scryfall.com/cards/random?q=t%3Aattraction%20include%3Aextras",
+});
+
 export const ASSEMBLE_PROP = randomTokenProp({
-  text: "Assemble Contraption",
-  symbol: "ss ss-ust ss-rare ss-grad ss-2x mx-1 mx-md-4",
+  action: "Assemble",
+  type: "Contraption",
+  symbol: "ss ss-ust ss-rare ss-grad ss-2x",
   url: "https://api.scryfall.com/cards/random?q=t%3Acontraption%20include%3Aextras",
 });
 
 export const AVATAR_PROP = randomTokenProp({
-  text: "Summon Avatar",
-  symbol: "ss ss-van ss-mythic ss-grad ss-2x mx-1 mx-md-4",
+  action: "Summon",
+  type: "Avatar",
+  symbol: "ss ss-van ss-mythic ss-grad ss-2x",
   url: "https://api.scryfall.com/cards/random?q=t%3Avanguard%20include%3Aextras",
 });
 

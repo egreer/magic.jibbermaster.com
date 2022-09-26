@@ -1,19 +1,5 @@
 // sass-lint:disable force-pseudo-nesting, no-important
-$translucent: rgba(0, 0, 0, 0.2);
-
-@keyframes backside {
-  0% {
-    visibility: hidden;
-  }
-
-  1% {
-    visibility: visible;
-  }
-
-  100% {
-    visibility: hidden;
-  }
-}
+@import "../../../styles/colors";
 
 .planar .dice {
   .dot {
@@ -60,28 +46,90 @@ $translucent: rgba(0, 0, 0, 0.2);
       }
     }
   }
+}
 
-  // Hide the non facing sides
+.attraction .dice {
+  .face {
+    &.one {
+      background-color: rgba($attractionOneColor, 0.8) !important;
+    }
+    &.two {
+      background-color: rgba($attractionTwoColor, 0.8) !important;
+    }
+    &.three {
+      background-color: rgba($attractionThreeColor, 0.8) !important;
+    }
+    &.four {
+      background-color: rgba($attractionFourColor, 0.8) !important;
+    }
+    &.five {
+      background-color: rgba($attractionFiveColor, 0.8) !important;
+    }
+    &.six {
+      background-color: rgba($attractionSixColor, 0.8) !important;
+    }
+  }
+}
+
+// START- Hide the non facing sides
+@keyframes backside {
+  0% {
+    visibility: hidden;
+  }
+
+  1% {
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+  }
+}
+
+@mixin dot-animation() {
+  .dot {
+    animation-duration: 2s;
+    animation-name: backside;
+    visibility: hidden;
+  }
+  background-color: $translucent !important;
+}
+
+.dice {
   .die {
     // sass-lint:disable-block nesting-depth, force-element-nesting
     &.roll1 {
       .face.six {
-        .dot {
-          animation-duration: 2s;
-          animation-name: backside;
-          visibility: hidden;
-        }
+        @include dot-animation();
+      }
+    }
+    &.roll2 {
+      .face.five {
+        @include dot-animation();
+      }
+    }
+    &.roll3 {
+      .face.four {
+        @include dot-animation();
+      }
+    }
+    &.roll4 {
+      .face.three {
+        @include dot-animation();
+      }
+    }
+    &.roll5 {
+      .face.two {
+        @include dot-animation();
       }
     }
 
     &.roll6 {
       .face.one {
-        .dot {
-          animation-duration: 2s;
-          animation-name: backside;
-          visibility: hidden;
-        }
+        @include dot-animation();
       }
     }
   }
 }
+
+// END- Hide the non facing sides

@@ -25,7 +25,7 @@ import {
   getAllHikeModePlaneCards,
   internet,
 } from "../../util/api";
-import { RandomTokenModal } from "./RandomTokenModal";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { addAdditionalProperties } from "../../util/additionalProps";
 
 const PRE_CHAOS = "hike-chaos";
@@ -266,7 +266,7 @@ export const Hike = () => {
         </Row>
       )}
 
-      <RandomTokenModal
+      <RandomCardModal
         open={randomTokenModalOpen}
         additionalCards={game.additionalCards}
         onHide={_randomTokenModalClose}

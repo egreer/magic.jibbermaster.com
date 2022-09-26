@@ -332,4 +332,8 @@ export const BASE_PLANES = [
     name: "Marchesa, the Black Rose",
     id: "ca6cf5ba-0bad-4f7d-83b9-c092c2586131",
   },
+  {
+    name: "Raging River",
+    id: "61e4f56d-1f4f-49f2-8534-0d09196a3327",
+  },
 ];
