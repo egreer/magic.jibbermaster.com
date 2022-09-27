@@ -1,7 +1,6 @@
 import React, { useState } from "react";
+import { Dropdown, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink as RRNavLink } from "react-router-dom";
-
-import { Dropdown, Navbar, Nav } from "react-bootstrap";
 import { useSettings } from "../hooks/useSettings";
 import { DoubleFaceIcon } from "./magic/DoubleFaceIcon";
 
@@ -46,6 +45,12 @@ export const Navigation = () => {
     </Nav.Item>
   );
 
+  const NavDropdownItem = ({ to, text }) => (
+    <NavDropdown.Item as={RRNavLink} to={to}>
+      {text}
+    </NavDropdown.Item>
+  );
+
   return (
     <Navbar
       variant="dark"
@@ -58,15 +63,19 @@ export const Navigation = () => {
       <Navbar.Collapse>
         <Nav className="ml-auto" navbar>
           <NavItem to="/" text="Home" />
-          <NavItem to="/planechase" text="Planechase" />
-          <NavItem to="/archenemy" text="Archenemy" />
           <NavItem to="/syb" text="SYB" />
           <NavItem to="/formats" text="Formats" />
-          <NavItem to="/attractions" text="Attractions" />
-          <NavItem to="/contraptions" text="Contraptions" />
-          <NavItem to="/slivers" text="Slivers" />
-          <NavItem to="/vanguard" text="Vanguard" />
-          <NavItem to="/hike" text="Hike" />
+          <NavDropdown title="Game Modes" id="game-modes-nav-dropdown">
+            <NavDropdownItem to="/archenemy" text="Archenemy" />
+            <NavDropdownItem to="/planechase" text="Planechase" />
+            <NavDropdownItem to="/hike" text="Hike" />
+            <NavDropdownItem to="/vanguard" text="Vanguard" />
+          </NavDropdown>
+          <NavDropdown title="Trackers" id="tracker-nav-dropdown">
+            <NavDropdownItem to="/attractions" text="Attractions" />
+            <NavDropdownItem to="/contraptions" text="Contraptions" />
+            <NavDropdownItem to="/slivers" text="Slivers" />
+          </NavDropdown>
           <Dropdown navbar onToggle={(open) => !open && closeNavbar()}>
             <Dropdown.Toggle as={Nav.Link}>Settings</Dropdown.Toggle>
             <Dropdown.Menu alignRight>
