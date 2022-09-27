@@ -8,6 +8,7 @@ import {
   randomTokenProp,
   CHAOS_TRIGGER_PROP,
   ASSEMBLE_PROP,
+  ATTRACTION_PROP,
 } from "../../../util/additionalProps";
 
 export const CUSTOM_CHAOS = [
@@ -138,7 +139,7 @@ export const CUSTOM_CHAOS = [
   {
     name: "Stangg and Friends",
     type_line: "Plane - Hike",
-    oracle_text: "Create a random Legandary Creature token",
+    oracle_text: "Create a random Legendary Creature token",
     show_blank: true,
     customProperties: [
       CHAOS_TRIGGER_PROP,
@@ -148,6 +149,13 @@ export const CUSTOM_CHAOS = [
         url: "https://api.scryfall.com/cards/random?q=t%3Alegend%20t%3Acreature%20include%3Aextras",
       }),
     ],
+  },
+  {
+    name: "Under the Hike-Top",
+    type_line: "Plane - UnHikeFinity",
+    oracle_text: "Open a random Attraction",
+    show_blank: true,
+    customProperties: [CHAOS_TRIGGER_PROP, ATTRACTION_PROP],
   },
 ];
 

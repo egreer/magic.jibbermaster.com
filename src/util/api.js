@@ -10,7 +10,7 @@ import { addAdditionalProperties } from "./additionalProps";
 export const internet = axios.create();
 
 const ATTRACTIONS_URL =
-  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aattraction&unique=cards";
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aattraction&unique=prints";
 
 const PLANES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aplane+or+t%3Aphenomenon&unique=cards";
