@@ -3,21 +3,20 @@ import get from "lodash/get";
 import set from "lodash/set";
 import pluralize from "pluralize";
 import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Image, Row } from "react-bootstrap";
+import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import uuidv4 from "uuid/v4";
+import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
 import { AttractionDie } from "../../components/magic/planar-die/AttractionDie";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { useLocalState } from "../../hooks/useLocalState";
 import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
-import { filterAPI, internet } from "../../util/api";
-import { RandomCardModal } from "../../components/RandomCardModal";
-import { CardTypeListModal } from "../../components/CardTypeListModal";
-import { getAllAttractionsCards } from "../../util/api";
+import { filterAPI, getAllAttractionsCards, internet } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 
@@ -214,42 +213,44 @@ export const Attractions = () => {
                   </Button>
                 </Col>
               </Row>
-              <Row>
-                <Col sm={12}>
-                  <h3 className="text-center sticky-top bg-dark">{`${
-                    ATTRACTION_PROP.action
-                  } ${pluralize(ATTRACTION_PROP.type)}`}</h3>
-                </Col>
-                {playerAttractions?.map((card) => (
-                  <Col md={6} key={card.deck_card_id} className="my-3">
-                    <React.Fragment>
-                      <MtgCard card={card} displayChildrenBelow={false}>
-                        <Button
-                          onClick={() => closeAttraction({ card, player })}
-                          variant="danger"
-                          size="lg"
-                          className="btn-translucent mb-2"
-                        >
-                          <DeleteIcon />
-                        </Button>
-                      </MtgCard>
-                    </React.Fragment>
+              <Container>
+                <Row>
+                  <Col sm={12}>
+                    <h3 className="text-center sticky-top bg-dark">{`${
+                      ATTRACTION_PROP.action
+                    } ${pluralize(ATTRACTION_PROP.type)}`}</h3>
                   </Col>
-                ))}
-                {playerAttractions?.length ? (
-                  ""
-                ) : (
-                  <Col className="text-center">
-                    <p>None</p>
-                    <Image
-                      fluid
-                      src={attractionBack}
-                      alt="Attraction Back"
-                      className="px-5"
-                    ></Image>
-                  </Col>
-                )}
-              </Row>
+                  {playerAttractions?.map((card) => (
+                    <Col sm={6} key={card.deck_card_id} className="my-3">
+                      <React.Fragment>
+                        <MtgCard card={card} displayChildrenBelow={false}>
+                          <Button
+                            onClick={() => closeAttraction({ card, player })}
+                            variant="danger"
+                            size="lg"
+                            className="btn-translucent mb-2"
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </MtgCard>
+                      </React.Fragment>
+                    </Col>
+                  ))}
+                  {playerAttractions?.length ? (
+                    ""
+                  ) : (
+                    <Col className="text-center">
+                      <p>None</p>
+                      <Image
+                        fluid
+                        src={attractionBack}
+                        alt="Attraction Back"
+                        className="px-5"
+                      ></Image>
+                    </Col>
+                  )}
+                </Row>
+              </Container>
             </Carousel.Item>
           );
         })}
