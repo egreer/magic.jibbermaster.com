@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { useLocalState } from "../../hooks/useLocalState";
@@ -26,19 +27,22 @@ export const DayNight = () => {
   );
 
   return (
-    <Container>
-      <Row>
-        <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }}>
-          {toggle}
-          {card &&
-            (nightTime ? (
-              <MtgCard card={card.card_faces[1]} />
-            ) : (
-              <MtgCard card={card.card_faces[0]} />
-            ))}
-          {toggle}
-        </Col>
-      </Row>
-    </Container>
+    <div className="day-night">
+      <Helmet title="Day-Night" />
+      <Container>
+        <Row>
+          <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }}>
+            {toggle}
+            {card &&
+              (nightTime ? (
+                <MtgCard card={card.card_faces[1]} />
+              ) : (
+                <MtgCard card={card.card_faces[0]} />
+              ))}
+            {toggle}
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };

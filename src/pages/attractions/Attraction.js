@@ -5,6 +5,7 @@ import pluralize from "pluralize";
 import React, { useCallback, useRef, useState } from "react";
 import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
+import { Helmet } from "react-helmet-async";
 import uuidv4 from "uuid/v4";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
@@ -155,6 +156,7 @@ export const Attractions = () => {
 
   return (
     <div className="attractions">
+      <Helmet title="Attractions" />
       <Row className="my-4 text-center">
         <Col>
           <h1>{playerCount} Players</h1>

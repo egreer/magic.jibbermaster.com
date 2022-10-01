@@ -25,6 +25,7 @@ import { AbilityIcon } from "../../util/createMarkup";
 import { Confirm } from "../../components/Confirm";
 import numeralPrefix from "numeral-prefix";
 import compact from "lodash/compact";
+import { Helmet } from "react-helmet-async";
 
 // ABILITIY_STACKS_PROP
 const sliverProps = {
@@ -285,6 +286,7 @@ export const Slivers = () => {
 
   return (
     <div className="slivers">
+      <Helmet title="Slivers" />
       <div className="mb-3">
         <h1 className="text-center">Sliver Calculator</h1>
         <Accordion defaultActiveKey="0">
