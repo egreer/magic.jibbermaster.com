@@ -21,6 +21,7 @@ import { Contraptions } from "./pages/contraptions/Contraptions";
 import { Slivers } from "./pages/slivers/Slivers";
 import { Vanguard } from "./pages/vanguard/Vanguard";
 import { Attractions } from "./pages/attractions/Attraction";
+import { DayNight } from "./pages/day-night/DayNight";
 
 const Providers = ({ children }) => {
   return (
@@ -69,6 +70,11 @@ const Main = () => {
         path="/contraptions"
         exact
         render={(props) => <Contraptions {...props} />}
+      />
+      <Route
+        path="/day-night"
+        exact
+        render={({ props }) => <DayNight {...props} />}
       />
       <Route path="/slivers" exact render={(props) => <Slivers {...props} />} />
       <Route

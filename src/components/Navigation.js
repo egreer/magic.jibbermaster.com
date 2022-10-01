@@ -73,6 +73,7 @@ export const Navigation = () => {
           </NavDropdown>
           <NavDropdown title="Trackers" id="tracker-nav-dropdown">
             <NavDropdownItem to="/attractions" text="Attractions" />
+            <NavDropdownItem to="/day-night" text="Day-Night" />
             <NavDropdownItem to="/contraptions" text="Contraptions" />
             <NavDropdownItem to="/slivers" text="Slivers" />
           </NavDropdown>

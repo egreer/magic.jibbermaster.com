@@ -45,6 +45,7 @@ export const filterAPI = (card) =>
     "cmc",
     "type_line",
     "oracle_text",
+    "card_faces",
     "colors",
     "color_identity",
     "rulings_uri",
@@ -221,6 +222,19 @@ const fetchAllCards = async (ids) => {
     cards = cards.concat([...response?.data?.data]);
   }
   return cards.map((p) => addAdditionalProperties(filterAPI(p)));
+};
+
+export const fetchCard = async (id) => {
+  let card = cached(id);
+  if (!card) {
+    console.log(`Loading card from Axios (${id})`);
+    const response = await internet.get(
+      `https://api.scryfall.com/cards/${id}?format=json`
+    );
+    card = addAdditionalProperties(filterAPI({ ...response?.data }));
+    cache(id, card);
+  }
+  return card;
 };
 
 function cached(prefix) {

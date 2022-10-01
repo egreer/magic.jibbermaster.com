@@ -59,6 +59,16 @@ export const Home = () => {
             >
               <i className="ss ss-ust ss-3x mx-2 d-block" />
             </HomeButton>
+            <HomeButton
+              path={"/day-night"}
+              text="Day-Night"
+              variant="secondary"
+            >
+              <div className="my-1 d-block">
+                <i className="ms ms-dfc ms-dfc-day ms-3x text-light" />
+                <i className="ms ms-dfc ms-dfc-night ms-3x text-dark" />
+              </div>
+            </HomeButton>
             <HomeButton path={"/slivers"} text="Slivers" variant="success">
               <i className="ss ss-h09 ss-3x mx-2 d-block" />
             </HomeButton>
