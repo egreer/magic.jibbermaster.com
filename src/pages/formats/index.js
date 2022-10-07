@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { FORMATS, TAGS } from "./formats";
@@ -19,6 +19,7 @@ import {
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
 import { useLocalState } from "../../hooks/useLocalState";
+import Dialog from "react-bootstrap-dialog";
 
 const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 9;
@@ -76,6 +77,8 @@ export const Formats = () => {
   const [swapTriggered, setSwapTriggered] = useState(false);
   const [showFormatDescriptions, setShowFormatDescriptions] = useState(false);
 
+  const dialog = useRef(null);
+
   const reset = () => {
     setPlayerCount(DEFAULT_PLAYERS);
     setTags(createTags());
@@ -118,14 +121,17 @@ export const Formats = () => {
     setActiveFormat(null);
   };
 
-  const updateFormatValue = (format, value) => {
-    currentFormats[playerCount].forEach((f) => {
-      if (f.name === format.name) {
-        format.weight = value / 100;
-      }
-    });
-    setCurrentFormats({ ...currentFormats });
-  };
+  const updateFormatValue = useCallback(
+    (format, value) => {
+      currentFormats[playerCount].forEach((f) => {
+        if (f.name === format.name) {
+          format.weight = value / 100;
+        }
+      });
+      setCurrentFormats({ ...currentFormats });
+    },
+    [currentFormats, playerCount, setCurrentFormats]
+  );
 
   const activeTags = () => {
     return currentFormats
@@ -198,6 +204,24 @@ export const Formats = () => {
     }
   };
 
+  const adjustWeight = useCallback(
+    (format) => {
+      dialog.current.show({
+        title: "Update Weight?",
+        bsSize: "sm",
+        actions: [
+          Dialog.CancelAction(),
+          Dialog.OKAction((a) => {
+            // TODO: Update to set number
+            updateFormatValue(format, Math.min(a.value, 100));
+          }),
+        ],
+        prompt: Dialog.TextPrompt({ initialValue: format.weight * 100 }),
+      });
+    },
+    [dialog, updateFormatValue]
+  );
+
   const ActiveFormats = () => {
     const formats = activeFormats();
     if (formats) {
@@ -207,7 +231,9 @@ export const Formats = () => {
             className="row mb-2"
             key={`${playerCount}-${f.name}-${f.weight * 100}`}
           >
-            <div className="col-5">{f.name}</div>
+            <div className="col-5" onClick={() => adjustWeight(f)}>
+              {f.name}
+            </div>
             <div className="col-7">
               <Slider
                 min={0}
@@ -330,6 +356,11 @@ export const Formats = () => {
           triggerButtonParams={{ variant: "danger", block: true }}
         />
       </div>
+      <Dialog
+        ref={(component) => {
+          dialog.current = component;
+        }}
+      />
     </div>
   );
 };

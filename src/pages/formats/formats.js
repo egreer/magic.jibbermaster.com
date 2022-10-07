@@ -7,19 +7,25 @@ export const TAGS = [
   },
   {
     name: "Archenemy",
-    defaultEnabled: true,
+    defaultEnabled: false,
     description:
       "3 players band together to take out the 4th member of the group who is supported by a deck of devious Schemes. (Rules 904.*)",
   },
   {
-    name: "Attack 1",
+    name: "Assassin",
     defaultEnabled: false,
+    description:
+      "Players are dealt a face down card to indicate their hidden target",
+  },
+  {
+    name: "Attack 1",
+    defaultEnabled: true,
     description:
       "Scope down the game so players can only attack their neighbors, last one standing wins. (Rules 803.*)",
   },
   {
     name: "Chode Mode",
-    defaultEnabled: true,
+    defaultEnabled: false,
     description:
       "Players begin at 5 life, last player standing wins in this agressive free for all",
   },
@@ -48,7 +54,7 @@ export const TAGS = [
   },
   {
     name: "Hike Mode",
-    defaultEnabled: false,
+    defaultEnabled: true,
     description: "Let the Lord of Chaos rule in this planechase variant.",
   },
   {
@@ -93,13 +99,13 @@ export const TAGS = [
   },
   {
     name: "Teams",
-    defaultEnabled: false,
+    defaultEnabled: true,
     description:
       "Teams are formed and players operate independently but win together. (Rules 811.*)",
   },
   {
     name: "Vanguard",
-    defaultEnabled: false,
+    defaultEnabled: true,
     description:
       "Players select a Vanguard card to lead their deck to victory. (Rules 902.*)",
   },
@@ -139,13 +145,13 @@ export const FORMATS = [
   },
   {
     name: "Attack 1",
-    initial: 0.5,
+    initial: 0.1,
     tags: ["Attack 1"],
     players: canRange1,
   },
   {
     name: "Chode Mode",
-    initial: 0.5,
+    initial: 0.75,
     tags: ["Chode Mode"],
     players: canAny,
   },
@@ -163,7 +169,7 @@ export const FORMATS = [
   },
   {
     name: "EDH Attack 1",
-    initial: 0.5,
+    initial: 0.1,
     tags: ["EDH", "Attack 1"],
     players: canRange1,
   },
@@ -190,8 +196,7 @@ export const FORMATS = [
   },
   {
     name: "EDH Hike Mode",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.025,
     tags: ["EDH", "Hike Mode"],
     showSwaps: true,
     players: canAny,
@@ -199,8 +204,7 @@ export const FORMATS = [
   {
     name: "EDH Hike Mode Deck Swaps",
     displayName: "EDH Hike Mode",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.025,
     tags: ["EDH", "Hike Mode", "Deck Swaps"],
     showSwaps: true,
     players: canAny,
@@ -216,6 +220,7 @@ export const FORMATS = [
     name: "EDH Pentacle Deck Swaps",
     displayName: "EDH Pentacle",
     initial: 0.25,
+    showSwaps: true,
     tags: ["EDH", "Pentacle", "Deck Swaps"],
     players: canPentacle,
   },
@@ -242,7 +247,7 @@ export const FORMATS = [
   },
   {
     name: "EDH SYB Multi",
-    initial: 0.5,
+    initial: 0.25,
     tags: ["EDH", "SYB Multi"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
@@ -250,7 +255,7 @@ export const FORMATS = [
   {
     name: "EDH SYB Multi Deck Swaps",
     displayName: "EDH SYB Multi",
-    initial: 0.25,
+    initial: 0.125,
     tags: ["EDH", "SYB Multi", "Deck Swaps"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
@@ -285,8 +290,7 @@ export const FORMATS = [
   {
     name: "EDH Vanguard",
     displayName: " EDH Vanguard",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.05,
     tags: ["EDH", "Vanguard"],
     showSwaps: false,
     players: canAny,
@@ -314,8 +318,7 @@ export const FORMATS = [
   },
   {
     name: "Hike Mode",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.025,
     tags: ["Hike Mode"],
     showSwaps: true,
     players: canAny,
@@ -323,8 +326,7 @@ export const FORMATS = [
   {
     name: "Hike Mode Deck Swaps",
     displayName: "Hike Mode",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.025,
     tags: ["Hike Mode", "Deck Swaps"],
     showSwaps: true,
     players: canAny,
@@ -339,20 +341,20 @@ export const FORMATS = [
   {
     name: "Pentacle Deck Swaps",
     displayName: "Pentacle",
-    initial: 0.5,
+    initial: 0.25,
     tags: ["Pentacle", "Deck Swaps"],
     showSwaps: true,
     players: canPentacle,
   },
   {
     name: "Planechase ",
-    initial: 0.5,
+    initial: 0.05,
     tags: ["Planechase"],
     players: canAny,
   },
   {
     name: "Planechase EDH",
-    initial: 0.5,
+    initial: 0.05,
     tags: ["Planechase", "EDH"],
     players: canAny,
   },
@@ -372,14 +374,14 @@ export const FORMATS = [
   {
     name: "SYB Deck Swaps",
     displayName: "SYB",
-    initial: 0.5,
+    initial: 0.25,
     tags: ["SYB", "Deck Swaps"],
     showSwaps: true,
     players: canAny,
   },
   {
     name: "SYB Multi",
-    initial: 0.5,
+    initial: 0.25,
     tags: ["SYB Multi"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
@@ -387,7 +389,7 @@ export const FORMATS = [
   {
     name: "SYB Multi Deck Swaps",
     displayName: "SYB Multi",
-    initial: 0.5,
+    initial: 0.125,
     tags: ["SYB Multi", "Deck Swaps"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
@@ -422,8 +424,7 @@ export const FORMATS = [
   {
     name: "Vanguard",
     displayName: "Vanguard",
-    initial: 0.5,
-    weight: 0.5,
+    initial: 0.05,
     tags: ["Vanguard"],
     showSwaps: false,
     players: canAny,
