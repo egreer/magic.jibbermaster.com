@@ -67,6 +67,10 @@ export const Formats = () => {
     DEFAULT_PLAYERS
   );
   const [tags, setTags] = useLocalState("formats-tags", createTags());
+  const [displayWeights, setDisplayWeights] = useLocalState(
+    "formats-display-weights",
+    false
+  );
   const [currentFormats, setCurrentFormats] = useLocalState(
     "formats-current",
     createFormats()
@@ -224,7 +228,8 @@ export const Formats = () => {
 
   const ActiveFormats = () => {
     const formats = activeFormats();
-    if (formats) {
+
+    if (formats && displayWeights) {
       const formatTags = formats.map((f) => {
         return (
           <div
@@ -250,6 +255,8 @@ export const Formats = () => {
       });
       return formatTags;
     }
+
+    return null;
   };
 
   const FormatDescriptions = () => {
@@ -342,6 +349,12 @@ export const Formats = () => {
       </div>
       <div className="mb-5 noselect">
         <ActiveFormats />
+        <DoubleFaceButton
+          onClick={() => setDisplayWeights(!displayWeights)}
+          enabled={displayWeights}
+          text={"Controls"}
+          className="my-5"
+        />
       </div>
       <div className="mb-5 noselect">
         <FormatDescriptions />
