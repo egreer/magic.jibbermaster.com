@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.75ef3502.css",
-    "main.js": "/static/js/main.d3159e80.js",
+    "main.css": "/static/css/main.0d6f3524.css",
+    "main.js": "/static/js/main.1da625fe.js",
+    "static/media/planechase-back.png": "/static/media/planechase-back.e107504fb179edc2ed80.png",
+    "static/media/classic-back.png": "/static/media/classic-back.125a80aad275b1f8c6a3.png",
+    "static/media/archenemy-back.png": "/static/media/archenemy-back.4fe071c3eafa38cdd522.png",
     "static/media/blank-front.png": "/static/media/blank-front.16e3055fda4409ee868d.png",
     "static/media/contraption-back.jpg": "/static/media/contraption-back.782864c5e498989f89ba.jpg",
     "static/media/arena-back.png": "/static/media/arena-back.8aa7dc1faa00e74910e8.png",
-    "static/media/planechase-back.jpg": "/static/media/planechase-back.e5e428e7ea8d2e2a4db1.jpg",
-    "static/media/archenemy-back.jpg": "/static/media/archenemy-back.db7ab2505710cecb40d1.jpg",
     "static/media/attraction-back.jpg": "/static/media/attraction-back.143df0f2fd50ebbf652c.jpg",
-    "static/media/classic-back.jpg": "/static/media/classic-back.a8e7574b2243b8e49377.jpg",
     "index.html": "/index.html",
-    "main.75ef3502.css.map": "/static/css/main.75ef3502.css.map",
-    "main.d3159e80.js.map": "/static/js/main.d3159e80.js.map"
+    "main.0d6f3524.css.map": "/static/css/main.0d6f3524.css.map",
+    "main.1da625fe.js.map": "/static/js/main.1da625fe.js.map"
   },
   "entrypoints": [
-    "static/css/main.75ef3502.css",
-    "static/js/main.d3159e80.js"
+    "static/css/main.0d6f3524.css",
+    "static/js/main.1da625fe.js"
   ]
 }
