@@ -247,7 +247,7 @@ export const Attractions = () => {
                         fluid
                         src={attractionBack}
                         alt="Attraction Back"
-                        className="px-5"
+                        className="mx-5 mtg-card"
                       ></Image>
                     </Col>
                   )}

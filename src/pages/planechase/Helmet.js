@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { gathererImageURL } from "../../mtg/card.js";
+import { scryfallImageURL } from "../../mtg/card.js";
 
 export const PlanechaseHelmet = ({ planes }) => {
   return (
@@ -36,7 +36,7 @@ export const PlanechaseHelmet = ({ planes }) => {
         planes.map((p) => (
           <link
             rel="preload"
-            href={gathererImageURL(p)}
+            href={scryfallImageURL(p)}
             as="image"
             key={p.id}
           />

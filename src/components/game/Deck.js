@@ -38,7 +38,11 @@ export const Deck = ({ CardType, name = "" }) => {
               <ListGroup>
                 {deck.map((card, i) => (
                   <React.Fragment key={card.deck_card_id}>
-                    <CardType card={card} listDisplay={!showDeckImages} />
+                    <CardType
+                      card={card}
+                      listDisplay={!showDeckImages}
+                      displayTypeLine={true}
+                    />
                     <ListGroup.Item className="text-center justify-content-center d-flex">
                       <ButtonToolbar>
                         <LoyaltyButtonGroup

@@ -1,6 +1,6 @@
+import pluralize from "pluralize";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import pluralize from "pluralize";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { Deck } from "../../components/game/Deck";
@@ -8,25 +8,25 @@ import { History } from "../../components/game/History";
 import { Loading } from "../../components/Loading";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { useLocalState } from "../../hooks/useLocalState";
+import { ARENA_BACK, hasCustomProperty } from "../../mtg/card";
+import { drawCard, getOrCreateCurrentDeck } from "../../mtg/deck";
 import { DeckProvider, useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
-import { ChaosButton } from "../planechase/ChaosButton";
-import { CurrentDie } from "./Die";
-import { HikeHelmet } from "./Helmet";
-import { Rules } from "./Rules";
-import { CUSTOM_CHAOS } from "./data/chaos";
-import { CUSTOM_PLANES } from "./data/planes";
-import { getOrCreateCurrentDeck, drawCard } from "../../mtg/deck";
-import { hasCustomProperty } from "../../mtg/card";
+import { addAdditionalProperties } from "../../util/additionalProps";
 import {
   filterAPI,
   getAllHikeModeChaosCards,
   getAllHikeModePlaneCards,
   internet,
 } from "../../util/api";
-import { RandomCardModal } from "../../components/RandomCardModal";
-import { addAdditionalProperties } from "../../util/additionalProps";
+import { ChaosButton } from "../planechase/ChaosButton";
+import { CUSTOM_CHAOS } from "./data/chaos";
+import { CUSTOM_PLANES } from "./data/planes";
+import { CurrentDie } from "./Die";
+import { HikeHelmet } from "./Helmet";
+import { Rules } from "./Rules";
 
 const PRE_CHAOS = "hike-chaos";
 
@@ -224,7 +224,12 @@ export const Hike = () => {
           <>
             <Col xs={6}>
               <i className="ms ms-planeswalker ms-4x ms-mechanic mb-3" />
-              <MtgCard card={currentCard} displayActions="true">
+              <MtgCard
+                card={currentCard}
+                displayActions={true}
+                displayTextWhenRotated={true}
+                displayHikeErrata={true}
+              >
                 <ChaosButton card={currentCard} onClick={triggerChaos} />
               </MtgCard>
             </Col>
@@ -232,8 +237,9 @@ export const Hike = () => {
               <i className="ms ms-chaos ms-4x ms-mechanic mb-3" />
               <MtgCard
                 card={currentChaosCard}
-                displayActions="true"
-                altBack={true}
+                displayActions={true}
+                back={ARENA_BACK}
+                displayHikeErrata={true}
               >
                 <ChaosButton card={currentChaosCard} onClick={triggerChaos} />
               </MtgCard>
@@ -245,7 +251,7 @@ export const Hike = () => {
               <MtgCard />
             </Col>
             <Col sm={6}>
-              <MtgCard altBack={true} />
+              <MtgCard back={ARENA_BACK} />
             </Col>
           </>
         )}
@@ -257,7 +263,11 @@ export const Hike = () => {
           {[...customPlanes, ...customChaos].map((c, i) => {
             return (
               <div className="col-6 mb-2" key={i}>
-                <MtgCard card={c} displayActions="true">
+                <MtgCard
+                  card={c}
+                  displayActions={true}
+                  displayHikeErrata={true}
+                >
                   <ChaosButton card={c} onClick={() => triggerChaos(c)} />
                 </MtgCard>
               </div>

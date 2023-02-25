@@ -25,10 +25,28 @@
   padding-top: 25%;
 }
 
-.counter-overlay {
-  padding-top: 15%;
+.rotated {
+  $rotate: rotate(90deg);
+  $translate: translate(0, -100%);
+  $scale: scale(0.685);
 
-  &.scheme-overlay {
-    padding-top: 25%;
+  &.card_image {
+    transform: $rotate $translate;
+    display: block;
+    transform-origin: top left;
+    margin-top: -35%;
+
+    &.scaled {
+      transform: $rotate $scale $translate;
+    }
+  }
+
+  &.card_image__outer {
+    display: "table";
+  }
+
+  &.card_image__inner {
+    padding: 35% 0;
+    height: 0;
   }
 }

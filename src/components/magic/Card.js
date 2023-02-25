@@ -1,73 +1,76 @@
-import React, { useState } from "react";
-import { Button, Card, ListGroup, Modal } from "react-bootstrap";
-import { Textfit } from "react-textfit";
-import classicBack from "../../images/classic-back.jpg";
-import arenaBack from "../../images/arena-back.png";
-import blankFront from "../../images/blank-front.png";
-import { Counter } from "./Counter";
-import "./planes.scss";
-
-import { hasCustomProperty, rotatedLayout } from "../../mtg/card.js";
-import { CardText } from "./CardText";
 import cn from "classnames";
+import React, { useCallback, useState } from "react";
+import { Button, Card, Col, ListGroup, Modal, Row } from "react-bootstrap";
+import { Textfit } from "react-textfit";
 import { useSettings } from "../../hooks/useSettings";
+import blankFront from "../../images/blank-front.png";
+import {
+  CLASSIC_BACK,
+  hasCustomProperty,
+  rotatedLayout,
+  scryfallImageURL,
+} from "../../mtg/card.js";
 import { createMarkup } from "../../util/createMarkup";
-import ReactDOMServer from "react-dom/server";
+import { reactToBool } from "../../util/react";
 import { CardLinks } from "./CardLinks";
+import { CardText } from "./CardText";
+import { Counter } from "./Counter";
 import { EmDashIcon } from "./Icons";
+import "./planes.scss";
 
 export const MtgCard = ({
   listDisplay,
   card,
   displayActions,
   children,
-  altBack = false,
+  back = CLASSIC_BACK,
   displayChildrenBelow = true,
+  displayHikeErrata = false,
+  displayTextWhenRotated = false,
+  displayTypeLine = false,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-
   const { displayImages } = useSettings();
 
+  const toggleModal = useCallback(() => {
+    console.log("Toggle Modal");
+    setModalOpen((isOpen) => !isOpen);
+  }, [setModalOpen]);
+
+  const toggleFullScreen = useCallback(() => {
+    console.log("Toggle FullScreen");
+    setFullscreen((isFullscreen) => !isFullscreen);
+  }, [setFullscreen]);
+
+  const emptyChildren = !reactToBool(children);
+
   const hasCounters = hasCustomProperty("counter", card);
-  const errata = hasCustomProperty("errata", card);
+  const errata = displayHikeErrata && hasCustomProperty("errata", card);
   const token = hasCustomProperty("token", card);
-  const phenomenon = hasCustomProperty("phenomenon", card);
-  const chaosomenon = hasCustomProperty("chaosomenon", card);
+  const phenomenon = displayHikeErrata && hasCustomProperty("phenomenon", card);
+  const chaosomenon =
+    displayHikeErrata && hasCustomProperty("chaosomenon", card);
   const chaosX = hasCustomProperty("chaos_x", card);
   const urlProp = hasCustomProperty("url", card);
-  const emptyChildren = !Boolean(ReactDOMServer.renderToStaticMarkup(children));
 
-  const back = altBack ? arenaBack : classicBack;
   const isRotated = rotatedLayout(card);
-  const cardStyle = isRotated
-    ? { transform: "rotate(90deg) scale(0.7) translate(-50%)" }
-    : {};
 
-  const counterStyle = isRotated ? { transform: "translateY(110%)" } : {};
+  const text = CardText({
+    card,
+    showText: displayTextWhenRotated && isRotated,
+  });
+
   const isBlank = card?.show_blank;
   const imageURI = card
     ? isBlank
       ? blankFront
-      : card.image_uris.border_crop
+      : scryfallImageURL(card)
     : back;
 
-  const counter = displayActions && hasCounters && (
-    <Counter card={card} style={counterStyle} />
-  );
-
-  const toggleModal = () => {
-    console.log("Toggle Modal");
-    setModalOpen((isOpen) => !isOpen);
-  };
-
-  const toggleFullScreen = () => {
-    console.log("Toggle FullScreen");
-    setFullscreen((isFullscreen) => !isFullscreen);
-  };
+  const counter = displayActions && hasCounters && <Counter card={card} />;
 
   const renderBody = () => {
-    const text = CardText({ card, showText: isRotated });
     const hasBody = !!text;
 
     return (
@@ -165,21 +168,28 @@ export const MtgCard = ({
     );
   };
 
-  const renderCardImage = () => (
-    <Card.Img
-      variant="top"
-      width="100%"
-      src={imageURI}
-      className="mtg-card mtg-card-card no-border"
-      style={cardStyle}
-    />
+  const renderCardImage = ({ scaled } = { scaled: true }) => (
+    <div className={cn("card_image__outer", { rotated: isRotated })}>
+      <div className={cn("card_image__inner", { rotated: isRotated })}>
+        <Card.Img
+          variant="top"
+          width="100%"
+          src={imageURI}
+          className={cn("card_image", {
+            rotated: isRotated,
+            scaled: scaled,
+          })}
+        />
+      </div>
+    </div>
   );
 
-  const renderImage = () => {
+  const renderImage = ({ scaled } = { scaled: true }) => {
     if (displayImages) {
       return (
         <>
-          <div onDoubleClick={toggleFullScreen}>{renderCardImage()}</div>
+          {renderCardImage()}
+
           <Modal
             show={fullscreen}
             onHide={toggleFullScreen}
@@ -192,7 +202,7 @@ export const MtgCard = ({
               centered="true"
               onClick={toggleFullScreen}
             >
-              {renderCardImage()}
+              {renderCardImage({ scaled })}
             </Modal.Body>
           </Modal>
         </>
@@ -254,6 +264,8 @@ export const MtgCard = ({
           className={cn("text-center card-overlay", {
             "child-overlay": !emptyChildren && !isBlank,
             "counter-overlay": emptyChildren && hasCounters,
+            "d-flex align-items-center justify-content-center":
+              emptyChildren && hasCounters,
           })}
         >
           <Card.Title className={cn("text-center", { "h-100": isBlank })}>
@@ -278,7 +290,12 @@ export const MtgCard = ({
     return (
       <>
         <ListGroup.Item variant="dark" onClick={toggleModal}>
-          <div>{card.name}</div>
+          <Row>
+            <Col>{card.name}</Col>
+            {displayTypeLine && (
+              <Col className="font-italic">{card.type_line}</Col>
+            )}
+          </Row>
         </ListGroup.Item>
         <Modal
           show={modalOpen}
@@ -288,7 +305,10 @@ export const MtgCard = ({
           dialogClassName="modal-content-no-border"
         >
           <Modal.Body className="p-0" centered="true">
-            <Card card={card} />
+            <Card bg="black" text="light" className={"mtg-standard-card"}>
+              {renderImage({ scaled: false })}
+              {renderComponents()}
+            </Card>
             {children}
           </Modal.Body>
         </Modal>
@@ -297,7 +317,7 @@ export const MtgCard = ({
   } else {
     return (
       <>
-        <Card bg="black" text="light" className="mtg-standard-card">
+        <Card bg="black" text="light" className={"mtg-standard-card"}>
           {renderImage()}
           {renderComponents()}
           <CardLinks card={card} />

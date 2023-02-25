@@ -1,25 +1,25 @@
+import pluralize from "pluralize";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Fade } from "react-bootstrap";
-import pluralize from "pluralize";
-import { PlanechaseHelmet } from "./Helmet";
-import { shuffleArray } from "../../util/shuffleArray";
-import { hasCustomProperty } from "../../mtg/card.js";
-import { getAllPlanechaseCards } from "../../util/api.js";
-import { Loading } from "../../components/Loading";
 import { Confirm } from "../../components/Confirm";
-import { Plane } from "../../components/magic/Plane";
-import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
-import { DoubleFaceButton } from "../../components/magic/Buttons";
-import { useDeckContext } from "../../mtg/DeckContext";
-import { History } from "../../components/game/History";
-import { Deck } from "../../components/game/Deck";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
-import { ScryModal } from "./ScryModal";
-import { ChaosButton } from "./ChaosButton";
-import { TripleChaosModal } from "./TripleChaosModal";
-import { useGameContext } from "../../mtg/GameContext";
+import { Deck } from "../../components/game/Deck";
+import { History } from "../../components/game/History";
+import { Loading } from "../../components/Loading";
+import { DoubleFaceButton } from "../../components/magic/Buttons";
+import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
+import { Plane } from "../../components/magic/Plane";
 import { useLocalState } from "../../hooks/useLocalState";
+import { hasCustomProperty } from "../../mtg/card.js";
+import { useDeckContext } from "../../mtg/DeckContext";
+import { useGameContext } from "../../mtg/GameContext";
+import { getAllPlanechaseCards } from "../../util/api.js";
+import { shuffleArray } from "../../util/shuffleArray";
+import { ChaosButton } from "./ChaosButton";
+import { PlanechaseHelmet } from "./Helmet";
+import { ScryModal } from "./ScryModal";
+import { TripleChaosModal } from "./TripleChaosModal";
 
 export const Planechase = () => {
   const [loading, setLoading] = useState(true);
@@ -72,7 +72,7 @@ export const Planechase = () => {
   }, [setTripleChaosModalOpen, revealedCards, currentCard]);
 
   const planeswalk = ({ card }) => {
-    const newCard = card || deck.drawCard();
+    const newCard = card ?? deck.drawCard() ?? null;
     game.setCurrentCard(newCard);
     let newRevealedCards = [];
     let newAdditionalCards = [];
@@ -151,7 +151,7 @@ export const Planechase = () => {
           </Alert>
           {revealedPlanes.map((c) => (
             <React.Fragment key={c.deck_card_id}>
-              <Plane card={c} displayActions="true">
+              <Plane card={c} displayActions={true}>
                 <ChaosButton card={c} onClick={triggerChaos} />
               </Plane>
             </React.Fragment>
@@ -226,7 +226,7 @@ export const Planechase = () => {
 
   return (
     <div className="planechase">
-      <PlanechaseHelmet planes={planes} cardType={Plane} />
+      <PlanechaseHelmet planes={planes} />
       <ActionButton
         text="Planeswalk"
         onClick={planeswalk}
@@ -239,7 +239,7 @@ export const Planechase = () => {
         <div className="mb-2">
           {currentCard ? (
             <Fade key={currentCard.deck_card_id} timeout={100}>
-              <Plane card={currentCard} displayActions="true">
+              <Plane card={currentCard} displayActions={true}>
                 <ChaosButton card={currentCard} onClick={triggerChaos} />
               </Plane>
             </Fade>

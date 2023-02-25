@@ -1,22 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Fade, Jumbotron, Container } from "react-bootstrap";
 import pluralize from "pluralize";
-
-import { ArchenemyHelmet } from "./Helmet";
-import { getAllArchenemyCards } from "../../util/api.js";
-import { Scheme } from "../../components/magic/Scheme";
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert, Button, Container, Fade, Jumbotron } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
-import { Loading } from "../../components/Loading";
-
-import { useDeckContext } from "../../mtg/DeckContext";
-import { History } from "../../components/game/History";
-import { Deck } from "../../components/game/Deck";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
+import { Deck } from "../../components/game/Deck";
+import { History } from "../../components/game/History";
+import { Loading } from "../../components/Loading";
+import { Scheme } from "../../components/magic/Scheme";
+import { useLocalState } from "../../hooks/useLocalState";
+import { useDeckContext } from "../../mtg/DeckContext";
+import { useGameContext } from "../../mtg/GameContext";
+import { getAllArchenemyCards } from "../../util/api.js";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
-import { useGameContext } from "../../mtg/GameContext";
-import { useLocalState } from "../../hooks/useLocalState";
+import { ArchenemyHelmet } from "./Helmet";
 
 export const Archenemy = () => {
   const [loading, setLoading] = useState(true);
@@ -56,7 +54,7 @@ export const Archenemy = () => {
         ongoingSchemes.push(currentCard);
       }
     }
-    const newCard = deck.drawCard();
+    const newCard = deck.drawCard() ?? null;
     game.setCurrentCard(newCard);
     game.setAdditionalCards(ongoingSchemes);
     game.setCurrentCard(newCard);
@@ -96,7 +94,7 @@ export const Archenemy = () => {
         {loading ? (
           <Loading className="text-muted" />
         ) : (
-          <div className="pt-2 mb-2 d-flex justify-content-center">
+          <div className="pt-2 mb-2 mtg-scheme-card">
             {abandonedOngoing ? (
               <Jumbotron className="bg-danger text-center" fluid>
                 <Container fluid>
@@ -105,7 +103,7 @@ export const Archenemy = () => {
               </Jumbotron>
             ) : currentCard ? (
               <Fade key={currentCard?.deck_card_id} timeout={100}>
-                <Scheme card={currentCard} displayActions="true">
+                <Scheme card={currentCard} displayActions={true}>
                   <AbandonButton card={currentCard} onClick={abandonScheme} />
                 </Scheme>
               </Fade>
@@ -142,10 +140,10 @@ export const Archenemy = () => {
           <Alert variant="info" className="text-center">
             <h5>Ongoing Schemes</h5>
           </Alert>
-          <div className="d-flex justify-content-center flex-wrap ">
+          <div className="d-flex justify-content-center flex-wrap mtg-scheme-card">
             {ongoingSchemes.map((c) => (
               <React.Fragment key={c.deck_card_id}>
-                <Scheme card={c} displayActions="true">
+                <Scheme card={c} displayActions={true}>
                   <AbandonButton card={c} onClick={abandonScheme} />
                 </Scheme>
               </React.Fragment>

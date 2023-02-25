@@ -52,7 +52,7 @@ export const CardTypeListModal = ({
           </p>
           <Row>
             {filteredCards?.map((card) => (
-              <Col md={6} key={card.id}>
+              <Col md={6} key={card.id} className={"mb-1"}>
                 <MtgCard card={card} displayChildrenBelow={false}>
                   <Button
                     onClick={() => onSelect({ card })}
