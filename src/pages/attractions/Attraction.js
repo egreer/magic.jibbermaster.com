@@ -157,7 +157,7 @@ export const Attractions = () => {
   return (
     <div className="attractions">
       <Helmet title="Attractions" />
-      <Row className="my-4 text-center">
+      <Row className="my-5 text-center">
         <Col>
           <h1>{playerCount} Players</h1>
           <LoyaltyButtonGroup
@@ -185,36 +185,38 @@ export const Attractions = () => {
           return (
             <Carousel.Item
               key={player}
-              className="my-5"
+              className="my-4"
               style={{ minHeight: "1vh" }}
             >
-              <h2 className="text-center mb-3" onClick={() => setLabel(player)}>
+              <h2 className="text-center mb-5" onClick={() => setLabel(player)}>
                 {labels[player] || `Player ${playerLabel}`}
                 <sup>
                   <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
                 </sup>
               </h2>
-              <Row className="my-3 mx-5">
-                <Col sm={6} className="mb-3 mb-sm-2">
-                  <Button
-                    onClick={() => _randomTokenModalOpen(player)}
-                    block
-                    variant="primary"
-                  >
-                    {ATTRACTION_PROP.action} Random {ATTRACTION_PROP.type}
-                  </Button>
-                </Col>
-                <Col sm={6} className="mb-3 mb-sm-2">
-                  <Button
-                    onClick={() => _selectAttractionModalOpen(player)}
-                    block
-                    variant="info"
-                    className="h-100"
-                  >
-                    {ATTRACTION_PROP.action} Select {ATTRACTION_PROP.type}
-                  </Button>
-                </Col>
-              </Row>
+              <Container>
+                <Row className="my-3 mx-5">
+                  <Col sm={6} className="mb-3 mb-sm-2">
+                    <Button
+                      onClick={() => _randomTokenModalOpen(player)}
+                      block
+                      variant="primary"
+                    >
+                      {ATTRACTION_PROP.action} Random {ATTRACTION_PROP.type}
+                    </Button>
+                  </Col>
+                  <Col sm={6} className="mb-3 mb-sm-2">
+                    <Button
+                      onClick={() => _selectAttractionModalOpen(player)}
+                      block
+                      variant="info"
+                      className="h-100"
+                    >
+                      {ATTRACTION_PROP.action} Select {ATTRACTION_PROP.type}
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
               <Container>
                 <Row>
                   <Col sm={12}>
@@ -241,7 +243,7 @@ export const Attractions = () => {
                   {playerAttractions?.length ? (
                     ""
                   ) : (
-                    <Col className="text-center">
+                    <Col className="d-flex justify-content-center">
                       <p>None</p>
                       <Image
                         fluid

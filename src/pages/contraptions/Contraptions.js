@@ -2,7 +2,7 @@ import concat from "lodash/concat";
 import get from "lodash/get";
 import set from "lodash/set";
 import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Image, Row } from "react-bootstrap";
+import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Helmet } from "react-helmet-async";
 import uuidv4 from "uuid/v4";
@@ -220,36 +220,39 @@ export const Contraptions = () => {
           return (
             <Carousel.Item
               key={player}
-              className="my-5"
+              className="my-4"
               style={{ minHeight: "1vh" }}
             >
-              <h2 className="text-center mb-3" onClick={() => setLabel(player)}>
+              <h2 className="text-center mb-5" onClick={() => setLabel(player)}>
                 {labels[player] || `Player ${playerLabel}`}
                 <sup>
                   <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
                 </sup>
               </h2>
-              <Row className="my-3 mx-5">
-                <Col sm={6} className="mb-3 mb-sm-2">
-                  <Button
-                    onClick={() => _randomTokenModalOpen(player)}
-                    block
-                    variant="primary"
-                  >
-                    Assemble Random Contraption
-                  </Button>
-                </Col>
-                <Col sm={6} className="mb-3 mb-sm-2">
-                  <Button
-                    onClick={() => _selectContraptionModalOpen(player)}
-                    block
-                    variant="info"
-                    className="h-100"
-                  >
-                    Assemble Select Contraption
-                  </Button>
-                </Col>
-              </Row>
+
+              <Container>
+                <Row className="my-3 mx-5">
+                  <Col sm={6} className="mb-3 mb-sm-2">
+                    <Button
+                      onClick={() => _randomTokenModalOpen(player)}
+                      block
+                      variant="primary"
+                    >
+                      Assemble Random Contraption
+                    </Button>
+                  </Col>
+                  <Col sm={6} className="mb-3 mb-sm-2">
+                    <Button
+                      onClick={() => _selectContraptionModalOpen(player)}
+                      block
+                      variant="info"
+                      className="h-100"
+                    >
+                      Assemble Select Contraption
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
               <Row className="my-3">
                 <Col md={{ span: 8, offset: 2 }}>
                   <Image
