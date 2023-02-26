@@ -1,6 +1,6 @@
 import pluralize from "pluralize";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { Deck } from "../../components/game/Deck";
@@ -164,7 +164,7 @@ export const Hike = () => {
 
   // TODO: Chaos Card
   return (
-    <div className="hikemode">
+    <Container className="hikemode" fluid>
       <HikeHelmet cards={cards.concat(chaosCards)} />
       <Row className="my-4 text-center">
         <Col>
@@ -183,8 +183,7 @@ export const Hike = () => {
           <Button
             onClick={planeswalk}
             disabled={loading}
-            className="btn-translucent my-3"
-            block
+            className="btn-translucent my-3 w-100"
           >
             <i className="ms ms-planeswalker ms-2x mx-2" />
             <span className="mx-2 d-none d-sm-inline">Planeswalk</span>
@@ -195,10 +194,9 @@ export const Hike = () => {
         <Col xs={6}>
           <Button
             onClick={planeshift}
-            className="btn-translucent my-3"
+            className="btn-translucent my-3  w-100"
             variant="info"
             disabled={loading}
-            block
           >
             <i className="ss ss-fw ss-2x ss-fut mx-2" />
             <span className="mx-2 d-none d-sm-inline">Planes Hike</span>
@@ -207,10 +205,9 @@ export const Hike = () => {
         <Col xs={6}>
           <Button
             onClick={chaosshift}
-            className="btn-translucent my-3"
+            className="btn-translucent my-3  w-100"
             variant="warning"
             disabled={loading}
-            block
           >
             <i className="ms ms-fw ms-2x ms-phenomenon mx-2" />
             <span className="mx-2 d-none d-sm-inline">Chaos Hike</span>
@@ -247,10 +244,10 @@ export const Hike = () => {
           </>
         ) : (
           <>
-            <Col sm={6}>
+            <Col xs={6}>
               <MtgCard />
             </Col>
-            <Col sm={6}>
+            <Col xs={6}>
               <MtgCard back={ARENA_BACK} />
             </Col>
           </>
@@ -302,11 +299,11 @@ export const Hike = () => {
         triggerText="Reset"
         confirmText="Reset"
         confirmVariant="danger"
-        triggerButtonParams={{ variant: "danger", block: true }}
+        triggerButtonParams={{ variant: "danger", className: "w-100 my-4" }}
       />
 
       <DevTools>
-        <Button onClick={undo} variant="warning" block>
+        <Button onClick={undo} variant="warning">
           Undo
         </Button>
         <Deck CardType={MtgCard} name="Plane" />
@@ -327,6 +324,6 @@ export const Hike = () => {
           enabled={showAllCustom}
         />
       </DevTools>
-    </div>
+    </Container>
   );
 };

@@ -26,7 +26,7 @@ export const Navigation = () => {
 
   const Toggler = ({ value, text, onClick }) => (
     <Dropdown.Item onClick={onClick}>
-      <DoubleFaceIcon enabled={value} />
+      <DoubleFaceIcon enabled={value} backdrop />
       <span className="ml-3">{text}</span>
     </Dropdown.Item>
   );
@@ -46,7 +46,7 @@ export const Navigation = () => {
   );
 
   const NavDropdownItem = ({ to, text }) => (
-    <NavDropdown.Item as={RRNavLink} to={to}>
+    <NavDropdown.Item as={RRNavLink} to={to} onClick={closeNavbar}>
       {text}
     </NavDropdown.Item>
   );
@@ -65,21 +65,29 @@ export const Navigation = () => {
           <NavItem to="/" text="Home" />
           <NavItem to="/syb" text="SYB" />
           <NavItem to="/formats" text="Formats" />
-          <NavDropdown title="Game Modes" id="game-modes-nav-dropdown">
+          <NavDropdown
+            title="Game Modes"
+            id="game-modes-nav-dropdown"
+            menuVariant="dark"
+          >
             <NavDropdownItem to="/archenemy" text="Archenemy" />
             <NavDropdownItem to="/planechase" text="Planechase" />
             <NavDropdownItem to="/hike" text="Hike" />
             <NavDropdownItem to="/vanguard" text="Vanguard" />
           </NavDropdown>
-          <NavDropdown title="Trackers" id="tracker-nav-dropdown">
+          <NavDropdown
+            title="Trackers"
+            id="tracker-nav-dropdown"
+            menuVariant="dark"
+          >
             <NavDropdownItem to="/attractions" text="Attractions" />
-            <NavDropdownItem to="/day-night" text="Day-Night" />
             <NavDropdownItem to="/contraptions" text="Contraptions" />
+            <NavDropdownItem to="/day-night" text="Day-Night" />
             <NavDropdownItem to="/slivers" text="Slivers" />
           </NavDropdown>
           <Dropdown navbar onToggle={(open) => !open && closeNavbar()}>
             <Dropdown.Toggle as={Nav.Link}>Settings</Dropdown.Toggle>
-            <Dropdown.Menu alignRight>
+            <Dropdown.Menu align="end" variant="dark">
               <Toggler
                 value={disclaimerDismissed}
                 text="Disclaimer Dismissed"

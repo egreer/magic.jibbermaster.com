@@ -1,3 +1,4 @@
+import cn from "classnames";
 import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import { DoubleFaceIcon } from "./DoubleFaceIcon";
@@ -70,7 +71,7 @@ export const DoubleFaceButton = ({
 }) => (
   <Button
     {...props}
-    block
+    className={cn("w-100", props?.className)}
     variant={highlight && enabled ? "info" : "secondary"}
   >
     <span className="mr-2">{text}</span>
@@ -79,8 +80,13 @@ export const DoubleFaceButton = ({
 );
 
 export const DoubleFaceHighlightButton = ({ enabled, text, ...props }) => (
-  <Button size="sm" block {...props} variant={enabled ? "info" : "secondary"}>
-    <div className="float-left">
+  <Button
+    size="sm"
+    className="w-100"
+    {...props}
+    variant={enabled ? "info" : "secondary"}
+  >
+    <div className="float-start">
       <DoubleFaceIcon enabled={enabled} invert />
     </div>
     <div className="d-inline">{text}</div>

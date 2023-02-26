@@ -9,7 +9,7 @@ export const History = ({ history, CardType }) => {
       <Button
         onClick={() => setShowHistory(!showHistory)}
         variant="secondary"
-        block
+        className="w-100"
       >
         {showHistory ? "Hide" : "Show"} History
       </Button>

@@ -1,5 +1,5 @@
 import store from "store/dist/store.modern";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 
 export const moveCard = (prefix, from, to) => {
   const deck = getCurrentDeck(prefix);

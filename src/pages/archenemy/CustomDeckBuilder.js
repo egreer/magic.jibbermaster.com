@@ -8,9 +8,10 @@ import {
   Card,
   ListGroup,
 } from "react-bootstrap";
-import { Scheme } from "../../components/magic/Scheme";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
+import { Scheme } from "../../components/magic/Scheme";
 import { DeckCardTitle } from "./DeckCardTitle";
+import { DecklistButton } from "./DecklistButton";
 
 export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
   const [customDeck, setCustomDeck] = useState([]);
@@ -58,7 +59,7 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
       <Scheme card={card} />
       <div className="text-center">
         <h1>
-          <Badge pill variant={card.count > 0 ? "success" : "dark"}>
+          <Badge pill bg={card.count > 0 ? "success" : "dark"}>
             x{card.count}
           </Badge>
         </h1>
@@ -76,52 +77,54 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
     </ListGroup.Item>
   ));
 
+  const eventKey = "custom-deck-toggle";
+
   return (
     <Accordion>
-      <Card className="noselect">
-        <Card.Body>
-          <DeckCardTitle name={deckName} />
-          <Accordion.Toggle
-            as={Button}
-            block
-            eventKey="custom-deck-toggle"
-            variant="secondary"
-          >
-            Build Custom
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="custom-deck-toggle">
-            <>
-              <div className="fixed-top mt-1 ml-1 text-left">
-                <Alert variant="info" className="clearfix">
-                  <h4 className="float-left">
-                    Custom Deck Size: {customDeckSize()}
-                  </h4>
-                  <ButtonGroup className="float-right">
-                    <Button variant="danger" onClick={resetCustomDeck}>
-                      Reset
-                    </Button>
-                    <Button
-                      variant="success"
-                      onClick={() => onSelectDeck("Custom", customDeck)}
-                    >
-                      Use Deck
-                    </Button>
-                  </ButtonGroup>
-                </Alert>
-              </div>
+      <Accordion.Item eventKey={eventKey} className="border-0">
+        <Card className="noselect" bg="black" text="light">
+          <Card.Body>
+            <DeckCardTitle name={deckName} />
+            <DecklistButton eventKey={eventKey}>Build Custom</DecklistButton>
+            <Accordion.Collapse eventKey="custom-deck-toggle">
+              <>
+                <div className="fixed-top mt-1 ml-1 text-start">
+                  <Alert variant="info" className="clearfix">
+                    <h4 className="float-start">
+                      Custom Deck Size: {customDeckSize()}
+                    </h4>
+                    <ButtonGroup className="float-end">
+                      <Button
+                        variant="danger"
+                        className="px-4"
+                        onClick={resetCustomDeck}
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        variant="success"
+                        className="px-4"
+                        onClick={() => onSelectDeck("Custom", customDeck)}
+                      >
+                        Use Deck
+                      </Button>
+                    </ButtonGroup>
+                  </Alert>
+                </div>
 
-              <ListGroup>{cardListItems}</ListGroup>
-            </>
-          </Accordion.Collapse>
-          <Button
-            block
-            variant="success"
-            onClick={() => onSelectDeck("Custom", customDeck)}
-          >
-            Use Custom Deck
-          </Button>
-        </Card.Body>
-      </Card>
+                <ListGroup>{cardListItems}</ListGroup>
+              </>
+            </Accordion.Collapse>
+            <Button
+              className="fill-100"
+              variant="success"
+              onClick={() => onSelectDeck("Custom", customDeck)}
+            >
+              Use Custom Deck
+            </Button>
+          </Card.Body>
+        </Card>
+      </Accordion.Item>
     </Accordion>
   );
 };

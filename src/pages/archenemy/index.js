@@ -1,6 +1,6 @@
 import pluralize from "pluralize";
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Container, Fade, Jumbotron } from "react-bootstrap";
+import { Alert, Button, Container, Fade } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
@@ -15,6 +15,12 @@ import { getAllArchenemyCards } from "../../util/api.js";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
 import { ArchenemyHelmet } from "./Helmet";
+
+const Jumbotron = ({ children }) => (
+  <div className="my-4 p-5 bg-primary text-white rounded bg-danger text-center">
+    {children}
+  </div>
+);
 
 export const Archenemy = () => {
   const [loading, setLoading] = useState(true);
@@ -127,7 +133,7 @@ export const Archenemy = () => {
           triggerText="Reset"
           confirmText="Reset"
           confirmVariant="danger"
-          triggerButtonParams={{ variant: "danger", block: true }}
+          triggerButtonParams={{ variant: "danger", className: "w-100" }}
         />
       </>
     );
@@ -181,7 +187,7 @@ export const Archenemy = () => {
   };
 
   return (
-    <div className="archenemy">
+    <Container className="archenemy" fluid>
       <ArchenemyHelmet schemes={schemes} />
       {loading ? (
         <Loading className="text-muted" />
@@ -194,11 +200,11 @@ export const Archenemy = () => {
         renderGamePlay()
       )}
       <DevTools>
-        <Button onClick={undo} variant="warning" block>
+        <Button onClick={undo} variant="warning">
           Undo
         </Button>
         <Deck CardType={Scheme} />
       </DevTools>
-    </div>
+    </Container>
   );
 };

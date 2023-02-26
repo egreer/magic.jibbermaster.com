@@ -6,7 +6,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Helmet } from "react-helmet-async";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -155,7 +155,7 @@ export const Attractions = () => {
   };
 
   return (
-    <div className="attractions">
+    <Container className="attractions" fluid>
       <Helmet title="Attractions" />
       <Row className="my-5 text-center">
         <Col>
@@ -199,7 +199,7 @@ export const Attractions = () => {
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
                       onClick={() => _randomTokenModalOpen(player)}
-                      block
+                      className="fill-100"
                       variant="primary"
                     >
                       {ATTRACTION_PROP.action} Random {ATTRACTION_PROP.type}
@@ -208,9 +208,8 @@ export const Attractions = () => {
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
                       onClick={() => _selectAttractionModalOpen(player)}
-                      block
+                      className="fill-100"
                       variant="info"
-                      className="h-100"
                     >
                       {ATTRACTION_PROP.action} Select {ATTRACTION_PROP.type}
                     </Button>
@@ -243,13 +242,13 @@ export const Attractions = () => {
                   {playerAttractions?.length ? (
                     ""
                   ) : (
-                    <Col className="d-flex justify-content-center">
-                      <p>None</p>
+                    <Col className="d-flex flex-column  justify-content-center mx-5">
+                      <p className="text-center">None</p>
                       <Image
                         fluid
                         src={attractionBack}
                         alt="Attraction Back"
-                        className="mx-5 mtg-card"
+                        className="mtg-card"
                       ></Image>
                     </Col>
                   )}
@@ -268,8 +267,7 @@ export const Attractions = () => {
         confirmVariant="danger"
         triggerButtonParams={{
           variant: "danger",
-          block: true,
-          className: "my-3",
+          className: "my-3 w-100",
         }}
       />
       <RandomCardModal
@@ -296,6 +294,6 @@ export const Attractions = () => {
       <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
         <AttractionDie rollDone={(r) => console.log(`Rolled: ${r}`)} />
       </div>
-    </div>
+    </Container>
   );
 };

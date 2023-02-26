@@ -21,7 +21,11 @@ export const Deck = ({ CardType, name = "" }) => {
 
   return (
     <div className="my-2">
-      <Button onClick={() => setShowDeck(!showDeck)} variant="secondary" block>
+      <Button
+        onClick={() => setShowDeck(!showDeck)}
+        variant="secondary"
+        className="w-100"
+      >
         {showDeck ? "Hide" : "Show"} {name} Deck
       </Button>
       <Fade in={showDeck}>
@@ -31,7 +35,7 @@ export const Deck = ({ CardType, name = "" }) => {
               <Button
                 onClick={() => setShowDeckImages(!showDeckImages)}
                 variant="secondary"
-                block
+                className="w-100 my-2"
               >
                 {showDeckImages ? "Hide" : "Show"} Full Card
               </Button>

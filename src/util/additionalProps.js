@@ -38,7 +38,6 @@ export const randomTokenProp = ({ type, action, ...props }) => {
   };
 };
 
-// TODO: update symbols to not include mx
 export const ATTRACTION_PROP = randomTokenProp({
   action: `"Open"`,
   type: "Attraction",

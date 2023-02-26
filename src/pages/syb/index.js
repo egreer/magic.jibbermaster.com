@@ -1,6 +1,13 @@
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, ButtonGroup, Col, Row, Spinner } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import { Confirm } from "../../components/Confirm";
@@ -297,7 +304,7 @@ export const SYB = () => {
   };
 
   return (
-    <div className="syb">
+    <Container className="syb" fluid>
       <SYBHelmet />
 
       <Row className="my-4 text-center">
@@ -349,8 +356,8 @@ export const SYB = () => {
         <Button
           variant="danger"
           onClick={whichWay}
-          block
           disabled={loadingDirection}
+          className="w-100"
         >
           {loadingDirection ? "Calculating..." : "Which way are we screwing?"}
         </Button>
@@ -378,7 +385,7 @@ export const SYB = () => {
         triggerText="Reset"
         confirmText="Reset"
         confirmVariant="danger"
-        triggerButtonParams={{ variant: "danger", block: true }}
+        triggerButtonParams={{ variant: "danger", className: "w-100" }}
       />
 
       <DevTools>
@@ -404,6 +411,6 @@ export const SYB = () => {
           dialog.current = component;
         }}
       />
-    </div>
+    </Container>
   );
 };

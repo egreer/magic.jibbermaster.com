@@ -19,14 +19,14 @@ export const ScryModal = ({ scryCards, open, onScryTop, onScryBottom }) => {
             <i className="ms ms-chaos mx-4" />
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Button variant="info" block onClick={onScryTop}>
+        <Modal.Body className="d-grid gap-0">
+          <Button variant="info" onClick={onScryTop}>
             Top
           </Button>
           {scryCards.map((c) => (
             <Plane card={c} key={c.deck_card_id} />
           ))}
-          <Button variant="info" block onClick={onScryBottom}>
+          <Button variant="info" onClick={onScryBottom}>
             Bottom
           </Button>
         </Modal.Body>

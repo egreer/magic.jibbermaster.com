@@ -1,44 +1,23 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
-import { Confirm } from "../../components/Confirm";
-import { FORMATS, TAGS } from "./formats";
-import { FormatsHelmet } from "./Helmet";
-
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
-
-import "rc-slider/assets/index.css";
-import "rc-tooltip/assets/bootstrap.css";
-
-import Slider from "rc-slider";
-import Tooltip from "rc-tooltip";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import { Button, Container, Spinner } from "react-bootstrap";
+import Dialog from "react-bootstrap-dialog";
+import { Confirm } from "../../components/Confirm";
 import {
   DoubleFaceButton,
   DoubleFaceHighlightButton,
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
+import TooltipSlider from "../../components/ToolTipSlider";
 import { useLocalState } from "../../hooks/useLocalState";
-import Dialog from "react-bootstrap-dialog";
+import { FORMATS, TAGS } from "./formats";
+import { FormatsHelmet } from "./Helmet";
 
 const MIN_PLAYERS = 2;
 const MAX_PLAYERS = 9;
 const DEFAULT_PLAYERS = 5;
-
-const handle = (props) => {
-  const { value, dragging, index, ...restProps } = props;
-  return (
-    <Tooltip
-      prefixCls="rc-slider-tooltip"
-      overlay={value}
-      visible={dragging}
-      placement="top"
-      key={index}
-    >
-      <Slider.Handle value={value} {...restProps} />
-    </Tooltip>
-  );
-};
 
 const createTags = () => {
   return TAGS.map((t) => {
@@ -240,13 +219,12 @@ export const Formats = () => {
               {f.name}
             </div>
             <div className="col-7">
-              <Slider
+              <TooltipSlider
                 min={0}
                 max={100}
                 marks={{ 25: "25", 50: "50", 75: "75" }}
                 defaultValue={f.weight * 100}
                 included={true}
-                handle={handle}
                 onAfterChange={(value) => updateFormatValue(f, value)}
               />
             </div>
@@ -293,7 +271,7 @@ export const Formats = () => {
     enabledTags().includes("Deck Swaps");
 
   return (
-    <div className="formats">
+    <Container className="formats" fluid>
       <FormatsHelmet />
       <div className="my-4 noselect">
         <div className="text-center">
@@ -311,7 +289,7 @@ export const Formats = () => {
           />
           <div className="text-center mb-5">
             <Button
-              block
+              className="w-100"
               variant="danger"
               onClick={pickFormat}
               disabled={loadingFormat}
@@ -347,7 +325,7 @@ export const Formats = () => {
       <div className="mb-5">
         <FormatToggles />
       </div>
-      <div className="mb-5 noselect">
+      <div className="noselect">
         <ActiveFormats />
         <DoubleFaceButton
           onClick={() => setDisplayWeights(!displayWeights)}
@@ -366,7 +344,7 @@ export const Formats = () => {
           triggerText="Reset"
           confirmText="Reset"
           confirmVariant="danger"
-          triggerButtonParams={{ variant: "danger", block: true }}
+          triggerButtonParams={{ variant: "danger", className: "w-100" }}
         />
       </div>
       <Dialog
@@ -374,6 +352,6 @@ export const Formats = () => {
           dialog.current = component;
         }}
       />
-    </div>
+    </Container>
   );
 };

@@ -1,9 +1,13 @@
 import React from "react";
+import { ARCHENEMY_BACK } from "../../mtg/card";
+import { MtgCard } from "./Card";
 import "./planes.scss";
 
-import { MtgCard } from "./Card";
-import { ARCHENEMY_BACK } from "../../mtg/card";
-
-export const Scheme = ({ ...props }) => (
-  <MtgCard displayChildrenBelow={false} back={ARCHENEMY_BACK} {...props} />
-);
+export const Scheme = React.forwardRef(({ ...props }, ref) => (
+  <MtgCard
+    displayChildrenBelow={false}
+    back={ARCHENEMY_BACK}
+    {...props}
+    ref={ref}
+  />
+));

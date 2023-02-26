@@ -1,17 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import pluralize from "pluralize";
 import Case from "case";
+import compact from "lodash/compact";
+import numeralPrefix from "numeral-prefix";
+import pluralize from "pluralize";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Accordion,
   Badge,
   Button,
   Card,
   Col,
+  Container,
   Fade,
   Form,
   InputGroup,
   Row,
+  useAccordionButton,
 } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { Confirm } from "../../components/Confirm";
 import {
   DoubleFaceButton,
   LoyaltyButtonGroup,
@@ -22,10 +28,6 @@ import { hasCustomProperty } from "../../mtg/card";
 import { ABILITIY_STACKS_PROP } from "../../util/additionalProps";
 import { getAllSliversCards } from "../../util/api";
 import { AbilityIcon } from "../../util/createMarkup";
-import { Confirm } from "../../components/Confirm";
-import numeralPrefix from "numeral-prefix";
-import compact from "lodash/compact";
-import { Helmet } from "react-helmet-async";
 
 // ABILITIY_STACKS_PROP
 const sliverProps = {
@@ -72,9 +74,18 @@ const sliverProps = {
   "Watcher Sliver": [ABILITIY_STACKS_PROP],
 };
 
-const AbilityHeader = ({ ...props }) => (
-  <Card.Header className="py-1 px-2" {...props} />
-);
+const AbilityHeader = ({ children, eventKey }) => {
+  const decoratedOnClick = useAccordionButton(eventKey);
+
+  return (
+    <div
+      className="py-1 px-2 bg-dark text-light border-secondary"
+      onClick={decoratedOnClick}
+    >
+      {children}
+    </div>
+  );
+};
 
 const parsedAbility = ({ card }) => {
   let allPlayers = false;
@@ -264,7 +275,7 @@ export const Slivers = () => {
           <MtgCard card={card} displayChildrenBelow={false} />
           <div className="text-center">
             <h1>
-              <Badge pill variant={count > 0 ? "success" : "dark"}>
+              <Badge pill bg={count > 0 ? "success" : "dark"}>
                 x{count}
               </Badge>
             </h1>
@@ -285,9 +296,9 @@ export const Slivers = () => {
   );
 
   return (
-    <div className="slivers">
+    <Container className="slivers" fluid>
       <Helmet title="Slivers" />
-      <div className="mb-3">
+      <div className="d-grid gap-1">
         <h1 className="text-center">Sliver Calculator</h1>
         <Accordion defaultActiveKey="0">
           {orderedSlivers.map((group) => {
@@ -300,24 +311,23 @@ export const Slivers = () => {
               return (
                 card &&
                 card.oracle_html && (
-                  <Card
+                  <Accordion.Item
+                    eventKey={card.id}
                     key={`ability-${card.id}`}
-                    text="light"
-                    bg="dark"
-                    border="secondary"
+                    className="bg-dark text-light border-secondary"
                   >
-                    <Accordion.Toggle as={AbilityHeader} eventKey={card.id}>
+                    <AbilityHeader eventKey={card.id}>
                       <Row>
                         <Col xs={1}>
-                          {!!allPlayers && <Badge variant="primary">ALL</Badge>}
-                          {!!youControl && <Badge variant="warning">YOU</Badge>}
+                          {!!allPlayers && <Badge bg="primary">ALL</Badge>}
+                          {!!youControl && <Badge bg="warning">YOU</Badge>}
                           {!youControl && !allPlayers && (
-                            <Badge variant="secondary">* * *</Badge>
+                            <Badge bg="secondary">* * *</Badge>
                           )}
                         </Col>
                         <Col xs={1}>
                           {!!abilityStacks && (
-                            <Badge variant="success">{`${count} x `}</Badge>
+                            <Badge bg="success">{`${count} x `}</Badge>
                           )}
                         </Col>
                         <Col>
@@ -340,13 +350,13 @@ export const Slivers = () => {
                           )}
                         </Col>
                       </Row>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey={card.id}>
+                    </AbilityHeader>
+                    <Accordion.Body>
                       <Card.Body>
                         <SliverCard card={card} />
                       </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
+                    </Accordion.Body>
+                  </Accordion.Item>
                 )
               );
             }
@@ -356,12 +366,12 @@ export const Slivers = () => {
         <Button
           onClick={() => setShowName(!showName)}
           variant="secondary"
-          block
+          className="w-100"
         >
           {showName ? "Hide" : "Show"} Name
         </Button>
         <Fade in={showName}>
-          <div className="font-italic">
+          <div className="fst-italic">
             {showName && (
               <>
                 {Case.title(
@@ -382,12 +392,12 @@ export const Slivers = () => {
         <Button
           onClick={() => setShowFlavorText(!showFlavorText)}
           variant="secondary"
-          block
+          className="w-100"
         >
           {showFlavorText ? "Hide" : "Show"} Flavor Text
         </Button>
         <Fade in={showFlavorText}>
-          <div className="font-italic">
+          <div className="fst-italic">
             {showFlavorText &&
               orderedSlivers.map((group) => {
                 const { card, count } = group;
@@ -406,7 +416,7 @@ export const Slivers = () => {
           triggerText="Reset"
           confirmText="Reset"
           confirmVariant="danger"
-          triggerButtonParams={{ variant: "danger", block: true }}
+          triggerButtonParams={{ variant: "danger", className: "w-100" }}
         />
       </div>
 
@@ -416,7 +426,7 @@ export const Slivers = () => {
           value={search}
           onChange={(a) => setSearch(a.target.value)}
         />
-        <InputGroup.Append>
+        <div>
           <DoubleFaceButton
             onClick={() => {
               setActiveOnly(!activeOnly);
@@ -425,7 +435,7 @@ export const Slivers = () => {
             text="Only Active"
             highlight
           />
-        </InputGroup.Append>
+        </div>
       </InputGroup>
       <Form.Text>
         {pluralize("Match", filteredSlivers?.length ?? 0, true)}
@@ -436,6 +446,6 @@ export const Slivers = () => {
           <SliverCard card={card} key={`col-${card.id}`} />
         ))}
       </Row>
-    </div>
+    </Container>
   );
 };

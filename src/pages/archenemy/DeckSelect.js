@@ -1,16 +1,16 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { CustomDeckBuilder } from "./CustomDeckBuilder";
 import { DeckCardTitle } from "./DeckCardTitle";
 import { Prebuilts } from "./Prebuilts";
-import { CustomDeckBuilder } from "./CustomDeckBuilder";
 
 export const DeckSelect = ({ schemes, onSelectDeck }) => (
   <>
-    <Card className="noselect">
+    <Card className="noselect" bg="black" text="white">
       <Card.Body>
         <DeckCardTitle name={"All Schemes"} />
         <Button
-          block
+          className="fill-100"
           variant="success"
           onClick={() => onSelectDeck("All", schemes)}
         >

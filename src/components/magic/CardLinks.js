@@ -10,14 +10,14 @@ export const CardLinks = ({ card }) => {
 
   if (displayGatherer && (gathererUri || scryfallUri)) {
     return (
-      <Card>
+      <Card text="light" bg="black">
         <Card.Footer>
           {gathererUri && (
             <Card.Link
               href={gathererUri}
               target="_blank"
               rel="noopener noreferrer"
-              className="float-left"
+              className="float-start"
             >
               Gatherer
             </Card.Link>
@@ -27,7 +27,7 @@ export const CardLinks = ({ card }) => {
               href={scryfallUri}
               target="_blank"
               rel="noopener noreferrer"
-              className="float-right"
+              className="float-end"
             >
               Scryfall
             </Card.Link>

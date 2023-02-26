@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { Button, Col, Modal } from "react-bootstrap";
 
 export const Confirm = ({
@@ -39,12 +38,20 @@ export const Confirm = ({
         {bodyText && body}
         <Modal.Footer>
           <Col>
-            <Button variant="secondary" onClick={() => close(false)} block>
+            <Button
+              variant="secondary"
+              onClick={() => close(false)}
+              className="w-100"
+            >
               Close
             </Button>
           </Col>
           <Col>
-            <Button variant={confirmVariant} onClick={() => close(true)} block>
+            <Button
+              variant={confirmVariant}
+              onClick={() => close(true)}
+              className="w-100"
+            >
               {confirmText}
             </Button>
           </Col>

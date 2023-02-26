@@ -5,7 +5,14 @@ import { NavLink } from "react-router-dom";
 
 const HomeButton = ({ path, text, children, variant = "secondary" }) => (
   <Col xs={6} sm={4} lg={6} className="my-2">
-    <Button as={NavLink} exact to={path} block variant={variant} size="lg">
+    <Button
+      as={NavLink}
+      exact
+      to={path}
+      className="w-100"
+      variant={variant}
+      size="lg"
+    >
       {children}
       <span className="d-block">{text}</span>
     </Button>

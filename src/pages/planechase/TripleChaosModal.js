@@ -46,7 +46,12 @@ export const TripleChaosModal = ({
           ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="info" block aria-label="Close" onClick={close}>
+          <Button
+            variant="info"
+            className="w-100"
+            aria-label="Close"
+            onClick={close}
+          >
             Done
           </Button>
         </Modal.Footer>

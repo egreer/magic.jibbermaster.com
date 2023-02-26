@@ -27,22 +27,20 @@ export const DayNight = () => {
   );
 
   return (
-    <div className="day-night">
+    <Container className="day-night">
       <Helmet title="Day-Night" />
-      <Container>
-        <Row>
-          <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }}>
-            {toggle}
-            {card &&
-              (nightTime ? (
-                <MtgCard card={card.card_faces[1]} />
-              ) : (
-                <MtgCard card={card.card_faces[0]} />
-              ))}
-            {toggle}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+      <Row>
+        <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }}>
+          {toggle}
+          {card &&
+            (nightTime ? (
+              <MtgCard card={card.card_faces[1]} />
+            ) : (
+              <MtgCard card={card.card_faces[0]} />
+            ))}
+          {toggle}
+        </Col>
+      </Row>
+    </Container>
   );
 };

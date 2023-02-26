@@ -1,10 +1,10 @@
 import get from "lodash/get";
 import set from "lodash/set";
 import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Row } from "react-bootstrap";
+import { Button, Carousel, Col, Container, Row } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Helmet } from "react-helmet-async";
-import uuidv4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -137,7 +137,7 @@ export const Vanguard = () => {
   };
 
   return (
-    <div className="vanguard">
+    <Container className="vanguard" fluid>
       <Helmet title="Vanguard" />
       <Row className="my-4 text-center">
         <Col>
@@ -178,8 +178,8 @@ export const Vanguard = () => {
                 <Col sm={6} className="mb-3 mb-sm-2">
                   <Button
                     onClick={() => _randomTokenModalOpen()}
-                    block
                     variant="primary"
+                    className="fill-100"
                   >
                     Random Avatar
                   </Button>
@@ -187,9 +187,8 @@ export const Vanguard = () => {
                 <Col sm={6} className="mb-3 mb-sm-2">
                   <Button
                     onClick={() => _selectAvatarModalOpen()}
-                    block
                     variant="info"
-                    className="h-100"
+                    className="fill-100"
                   >
                     Select Avatar
                   </Button>
@@ -205,10 +204,9 @@ export const Vanguard = () => {
                       ></MtgCard>
                       <Button
                         onClick={() => removeAvatar({ player })}
-                        block
                         variant="danger"
                         size="lg"
-                        className="btn-translucent mb-2 my-2"
+                        className="btn-translucent mb-2 my-2 w-100"
                       >
                         <DeleteIcon />
                       </Button>
@@ -231,8 +229,7 @@ export const Vanguard = () => {
         confirmVariant="danger"
         triggerButtonParams={{
           variant: "danger",
-          block: true,
-          className: "my-3",
+          className: "my-3 w-100",
         }}
       />
       <RandomCardModal
@@ -255,6 +252,6 @@ export const Vanguard = () => {
           dialog.current = component;
         }}
       />
-    </div>
+    </Container>
   );
 };

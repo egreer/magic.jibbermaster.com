@@ -8,13 +8,12 @@ export const ActionButton = ({
   children,
   ...rest
 }) => (
-  <div className="fixed-top mt-1 ml-1 w-25 text-left">
+  <div className="fixed-top mt-1 ml-1 w-25 text-start">
     <Button
       onClick={onClick}
-      className="mb-2"
+      className="mb-2 w-100"
       variant="success"
       disabled={disabled}
-      block
       {...rest}
     >
       {icon}

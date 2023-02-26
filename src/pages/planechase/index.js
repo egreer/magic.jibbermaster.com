@@ -1,6 +1,6 @@
 import pluralize from "pluralize";
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Fade } from "react-bootstrap";
+import { Alert, Button, Container, Fade } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { ActionButton } from "../../components/game/ActionButton";
@@ -225,7 +225,7 @@ export const Planechase = () => {
   };
 
   return (
-    <div className="planechase">
+    <Container className="planechase" fluid>
       <PlanechaseHelmet planes={planes} />
       <ActionButton
         text="Planeswalk"
@@ -275,10 +275,10 @@ export const Planechase = () => {
         triggerText="Reset"
         confirmText="Reset"
         confirmVariant="danger"
-        triggerButtonParams={{ variant: "danger", block: true }}
+        triggerButtonParams={{ variant: "danger", className: "w-100" }}
       />
       <DevTools>
-        <Button onClick={undo} variant="warning" block>
+        <Button onClick={undo} variant="warning">
           Undo
         </Button>
         <Deck CardType={Plane} />
@@ -293,6 +293,6 @@ export const Planechase = () => {
           <PlanarDie rollDone={(face) => console.log(`Rolled: ${face}`)} />
         </div>
       )}
-    </div>
+    </Container>
   );
 };

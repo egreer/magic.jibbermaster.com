@@ -7,7 +7,7 @@ export const DevTools = ({ children }) => {
     return (
       <div className="my-4">
         <h5 className="text-center noselect">Dev Tools</h5>
-        {children}
+        <div className="d-grid gap-2">{children}</div>
       </div>
     );
   }

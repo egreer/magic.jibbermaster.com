@@ -112,7 +112,7 @@ export const CurrentDie = forwardRef(({ showAllEffect, onClick }, ref) => {
         </>
       )}
 
-      <Button onClick={regenDie} block variant="outline-danger">
+      <Button onClick={regenDie} className="w-100" variant="outline-danger">
         <i className="ss ss-fw ss-2x ss-h09" />
         <span className="mx-2">Re-Randomize Die</span>
       </Button>
