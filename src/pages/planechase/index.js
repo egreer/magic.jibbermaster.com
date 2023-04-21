@@ -71,24 +71,31 @@ export const Planechase = () => {
     }
   }, [setTripleChaosModalOpen, revealedCards, currentCard]);
 
+  const revealPlanes = (count) => {
+    const newRevealedCards = deck.revealCards(count, true);
+    deck.removeCards(newRevealedCards);
+    const revealedPlanes = newRevealedCards.filter(
+      (c) => c.type_line.search("Plane") >= 0
+    );
+    const revealedPhenomenon = newRevealedCards.filter(
+      (c) => c.type_line.search("Phenomenon") >= 0
+    );
+    revealedPlanes.forEach((c) => deck.updateHistory(c));
+    deck.addCardsToBottom(revealedPhenomenon);
+    return revealedPlanes;
+  };
+
   const planeswalk = ({ card }) => {
     const newCard = card ?? deck.drawCard() ?? null;
     game.setCurrentCard(newCard);
     let newRevealedCards = [];
     let newAdditionalCards = [];
-    if (hasCustomProperty("two-planes", newCard)) {
-      newRevealedCards = deck.revealCards(2, true);
-      deck.removeCards(newRevealedCards);
-      const revealedPlanes = newRevealedCards.filter(
-        (c) => c.type_line.search("Plane") >= 0
-      );
-      const revealedPhenomenon = newRevealedCards.filter(
-        (c) => c.type_line.search("Phenomenon") >= 0
-      );
-      revealedPlanes.forEach((c) => deck.updateHistory(c));
-      deck.addCardsToBottom(revealedPhenomenon);
-      newRevealedCards = [];
-      newAdditionalCards = revealedPlanes;
+    const multiplePlanesProperty = hasCustomProperty(
+      "multiple-planes",
+      newCard
+    );
+    if (multiplePlanesProperty) {
+      newAdditionalCards = revealPlanes(multiplePlanesProperty.initial);
     }
 
     if (hasCustomProperty("top-5", newCard)) {
@@ -136,28 +143,35 @@ export const Planechase = () => {
         setScryModalOpen(true);
       }
     }
+    const multiplePlanesProperty = hasCustomProperty("multiple-planes", card);
+    if (multiplePlanesProperty) {
+      const revealedPlanes = revealPlanes(multiplePlanesProperty.revealNumber);
+      game.setAdditionalCards([...additionalCards, ...revealedPlanes]);
+    }
   };
 
-  const renderTwoPlanes = () => {
-    if (hasCustomProperty("two-planes", currentCard)) {
+  const renderMultiplePlanes = () => {
+    if (hasCustomProperty("multiple-planes", currentCard)) {
       const revealedPlanes = additionalCards.filter(
         (c) => c.type_line.search("Plane") >= 0
       );
       return (
-        <div>
-          <Alert variant="info" className="text-center mb-0">
-            <i className="ms ms-planeswalker mx-2" />
-            You Are On Both Planes
-            <i className="ms ms-planeswalker mx-2" />
-          </Alert>
-          {revealedPlanes.map((c) => (
-            <React.Fragment key={c.deck_card_id}>
-              <Plane card={c} displayActions={true}>
-                <ChaosButton card={c} onClick={triggerChaos} />
-              </Plane>
-            </React.Fragment>
-          ))}
-        </div>
+        revealedPlanes.length > 0 && (
+          <div>
+            <Alert variant="info" className="text-center mb-0">
+              <i className="ms ms-planeswalker mx-2" />
+              You Are On {revealedPlanes.length} Planes
+              <i className="ms ms-planeswalker mx-2" />
+            </Alert>
+            {revealedPlanes.map((c) => (
+              <React.Fragment key={c.deck_card_id}>
+                <Plane card={c} displayActions={true}>
+                  <ChaosButton card={c} onClick={triggerChaos} />
+                </Plane>
+              </React.Fragment>
+            ))}
+          </div>
+        )
       );
     }
   };
@@ -249,7 +263,7 @@ export const Planechase = () => {
           )}
         </div>
       )}
-      {renderTwoPlanes()}
+      {renderMultiplePlanes()}
       {renderFivePlanes()}
 
       <MultiChaosModal

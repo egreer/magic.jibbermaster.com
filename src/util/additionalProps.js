@@ -68,12 +68,17 @@ export const addAdditionalProperties = (card) => {
     "Kilnspire District": [counterProp("Charge")],
     "Mount Keralia": [counterProp("Pressure")],
     "Naar Isle": [counterProp("Flame")],
-    "Norn's Seedcore": [CHAOS_TRIGGER_PROP, { name: "additional-planes" }],
+    "Norn's Seedcore": [
+      CHAOS_TRIGGER_PROP,
+      { name: "multiple-planes", initial: 0, revealNumber: 1 },
+    ],
     "Pools of Becoming": [
       CHAOS_TRIGGER_PROP,
       { name: "multi-chaos", number: 3 },
     ],
-    "Spatial Merging": [{ name: "two-planes" }],
+    "Spatial Merging": [
+      { name: "multiple-planes", initial: 2, revealNumber: 0 },
+    ],
     "Stairs to Infinity": [CHAOS_TRIGGER_PROP, { name: "scry-1" }],
     "The Fertile Lands of Saulvinia": [
       CHAOS_TRIGGER_PROP,
