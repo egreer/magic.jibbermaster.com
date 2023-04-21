@@ -19,9 +19,9 @@ _Like what you see? Consider buying me a couple packs to help fuel this hobby an
 There is always the one villain at the table and this tool helps the Archenemy build the perfect deck to take on the heros. Select the perfect pre-built or design a custom synergy stack to ensure victory.
 
   <details>
-    <summary>Archenemy Images</summary>
+    <summary><em>Archenemy Images</em></summary>
 
-    ![Archenemy](/docs/images/archenemy.png)
+![Archenemy](/docs/images/archenemy.png)
 
   </details>
 
@@ -30,9 +30,9 @@ There is always the one villain at the table and this tool helps the Archenemy b
 One of the most popular alternate game modes, this tool leverages a single stack of all the Planes to add powerful effects to the game.
 
   <details>
-    <summary>Planechase Images</summary>
+    <summary><em>Planechase Images</em></summary>
 
-    ![Planechase gameplay of Naar Isle with one flame counter](/docs/images/planechase.png)
+![Planechase gameplay of Naar Isle with one flame counter](/docs/images/planechase.png)
 
   </details>
 
@@ -41,9 +41,9 @@ One of the most popular alternate game modes, this tool leverages a single stack
 A topsy turvy game mode that makes use of some of Magics zaniest effects. Based on Planechase, the planar die has been upgraded to a d12 to really amp up the randomness.
 
   <details>
-    <summary>Hike Mode Images</summary>
+    <summary><em>Hike Mode Images</em></summary>
 
-    ![Hike Mode on 'Queue of Beetles' as the static planar ability and 'Game of Chaos' as the chaos ability](/docs/images/hike_mode.png)
+![Hike Mode on 'Queue of Beetles' as the static planar ability and 'Game of Chaos' as the chaos ability](/docs/images/hike_mode.png)
 
   </details>
 
@@ -52,7 +52,7 @@ A topsy turvy game mode that makes use of some of Magics zaniest effects. Based 
 Summon the powerful Avatars of Magic lore to add some flavorful abilities that will power up everyones decks.
 
   <details>
-    <summary>Vanguard Images</summary>
+    <summary><em?>Vanguard Images</em></summary>
 
 ![Vanguard gameplay with Player 1 having selected the Crovax Character](/docs/images/vanguard.png)
 
@@ -65,7 +65,7 @@ Summon the powerful Avatars of Magic lore to add some flavorful abilities that w
 Affectionately known as "Screw Your Buddy" this tool will help randomize the targets at the table so that each person knows who they need to defeat to win. For larger groups up the challenge with multiple targets. For games of 5 or 7 players enable Star Turns in the Dev Tools to really mix up the order.
 
   <details>
-    <summary>SYB Images</summary>
+    <summary><em>SYB Images</em></summary>
 
 ![SYB single target direction indicator](/docs/images/syb_single_target.png)![SYB multi target direction indicator](/docs/images/syb_multi_target.png)
 
@@ -76,7 +76,7 @@ Affectionately known as "Screw Your Buddy" this tool will help randomize the tar
 This tool helps playgroups mix up the evening by combining formats and game modes tailored to the number of players.
 
   <details>
-    <summary>Format Images</summary>
+    <summary><em>Format Images</em></summary>
 
 ![Format selector that has selected 'Free For All'](/docs/images/format_selector.png)
 
@@ -93,7 +93,7 @@ Unfinity introduced the attraction deck and this tool helps the carnival festivi
 Unstable introduced the contraption deck and sprokets. This tool helps keep the contraptions organized.
 
   <details>
-    <summary>Contraptions Images</summary>
+    <summary><em>Contraptions Images</em></summary>
 
 ![3 Contraptions from the Unstable set sproketed on their sprokets](/docs/images/contraptions.png)
 
