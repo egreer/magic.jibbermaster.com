@@ -19,7 +19,7 @@ import { shuffleArray } from "../../util/shuffleArray";
 import { ChaosButton } from "./ChaosButton";
 import { PlanechaseHelmet } from "./Helmet";
 import { ScryModal } from "./ScryModal";
-import { TripleChaosModal } from "./TripleChaosModal";
+import { MultiChaosModal } from "./MultiChaosModal";
 
 export const Planechase = () => {
   const [loading, setLoading] = useState(true);
@@ -65,7 +65,7 @@ export const Planechase = () => {
   useEffect(() => {
     const open =
       revealedCards.length > 0 &&
-      !!hasCustomProperty("triple-chaos", currentCard);
+      !!hasCustomProperty("multi-chaos", currentCard);
     if (open) {
       setTripleChaosModalOpen(open);
     }
@@ -117,9 +117,10 @@ export const Planechase = () => {
   };
 
   const triggerChaos = (card) => {
-    console.log("Chaos Triggered");
-    if (hasCustomProperty("triple-chaos", card)) {
-      const newRevealedCards = deck.revealCards(3, true);
+    console.log("Chaos Triggered", card);
+    const multiChaos = hasCustomProperty("multi-chaos", card);
+    if (multiChaos) {
+      const newRevealedCards = deck.revealCards(multiChaos.number, true);
       deck.removeCards(newRevealedCards);
       const shuffledCards = shuffleArray(newRevealedCards.slice());
       deck.addCardsToBottom(shuffledCards);
@@ -251,7 +252,7 @@ export const Planechase = () => {
       {renderTwoPlanes()}
       {renderFivePlanes()}
 
-      <TripleChaosModal
+      <MultiChaosModal
         open={tripleChaosModalOpen}
         revealedCards={revealedCards}
         onHide={_tripleChaosModalClose}

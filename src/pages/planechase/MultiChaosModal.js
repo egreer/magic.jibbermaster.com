@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { Plane } from "../../components/magic/Plane";
 import { ChaosButton } from "./ChaosButton";
 
-export const TripleChaosModal = ({
+export const MultiChaosModal = ({
   open,
   revealedCards,
   onHide,
@@ -27,7 +27,7 @@ export const TripleChaosModal = ({
             <i className="ms ms-chaos mr-1" />
             <i className="ms ms-chaos mr-1" />
             <i className="ms ms-chaos mr-1" />
-            <span className="mx-1">Triple Chaos</span>
+            <span className="mx-1">Multi Chaos</span>
             <i className="ms ms-chaos ml-1" />
             <i className="ms ms-chaos ml-1" />
             <i className="ms ms-chaos ml-1" />
