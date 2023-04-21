@@ -1,69 +1,144 @@
-# magic.jibbermaster.com
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# [magic.jibbermaster.com](https://magic.jibbermaster.com)
 
-## Available Scripts
+This is a passion project for all aspects of Magic the Gathering. It is a go to tool for casual players who want to supplement their play group's experience with formats like Planechase, Archenemy, or Vanguard without having to carry the cards to every event.
 
-In the project directory, you can run:
+Game night getting stale? Add a bit of randomness with a random game mode selector, SYB direction guide, or even the topsy-turvy Hike Mode.
 
-### `npm start`
+Board state too crazy? Keep track of all the Slivers effects, setup all the Contraptions, Attractions or other in game mechanics easily from your phone.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+_Like what you see? Consider buying me a couple packs to help fuel this hobby and support future development by donating at [paypal.me/egreerme](https://www.paypal.me/egreerme)_
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Game Modes
 
-### `npm run build`
+### [Archenemy](https://magic.jibbermaster.com/archenemy)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+There is always the one villain at the table and this tool helps the Archenemy build the perfect deck to take on the heros. Select the perfect pre-built or design a custom synergy stack to ensure victory.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+  <details>
+    <summary>Archenemy Images</summary>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ![Archenemy](/docs/images/archenemy.png)
 
-### `npm run eject`
+  </details>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### [Planechase](https://magic.jibbermaster.com/planechase)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+One of the most popular alternate game modes, this tool leverages a single stack of all the Planes to add powerful effects to the game.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  <details>
+    <summary>Planechase Images</summary>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    ![Planechase gameplay of Naar Isle with one flame counter](/docs/images/planechase.png)
 
-## Learn More
+  </details>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### [Hike Mode](https://magic.jibbermaster.com/hike)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+A topsy turvy game mode that makes use of some of Magics zaniest effects. Based on Planechase, the planar die has been upgraded to a d12 to really amp up the randomness.
 
-### Code Splitting
+  <details>
+    <summary>Hike Mode Images</summary>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+    ![Hike Mode on 'Queue of Beetles' as the static planar ability and 'Game of Chaos' as the chaos ability](/docs/images/hike_mode.png)
 
-### Analyzing the Bundle Size
+  </details>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### [Vanguard](https://magic.jibbermaster.com/vanguard)
 
-### Making a Progressive Web App
+Summon the powerful Avatars of Magic lore to add some flavorful abilities that will power up everyones decks.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+  <details>
+    <summary>Vanguard Images</summary>
 
-### Advanced Configuration
+![Vanguard gameplay with Player 1 having selected the Crovax Character](/docs/images/vanguard.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+  </details>
 
-### Deployment
+## Tools
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+### [SYB](https://magic.jibbermaster.com/syb)
 
-### `npm run build` fails to minify
+Affectionately known as "Screw Your Buddy" this tool will help randomize the targets at the table so that each person knows who they need to defeat to win. For larger groups up the challenge with multiple targets. For games of 5 or 7 players enable Star Turns in the Dev Tools to really mix up the order.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  <details>
+    <summary>SYB Images</summary>
+
+![SYB single target direction indicator](/docs/images/syb_single_target.png)![SYB multi target direction indicator](/docs/images/syb_multi_target.png)
+
+  </details>
+
+### [Format Selector](https://magic.jibbermaster.com/formats)
+
+This tool helps playgroups mix up the evening by combining formats and game modes tailored to the number of players.
+
+  <details>
+    <summary>Format Images</summary>
+
+![Format selector that has selected 'Free For All'](/docs/images/format_selector.png)
+
+  </details>
+
+## Trackers
+
+### [Attractions](https://magic.jibbermaster.com/attractions)
+
+Unfinity introduced the attraction deck and this tool helps the carnival festivities thrive.
+
+### [Contraptions](https://magic.jibbermaster.com/contraptions)
+
+Unstable introduced the contraption deck and sprokets. This tool helps keep the contraptions organized.
+
+  <details>
+    <summary>Contraptions Images</summary>
+
+![3 Contraptions from the Unstable set sproketed on their sprokets](/docs/images/contraptions.png)
+
+  </details>
+
+### [Day / Night](https://magic.jibbermaster.com/day-night)
+
+Forgot the tracking token for the killer werewolf deck? Fear not this simple tool will help track the time of day.
+
+### [Slivers](https://magic.jibbermaster.com/slivers)
+
+Sliver cards stack abilities on top of abilities and it can be a challenge to determine what each one has. Plug in each sliver in play and get the grand listing of their abilities and even its super combined name.
+
+  <details>
+    <summary><em>Sliver Calculator Images</em></summary>
+
+![Sliver calculator grouping abilities](/docs/images/sliver_calculator_2.png)
+
+  </details>
+
+## Acknowledgements
+
+Thank you to all the people that make this project possible:
+
+- Dave, Mike, Jimmy, Jon, Henry, Garret form the core play testers who's feedback week over week is what keeps the site constantly improving and evolving.
+
+Thank you to all developers and maintainers of the tools that this app relies on. Without their passion this would be a a much harder project:
+
+- [keyrune](https://github.com/andrewgioia/Keyrune) and [mana-font](https://github.com/andrewgioia/mana) created and maintained by [Andrew Gioia](https://andrewgioia.com/) which allows for all the MTG symbols to be used with unparalleled ease.
+- [scryfall](https://scryfall.com/) - for their amazing APIs and card image collections.
+
+Special thanks to [Wizards of the Coast](https://company.wizards.com/) who invented this amazing game. Without them none of this would be possible.
+
+## Contributing
+
+Feel free to open issues to track any bugs, features, or other enhancements.
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details on how to help and how to start developing locally.
+
+## Disclaimer
+
+This site is created for personal use. Magic: The Gathering, the mana symbols, the tap symbol and all other related images are owned by Wizards of the Coast. jibbermaster.com is unaffiliated with Wizards of the Coast.
+
+---
+
+_Like what you see? Consider buying me a couple packs to help fuel this hobby and support future development by donating at [paypal.me/egreerme](https://www.paypal.me/egreerme)_
+
+---
