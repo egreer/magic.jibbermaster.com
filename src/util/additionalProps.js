@@ -61,15 +61,24 @@ export const AVATAR_PROP = randomTokenProp({
 
 export const addAdditionalProperties = (card) => {
   const properties = {
+    // Planechase
     Aretopolis: [counterProp("Scroll")],
     "Chaotic Aether": [{ name: "all-chaos" }],
     "Interplanar Tunnel": [{ name: "top-5" }],
     "Kilnspire District": [counterProp("Charge")],
     "Mount Keralia": [counterProp("Pressure")],
     "Naar Isle": [counterProp("Flame")],
+    "Norn's Seedcore": [CHAOS_TRIGGER_PROP, { name: "additional-planes" }],
+    "Pools of Becoming": [
+      CHAOS_TRIGGER_PROP,
+      { name: "multi-chaos", number: 3 },
+    ],
     "Spatial Merging": [{ name: "two-planes" }],
     "Stairs to Infinity": [CHAOS_TRIGGER_PROP, { name: "scry-1" }],
-    "Pools of Becoming": [CHAOS_TRIGGER_PROP, { name: "triple-chaos" }],
+    "The Fertile Lands of Saulvinia": [
+      CHAOS_TRIGGER_PROP,
+      { name: "multi-chaos", number: 1 },
+    ],
     // Archenemy
     "Your Inescapable Doom": [{ name: "unabandonable" }, counterProp("Doom")],
     // Hike Mode
