@@ -10,8 +10,11 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.1
-
+        uses: actions/checkout@v3
+      - name: NPM Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Install and Build
         run: |
           npm ci
