@@ -62,6 +62,7 @@ export const AVATAR_PROP = randomTokenProp({
 export const addAdditionalProperties = (card) => {
   const properties = {
     // Planechase
+    "Aplan Mortarium": [counterProp("Exposure")],
     Aretopolis: [counterProp("Scroll")],
     "Chaotic Aether": [{ name: "all-chaos" }],
     "Interplanar Tunnel": [{ name: "top-5" }],
@@ -72,6 +73,7 @@ export const addAdditionalProperties = (card) => {
       CHAOS_TRIGGER_PROP,
       { name: "multiple-planes", initial: 0, revealNumber: 1 },
     ],
+    Pompeii: [counterProp("Eruption")], //TODO: Future - Planar Die - Blank Side Effect
     "Pools of Becoming": [
       CHAOS_TRIGGER_PROP,
       { name: "multi-chaos", number: 3 },

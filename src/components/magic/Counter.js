@@ -3,26 +3,32 @@ import { Button } from "react-bootstrap";
 import { getCounterType } from "../../mtg/card.js";
 
 export const CounterIcon = ({ type, className = "", style = {} }) => {
-  const icon = (ms, verticalAlign = "initial") => (
-    <i
-      className={`ms mm-fw ${ms} ${className}`}
-      style={{ verticalAlign, ...style }}
-    ></i>
-  );
+  const icon = ({ ms, verticalAlign = "initial", fa }) => {
+    const iconClass = fa ? `fa fa-fw ${fa}` : `ms mm-fw ${ms}`;
+    return (
+      <i
+        className={`${iconClass} ${className}`}
+        style={{ verticalAlign, ...style }}
+      ></i>
+    );
+  };
 
   switch (type) {
     case "Doom":
-      return icon("ms-counter-doom");
+      return icon({ ms: "ms-counter-doom" });
+    case "Exposure":
+      return icon({ fa: "fa fa-fw fa-radiation" });
     case "Scroll":
-      return icon("ms-counter-lore", "bottom");
+      return icon({ ms: "ms-counter-lore", verticalAlign: "bottom" });
     case "Charge":
-      return icon("ms-counter-charge");
+      return icon({ ms: "ms-counter-charge" });
+    case "Eruption":
     case "Pressure":
-      return icon("ms-counter-mining");
+      return icon({ ms: "ms-counter-mining" });
     case "Flame":
-      return icon("ms-counter-flame");
+      return icon({ ms: "ms-counter-flame" });
     case "Fun":
-      return icon("ms-counter-vortex", "bottom");
+      return icon({ ms: "ms-counter-vortex", verticalAlign: "bottom" });
     default:
       return null;
   }
