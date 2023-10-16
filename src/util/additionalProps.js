@@ -65,6 +65,7 @@ export const addAdditionalProperties = (card) => {
     "Aplan Mortarium": [counterProp("Exposure")],
     Aretopolis: [counterProp("Scroll")],
     "Chaotic Aether": [{ name: "all-chaos" }],
+    "Fixed Point in Time": [{ name: "ongoing" }], //TODO: Future - Planar Die - Planeswalk Symbol Effect
     "Interplanar Tunnel": [{ name: "top-5" }],
     "Kilnspire District": [counterProp("Charge")],
     "Mount Keralia": [counterProp("Pressure")],

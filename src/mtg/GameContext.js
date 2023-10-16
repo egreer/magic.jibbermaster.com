@@ -17,16 +17,22 @@ export const GameProvider = ({ prefix = null, children }) => {
     `${prefix}-additionalCards`,
     []
   );
+  const [ongoingCards, setOngoingCards] = useLocalState(
+    `${prefix}-ongoingCards`,
+    []
+  );
   const [scryCards, setScryCards] = useLocalState(`${prefix}-scryCards`, []);
 
   const clearCurrentCard = () => setCurrentCard(null);
   const clearRevealedCards = () => setRevealedCards([]);
   const clearAdditionalCards = () => setAdditionalCards([]);
+  const clearOngoingCards = () => setOngoingCards([]);
   const clearScryCards = () => setScryCards([]);
   const reset = () => {
     clearCurrentCard();
     clearRevealedCards();
     clearAdditionalCards();
+    clearOngoingCards();
     clearScryCards();
   };
 
@@ -37,14 +43,17 @@ export const GameProvider = ({ prefix = null, children }) => {
         currentCard,
         revealedCards,
         additionalCards,
+        ongoingCards,
         scryCards,
         setCurrentCard,
         setRevealedCards,
         setAdditionalCards,
+        setOngoingCards,
         setScryCards,
         clearCurrentCard,
         clearRevealedCards,
         clearAdditionalCards,
+        clearOngoingCards,
         clearScryCards,
         reset,
       }}

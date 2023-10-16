@@ -20,6 +20,7 @@ import { ChaosButton } from "./ChaosButton";
 import { PlanechaseHelmet } from "./Helmet";
 import { ScryModal } from "./ScryModal";
 import { MultiChaosModal } from "./MultiChaosModal";
+import { DeleteIcon } from "../../components/magic/Icons";
 
 export const Planechase = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,13 @@ export const Planechase = () => {
   const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
 
   const game = useGameContext();
-  const { currentCard, additionalCards, revealedCards, scryCards } = game;
+  const {
+    currentCard,
+    additionalCards,
+    revealedCards,
+    ongoingCards,
+    scryCards,
+  } = game;
 
   const deck = useDeckContext();
   const history = deck.history;
@@ -101,6 +108,10 @@ export const Planechase = () => {
     if (hasCustomProperty("top-5", newCard)) {
       newRevealedCards = deck.revealCards(5, true);
       deck.removeCards(newRevealedCards);
+    }
+
+    if (hasCustomProperty("ongoing", newCard)) {
+      game.setOngoingCards([...ongoingCards, newCard]);
     }
 
     game.setRevealedCards(newRevealedCards);
@@ -220,6 +231,50 @@ export const Planechase = () => {
     }
   };
 
+  const abandonPlane = (card) => {
+    console.log("Abandon Plane", card);
+    const newOngoing = ongoingCards.filter(
+      (s) => s.deck_card_id !== card.deck_card_id
+    );
+    game.setOngoingCards([...newOngoing]);
+  };
+
+  const renderOngoingPlanes = () => {
+    const ongoing = ongoingCards?.filter(
+      (s) => s.deck_card_id !== currentCard.deck_card_id
+    );
+    if (ongoing && ongoing.length > 0) {
+      return (
+        <>
+          <Alert variant="info" className="text-center">
+            <h5>Ongoing Planes</h5>
+          </Alert>
+          <div className="d-flex justify-content-center flex-wrap mtg-scheme-card">
+            {ongoing.map((c) => (
+              <div key={c.deck_card_id}>
+                <Plane card={c}>
+                  <Button
+                    onClick={() => abandonPlane(c)}
+                    variant="danger"
+                    size="lg"
+                    className="btn-translucent"
+                  >
+                    <h2 className="mb-0">
+                      <DeleteIcon />
+                      <span className="mx-2 d-none d-md-inline">
+                        Abandon Plane
+                      </span>
+                    </h2>
+                  </Button>
+                </Plane>
+              </div>
+            ))}
+          </div>
+        </>
+      );
+    }
+  };
+
   const _tripleChaosModalClose = () => {
     game.clearRevealedCards();
     setTripleChaosModalOpen(false);
@@ -265,6 +320,7 @@ export const Planechase = () => {
       )}
       {renderMultiplePlanes()}
       {renderFivePlanes()}
+      {renderOngoingPlanes()}
 
       <MultiChaosModal
         open={tripleChaosModalOpen}

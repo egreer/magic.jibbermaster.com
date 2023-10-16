@@ -29,7 +29,7 @@ export const Archenemy = () => {
 
   const game = useGameContext();
   const currentCard = game.currentCard;
-  const ongoingSchemes = game.additionalCards;
+  const ongoingSchemes = game.ongoingCards;
 
   const deck = useDeckContext();
 
@@ -62,7 +62,7 @@ export const Archenemy = () => {
     }
     const newCard = deck.drawCard() ?? null;
     game.setCurrentCard(newCard);
-    game.setAdditionalCards(ongoingSchemes);
+    game.setOngoingCards([...ongoingSchemes]);
     game.setCurrentCard(newCard);
     setAbandonedOnGoing(false);
   };
@@ -170,7 +170,7 @@ export const Archenemy = () => {
       const newOngoing = ongoingSchemes.filter(
         (s) => s.deck_card_id !== card.deck_card_id
       );
-      game.setAdditionalCards(newOngoing);
+      game.setOngoingCards([...newOngoing]);
     }
   };
 
