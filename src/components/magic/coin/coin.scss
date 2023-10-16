@@ -1,0 +1,74 @@
+// https://codesandbox.io/s/coin-flip-react-example-01j7q?file=/src/styles.css:59-1923
+$animationDuration: 3s;
+
+.coin {
+  height: 100px;
+  margin: 0 auto;
+  position: relative;
+  transform-style: preserve-3d;
+  width: 100px;
+
+  .side {
+    align-items: center;
+    backface-visibility: hidden;
+    border-radius: 50%;
+    box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3),
+      0 12px 20px -10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+
+    &.side-heads {
+      z-index: 100;
+    }
+
+    &.side-tails {
+      transform: rotateY(-180deg);
+    }
+  }
+
+  &.heads {
+    // transform: rotateY(0);
+    // transition: transform 1.5s ease-in-out;
+    animation: flipHeads 1s ease-out both;
+  }
+
+  &.tails {
+    // transform: rotateY(-180deg);
+    // transition: transform 1.5s ease-in-out;
+    animation: flipTails 1s ease-out both;
+  }
+
+  &.flipping {
+    animation: flipping 2s linear both infinite;
+  }
+}
+
+@keyframes flipping {
+  from {
+    transform: rotateY(90);
+  }
+  to {
+    transform: rotateY(630deg);
+  }
+}
+
+@keyframes flipHeads {
+  from {
+    transform: rotateY(630deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes flipTails {
+  from {
+    transform: rotateY(630deg);
+  }
+  to {
+    transform: rotateY(-180deg);
+  }
+}

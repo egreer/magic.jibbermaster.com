@@ -5,6 +5,7 @@ import { Die } from "../components/magic/die/die";
 import { Plane } from "../components/magic/Plane";
 import { Scheme } from "../components/magic/Scheme";
 import { createMarkup, MARKUP_TEXT } from "../util/createMarkup";
+import { CoinFlip } from "../components/magic/coin/CoinFlip";
 
 export const DebugPage = () => {
   return (
@@ -118,6 +119,11 @@ export const DebugPage = () => {
       <h1>Mana</h1>
       <div dangerouslySetInnerHTML={{ __html: createMarkup(MARKUP_TEXT) }} />
 
+      <div className="position-fixed" style={{ top: "10%", right: "150px" }}>
+        <CoinFlip start="heads" />
+        <br></br>
+        <CoinFlip start="tails" />
+      </div>
       <div className="position-fixed" style={{ top: "10%", right: "150px" }}>
         <Die sides={4}></Die>
       </div>

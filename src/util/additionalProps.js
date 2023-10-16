@@ -86,6 +86,7 @@ export const addAdditionalProperties = (card) => {
       CHAOS_TRIGGER_PROP,
       { name: "multi-chaos", number: 1 },
     ],
+    "Unleash the Flux": [{ name: "coin-flip" }],
     // Archenemy
     "Your Inescapable Doom": [{ name: "unabandonable" }, counterProp("Doom")],
     // Hike Mode

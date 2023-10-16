@@ -15,6 +15,7 @@ import { reactToBool } from "../../util/react";
 import { CardLinks } from "./CardLinks";
 import { CardText } from "./CardText";
 import { Counter } from "./Counter";
+import { CoinFlip } from "./coin/CoinFlip";
 import { EmDashIcon } from "./Icons";
 import "./planes.scss";
 
@@ -57,6 +58,7 @@ export const MtgCard = React.forwardRef(
     const chaosomenon =
       displayHikeErrata && hasCustomProperty("chaosomenon", card);
     const chaosX = hasCustomProperty("chaos_x", card);
+    const hasCoinFlip = hasCustomProperty("coin-flip", card);
     const urlProp = hasCustomProperty("url", card);
 
     const isRotated = rotatedLayout(card);
@@ -74,6 +76,7 @@ export const MtgCard = React.forwardRef(
       : back;
 
     const counter = displayActions && hasCounters && <Counter card={card} />;
+    const coinFlip = displayActions && hasCoinFlip && <CoinFlip card={card} />;
 
     const renderBody = () => {
       const hasBody = !!text;
@@ -268,13 +271,14 @@ export const MtgCard = React.forwardRef(
           <Card.ImgOverlay
             className={cn("text-center card-overlay", {
               "child-overlay": !emptyChildren && !isBlank,
-              "counter-overlay": emptyChildren && hasCounters,
+              "counter-overlay": emptyChildren && (hasCounters || hasCoinFlip),
               "d-flex align-items-center justify-content-center":
-                emptyChildren && hasCounters,
+                emptyChildren && (hasCounters || hasCoinFlip),
             })}
           >
             <Card.Title className={cn("text-center", { "h-100": isBlank })}>
               {counter}
+              {coinFlip}
               {renderCustomText()}
               {!isBlank && children}
             </Card.Title>
