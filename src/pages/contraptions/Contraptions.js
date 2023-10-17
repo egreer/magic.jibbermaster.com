@@ -21,6 +21,7 @@ import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 import { useLocalState } from "../../hooks/useLocalState";
 import contraptionBack from "../../images/contraption-back.jpg";
 import { ASSEMBLE_PROP } from "../../util/additionalProps";
@@ -331,6 +332,7 @@ export const Contraptions = () => {
           dialog.current = component;
         }}
       />
+      <UpdatedBanner setName="Unstable" symbol="ust" rarity="uncommon" />
     </Container>
   );
 };

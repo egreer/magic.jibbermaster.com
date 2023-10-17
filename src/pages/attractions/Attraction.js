@@ -9,11 +9,12 @@ import { Helmet } from "react-helmet-async";
 import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 import { AttractionDie } from "../../components/magic/planar-die/AttractionDie";
-import { RandomCardModal } from "../../components/RandomCardModal";
 import { useLocalState } from "../../hooks/useLocalState";
 import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
@@ -294,6 +295,7 @@ export const Attractions = () => {
       <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
         <AttractionDie rollDone={(r) => console.log(`Rolled: ${r}`)} />
       </div>
+      <UpdatedBanner setName="Unfinity" symbol="unf" rarity="foil" />
     </Container>
   );
 };

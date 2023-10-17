@@ -3,24 +3,25 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Container, Fade } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
+import { Loading } from "../../components/Loading";
 import { ActionButton } from "../../components/game/ActionButton";
 import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
-import { Loading } from "../../components/Loading";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
-import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
+import { DeleteIcon } from "../../components/magic/Icons";
 import { Plane } from "../../components/magic/Plane";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
+import { PlanarDie } from "../../components/magic/planar-die/PlanarDie";
 import { useLocalState } from "../../hooks/useLocalState";
-import { hasCustomProperty } from "../../mtg/card.js";
 import { useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
+import { hasCustomProperty } from "../../mtg/card.js";
 import { getAllPlanechaseCards } from "../../util/api.js";
 import { shuffleArray } from "../../util/shuffleArray";
 import { ChaosButton } from "./ChaosButton";
 import { PlanechaseHelmet } from "./Helmet";
-import { ScryModal } from "./ScryModal";
 import { MultiChaosModal } from "./MultiChaosModal";
-import { DeleteIcon } from "../../components/magic/Icons";
+import { ScryModal } from "./ScryModal";
 
 export const Planechase = () => {
   const [loading, setLoading] = useState(true);
@@ -321,7 +322,6 @@ export const Planechase = () => {
       {renderMultiplePlanes()}
       {renderFivePlanes()}
       {renderOngoingPlanes()}
-
       <MultiChaosModal
         open={tripleChaosModalOpen}
         revealedCards={revealedCards}
@@ -329,7 +329,6 @@ export const Planechase = () => {
         chaosClick={(c) => triggerChaos(c)}
         close={_tripleChaosModalClose}
       />
-
       <ScryModal
         scryCards={scryCards}
         open={scryModalOpen}
@@ -364,6 +363,7 @@ export const Planechase = () => {
           <PlanarDie rollDone={(face) => console.log(`Rolled: ${face}`)} />
         </div>
       )}
+      <UpdatedBanner setName="Dr. Who" symbol="who" rarity="rare" />
     </Container>
   );
 };

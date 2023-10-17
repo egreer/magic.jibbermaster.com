@@ -28,6 +28,7 @@ import { hasCustomProperty } from "../../mtg/card";
 import { ABILITIY_STACKS_PROP } from "../../util/additionalProps";
 import { getAllSliversCards } from "../../util/api";
 import { AbilityIcon } from "../../util/createMarkup";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 
 // ABILITIY_STACKS_PROP
 const sliverProps = {
@@ -446,6 +447,12 @@ export const Slivers = () => {
           <SliverCard card={card} key={`col-${card.id}`} />
         ))}
       </Row>
+
+      <UpdatedBanner
+        setName="Modern Horizons 2"
+        symbol="mh2"
+        rarity="rare"
+      ></UpdatedBanner>
     </Container>
   );
 };

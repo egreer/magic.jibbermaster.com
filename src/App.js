@@ -22,12 +22,16 @@ import { Slivers } from "./pages/slivers/Slivers";
 import { Vanguard } from "./pages/vanguard/Vanguard";
 import { Attractions } from "./pages/attractions/Attraction";
 import { DayNight } from "./pages/day-night/DayNight";
+import { Footer } from "./components/Footer";
+import { FooterProvider } from "./hooks/useFooter";
 
 const Providers = ({ children }) => {
   return (
     <BrowserRouter>
       <HelmetProvider>
-        <SettingsProvider>{children}</SettingsProvider>
+        <SettingsProvider>
+          <FooterProvider>{children}</FooterProvider>
+        </SettingsProvider>
       </HelmetProvider>
     </BrowserRouter>
   );
@@ -106,6 +110,7 @@ const App = () => {
       <div className="app text-light bg-dark col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
         <Main />
         <Disclaimer />
+        <Footer />
       </div>
     </Providers>
   );

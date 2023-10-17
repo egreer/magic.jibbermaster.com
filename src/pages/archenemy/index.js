@@ -15,6 +15,7 @@ import { getAllArchenemyCards } from "../../util/api.js";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
 import { ArchenemyHelmet } from "./Helmet";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 
 const Jumbotron = ({ children }) => (
   <div className="my-4 p-5 bg-primary text-white rounded bg-danger text-center">
@@ -205,6 +206,7 @@ export const Archenemy = () => {
         </Button>
         <Deck CardType={Scheme} />
       </DevTools>
+      <UpdatedBanner setName="Archenemy: Nicol Bolas" symbol="e01" />
     </Container>
   );
 };
