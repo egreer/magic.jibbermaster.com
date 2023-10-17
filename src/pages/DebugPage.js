@@ -24,7 +24,10 @@ export const DebugPage = () => {
           Mythic
         </Button>
         <Button variant="secondary" className="m-1 mtg-bg-timeshifted">
-          timeshifted
+          Timeshifted
+        </Button>
+        <Button variant="secondary" className="m-1 mtg-bg-foil">
+          Foil
         </Button>
       </div>
       <div>
@@ -41,7 +44,10 @@ export const DebugPage = () => {
           Mythic
         </Button>
         <Button variant="secondary" className="m-1 mtg-bg-timeshifted mtg-grad">
-          timeshifted
+          Timeshifted
+        </Button>
+        <Button variant="secondary" className="m-1 mtg-bg-foil mtg-grad">
+          Foil
         </Button>
       </div>
       <div>
@@ -61,7 +67,10 @@ export const DebugPage = () => {
           variant="outline-secondary"
           className="m-1 mtg-border-timeshifted"
         >
-          timeshifted
+          Timeshifted
+        </Button>
+        <Button variant="outline-secondary" className="m-1 mtg-border-foil">
+          Foil
         </Button>
       </div>
       <div>
@@ -93,7 +102,13 @@ export const DebugPage = () => {
           variant="outline-secondary"
           className="m-1 mtg-border-timeshifted mtg-grad"
         >
-          timeshifted
+          Timeshifted
+        </Button>
+        <Button
+          variant="outline-secondary"
+          className="m-1 mtg-border-foil mtg-grad"
+        >
+          Foil
         </Button>
       </div>
 
@@ -103,6 +118,7 @@ export const DebugPage = () => {
         <h1 className="m-1 mtg-text-rare">Rare</h1>
         <h1 className="m-1 mtg-text-mythic">Mythic</h1>
         <h1 className="m-1 mtg-text-timeshifted">Timeshifted</h1>
+        <h1 className="m-1 mtg-text-foil">Foil</h1>
       </div>
       <div>
         <h1 className="m-1 mtg-text-common mtg-grad">Common-Grad</h1>
@@ -110,6 +126,7 @@ export const DebugPage = () => {
         <h1 className="m-1 mtg-text-rare mtg-grad">Rare-Grad</h1>
         <h1 className="m-1 mtg-text-mythic mtg-grad">Mythic-Grad</h1>
         <h1 className="m-1 mtg-text-timeshifted mtg-grad">Timeshifted-Grad</h1>
+        <h1 className="m-1 mtg-text-foil mtg-grad">Foil-Grad</h1>
       </div>
 
       <Button className="mtg-bg-timeshifted mtg-grad">
