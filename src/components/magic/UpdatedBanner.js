@@ -2,7 +2,7 @@ export const UpdatedBanner = ({ setName, symbol, rarity = "mythic" }) => {
   return (
     <div
       className={`text-center p-3`}
-      style={{ "background-color": "rgba(0, 0, 0, 0.2)" }}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       title={`Cards are added automatically from Scryfall, but behavior has only been tested through ${setName}`}
     >
       <i
