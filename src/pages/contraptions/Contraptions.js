@@ -2,16 +2,25 @@ import concat from "lodash/concat";
 import get from "lodash/get";
 import set from "lodash/set";
 import React, { useCallback, useRef, useState } from "react";
-import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
+import {
+  Button,
+  Carousel,
+  Col,
+  Container,
+  Image,
+  Modal,
+  ModalBody,
+  Row,
+} from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Helmet } from "react-helmet-async";
 import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
+import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
-import { RandomCardModal } from "../../components/RandomCardModal";
 import { useLocalState } from "../../hooks/useLocalState";
 import contraptionBack from "../../images/contraption-back.jpg";
 import { ASSEMBLE_PROP } from "../../util/additionalProps";
@@ -29,9 +38,10 @@ export const Contraptions = () => {
   const [randomTokenModalOpen, setRandomTokenModalOpen] = useState(false);
   const [selectContraptionModalOpen, setSelectContraptionModalOpen] =
     useState(false);
-  const [additionalCards, setAdditionalCards] = useState([]);
+  const [selectSproketModalOpen, setSelectSproketModalOpen] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [labels, setLabels] = useLocalState("contraption-labels", {});
+  const [currentCard, setCurrentCard] = useState(null);
 
   const dialog = useRef(null);
 
@@ -55,59 +65,23 @@ export const Contraptions = () => {
     [dialog, labels, setLabels]
   );
 
-  const _randomTokenModalOpen = (player) => {
+  const _randomTokenModalOpen = () => {
     const getToken = async () => {
       let response = await internet.get(ASSEMBLE_PROP.url);
       let tokenCard = filterAPI(response.data);
       tokenCard.deck_card_id = uuidv4();
       console.log("Random Token", tokenCard);
 
-      setAdditionalCards([tokenCard]);
+      setCurrentCard(tokenCard);
       setRandomTokenModalOpen(true);
     };
     getToken();
   };
 
   const _randomTokenModalClose = useCallback(() => {
-    dialog.current.show({
-      title: "Which Sproket?",
-      bsSize: "sm",
-      actions: [
-        Dialog.CancelAction(() => {
-          setAdditionalCards([]);
-          setRandomTokenModalOpen(false);
-        }),
-        Dialog.OKAction((a) => {
-          const newSprokets = { ...sprokets };
-          set(
-            newSprokets,
-            [`player${currentPlayer}`, `sproket${a.value}`],
-            concat(
-              get(
-                newSprokets,
-                [`player${currentPlayer}`, `sproket${a.value}`],
-                []
-              ),
-              additionalCards
-            )
-          );
-          setSprokets(newSprokets);
-
-          setAdditionalCards([]);
-          setRandomTokenModalOpen(false);
-        }),
-      ],
-      prompt: Dialog.TextPrompt({ initialValue: 1 }),
-    });
-  }, [
-    dialog,
-    sprokets,
-    setSprokets,
-    additionalCards,
-    setAdditionalCards,
-    setRandomTokenModalOpen,
-    currentPlayer,
-  ]);
+    setRandomTokenModalOpen(false);
+    setSelectSproketModalOpen(true);
+  }, [setRandomTokenModalOpen, setSelectSproketModalOpen]);
 
   const _selectContraptionModalOpen = () => {
     setSelectContraptionModalOpen(true);
@@ -119,36 +93,35 @@ export const Contraptions = () => {
 
   const _selectContraption = useCallback(
     ({ card }) => {
-      dialog.current.show({
-        title: "Which Sproket?",
-        bsSize: "sm",
-        actions: [
-          Dialog.CancelAction(() => {
-            _hideSelectContraption();
-          }),
-          Dialog.OKAction((a) => {
-            const newSprokets = { ...sprokets };
-            set(
-              newSprokets,
-              [`player${currentPlayer}`, `sproket${a.value}`],
-              concat(
-                get(
-                  newSprokets,
-                  [`player${currentPlayer}`, `sproket${a.value}`],
-                  []
-                ),
-                [{ deck_card_id: uuidv4(), ...card }]
-              )
-            );
-            setSprokets(newSprokets);
-
-            _hideSelectContraption();
-          }),
-        ],
-        prompt: Dialog.TextPrompt({ initialValue: 1 }),
-      });
+      setCurrentCard(card);
+      setSelectContraptionModalOpen(false);
+      setSelectSproketModalOpen(true);
     },
-    [currentPlayer, setSprokets, sprokets]
+    [setCurrentCard, setSelectContraptionModalOpen, setSelectSproketModalOpen]
+  );
+
+  const selectSproket = useCallback(
+    ({ card, sproket }) => {
+      const newSprokets = { ...sprokets };
+      set(
+        newSprokets,
+        [`player${currentPlayer}`, `sproket${sproket}`],
+        concat(
+          get(newSprokets, [`player${currentPlayer}`, `sproket${sproket}`], []),
+          [{ deck_card_id: uuidv4(), ...card }]
+        )
+      );
+      setSprokets(newSprokets);
+      setSelectSproketModalOpen(false);
+      setCurrentCard(null);
+    },
+    [
+      currentPlayer,
+      setSprokets,
+      sprokets,
+      setCurrentCard,
+      setSelectSproketModalOpen,
+    ]
   );
 
   const incrementPlayerCount = useCallback(() => {
@@ -234,7 +207,7 @@ export const Contraptions = () => {
                 <Row className="my-3 mx-5">
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
-                      onClick={() => _randomTokenModalOpen(player)}
+                      onClick={_randomTokenModalOpen}
                       block
                       variant="primary"
                       className="fill-100"
@@ -244,7 +217,7 @@ export const Contraptions = () => {
                   </Col>
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
-                      onClick={() => _selectContraptionModalOpen(player)}
+                      onClick={_selectContraptionModalOpen}
                       variant="info"
                       className="fill-100"
                     >
@@ -316,7 +289,7 @@ export const Contraptions = () => {
       />
       <RandomCardModal
         open={randomTokenModalOpen}
-        additionalCards={additionalCards}
+        additionalCards={[currentCard]}
         onHide={_randomTokenModalClose}
         close={_randomTokenModalClose}
         randomTokenProps={ASSEMBLE_PROP}
@@ -329,6 +302,30 @@ export const Contraptions = () => {
         randomTokenProps={ASSEMBLE_PROP}
         fetchCards={getAllContraptionsCards}
       />
+      <Modal
+        show={selectSproketModalOpen}
+        dialogClassName="bg-secondary"
+        backdrop={true}
+      >
+        <Modal.Header className="justify-content-center text-white noselect">
+          <Modal.Title>Which Sproket?</Modal.Title>
+        </Modal.Header>
+        <ModalBody className="d-flex justify-content-evenly">
+          {[...Array(MAX_SPROKETS)].map((v, s) => {
+            const sproket = s + 1;
+            return (
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => selectSproket({ sproket, card: currentCard })}
+              >
+                <i class="fas fa-fw fa-cog mx-1"></i>
+                <span className="mx-1">{sproket}</span>
+              </Button>
+            );
+          })}
+        </ModalBody>
+      </Modal>
       <Dialog
         ref={(component) => {
           dialog.current = component;
