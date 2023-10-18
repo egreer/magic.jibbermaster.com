@@ -82,6 +82,8 @@ export const Vanguard = () => {
     // setCurrentPlayer,
   ]);
 
+  const _hideRandomTokenModal = () => setRandomTokenModalOpen(false);
+
   const _selectAvatarModalOpen = () => {
     setSelectAvatarModalOpen(true);
   };
@@ -235,7 +237,7 @@ export const Vanguard = () => {
       <RandomCardModal
         open={randomTokenModalOpen}
         additionalCards={[additionalCard]}
-        onHide={_randomTokenModalClose}
+        onHide={_hideRandomTokenModal}
         close={_randomTokenModalClose}
         randomTokenProps={AVATAR_PROP}
         closeText="Summon Avatar"

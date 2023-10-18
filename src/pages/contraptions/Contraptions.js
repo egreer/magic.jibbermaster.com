@@ -84,6 +84,8 @@ export const Contraptions = () => {
     setSelectSproketModalOpen(true);
   }, [setRandomTokenModalOpen, setSelectSproketModalOpen]);
 
+  const _hideRandomTokenModal = () => setRandomTokenModalOpen(false);
+
   const _selectContraptionModalOpen = () => {
     setSelectContraptionModalOpen(true);
   };
@@ -291,7 +293,7 @@ export const Contraptions = () => {
       <RandomCardModal
         open={randomTokenModalOpen}
         additionalCards={[currentCard]}
-        onHide={_randomTokenModalClose}
+        onHide={_hideRandomTokenModal}
         close={_randomTokenModalClose}
         randomTokenProps={ASSEMBLE_PROP}
         closeText="Assemble Contraption"
@@ -320,7 +322,7 @@ export const Contraptions = () => {
                 size="lg"
                 onClick={() => selectSproket({ sproket, card: currentCard })}
               >
-                <i class="fas fa-fw fa-cog mx-1"></i>
+                <i className="fas fa-fw fa-cog mx-1"></i>
                 <span className="mx-1">{sproket}</span>
               </Button>
             );

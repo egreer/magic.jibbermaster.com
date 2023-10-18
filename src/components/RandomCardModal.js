@@ -5,6 +5,7 @@ import { MtgCard } from "./magic/Card";
 export const RandomCardModal = ({
   additionalCards,
   onHide,
+  close,
   open,
   randomTokenProps,
   closeText = "Done",
@@ -36,7 +37,7 @@ export const RandomCardModal = ({
             variant="info"
             className="w-100"
             aria-label="Close"
-            onClick={onHide}
+            onClick={close}
           >
             {closeText}
           </Button>

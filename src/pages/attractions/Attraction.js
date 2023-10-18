@@ -73,6 +73,8 @@ export const Attractions = () => {
     getToken();
   };
 
+  const _hideRandomTokenModal = () => setRandomTokenModalOpen(false);
+
   const _randomTokenModalClose = useCallback(() => {
     const newAttractions = { ...attractions };
     set(
@@ -274,7 +276,7 @@ export const Attractions = () => {
       <RandomCardModal
         open={randomTokenModalOpen}
         additionalCards={additionalCards}
-        onHide={_randomTokenModalClose}
+        onHide={_hideRandomTokenModal}
         close={_randomTokenModalClose}
         randomTokenProps={ATTRACTION_PROP}
         closeText={ATTRACTION_PROP.text}
