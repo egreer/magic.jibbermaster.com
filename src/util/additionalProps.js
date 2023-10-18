@@ -27,6 +27,7 @@ export const CHAOS_ONCE_PROP = chaosXProp("Once");
 export const CHAOS_MAX_PROP = chaosXProp("Max");
 export const CHAOS_EACH_OP_PROP = chaosXProp("Each Opponent");
 export const CHAOS_PLAYER_CHOICE_PROP = chaosXProp("Player's Choice");
+export const COIN_PROP = { name: "coin-flip" };
 
 export const randomTokenProp = ({ type, action, ...props }) => {
   return {
@@ -67,7 +68,9 @@ export const addAdditionalProperties = (card) => {
     "Chaotic Aether": [{ name: "all-chaos" }],
     "Fixed Point in Time": [{ name: "ongoing" }], //TODO: Future - Planar Die - Planeswalk Symbol Effect
     "Interplanar Tunnel": [{ name: "top-5" }],
+    "Kerblam! Warehouse": [COIN_PROP],
     "Kilnspire District": [counterProp("Charge")],
+    "Mirrored Depths": [COIN_PROP],
     "Mount Keralia": [counterProp("Pressure")],
     "Naar Isle": [counterProp("Flame")],
     "Norn's Seedcore": [
@@ -87,7 +90,7 @@ export const addAdditionalProperties = (card) => {
       CHAOS_TRIGGER_PROP,
       { name: "multi-chaos", number: 1 },
     ],
-    "Unleash the Flux": [{ name: "coin-flip" }],
+    "Unleash the Flux": [COIN_PROP],
     // Archenemy
     "Your Inescapable Doom": [{ name: "unabandonable" }, counterProp("Doom")],
     // Hike Mode
