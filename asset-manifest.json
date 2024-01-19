@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.73b739b6.css",
-    "main.js": "/static/js/main.c4c4c17e.js",
+    "main.js": "/static/js/main.14fa7fe9.js",
     "static/media/planechase-back.png": "/static/media/planechase-back.e107504fb179edc2ed80.png",
     "static/media/classic-back.png": "/static/media/classic-back.125a80aad275b1f8c6a3.png",
     "static/media/archenemy-back.png": "/static/media/archenemy-back.4fe071c3eafa38cdd522.png",
@@ -11,10 +11,10 @@
     "static/media/attraction-back.jpg": "/static/media/attraction-back.143df0f2fd50ebbf652c.jpg",
     "index.html": "/index.html",
     "main.73b739b6.css.map": "/static/css/main.73b739b6.css.map",
-    "main.c4c4c17e.js.map": "/static/js/main.c4c4c17e.js.map"
+    "main.14fa7fe9.js.map": "/static/js/main.14fa7fe9.js.map"
   },
   "entrypoints": [
     "static/css/main.73b739b6.css",
-    "static/js/main.c4c4c17e.js"
+    "static/js/main.14fa7fe9.js"
   ]
 }
