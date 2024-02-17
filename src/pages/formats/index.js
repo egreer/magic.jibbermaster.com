@@ -311,7 +311,6 @@ export const Formats = () => {
             {showDeckswapButton && (
               <Button
                 onClick={() => setSwapTriggered(true)}
-                block
                 className={"w-50 mx-auto"}
                 variant="success"
               >

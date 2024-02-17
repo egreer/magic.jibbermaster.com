@@ -211,7 +211,6 @@ export const Contraptions = () => {
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
                       onClick={_randomTokenModalOpen}
-                      block
                       variant="primary"
                       className="fill-100"
                     >
@@ -320,6 +319,7 @@ export const Contraptions = () => {
               <Button
                 variant="primary"
                 size="lg"
+                key={`sproket-${sproket}`}
                 onClick={() => selectSproket({ sproket, card: currentCard })}
               >
                 <i className="fas fa-fw fa-cog mx-1"></i>
