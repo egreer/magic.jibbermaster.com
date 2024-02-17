@@ -4,26 +4,26 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 
+import { Archenemy } from "./pages/archenemy";
+import { Formats } from "./pages/formats";
 import { Home } from "./pages/home";
 import { Planechase } from "./pages/planechase";
-import { Archenemy } from "./pages/archenemy";
 import { SYB } from "./pages/syb";
-import { Formats } from "./pages/formats";
 
+import { Disclaimer } from "./components/Disclaimer";
+import { Footer } from "./components/Footer";
+import { Navigation } from "./components/Navigation";
+import { FooterProvider } from "./hooks/useFooter";
+import { SettingsProvider } from "./hooks/useSettings";
 import { DeckProvider } from "./mtg/DeckContext";
 import { GameProvider } from "./mtg/GameContext";
-import { Disclaimer } from "./components/Disclaimer";
-import { Navigation } from "./components/Navigation";
-import { SettingsProvider } from "./hooks/useSettings";
-import { Hike } from "./pages/hike";
-import { DebugPage } from "./pages/DebugPage";
+import { Attractions } from "./pages/attractions/Attraction";
 import { Contraptions } from "./pages/contraptions/Contraptions";
+import { DayNight } from "./pages/day-night/DayNight";
+import { DebugPage } from "./pages/DebugPage";
+import { Hike } from "./pages/hike";
 import { Slivers } from "./pages/slivers/Slivers";
 import { Vanguard } from "./pages/vanguard/Vanguard";
-import { Attractions } from "./pages/attractions/Attraction";
-import { DayNight } from "./pages/day-night/DayNight";
-import { Footer } from "./components/Footer";
-import { FooterProvider } from "./hooks/useFooter";
 
 const Providers = ({ children }) => {
   return (

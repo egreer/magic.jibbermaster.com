@@ -23,12 +23,12 @@ import {
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 import { useLocalState } from "../../hooks/useLocalState";
 import { hasCustomProperty } from "../../mtg/card";
 import { ABILITIY_STACKS_PROP } from "../../util/additionalProps";
 import { getAllSliversCards } from "../../util/api";
 import { AbilityIcon } from "../../util/createMarkup";
-import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 
 // ABILITIY_STACKS_PROP
 const sliverProps = {

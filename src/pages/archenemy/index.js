@@ -8,6 +8,7 @@ import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
 import { Loading } from "../../components/Loading";
 import { Scheme } from "../../components/magic/Scheme";
+import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
@@ -15,7 +16,6 @@ import { getAllArchenemyCards } from "../../util/api.js";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
 import { ArchenemyHelmet } from "./Helmet";
-import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 
 const Jumbotron = ({ children }) => (
   <div className="my-4 p-5 bg-primary text-white rounded bg-danger text-center">

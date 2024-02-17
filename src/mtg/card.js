@@ -1,8 +1,8 @@
 import get from "lodash/get";
-import classicBack from "../images/classic-back.png";
-import planechaseBack from "../images/planechase-back.png";
 import archenemyBack from "../images/archenemy-back.png";
 import arenaBack from "../images/arena-back.png";
+import classicBack from "../images/classic-back.png";
+import planechaseBack from "../images/planechase-back.png";
 
 export const hasCustomProperty = (property, card) => {
   return card && card?.customProperties?.find((p) => p.name === property);

@@ -1,6 +1,6 @@
 import React from "react";
-import { MtgCard } from "./Card";
 import { PLANECHASE_BACK } from "../../mtg/card";
+import { MtgCard } from "./Card";
 
 export const Plane = React.memo(({ ...props }) => (
   <MtgCard

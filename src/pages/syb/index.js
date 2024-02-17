@@ -114,8 +114,8 @@ export const SYB = () => {
             starNum > targets.length
               ? 1
               : starNum >= targets.length
-              ? 0
-              : starNum;
+                ? 0
+                : starNum;
           const normalTurnTarget = i + 1 >= targets.length ? 0 : i + 1;
           const target =
             starTurn && canStar(targets.length)

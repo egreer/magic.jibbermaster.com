@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { MtgCard } from "../components/magic/Card";
+import { CoinFlip } from "../components/magic/coin/CoinFlip";
 import { Die } from "../components/magic/die/die";
 import { Plane } from "../components/magic/Plane";
 import { Scheme } from "../components/magic/Scheme";
 import { createMarkup, MARKUP_TEXT } from "../util/createMarkup";
-import { CoinFlip } from "../components/magic/coin/CoinFlip";
 
 export const DebugPage = () => {
   return (

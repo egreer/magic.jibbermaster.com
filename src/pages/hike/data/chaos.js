@@ -1,14 +1,14 @@
 import {
-  CHAOSOMENON_PROP,
-  errataProp,
-  urlProp,
-  CHAOS_ONCE_PROP,
-  CHAOS_PLAYER_CHOICE_PROP,
-  CHAOS_MAX_PROP,
-  randomTokenProp,
-  CHAOS_TRIGGER_PROP,
   ASSEMBLE_PROP,
   ATTRACTION_PROP,
+  CHAOSOMENON_PROP,
+  CHAOS_MAX_PROP,
+  CHAOS_ONCE_PROP,
+  CHAOS_PLAYER_CHOICE_PROP,
+  CHAOS_TRIGGER_PROP,
+  errataProp,
+  randomTokenProp,
+  urlProp,
 } from "../../../util/additionalProps";
 
 export const CUSTOM_CHAOS = [

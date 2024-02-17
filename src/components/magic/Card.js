@@ -14,8 +14,8 @@ import { createMarkup } from "../../util/createMarkup";
 import { reactToBool } from "../../util/react";
 import { CardLinks } from "./CardLinks";
 import { CardText } from "./CardText";
-import { Counter } from "./Counter";
 import { CoinFlip } from "./coin/CoinFlip";
+import { Counter } from "./Counter";
 import { EmDashIcon } from "./Icons";
 import "./planes.scss";
 

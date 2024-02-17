@@ -1,8 +1,8 @@
+import noop from "lodash/noop";
 import React from "react";
 import ReactDice from "react-dice-complete";
 import "react-dice-complete/dist/react-dice-complete.css";
 import "./planar-die.scss";
-import noop from "lodash/noop";
 
 const translateRoll = (roll) => {
   switch (roll) {

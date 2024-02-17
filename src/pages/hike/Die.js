@@ -1,11 +1,11 @@
-import map from "lodash/map";
 import keys from "lodash/keys";
+import map from "lodash/map";
 import { forwardRef, useCallback, useEffect, useImperativeHandle } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useSettings } from "../../hooks/useSettings";
-import { createDie, ALL_FACES } from "./data/die";
 import { createMarkup } from "../../util/createMarkup";
+import { ALL_FACES, createDie } from "./data/die";
 
 export const CurrentDie = forwardRef(({ showAllEffect, onClick }, ref) => {
   const [die, setDie] = useLocalState("hike-die", {});
