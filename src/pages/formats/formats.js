@@ -27,7 +27,7 @@ export const TAGS = [
     name: "Chode Mode",
     defaultEnabled: false,
     description:
-      "Players begin at 5 life, last player standing wins in this agressive free for all",
+      "Players begin at 5 life, last player standing wins in this aggressive free for all",
   },
   {
     name: "Deck Swaps",
@@ -44,13 +44,13 @@ export const TAGS = [
     name: "Emperor",
     defaultEnabled: true,
     description:
-      "Teams are formed of 3 or more players using a limited range of influence to take out the opposing emperorer. (Rules 809.*)",
+      "Teams are formed of 3 or more players using a limited range of influence to take out the opposing emperor. (Rules 809.*)",
   },
   {
     name: "Free for All",
     defaultEnabled: true,
     description:
-      "Everyone is out for themselves and lastt one standing wins. (Rules 806.*)",
+      "Everyone is out for themselves and last one standing wins. (Rules 806.*)",
   },
   {
     name: "Hike Mode",
