@@ -135,9 +135,9 @@ export const Formats = () => {
     setTags([...tags]);
   };
 
-  const enabledTags = () => {
+  const enabledTags = useCallback(() => {
     return tags ? tags.filter((t) => t.enabled).map((t) => t.name) : [];
-  };
+  }, [tags]);
 
   const FormatToggles = () => {
     if (tags) {
@@ -162,7 +162,7 @@ export const Formats = () => {
     }
   };
 
-  const activeFormats = () => {
+  const activeFormats = useCallback(() => {
     let formats = null;
     console.log("Player", playerCount);
     console.log("format", currentFormats);
@@ -175,7 +175,7 @@ export const Formats = () => {
       console.log("Formats", formats);
     }
     return formats;
-  };
+  }, [currentFormats, enabledTags, playerCount, tags]);
 
   const activeFormatName = () => {
     if (!activeFormat) {
@@ -205,7 +205,7 @@ export const Formats = () => {
     [dialog, updateFormatValue]
   );
 
-  const ActiveFormats = () => {
+  const ActiveFormats = useCallback(() => {
     const formats = activeFormats();
 
     if (formats && displayWeights) {
@@ -235,6 +235,14 @@ export const Formats = () => {
     }
 
     return null;
+  }, [
+    activeFormats,
+    adjustWeight,
+    displayWeights,
+    playerCount,
+    updateFormatValue,
+  ]);
+
   };
 
   const FormatDescriptions = () => {
