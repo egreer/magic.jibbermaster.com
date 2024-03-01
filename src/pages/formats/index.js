@@ -12,6 +12,7 @@ import {
 } from "../../components/magic/Buttons";
 import TooltipSlider from "../../components/ToolTipSlider";
 import { useLocalState } from "../../hooks/useLocalState";
+import { calculateRadarData, FormatRadarChart } from "./FormatRadarChart";
 import { FORMATS, TAGS } from "./formats";
 import { FormatsHelmet } from "./Helmet";
 
@@ -243,7 +244,7 @@ export const Formats = () => {
     updateFormatValue,
   ]);
 
-  };
+  const radarData = calculateRadarData(activeFormats());
 
   const FormatDescriptions = () => {
     const formatDescriptions = useMemo(
@@ -329,6 +330,7 @@ export const Formats = () => {
         </div>
       </div>
       <hr className="border-info" />
+      <FormatRadarChart data={radarData}></FormatRadarChart>
       <div className="mb-5">
         <FormatToggles />
       </div>

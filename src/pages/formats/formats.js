@@ -129,6 +129,9 @@ const canPentacle = (p) => p >= 5;
 export const canStar = (p) => p >= 5 && canOdd(p);
 const canTeams = (p) => p > 2 && canEven(p);
 
+export const hasTags = (tags, values) =>
+  tags.some((t) => [].concat(values).includes(t));
+
 export const FORMATS = [
   {
     name: "2 Headed Giant",
