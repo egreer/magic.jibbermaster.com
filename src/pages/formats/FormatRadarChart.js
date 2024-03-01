@@ -47,7 +47,6 @@ export const calculateRadarData = (formats) => {
       weights["targeted"] += f.weight;
     } else if (
       hasTags(f.tags, [
-        "SYB",
         "Teams",
         "Secret Partners",
         "Emperor",
