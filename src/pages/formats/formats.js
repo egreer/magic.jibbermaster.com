@@ -116,6 +116,8 @@ export const TAGS = [
   },
 ];
 
+export const CHAOS_TAGS = ["Hike Mode", "Planechase", "Vanguard", "Chode Mode"];
+
 const canAny = (p) => true;
 const canEven = (p) => p % 2 === 0;
 const canOdd = (p) => p % 2 === 1;

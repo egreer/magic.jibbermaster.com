@@ -2,7 +2,7 @@ import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Container, Spinner } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Spinner } from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Confirm } from "../../components/Confirm";
 import {
@@ -13,7 +13,7 @@ import {
 import TooltipSlider from "../../components/ToolTipSlider";
 import { useLocalState } from "../../hooks/useLocalState";
 import { calculateRadarData, FormatRadarChart } from "./FormatRadarChart";
-import { FORMATS, TAGS } from "./formats";
+import { CHAOS_TAGS, FORMATS, hasTags, TAGS } from "./formats";
 import { FormatsHelmet } from "./Helmet";
 
 const MIN_PLAYERS = 2;
@@ -60,6 +60,7 @@ export const Formats = () => {
   const [loadingFormat, setLoadingFormat] = useState(false);
   const [swapTriggered, setSwapTriggered] = useState(false);
   const [showFormatDescriptions, setShowFormatDescriptions] = useState(false);
+  const [weightProfile, setWeightProfile] = useState("default");
 
   const dialog = useRef(null);
 
@@ -67,6 +68,7 @@ export const Formats = () => {
     setPlayerCount(DEFAULT_PLAYERS);
     setTags(createTags());
     setCurrentFormats(createFormats());
+    setWeightProfile("default");
   };
 
   const pickFormat = () => {
@@ -113,9 +115,35 @@ export const Formats = () => {
         }
       });
       setCurrentFormats({ ...currentFormats });
+      setWeightProfile("custom");
     },
     [currentFormats, playerCount, setCurrentFormats]
   );
+
+  const toggleDefaultWeights = () => {
+    setCurrentFormats(createFormats());
+    setWeightProfile("default");
+  };
+
+  const toggleMaxChaosWeights = () => {
+    currentFormats[playerCount].forEach((f) => {
+      if (hasTags(f.tags, CHAOS_TAGS.concat("Deck Swaps"))) {
+        f.weight = 1;
+      } else {
+        f.weight = 0.25;
+      }
+    });
+    setCurrentFormats({ ...currentFormats });
+    setWeightProfile("chaos");
+  };
+
+  const toggleEvenWeights = () => {
+    currentFormats[playerCount].forEach((f) => {
+      f.weight = 0.5;
+    });
+    setCurrentFormats({ ...currentFormats });
+    setWeightProfile("even");
+  };
 
   const activeTags = () => {
     return currentFormats
@@ -335,6 +363,34 @@ export const Formats = () => {
         <FormatToggles />
       </div>
       <div className="noselect">
+        <div className="my-3 d-flex justify-content-center">
+          <ButtonGroup>
+            <Button
+              variant="outline-info"
+              active={weightProfile === "default"}
+              onClick={toggleDefaultWeights}
+            >
+              Default
+            </Button>
+            <Button
+              variant="outline-info"
+              active={weightProfile === "even"}
+              onClick={toggleEvenWeights}
+            >
+              Even
+            </Button>
+            <Button
+              variant="outline-info"
+              active={weightProfile === "chaos"}
+              onClick={toggleMaxChaosWeights}
+            >
+              Max Chaos
+            </Button>
+            <Button variant="outline-info" active={weightProfile === "custom"}>
+              Custom
+            </Button>
+          </ButtonGroup>
+        </div>
         <ActiveFormats />
         <DoubleFaceButton
           onClick={() => setDisplayWeights(!displayWeights)}

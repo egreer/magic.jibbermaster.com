@@ -7,7 +7,7 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from "recharts";
-import { hasTags } from "./formats";
+import { CHAOS_TAGS, hasTags } from "./formats";
 
 export const calculateRadarData = (formats) => {
   const weights = {
@@ -35,9 +35,7 @@ export const calculateRadarData = (formats) => {
       weights["own"] += f.weight;
     }
 
-    if (
-      hasTags(f.tags, ["Hike Mode", "Planechase", "Vanguard", "Chode Mode"])
-    ) {
+    if (hasTags(f.tags, CHAOS_TAGS)) {
       weights["chaos"] += f.weight;
     } else {
       weights["notChaos"] += f.weight;
