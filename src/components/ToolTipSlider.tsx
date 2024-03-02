@@ -1,92 +1,31 @@
-import type { SliderProps } from "rc-slider";
-import Slider from "rc-slider";
+import Slider, { SliderProps } from "rc-slider";
 import "rc-slider/assets/index.css";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap.css";
-import raf from "rc-util/lib/raf";
-import React, { useRef } from "react";
+import { TooltipProps } from "rc-tooltip/lib/Tooltip";
+import React from "react";
 
-const HandleTooltip = (props: {
-  value: number;
-  children: React.ReactElement;
-  visible: boolean;
-  tipFormatter?: (value: number) => React.ReactNode;
-}) => {
-  const {
-    value,
-    children,
-    visible,
-    tipFormatter = (val) => `${val} %`,
-    ...restProps
-  } = props;
-
-  const tooltipRef = useRef<any>();
-  const rafRef = useRef<number | null>(null);
-
-  function cancelKeepAlign() {
-    raf.cancel(rafRef.current!);
-  }
-
-  function keepAlign() {
-    rafRef.current = raf(() => {
-      tooltipRef.current?.forcePopupAlign?.();
-    });
-  }
-
-  React.useEffect(() => {
-    if (visible) {
-      keepAlign();
-    } else {
-      cancelKeepAlign();
-    }
-
-    return cancelKeepAlign;
-  }, [value, visible]);
-
-  return (
-    <Tooltip
-      placement="top"
-      overlay={tipFormatter(value)}
-      overlayInnerStyle={{ minHeight: "auto" }}
-      ref={tooltipRef}
-      visible={visible}
-      {...restProps}
-    >
-      {children}
-    </Tooltip>
-  );
-};
-
-export const handleRender: SliderProps["handleRender"] = (node, props) => {
-  return (
-    <HandleTooltip value={props.value} visible={props.dragging}>
-      {node}
-    </HandleTooltip>
-  );
-};
-
-const TooltipSlider = ({
-  tipFormatter,
+const ToolTipSlider = ({
   tipProps,
   ...props
-}: SliderProps & {
-  tipFormatter?: (value: number) => React.ReactNode;
-  tipProps: any;
-}) => {
-  const tipHandleRender: SliderProps["handleRender"] = (node, handleProps) => {
-    return (
-      <HandleTooltip
-        value={handleProps.value}
-        visible={handleProps.dragging}
-        tipFormatter={tipFormatter}
-        {...tipProps}
-      >
-        {node}
-      </HandleTooltip>
-    );
-  };
+}: SliderProps & { tipProps?: TooltipProps }) => (
+  <Slider
+    className="mb-4"
+    handleRender={(node, handleProps) => {
+      return (
+        <Tooltip
+          visible={handleProps.dragging}
+          overlayInnerStyle={{ minHeight: "auto" }}
+          overlay={`${handleProps.value} %`}
+          placement="top"
+          {...tipProps}
+        >
+          {node}
+        </Tooltip>
+      );
+    }}
+    {...props}
+  ></Slider>
+);
 
-  return <Slider {...props} handleRender={tipHandleRender} />;
-};
-
-export default TooltipSlider;
+export default ToolTipSlider;
