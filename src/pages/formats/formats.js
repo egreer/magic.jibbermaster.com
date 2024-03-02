@@ -221,7 +221,7 @@ export const FORMATS = [
   },
   {
     name: "EDH Pentacle",
-    initial: 0.5,
+    initial: 0.625,
     tags: ["EDH", "Pentacle"],
     showSwaps: true,
     players: canPentacle,
@@ -229,7 +229,7 @@ export const FORMATS = [
   {
     name: "EDH Pentacle Deck Swaps",
     displayName: "EDH Pentacle",
-    initial: 0.25,
+    initial: 0.125,
     showSwaps: true,
     tags: ["EDH", "Pentacle", "Deck Swaps"],
     players: canPentacle,
@@ -242,7 +242,7 @@ export const FORMATS = [
   },
   {
     name: "EDH SYB",
-    initial: 0.5,
+    initial: 0.625,
     tags: ["EDH", "SYB"],
     showSwaps: true,
     players: canAny,
@@ -250,14 +250,14 @@ export const FORMATS = [
   {
     name: "EDH SYB Deck Swaps",
     displayName: "EDH SYB",
-    initial: 0.25,
+    initial: 0.125,
     tags: ["EDH", "SYB", "Deck Swaps"],
     showSwaps: true,
     players: canAny,
   },
   {
     name: "EDH SYB Multi",
-    initial: 0.25,
+    initial: 0.315,
     tags: ["EDH", "SYB Multi"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
@@ -265,14 +265,14 @@ export const FORMATS = [
   {
     name: "EDH SYB Multi Deck Swaps",
     displayName: "EDH SYB Multi",
-    initial: 0.125,
+    initial: 0.06,
     tags: ["EDH", "SYB Multi", "Deck Swaps"],
     showSwaps: true,
     players: (p) => canAny(p) && canSYBMulti(p),
   },
   {
     name: "EDH Secret Partners",
-    initial: 0.5,
+    initial: 0.625,
     tags: ["EDH", "Secret Partners"],
     showSwaps: true,
     players: canSecretPartner,
@@ -280,7 +280,7 @@ export const FORMATS = [
   {
     name: "EDH Secret Partners Deck Swaps",
     displayName: "EDH Secret Partners",
-    initial: 0.25,
+    initial: 0.125,
     tags: ["EDH", "Secret Partners", "Deck Swaps"],
     showSwaps: true,
     players: canSecretPartner,
@@ -300,7 +300,7 @@ export const FORMATS = [
   {
     name: "EDH Vanguard",
     displayName: " EDH Vanguard",
-    initial: 0.05,
+    initial: 0.1,
     tags: ["EDH", "Vanguard"],
     showSwaps: false,
     players: canAny,
@@ -358,13 +358,13 @@ export const FORMATS = [
   },
   {
     name: "Planechase",
-    initial: 0.05,
+    initial: 0.2,
     tags: ["Normal", "Planechase"],
     players: canAny,
   },
   {
     name: "Planechase EDH",
-    initial: 0.05,
+    initial: 0.2,
     tags: ["Planechase", "EDH"],
     players: canAny,
   },
@@ -434,7 +434,7 @@ export const FORMATS = [
   {
     name: "Vanguard",
     displayName: "Vanguard",
-    initial: 0.05,
+    initial: 0.1,
     tags: ["Normal", "Vanguard"],
     showSwaps: false,
     players: canAny,

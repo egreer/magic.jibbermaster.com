@@ -6,6 +6,7 @@ import {
   Radar,
   RadarChart,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 import { CHAOS_TAGS, hasTags } from "./formats";
 
@@ -62,52 +63,80 @@ export const calculateRadarData = (formats) => {
   return [
     {
       name: "Normal",
-      weight: (weights["normal"] / (weights["edh"] + weights["normal"])) * 100,
+      weight: (
+        (weights["normal"] / (weights["edh"] + weights["normal"])) *
+        100
+      ).toFixed(2),
       fullMark: 100,
     },
     {
       name: "EDH",
-      weight: (weights["edh"] / (weights["edh"] + weights["normal"])) * 100,
+      weight: (
+        (weights["edh"] / (weights["edh"] + weights["normal"])) *
+        100
+      ).toFixed(2),
       fullMark: 100,
     },
 
     {
       name: "FFA",
-      weight: (weights["ffa"] / styleTotal) * 100,
+      weight: ((weights["ffa"] / styleTotal) * 100).toFixed(2),
       fullMark: 100,
     },
     {
       name: "Targeted",
-      weight: (weights["targeted"] / styleTotal) * 100,
+      weight: ((weights["targeted"] / styleTotal) * 100).toFixed(2),
       fullMark: 100,
     },
     {
       name: "Team",
-      weight: (weights["team"] / styleTotal) * 100,
+      weight: ((weights["team"] / styleTotal) * 100).toFixed(2),
       fullMark: 100,
     },
     {
       name: "Swap",
-      weight: (weights["swap"] / (weights["swap"] + weights["own"])) * 100,
+      weight: (
+        (weights["swap"] / (weights["swap"] + weights["own"])) *
+        100
+      ).toFixed(2),
       fullMark: 100,
     },
     {
       name: "Chaos",
-      weight:
-        (weights["chaos"] / (weights["chaos"] + weights["notChaos"])) * 100,
+      weight: (
+        (weights["chaos"] / (weights["chaos"] + weights["notChaos"])) *
+        100
+      ).toFixed(2),
       fullMark: 100,
     },
   ];
 };
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${label} : ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 export const FormatRadarChart = ({ data }) => {
   return (
-    <div className="row mb-2 d-flex justify-content-center">
+    <div className="row mb-2 d-flex justify-content-center noselect">
       <ResponsiveContainer width={350} aspect={1}>
         <RadarChart outerRadius="75%" data={data}>
           <PolarGrid />
           <PolarAngleAxis dataKey="name" />
           <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+          <Tooltip
+            allowEscapeViewBox={{ x: true, y: true }}
+            content={<CustomTooltip />}
+            formatter={(value, name, props) => [value, props.payload["name"]]}
+          ></Tooltip>
           <Radar
             name="Formats"
             dataKey="weight"

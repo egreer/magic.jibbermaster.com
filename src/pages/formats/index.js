@@ -2,7 +2,13 @@ import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Button, ButtonGroup, Container, Spinner } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  ButtonGroup,
+  Container,
+  Spinner,
+} from "react-bootstrap";
 import Dialog from "react-bootstrap-dialog";
 import { Confirm } from "../../components/Confirm";
 import {
@@ -40,6 +46,11 @@ const createFormats = () => {
 const rand = (min, max) => {
   return Math.random() * (max - min) + min;
 };
+
+const totalFormatWeight = (formats) =>
+  formats.reduce((result, cur) => {
+    return result + cur.weight * 1000;
+  }, 0);
 
 export const Formats = () => {
   const [playerCount, setPlayerCount] = useLocalState(
@@ -84,15 +95,14 @@ export const Formats = () => {
     }, 1000);
   };
 
-  const getRandomFormat = (list) => {
-    const totalWeight = list.reduce((result, cur) => {
-      return result + cur.weight;
-    }, 0);
+  const getRandomFormat = (formats) => {
+    const totalWeight = totalFormatWeight(formats);
+
     const randomNum = rand(0, totalWeight);
     let weightSum = 0;
 
-    return list.find((item) => {
-      weightSum += item.weight;
+    return formats.find((item) => {
+      weightSum += item.weight * 1000;
       return randomNum <= weightSum;
     });
   };
@@ -236,16 +246,23 @@ export const Formats = () => {
 
   const ActiveFormats = useCallback(() => {
     const formats = activeFormats();
+    const totalWeight = totalFormatWeight(formats);
 
     if (formats && displayWeights) {
       const formatTags = formats.map((f) => {
         return (
           <div
-            className="row mb-2"
+            className="row"
             key={`${playerCount}-${f.name}-${f.weight * 100}`}
           >
-            <div className="col-5" onClick={() => adjustWeight(f)}>
+            <div
+              className="col-5 d-flex justify-content-between align-items-start"
+              onClick={() => adjustWeight(f)}
+            >
               {f.name}
+              <Badge bg="secondary" style={{ minWidth: "4.25em" }}>
+                {(((f.weight * 1000) / totalWeight) * 100).toFixed(1)}%
+              </Badge>
             </div>
             <div className="col-7">
               <TooltipSlider
@@ -254,7 +271,7 @@ export const Formats = () => {
                 marks={{ 25: "25", 50: "50", 75: "75" }}
                 defaultValue={f.weight * 100}
                 included={true}
-                onAfterChange={(value) => updateFormatValue(f, value)}
+                onChangeComplete={(value) => updateFormatValue(f, value)}
               />
             </div>
           </div>
