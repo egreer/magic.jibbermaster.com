@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.scss";
 
@@ -39,66 +39,50 @@ const Providers = ({ children }) => {
 
 const Main = () => {
   return (
-    <Switch>
-      <Route path="/" exact render={(props) => <Home {...props} />} />
+    <Routes>
+      <Route path="/" exact element={<Home />} />
       <Route
         path="/archenemy"
         exact
-        render={(props) => (
+        element={
           <GameProvider prefix="archenemy">
             <DeckProvider prefix="archenemy">
-              <Archenemy {...props} />
+              <Archenemy />
             </DeckProvider>
           </GameProvider>
-        )}
+        }
       />
       <Route
         path="/planechase"
         exact
-        render={(props) => (
+        element={
           <GameProvider prefix="planechase">
             <DeckProvider prefix="planechase">
-              <Planechase {...props} />
+              <Planechase />
             </DeckProvider>
           </GameProvider>
-        )}
+        }
       />
-      <Route path="/syb" exact render={(props) => <SYB {...props} />} />
-      <Route path="/formats" exact render={(props) => <Formats {...props} />} />
-      <Route
-        path="/attractions"
-        exact
-        render={(props) => <Attractions {...props} />}
-      />
-      <Route
-        path="/contraptions"
-        exact
-        render={(props) => <Contraptions {...props} />}
-      />
-      <Route
-        path="/day-night"
-        exact
-        render={({ props }) => <DayNight {...props} />}
-      />
-      <Route path="/slivers" exact render={(props) => <Slivers {...props} />} />
-      <Route
-        path="/vanguard"
-        exact
-        render={(props) => <Vanguard {...props} />}
-      />
+      <Route path="/syb" exact element={<SYB />} />
+      <Route path="/formats" exact element={<Formats />} />
+      <Route path="/attractions" exact element={<Attractions />} />
+      <Route path="/contraptions" exact element={<Contraptions />} />
+      <Route path="/day-night" exact render={({ props }) => <DayNight />} />
+      <Route path="/slivers" exact element={<Slivers />} />
+      <Route path="/vanguard" exact element={<Vanguard />} />
       <Route
         path="/hike"
         exact
-        render={(props) => (
+        element={
           <GameProvider prefix="hikemode">
             <DeckProvider prefix="hikemode">
-              <Hike {...props} />
+              <Hike />
             </DeckProvider>
           </GameProvider>
-        )}
+        }
       />
-      <Route path="/debug" exact render={(props) => <DebugPage {...props} />} />
-    </Switch>
+      <Route path="/debug" exact element={<DebugPage />} />
+    </Routes>
   );
 };
 
