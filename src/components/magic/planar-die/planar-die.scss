@@ -88,7 +88,7 @@
 
 @mixin dot-animation() {
   .dot {
-    animation-duration: 2s;
+    // animation-duration: 2s;
     animation-name: backside;
     visibility: hidden;
   }
@@ -98,33 +98,39 @@
 .dice {
   .die {
     // sass-lint:disable-block nesting-depth, force-element-nesting
-    &.roll1 {
+    &.roll1,
+    &.init-roll1 {
       .face.six {
         @include dot-animation();
       }
     }
-    &.roll2 {
+    &.roll2,
+    &.init-roll2 {
       .face.five {
         @include dot-animation();
       }
     }
-    &.roll3 {
+    &.roll3,
+    &.init-roll3 {
       .face.four {
         @include dot-animation();
       }
     }
-    &.roll4 {
+    &.roll4,
+    &.init-roll4 {
       .face.three {
         @include dot-animation();
       }
     }
-    &.roll5 {
+    &.roll5,
+    &.init-roll5 {
       .face.two {
         @include dot-animation();
       }
     }
 
-    &.roll6 {
+    &.roll6,
+    &.init-roll6 {
       .face.one {
         @include dot-animation();
       }
