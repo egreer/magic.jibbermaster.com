@@ -1,9 +1,7 @@
 import React, { useCallback, useContext, useEffect } from "react";
-import GitInfo from "react-git-info/macro";
 import store from "store/dist/store.modern";
 import { useLocalState } from "../hooks/useLocalState";
 
-const gitInfo = GitInfo();
 export const SettingsContext = React.createContext({});
 export const useSettings = () => useContext(SettingsContext);
 
@@ -40,12 +38,7 @@ export const SettingsProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const versionCheck = () => {
-      // const version = getSetting("version");
-      // if (version && version !== gitInfo.commit.shortHash) {
-      //   // TODO: Future refine this reset
-      //   store.clearAll();
-      // }
-      setSetting("version", gitInfo.commit.shortHash);
+      setSetting("version", process.env.COMMIT_HASH);
     };
 
     versionCheck();
