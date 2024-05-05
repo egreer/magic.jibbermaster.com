@@ -3,6 +3,7 @@ import { Button, Col, Modal } from "react-bootstrap";
 
 export const Confirm = ({
   onConfirm,
+  onClose,
   triggerButtonParams,
   triggerText,
   headerText = "Confirm?",
@@ -14,8 +15,10 @@ export const Confirm = ({
   const close = (confirmed) => {
     setOpen(false);
     if (confirmed) {
-      onConfirm();
+      onConfirm?.();
     }
+
+    onClose?.();
   };
 
   const header = (

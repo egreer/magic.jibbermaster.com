@@ -20,7 +20,6 @@
     "rc-tooltip": "^6.2.0",
     "react": "^16.14.0",
     "react-bootstrap": "^2.10.2",
-    "react-bootstrap-dialog": "^0.13.0",
     "react-cytoscapejs": "^2.0.0",
     "react-dice-complete": "^2.2.0",
     "react-dom": "^16.14.0",

@@ -8,9 +8,9 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import Dialog from "react-bootstrap-dialog";
 import CytoscapeComponent from "react-cytoscapejs";
 import { Confirm } from "../../components/Confirm";
+import { ConfirmForm } from "../../components/ConfirmForm";
 import { DevTools } from "../../components/DevTools";
 import {
   DoubleFaceButton,
@@ -63,8 +63,10 @@ export const SYB = () => {
   const [cySet, setCySet] = useState(false);
   const [loadingDirection, setLoadingDirection] = useState(false);
 
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [confirmPerson, setConfirmPerson] = useState(null);
+
   const cyContainer = useRef(null);
-  const dialog = useRef(null);
 
   useEffect(() => {
     cyContainer.current.nodes().each((d) => {
@@ -192,22 +194,30 @@ export const SYB = () => {
   };
 
   const setLabel = useCallback(
-    (number) => {
-      console.log("Setting label", number);
-      dialog.current.show({
-        title: "Who is this?",
-        bsSize: "sm",
-        actions: [
-          Dialog.CancelAction(),
-          Dialog.OKAction((a) => {
-            labels[number] = a.value;
-            setLabels({ ...labels });
-          }),
-        ],
-        prompt: Dialog.TextPrompt({ initialValue: labels[number] || number }),
-      });
+    (person) => {
+      setConfirmPerson(person);
+      setOpenConfirm(true);
     },
-    [dialog, labels, setLabels]
+    [setConfirmPerson, setOpenConfirm]
+  );
+
+  const confirmInitialValue = useCallback(
+    () => labels[confirmPerson] || "",
+    [labels, confirmPerson]
+  );
+
+  const closeConfirmModal = useCallback(() => {
+    setOpenConfirm(false);
+    setConfirmPerson(null);
+  }, [setOpenConfirm, setConfirmPerson]);
+
+  const confirmPersonLabel = useCallback(
+    (value) => {
+      labels[confirmPerson] = value;
+      setLabels({ ...labels });
+      closeConfirmModal();
+    },
+    [labels, confirmPerson, closeConfirmModal, setLabels]
   );
 
   const renderCyto = () => {
@@ -306,7 +316,6 @@ export const SYB = () => {
   return (
     <Container className="syb" fluid>
       <SYBHelmet />
-
       <Row className="my-4 text-center">
         <Col>
           <h1>{playerCount} Players</h1>
@@ -378,7 +387,6 @@ export const SYB = () => {
         )}
         {renderCyto()}
       </div>
-
       <Confirm
         onConfirm={reset}
         headerText="Reset Targets?"
@@ -387,7 +395,6 @@ export const SYB = () => {
         confirmVariant="danger"
         triggerButtonParams={{ variant: "danger", className: "w-100" }}
       />
-
       <DevTools>
         <DoubleFaceButton
           text="Turn Edges"
@@ -406,11 +413,13 @@ export const SYB = () => {
         />
       </DevTools>
 
-      <Dialog
-        ref={(component) => {
-          dialog.current = component;
-        }}
-      />
+      <ConfirmForm
+        open={openConfirm}
+        headerText="Who is this?"
+        initialValue={confirmInitialValue()}
+        onConfirm={confirmPersonLabel}
+        onClose={closeConfirmModal}
+      ></ConfirmForm>
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Badge,
   Button,
@@ -9,8 +9,8 @@ import {
   Container,
   Spinner,
 } from "react-bootstrap";
-import Dialog from "react-bootstrap-dialog";
 import { Confirm } from "../../components/Confirm";
+import { ConfirmForm } from "../../components/ConfirmForm";
 import TooltipSlider from "../../components/ToolTipSlider";
 import {
   DoubleFaceButton,
@@ -73,7 +73,8 @@ export const Formats = () => {
   const [showFormatDescriptions, setShowFormatDescriptions] = useState(false);
   const [weightProfile, setWeightProfile] = useState("default");
 
-  const dialog = useRef(null);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openConfirmFormat, setOpenConfirmFormat] = useState(null);
 
   const reset = () => {
     setPlayerCount(DEFAULT_PLAYERS);
@@ -121,7 +122,7 @@ export const Formats = () => {
     (format, value) => {
       currentFormats[playerCount].forEach((f) => {
         if (f.name === format.name) {
-          format.weight = value / 100;
+          f.weight = value / 100;
         }
       });
       setCurrentFormats({ ...currentFormats });
@@ -228,20 +229,23 @@ export const Formats = () => {
 
   const adjustWeight = useCallback(
     (format) => {
-      dialog.current.show({
-        title: "Update Weight?",
-        bsSize: "sm",
-        actions: [
-          Dialog.CancelAction(),
-          Dialog.OKAction((a) => {
-            // TODO: Update to set number
-            updateFormatValue(format, Math.min(a.value, 100));
-          }),
-        ],
-        prompt: Dialog.TextPrompt({ initialValue: format.weight * 100 }),
-      });
+      setOpenConfirmFormat(format);
+      setOpenConfirm(true);
     },
-    [dialog, updateFormatValue]
+    [setOpenConfirmFormat, setOpenConfirm]
+  );
+
+  const closeConfirmModal = useCallback(() => {
+    setOpenConfirm(false);
+    setOpenConfirmFormat(null);
+  }, [setOpenConfirm, setOpenConfirmFormat]);
+
+  const confirmWeight = useCallback(
+    (value) => {
+      updateFormatValue({ ...openConfirmFormat }, Math.min(value, 100));
+      closeConfirmModal();
+    },
+    [openConfirmFormat, closeConfirmModal, updateFormatValue]
   );
 
   const ActiveFormats = useCallback(() => {
@@ -429,11 +433,13 @@ export const Formats = () => {
           triggerButtonParams={{ variant: "danger", className: "w-100" }}
         />
       </div>
-      <Dialog
-        ref={(component) => {
-          dialog.current = component;
-        }}
-      />
+      <ConfirmForm
+        open={openConfirm}
+        headerText={`Update ${openConfirmFormat?.name || ""} Weight?`}
+        initialValue={openConfirmFormat ? openConfirmFormat.weight * 100 : null}
+        onConfirm={confirmWeight}
+        onClose={closeConfirmModal}
+      ></ConfirmForm>
     </Container>
   );
 };

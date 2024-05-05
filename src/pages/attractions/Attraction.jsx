@@ -2,13 +2,13 @@ import concat from "lodash/concat";
 import get from "lodash/get";
 import set from "lodash/set";
 import pluralize from "pluralize";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
-import Dialog from "react-bootstrap-dialog";
 import { Helmet } from "react-helmet-async";
 import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
+import { ConfirmForm } from "../../components/ConfirmForm";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
@@ -38,26 +38,34 @@ export const Attractions = () => {
   const [currentPlayer, setCurrentPlayer] = useState(0);
   const [labels, setLabels] = useLocalState("attraction-labels", {});
 
-  const dialog = useRef(null);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [confirmPerson, setConfirmPerson] = useState(null);
 
   const setLabel = useCallback(
-    (number) => {
-      console.log("Setting label", number);
-      dialog.current.show({
-        title: "Who is this?",
-        bsSize: "sm",
-        actions: [
-          Dialog.CancelAction(),
-          Dialog.OKAction((a) => {
-            console.log(`Setting label ${a.value}`);
-            labels[number] = a.value;
-            setLabels({ ...labels });
-          }),
-        ],
-        prompt: Dialog.TextPrompt({ initialValue: labels[number] || number }),
-      });
+    (person) => {
+      setConfirmPerson(person);
+      setOpenConfirm(true);
     },
-    [dialog, labels, setLabels]
+    [setConfirmPerson, setOpenConfirm]
+  );
+
+  const confirmInitialValue = useCallback(
+    () => labels[confirmPerson] || "",
+    [labels, confirmPerson]
+  );
+
+  const closeConfirmModal = useCallback(() => {
+    setOpenConfirm(false);
+    setConfirmPerson(null);
+  }, [setOpenConfirm, setConfirmPerson]);
+
+  const confirmPersonLabel = useCallback(
+    (value) => {
+      labels[confirmPerson] = value;
+      setLabels({ ...labels });
+      closeConfirmModal();
+    },
+    [labels, confirmPerson, closeConfirmModal, setLabels]
   );
 
   const _randomTokenModalOpen = (player) => {
@@ -288,11 +296,14 @@ export const Attractions = () => {
         randomTokenProps={ATTRACTION_PROP}
         fetchCards={getAllAttractionsCards}
       />
-      <Dialog
-        ref={(component) => {
-          dialog.current = component;
-        }}
-      />
+
+      <ConfirmForm
+        open={openConfirm}
+        headerText="Who is this?"
+        initialValue={confirmInitialValue()}
+        onConfirm={confirmPersonLabel}
+        onClose={closeConfirmModal}
+      ></ConfirmForm>
 
       <div className="position-fixed" style={{ bottom: "5px", right: "5px" }}>
         <AttractionDie rollDone={(r) => console.log(`Rolled: ${r}`)} />
