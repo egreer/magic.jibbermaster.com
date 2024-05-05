@@ -39,10 +39,9 @@ const Providers = ({ children }) => {
 const Main = () => {
   return (
     <Routes>
-      <Route path="/" exact element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route
         path="/archenemy"
-        exact
         element={
           <GameProvider prefix="archenemy">
             <DeckProvider prefix="archenemy">
@@ -53,7 +52,6 @@ const Main = () => {
       />
       <Route
         path="/planechase"
-        exact
         element={
           <GameProvider prefix="planechase">
             <DeckProvider prefix="planechase">
@@ -62,16 +60,15 @@ const Main = () => {
           </GameProvider>
         }
       />
-      <Route path="/syb" exact element={<SYB />} />
-      <Route path="/formats" exact element={<Formats />} />
-      <Route path="/attractions" exact element={<Attractions />} />
-      <Route path="/contraptions" exact element={<Contraptions />} />
-      <Route path="/day-night" exact element={<DayNight />} />
-      <Route path="/slivers" exact element={<Slivers />} />
-      <Route path="/vanguard" exact element={<Vanguard />} />
+      <Route path="/syb" element={<SYB />} />
+      <Route path="/formats" element={<Formats />} />
+      <Route path="/attractions" element={<Attractions />} />
+      <Route path="/contraptions" element={<Contraptions />} />
+      <Route path="/day-night" element={<DayNight />} />
+      <Route path="/slivers" element={<Slivers />} />
+      <Route path="/vanguard" element={<Vanguard />} />
       <Route
         path="/hike"
-        exact
         element={
           <GameProvider prefix="hikemode">
             <DeckProvider prefix="hikemode">
@@ -80,7 +77,7 @@ const Main = () => {
           </GameProvider>
         }
       />
-      <Route path="/debug" exact element={<DebugPage />} />
+      <Route path="/debug" element={<DebugPage />} />
     </Routes>
   );
 };

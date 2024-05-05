@@ -6,7 +6,6 @@ const HomeButton = ({ path, text, children, variant = "secondary" }) => (
   <Col xs={6} sm={4} lg={6} className="my-2">
     <Button
       as={NavLink}
-      exact
       to={path}
       className="w-100"
       variant={variant}

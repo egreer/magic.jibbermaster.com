@@ -33,7 +33,7 @@ export const Navigation = () => {
 
   const NavItem = ({ to, text }) => (
     <Nav.Item>
-      <Nav.Link as={RRNavLink} exact to={to} onClick={closeNavbar}>
+      <Nav.Link as={RRNavLink} to={to} onClick={closeNavbar}>
         {text}
       </Nav.Link>
     </Nav.Item>
