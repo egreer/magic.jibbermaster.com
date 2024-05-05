@@ -1,7 +1,7 @@
 &.d12 {
   $angle: 116.57deg;
   $ringAngle: -11deg;
-  $sideAngle: 360deg/5;
+  $sideAngle: calc(360deg / 5);
 
   @for $i from 1 through 5 {
     &[data-face="#{$i}"] {
@@ -31,7 +31,7 @@
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 8;
       transform: rotateX(-$ringAngle)
-        rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
+        rotateY(-$sideAngle * $angleMultiplier - calc($sideAngle / 2));
     }
   }
 }

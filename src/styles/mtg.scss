@@ -1,4 +1,4 @@
-@import "~keyrune/sass/_variables";
+@import "../../node_modules/keyrune/sass/_variables";
 
 @each $rarity, $text, $left, $right, $stroke in $keyrune_palette {
   /* Rarity Background */

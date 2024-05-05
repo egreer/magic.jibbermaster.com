@@ -92,7 +92,7 @@ $translateLowerY: $faceHeight * 0.78 + $translateRingY;
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 8;
       transform: rotateX(-$ringAngle)
-        rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
+        rotateY(-$sideAngle * $angleMultiplier - calc($sideAngle / 2));
     }
   }
 
@@ -140,7 +140,7 @@ $translateLowerY: $faceHeight * 0.78 + $translateRingY;
     @for $i from 16 through 20 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 18;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+        transform: rotateY($sideAngle * $angleMultiplier + calc($sideAngle / 2))
           translateZ($translateLowerZ)
           translateY($translateLowerY)
           rotateZ(180deg)
@@ -162,7 +162,7 @@ $translateLowerY: $faceHeight * 0.78 + $translateRingY;
     @for $i from 11 through 15 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 8;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+        transform: rotateY($sideAngle * $angleMultiplier + calc($sideAngle / 2))
           translateZ($translateRingZ)
           translateY($translateRingY)
           rotateX($ringAngle);
