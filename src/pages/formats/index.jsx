@@ -158,11 +158,7 @@ export const Formats = () => {
 
   const activeTags = () => {
     return currentFormats
-      ? uniq(
-          flatMap(currentFormats[playerCount], (f) => {
-            return f.tags;
-          })
-        ).sort()
+      ? uniq(flatMap(currentFormats[playerCount], "tags")).sort()
       : [];
   };
 

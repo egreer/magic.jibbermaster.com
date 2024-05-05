@@ -109,7 +109,7 @@ export const Hike = () => {
       "random-token",
       c || currentChaosCard
     );
-    if (!!randomTokenProp) {
+    if (randomTokenProp) {
       console.log("fetching random token");
       const getToken = async () => {
         let response = await internet.get(randomTokenProp.url);

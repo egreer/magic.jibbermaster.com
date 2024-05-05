@@ -116,9 +116,9 @@ export const Contraptions = () => {
       const newSprokets = { ...sprokets };
       set(
         newSprokets,
-        [`player${currentPlayer}`, `sproket${sproket}`],
+        `player${currentPlayer}.sproket${sproket}`,
         concat(
-          get(newSprokets, [`player${currentPlayer}`, `sproket${sproket}`], []),
+          get(newSprokets, `player${currentPlayer}.sproket${sproket}`, []),
           [{ deck_card_id: uuidv4(), ...card }]
         )
       );
@@ -156,13 +156,13 @@ export const Contraptions = () => {
     const newSprokets = { ...sprokets };
     const playerSproket = get(
       newSprokets,
-      [`player${player}`, `sproket${sproket}`],
+      `player${player}.sproket${sproket}`,
       []
     );
     const filteredSproket = playerSproket.filter(
       (c) => c.deck_card_id !== card.deck_card_id
     );
-    set(newSprokets, [`player${player}`, `sproket${sproket}`], filteredSproket);
+    set(newSprokets, `player${player}.sproket${sproket}`, filteredSproket);
     setSprokets(newSprokets);
   };
 
@@ -249,10 +249,10 @@ export const Contraptions = () => {
               <Row>
                 {[...Array(MAX_SPROKETS)].map((_v, s) => {
                   const sproket = s + 1;
-                  const playerSprokets = get(sprokets, [
-                    `player${player}`,
-                    `sproket${sproket}`,
-                  ]);
+                  const playerSprokets = get(
+                    sprokets,
+                    `player${currentPlayer}.sproket${sproket}`
+                  );
                   return (
                     <Col md={4} key={`${player}-${sproket}`} className="my-3">
                       <h3 className="text-center sticky-top bg-dark">{`Sprocket ${sproket}`}</h3>

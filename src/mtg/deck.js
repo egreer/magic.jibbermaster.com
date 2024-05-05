@@ -46,7 +46,7 @@ export const updateHistory = (prefix, card) => {
   store.set(`${prefix}-history`, history);
 };
 
-export const getHistory = (prefix, card) => {
+export const getHistory = (prefix) => {
   return store.get(`${prefix}-history`);
 };
 

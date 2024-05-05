@@ -182,7 +182,7 @@ export const SYB = () => {
           .addClass("semitransparent");
       });
 
-      cy.on("mouseout touchend", "node", function (e) {
+      cy.on("mouseout touchend", "node", () => {
         cy.elements().removeClass(
           "semitransparent highlight incoming outgoing"
         );

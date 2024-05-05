@@ -142,10 +142,10 @@ const parsedAbility = ({ card }) => {
     );
     if (!parsed && matches) {
       abilities.push(
-        ...matches[1]?.split(" and ")?.map((m) => {
+        ...(matches[1]?.split(" and ")?.map((m) => {
           let r = m.replace(/(^"|"$)/g, "");
           return r.includes(":") ? r : Case.sentence(r);
-        })
+        }) || [])
       );
       youControl = true;
       reminderText = matches[2];

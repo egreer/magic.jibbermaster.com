@@ -19,10 +19,7 @@ export const ConfirmForm = ({
   onConfirm,
   onClose,
   initialValue,
-  triggerButtonParams,
-  triggerText,
   headerText = "Confirm?",
-  bodyText,
   confirmText = "Save",
   confirmVariant = "primary",
   ...props

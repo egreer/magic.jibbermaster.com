@@ -68,7 +68,7 @@ export const Attractions = () => {
     [labels, confirmPerson, closeConfirmModal, setLabels]
   );
 
-  const _randomTokenModalOpen = (player) => {
+  const _randomTokenModalOpen = () => {
     const getToken = async () => {
       let response = await internet.get(ATTRACTION_PROP.url);
       let tokenCard = filterAPI(response.data);
@@ -209,7 +209,7 @@ export const Attractions = () => {
                 <Row className="my-3 mx-5">
                   <Col sm={6} className="mb-3 mb-sm-2">
                     <Button
-                      onClick={() => _randomTokenModalOpen(player)}
+                      onClick={() => _randomTokenModalOpen()}
                       className="fill-100"
                       variant="primary"
                     >

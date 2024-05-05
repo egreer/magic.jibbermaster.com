@@ -219,7 +219,7 @@ const fetchAllCards = async (ids) => {
     let response = await internet.post(COLLECTION_URL, {
       identifiers,
     });
-    cards = cards.concat([...response?.data?.data]);
+    cards = cards.concat([...(response?.data?.data || [])]);
   }
   return cards.map((p) => addAdditionalProperties(filterAPI(p)));
 };
