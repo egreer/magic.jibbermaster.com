@@ -1,8 +1,24 @@
 {
-  "name": "magic",
+  "name": "magic.jibbermaster.com",
   "version": "0.1.0",
   "private": true,
+  "description": "A suite of tools for Magic the Gathering",
+  "keywords": [
+    "magic the gathering",
+    "mtg",
+    "magic"
+  ],
   "homepage": "https://magic.jibbermaster.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egreer/magic.jibbermaster.com.git"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://www.paypal.me/egreerme"
+    }
+  ],
   "type": "module",
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js' --html analysis.html",
