@@ -1,11 +1,13 @@
-import { Button, useAccordionButton } from "react-bootstrap";
+import { CloseAccordionButton } from "../../components/CloseAccordionButton";
 
 export const DecklistButton = ({ children, eventKey }) => {
-  const decoratedOnClick = useAccordionButton(eventKey);
-
   return (
-    <Button variant="secondary" className="fill-100" onClick={decoratedOnClick}>
+    <CloseAccordionButton
+      variant="secondary"
+      className="fill-100"
+      eventKey={eventKey}
+    >
       {children}
-    </Button>
+    </CloseAccordionButton>
   );
 };
