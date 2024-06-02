@@ -200,12 +200,14 @@ export const Archenemy = () => {
       ) : (
         renderGamePlay()
       )}
-      <DevTools>
-        <Button onClick={undo} variant="warning">
-          Undo
-        </Button>
-        <Deck CardType={Scheme} />
-      </DevTools>
+      {!deckSelection && (
+        <DevTools>
+          <Button onClick={undo} variant="warning">
+            Undo
+          </Button>
+          <Deck CardType={Scheme} />
+        </DevTools>
+      )}
       <UpdatedBanner setName="Archenemy: Nicol Bolas" symbol="e01" />
     </Container>
   );
