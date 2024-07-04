@@ -3,9 +3,11 @@ import chunk from "lodash/chunk";
 import pick from "lodash/pick";
 import moment from "moment";
 import store from "store/dist/store.modern";
+import { v4 as uuidv4 } from "uuid";
 import { BASE_CHAOS } from "../pages/hike/data/chaos";
 import { BASE_PLANES } from "../pages/hike/data/planes";
 import { addAdditionalProperties } from "./additionalProps";
+
 // TODO use expire store
 export const internet = axios.create();
 
@@ -222,6 +224,16 @@ const fetchAllCards = async (ids) => {
     cards = cards.concat([...(response?.data?.data || [])]);
   }
   return cards.map((p) => addAdditionalProperties(filterAPI(p)));
+};
+
+export const fetchRandomCard = async (url) => {
+  console.log(`Loading random card from Axios (${url})`);
+  const response = await internet.get(url);
+  const card = addAdditionalProperties(filterAPI({ ...response?.data }));
+  card.deck_card_id = uuidv4();
+
+  console.log("Random Card", card);
+  return card;
 };
 
 export const fetchCard = async (id) => {

@@ -13,7 +13,7 @@ import { MtgCard } from "../../components/magic/Card";
 import { DeleteIcon } from "../../components/magic/Icons";
 import { useLocalState } from "../../hooks/useLocalState";
 import { AVATAR_PROP } from "../../util/additionalProps";
-import { filterAPI, getAllVanguardCards, internet } from "../../util/api";
+import { fetchRandomCard, getAllVanguardCards } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 
@@ -61,11 +61,7 @@ export const Vanguard = () => {
 
   const _randomTokenModalOpen = () => {
     const getToken = async () => {
-      let response = await internet.get(AVATAR_PROP.url);
-      let tokenCard = filterAPI(response.data);
-      tokenCard.deck_card_id = uuidv4();
-      console.log("Random Token", tokenCard);
-
+      const tokenCard = await fetchRandomCard(AVATAR_PROP.url);
       setAdditionalCard(tokenCard);
       setRandomTokenModalOpen(true);
     };

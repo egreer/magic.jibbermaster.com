@@ -18,7 +18,7 @@ import { AttractionDie } from "../../components/magic/planar-die/AttractionDie";
 import { useLocalState } from "../../hooks/useLocalState";
 import attractionBack from "../../images/attraction-back.jpg";
 import { ATTRACTION_PROP } from "../../util/additionalProps";
-import { filterAPI, getAllAttractionsCards, internet } from "../../util/api";
+import { fetchRandomCard, getAllAttractionsCards } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 
@@ -70,11 +70,7 @@ export const Attractions = () => {
 
   const _randomTokenModalOpen = () => {
     const getToken = async () => {
-      let response = await internet.get(ATTRACTION_PROP.url);
-      let tokenCard = filterAPI(response.data);
-      tokenCard.deck_card_id = uuidv4();
-      console.log("Random Token", tokenCard);
-
+      const tokenCard = await fetchRandomCard(ATTRACTION_PROP.url);
       setAdditionalCards([tokenCard]);
       setRandomTokenModalOpen(true);
     };

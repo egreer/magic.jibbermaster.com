@@ -25,7 +25,7 @@ import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
 import { useLocalState } from "../../hooks/useLocalState";
 import contraptionBack from "../../images/contraption-back.jpg";
 import { ASSEMBLE_PROP } from "../../util/additionalProps";
-import { filterAPI, getAllContraptionsCards, internet } from "../../util/api";
+import { fetchRandomCard, getAllContraptionsCards } from "../../util/api";
 
 const DEFAULT_PLAYER_COUNT = 5;
 const MAX_SPROKETS = 3;
@@ -76,11 +76,7 @@ export const Contraptions = () => {
 
   const _randomTokenModalOpen = () => {
     const getToken = async () => {
-      let response = await internet.get(ASSEMBLE_PROP.url);
-      let tokenCard = filterAPI(response.data);
-      tokenCard.deck_card_id = uuidv4();
-      console.log("Random Token", tokenCard);
-
+      const tokenCard = await fetchRandomCard(ASSEMBLE_PROP.url);
       setCurrentCard(tokenCard);
       setRandomTokenModalOpen(true);
     };
