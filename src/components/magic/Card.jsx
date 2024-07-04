@@ -12,10 +12,13 @@ import {
 } from "../../mtg/card.js";
 import { createMarkup } from "../../util/createMarkup";
 import { reactToBool } from "../../util/react";
+import { CardInputProp } from "./CardInputProp";
 import { CardLinks } from "./CardLinks";
 import { CardText } from "./CardText";
 import { Counter } from "./Counter";
 import { EmDashIcon } from "./Icons";
+import { RandomChoice } from "./RandomChoice";
+import { RandomToken } from "./RandomToken";
 import { CoinFlip } from "./coin/CoinFlip";
 import "./planes.scss";
 
@@ -59,6 +62,9 @@ export const MtgCard = React.forwardRef(
       displayHikeErrata && hasCustomProperty("chaosomenon", card);
     const chaosX = hasCustomProperty("chaos_x", card);
     const hasCoinFlip = hasCustomProperty("coin-flip", card);
+    const hasRandomChoice = hasCustomProperty("random-choices", card);
+    const hasInputPrompt = hasCustomProperty("input", card);
+    const hasRandomToken = hasCustomProperty("random-token", card);
     const urlProp = hasCustomProperty("url", card);
 
     const isRotated = rotatedLayout(card);
@@ -77,6 +83,32 @@ export const MtgCard = React.forwardRef(
 
     const counter = displayActions && hasCounters && <Counter card={card} />;
     const coinFlip = displayActions && hasCoinFlip && <CoinFlip card={card} />;
+    const inputPrompt = displayActions && hasInputPrompt && (
+      <CardInputProp card={card} />
+    );
+    const randomChoice = displayActions && hasRandomChoice && (
+      <RandomChoice card={card} />
+    );
+    const randomToken = displayActions && hasRandomToken && (
+      <RandomToken card={card} />
+    );
+
+    const hasOverlayAbility =
+      hasCounters ||
+      hasCoinFlip ||
+      hasRandomChoice ||
+      hasRandomToken ||
+      hasInputPrompt;
+
+    const renderAbilities = () => (
+      <>
+        {counter}
+        {coinFlip}
+        {inputPrompt}
+        {randomChoice}
+        {randomToken}
+      </>
+    );
 
     const renderBody = () => {
       const hasBody = !!text;
@@ -271,14 +303,13 @@ export const MtgCard = React.forwardRef(
           <Card.ImgOverlay
             className={cn("text-center card-overlay", {
               "child-overlay": !emptyChildren && !isBlank,
-              "counter-overlay": emptyChildren && (hasCounters || hasCoinFlip),
+              "counter-overlay": emptyChildren && hasOverlayAbility,
               "d-flex align-items-center justify-content-center":
-                emptyChildren && (hasCounters || hasCoinFlip),
+                emptyChildren && hasOverlayAbility,
             })}
           >
             <Card.Title className={cn("text-center", { "h-100": isBlank })}>
-              {counter}
-              {coinFlip}
+              {hasOverlayAbility && renderAbilities()}
               {renderCustomText()}
               {!isBlank && children}
             </Card.Title>
@@ -287,7 +318,7 @@ export const MtgCard = React.forwardRef(
       } else {
         return (
           <Card.Body className="text-center pb-0">
-            {counter}
+            {hasOverlayAbility && renderAbilities()}
             {renderCustomText()}
             {!isBlank && children}
           </Card.Body>

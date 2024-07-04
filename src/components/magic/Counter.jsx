@@ -14,6 +14,8 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
   };
 
   switch (type) {
+    case "Death":
+      return icon({ ms: "ms-counter-skull" });
     case "Doom":
       return icon({ ms: "ms-counter-doom" });
     case "Exposure":

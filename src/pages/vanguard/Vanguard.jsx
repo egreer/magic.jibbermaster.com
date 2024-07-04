@@ -207,6 +207,7 @@ export const Vanguard = () => {
                       <MtgCard
                         card={card}
                         displayChildrenBelow={false}
+                        displayActions={true}
                       ></MtgCard>
                       <Button
                         onClick={() => removeAvatar({ player })}

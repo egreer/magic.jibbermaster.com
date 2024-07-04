@@ -103,14 +103,14 @@ const ABILITY_ICONS = {
   deathtouch: "ability-deathtouch",
   defender: "ability-defender",
   devotion: "ability-devotion",
-  "double Strike": "ability-double-strike",
+  "double strike": "ability-double-strike",
   dungeon: "ability-dungeon",
   embalm: "ability-embalm",
   enrage: "ability-enrage",
   escape: "ability-escape",
   eternalize: "ability-eternalize",
   explore: "ability-explore",
-  "first Strike": "ability-first-strike",
+  "first strike": "ability-first-strike",
   flash: "ability-flash",
   flying: "ability-flying",
   foretell: "ability-foretell",
@@ -121,6 +121,12 @@ const ABILITY_ICONS = {
   "hexproof: black": "ability-hexproof-black",
   "hexproof: red": "ability-hexproof-red",
   "hexproof: green": "ability-hexproof-green",
+  protection: "ability-hexproof",
+  "protection from white": "ability-hexproof-white",
+  "protection from blue": "ability-hexproof-blue",
+  "protection from black": "ability-hexproof-black",
+  "protection from red": "ability-hexproof-red",
+  "protection from green": "ability-hexproof-green",
   indestructible: "ability-indestructible",
   jumpstart: "ability-jumpstart",
   kicker: "ability-kicker",
@@ -138,7 +144,7 @@ const ABILITY_ICONS = {
   revolt: "ability-revolt",
   riot: "ability-riot",
   spectacle: "ability-spectacle",
-  "static Ability": "ability-static",
+  "static ability": "ability-static",
   "summoning Sickness": "ability-summoning-sickness",
   surveil: "ability-surveil",
   trample: "ability-trample",
@@ -152,10 +158,10 @@ const ABILITY_ICONS = {
 export const hasAbilityIcon = (ability) =>
   ABILITY_ICONS?.[ability?.toLowerCase()];
 export const AbilityIcon = ({ ability, className, ...props }) =>
-  hasAbilityIcon(ability) ? (
+  hasAbilityIcon(`${ability}`) ? (
     <i
       className={`ms ms-fw ms-${
-        ABILITY_ICONS[ability.toLowerCase()]
+        ABILITY_ICONS[ability?.toLowerCase()]
       } ${className}`}
       {...props}
     ></i>
