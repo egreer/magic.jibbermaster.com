@@ -166,7 +166,7 @@ export const FORMATS = [
     players: canAny,
   },
   {
-    name: "EDH 2 Headed Giant",
+    name: "EDH 2 Headed Giant SYB",
     initial: 0.5,
     tags: ["EDH", "2 Headed Giant"],
     players: can2Hg,
