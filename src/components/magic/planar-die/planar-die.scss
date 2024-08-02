@@ -87,12 +87,12 @@
 }
 
 @mixin dot-animation() {
+  background-color: $translucent !important;
   .dot {
     // animation-duration: 2s;
     animation-name: backside;
     visibility: hidden;
   }
-  background-color: $translucent !important;
 }
 
 .dice {
