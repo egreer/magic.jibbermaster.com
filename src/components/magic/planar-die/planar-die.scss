@@ -47,6 +47,11 @@
     }
   }
 }
+.planar .dice {
+  .face {
+    background-color: rgba($planarDiePurple, 0.8) !important;
+  }
+}
 
 .attraction .dice {
   .face {
