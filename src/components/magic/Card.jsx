@@ -86,9 +86,12 @@ export const MtgCard = React.forwardRef(
     const inputPrompt = displayActions && hasInputPrompt && (
       <CardInputProp card={card} />
     );
-    const randomChoice = displayActions && hasRandomChoice && (
-      <RandomChoice card={card} />
-    );
+
+    const randomChoice = displayActions &&
+      hasRandomChoice &&
+      !(hasRandomChoice?.hikeOnly && !displayHikeErrata) && (
+        <RandomChoice card={card} />
+      );
     const randomToken = displayActions && hasRandomToken && (
       <RandomToken card={card} />
     );

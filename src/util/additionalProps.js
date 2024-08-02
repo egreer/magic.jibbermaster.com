@@ -39,13 +39,22 @@ export const randomTokenProp = ({ type, action, ...props }) => {
   };
 };
 
-export const randomChoiceProp = ({ choices = [], count = 1 }) => {
+export const randomChoiceProp = ({ choices = [], count = 1, ...props }) => {
   return {
     name: "random-choices",
     choices,
     count,
+    ...props,
   };
 };
+
+const randomColorProp = ({ ...props }) =>
+  randomChoiceProp({
+    choices: ["white", "blue", "black", "red", "green"],
+    ...props,
+  });
+
+const HIKE_RANDOM_COLOR_PROP = randomColorProp({ hikeOnly: true });
 
 export const ATTRACTION_PROP = randomTokenProp({
   action: `"Open"`,
@@ -142,6 +151,7 @@ export const PLANECHASE_PROPERTIES = {
 export const HIKE_PROPERTIES = {
   // Hike Mode
   Agyrem: [
+    HIKE_RANDOM_COLOR_PROP,
     errataProp(
       "When you planeswalk to or at the beginning of your upkeep, choose a color at random (replacing White)."
     ),
@@ -184,6 +194,7 @@ export const HIKE_PROPERTIES = {
     }),
   ],
   "Swirl the Mists": [
+    HIKE_RANDOM_COLOR_PROP,
     errataProp(
       "When you planeswalk to Swirl the Mists, choose a color word and a basic land type at random.  All instances of color words in the text of spells and permanents are changed to the chosen color word. All instances of basic land types are replaced with the chosen basic land type"
     ),
@@ -251,6 +262,7 @@ export const HIKE_PROPERTIES = {
     ),
   ],
   "Chaos Moon": [
+    HIKE_RANDOM_COLOR_PROP,
     errataProp(
       "When you planeswalk to Chaos Moon and at the beginning of each upkeep, select a color at random then count the number of permanents in play. If the number is odd, all creatures of the chosen color get +1/+1 and whenever a permanent is tapped for mana of the chosen color add one additional mana of that type. If even, creatures of the chosen color get -1/-1 and whenever a permanent is tapped for mana of the chosen color, add {C}"
     ),

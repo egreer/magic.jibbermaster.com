@@ -153,6 +153,11 @@ const ABILITY_ICONS = {
   undergrowth: "ability-undergrowth",
   vigilance: "ability-vigilance",
   ward: "ability-ward",
+  white: "w",
+  blue: "u",
+  black: "b",
+  red: "r",
+  green: "g",
 };
 
 export const hasAbilityIcon = (ability) =>
