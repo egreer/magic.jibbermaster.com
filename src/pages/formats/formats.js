@@ -136,13 +136,13 @@ export const hasTags = (tags, values) =>
 
 export const FORMATS = [
   {
-    name: "2 Headed Giant",
+    name: "2 Headed Giant SYB",
     initial: 0.5,
     tags: ["2 Headed Giant", "Normal"],
     players: can2Hg,
   },
   {
-    name: "2 Headed Giant Free for All",
+    name: "2 Headed Giant FFA",
     initial: 0.5,
     tags: ["2 Headed Giant", "Free for All"],
     players: (p) => can2Hg(p) && canFreeForAll(p) && p > 4,
@@ -414,7 +414,7 @@ export const FORMATS = [
   {
     name: "Secret Partners Deck Swaps",
     displayName: "Secret Partners",
-    initial: 0.5,
+    initial: 0.125,
     tags: ["Normal", "Secret Partners", "Deck Swaps"],
     showSwaps: true,
     players: canSecretPartner,
