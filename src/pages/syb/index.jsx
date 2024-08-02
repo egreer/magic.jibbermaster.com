@@ -250,6 +250,7 @@ export const SYB = () => {
   };
 
   const isSquare = () => {
+    // eslint-disable-next-line no-constant-binary-expression
     return false && tableShape === TABLE_SHAPE_SQUARE;
   };
 
@@ -342,6 +343,7 @@ export const SYB = () => {
             }}
           />
         </Col>
+        {/* eslint-disable-next-line no-constant-binary-expression*/}
         {false && (
           <ButtonGroup>
             <Button
