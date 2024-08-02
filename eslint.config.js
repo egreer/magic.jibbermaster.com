@@ -16,7 +16,11 @@ const compat = new FlatCompat({
 });
 
 export default [
-  ...compat.extends("eslint:recommended", "plugin:lodash/recommended"),
+  ...compat.extends(
+    "eslint:recommended",
+    "plugin:lodash/recommended",
+    // "plugin:react-hooks/recommended"
+  ),
   {
     plugins: {
       "unused-imports": unusedImports,
