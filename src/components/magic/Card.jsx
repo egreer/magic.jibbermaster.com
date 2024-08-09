@@ -19,6 +19,7 @@ import { Counter } from "./Counter";
 import { EmDashIcon } from "./Icons";
 import { RandomChoice } from "./RandomChoice";
 import { RandomToken } from "./RandomToken";
+import { CardRibbon } from "./card/CardRibbon";
 import { CoinFlip } from "./coin/CoinFlip";
 import "./planes.scss";
 
@@ -34,6 +35,7 @@ export const MtgCard = React.forwardRef(
       displayHikeErrata = false,
       displayTextWhenRotated = false,
       displayTypeLine = false,
+      ribbonProps = {},
     },
     ref
   ) => {
@@ -311,6 +313,13 @@ export const MtgCard = React.forwardRef(
                 emptyChildren && hasOverlayAbility,
             })}
           >
+            {ribbonProps?.value && (
+              <CardRibbon
+                right={ribbonProps.right}
+                value={ribbonProps.value}
+                background={ribbonProps.background}
+              ></CardRibbon>
+            )}
             <Card.Title className={cn("text-center", { "h-100": isBlank })}>
               {hasOverlayAbility && renderAbilities()}
               {renderCustomText()}

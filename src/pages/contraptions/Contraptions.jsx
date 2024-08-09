@@ -249,12 +249,22 @@ export const Contraptions = () => {
                     sprokets,
                     `player${currentPlayer}.sproket${sproket}`
                   );
+                  const bgs = ["common", "uncommon", "rare"];
+
                   return (
                     <Col md={4} key={`${player}-${sproket}`} className="my-3">
                       <h3 className="text-center sticky-top bg-dark">{`Sprocket ${sproket}`}</h3>
                       {playerSprokets?.map((card) => (
                         <React.Fragment key={card.deck_card_id}>
-                          <MtgCard card={card} displayChildrenBelow={false}>
+                          <MtgCard
+                            card={card}
+                            displayChildrenBelow={false}
+                            ribbonProps={{
+                              value: `${sproket}`,
+                              right: true,
+                              background: `mtg-bg-${bgs[s]} mtg-grad`,
+                            }}
+                          >
                             <Button
                               onClick={() =>
                                 unsproket({ card, player, sproket })
