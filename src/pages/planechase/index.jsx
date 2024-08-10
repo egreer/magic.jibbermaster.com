@@ -21,6 +21,7 @@ import { shuffleArray } from "../../util/shuffleArray";
 import { ChaosButton } from "./ChaosButton";
 import { PlanechaseHelmet } from "./Helmet";
 import { MultiChaosModal } from "./MultiChaosModal";
+import { PickPlaneModal } from "./PickPlaneModal";
 import { ScryModal } from "./ScryModal";
 
 export const Planechase = () => {
@@ -28,6 +29,7 @@ export const Planechase = () => {
   const [planes, setPlanes] = useState([]);
   const [tripleChaosModalOpen, setTripleChaosModalOpen] = useState(false);
   const [scryModalOpen, setScryModalOpen] = useState(false);
+  const [pickPlaneModalOpen, setPickPlaneModalOpen] = useState(false);
   const [showPlanarDie, setShowPlanarDie] = useLocalState("planar-die", true);
 
   const game = useGameContext();
@@ -188,12 +190,14 @@ export const Planechase = () => {
     }
   };
 
-  const selectPlane = (card) => {
-    const restCards = revealedCards.filter(
-      (c) => c.deck_card_id !== card.deck_card_id
-    );
+  const putToBottomExcept = (cards, card) => {
+    const restCards = cards.filter((c) => c.deck_card_id !== card.deck_card_id);
     const shuffledCards = shuffleArray(restCards.slice());
     deck.addCardsToBottom([...shuffledCards]);
+  };
+
+  const selectPlane = (card) => {
+    putToBottomExcept(revealedCards, card);
     game.clearRevealedCards();
     setTimeout(() => planeswalk({ card }));
   };
@@ -295,6 +299,26 @@ export const Planechase = () => {
     setScryModalOpen(false);
   };
 
+  const scryAndPlaneswalk = () => {
+    const newScryCards = deck.revealCards(2, false);
+    deck.removeCards(newScryCards);
+    game.setScryCards(newScryCards);
+    setPickPlaneModalOpen(true);
+  };
+
+  const _pickPlaneModalClose = () => {
+    deck.addCardsToTop(scryCards);
+    game.clearScryCards();
+    setPickPlaneModalOpen(false);
+  };
+
+  const _pickPlane = (card) => {
+    putToBottomExcept(scryCards, card);
+    game.clearScryCards();
+    setPickPlaneModalOpen(false);
+    setTimeout(() => planeswalk({ card }));
+  };
+
   return (
     <Container className="planechase" fluid>
       <PlanechaseHelmet planes={planes} />
@@ -329,12 +353,30 @@ export const Planechase = () => {
         chaosClick={(c) => triggerChaos(c)}
         close={_tripleChaosModalClose}
       />
+      <PickPlaneModal
+        pickCards={scryCards}
+        open={pickPlaneModalOpen}
+        onHide={_pickPlaneModalClose}
+        onSelect={_pickPlane}
+      />
       <ScryModal
         scryCards={scryCards}
         open={scryModalOpen}
         onScryTop={() => _scryTop()}
         onScryBottom={() => _scryBottom()}
       />
+      <Button
+        className="w-100"
+        onClick={scryAndPlaneswalk}
+        disabled={planeswalkDisabled || loading}
+        icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
+      >
+        <i className="ms ms-planeswalker mx-2" />
+        <span>
+          Scry Planeswalk - <em>Susan Foreman</em>
+        </span>
+        <i className="ss ss-who mx-2 " />
+      </Button>
       <History history={history} CardType={Plane} />
       <p className="text-center my-3 noselect">
         There are {pluralize("card", deck?.deck?.length ?? 0, true)} remaining.
