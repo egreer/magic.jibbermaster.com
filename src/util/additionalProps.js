@@ -161,6 +161,7 @@ export const HIKE_PROPERTIES = {
       "All creature tokens are Squirrels in addition to their other types.\n All Squirrels get +1/+1\n All nontoken creatures gain Squirrellink (Whenever they deal damage, create that many 1/1 green Squirrel tokens)"
     ),
   ],
+  "Infinite Hourglass": [counterProp("Time")],
   Pramikon: [
     errataProp(
       "When you planeswalk to Pramikon, choose a SYB pattern at random based on the numbers in play. For as long as you remain on Pramikon, players can only attack in the screwing direction.\nWhen a player loses, reselect a screwing pattern with the remaining number of players."

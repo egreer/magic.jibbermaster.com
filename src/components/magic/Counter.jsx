@@ -14,23 +14,25 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
   };
 
   switch (type) {
+    case "Charge":
+      return icon({ ms: "ms-counter-charge" });
     case "Death":
       return icon({ ms: "ms-counter-skull" });
     case "Doom":
       return icon({ ms: "ms-counter-doom" });
-    case "Exposure":
-      return icon({ fa: "fa fa-fw fa-radiation" });
-    case "Scroll":
-      return icon({ ms: "ms-counter-lore", verticalAlign: "bottom" });
-    case "Charge":
-      return icon({ ms: "ms-counter-charge" });
     case "Eruption":
     case "Pressure":
       return icon({ ms: "ms-counter-mining" });
+    case "Exposure":
+      return icon({ fa: "fa fa-fw fa-radiation" });
     case "Flame":
       return icon({ ms: "ms-counter-flame" });
     case "Fun":
       return icon({ ms: "ms-counter-vortex", verticalAlign: "bottom" });
+    case "Scroll":
+      return icon({ ms: "ms-counter-lore", verticalAlign: "bottom" });
+    case "Time":
+      return icon({ ms: "ms-counter-time" });
     default:
       return null;
   }
