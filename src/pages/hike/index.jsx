@@ -13,7 +13,14 @@ import { useLocalState } from "../../hooks/useLocalState";
 import { DeckProvider, useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
 import { ARENA_BACK, hasCustomProperty } from "../../mtg/card";
-import { drawCard, getOrCreateCurrentDeck } from "../../mtg/deck";
+import {
+  addCardsToBottom,
+  addCardsToTop,
+  drawCard,
+  getOrCreateCurrentDeck,
+  removeCards,
+  revealCards,
+} from "../../mtg/deck";
 import { addAdditionalProperties } from "../../util/additionalProps";
 import {
   filterAPI,
@@ -21,9 +28,11 @@ import {
   getAllHikeModePlaneCards,
   internet,
 } from "../../util/api";
+import { shuffleArray } from "../../util/shuffleArray";
 import { ChaosButton } from "../planechase/ChaosButton";
 import { CurrentDie } from "./Die";
 import { HikeHelmet } from "./Helmet";
+import { PickHikePlaneModal } from "./PickHikePlaneModal";
 import { Rules } from "./Rules";
 import { CUSTOM_CHAOS } from "./data/chaos";
 import { CUSTOM_PLANES } from "./data/planes";
@@ -52,14 +61,14 @@ export const Hike = () => {
   const [showRules, setShowRules] = useLocalState("hike-show-rules", false);
   const [randomTokenModalOpen, setRandomTokenModalOpen] = useState(false);
   const [randomTokenProps, setRandomTokenProps] = useState(null);
+  const [pickPlaneModalOpen, setPickPlaneModalOpen] = useState(false);
+
   // TODOs:
-  // mobile testing
-  // Reset planes / Chaos on empty
   // Hike Die
   // Coin Flipper link
   const die = useRef();
   const game = useGameContext();
-  const { currentCard } = game;
+  const { currentCard, scryCards, additionalCards } = game;
 
   const deck = useDeckContext();
   const history = deck.history;
@@ -88,20 +97,29 @@ export const Hike = () => {
     }
   }, [cards, deck]);
 
-  const planeshift = useCallback(() => {
-    const newCard = deck.drawCard();
-    game.setCurrentCard(newCard ?? null);
-  }, [deck, game]);
+  const planeshift = useCallback(
+    ({ card }) => {
+      const newCard = card ?? deck.drawCard() ?? null;
+      game.setCurrentCard(newCard);
+    },
+    [deck, game]
+  );
 
-  const chaosshift = useCallback(() => {
-    const newCard = drawCard(PRE_CHAOS);
-    setCurrentChaosCard(newCard ?? null);
-  }, [setCurrentChaosCard]);
+  const chaosshift = useCallback(
+    ({ card }) => {
+      const newCard = card ?? drawCard(PRE_CHAOS) ?? null;
+      setCurrentChaosCard(newCard);
+    },
+    [setCurrentChaosCard]
+  );
 
-  const planeswalk = useCallback(() => {
-    planeshift();
-    chaosshift();
-  }, [planeshift, chaosshift]);
+  const planeswalk = useCallback(
+    ({ planeCard, chaosCard }) => {
+      planeshift({ card: planeCard });
+      chaosshift({ card: chaosCard });
+    },
+    [planeshift, chaosshift]
+  );
 
   const triggerChaos = (c) => {
     console.log("Chaos Triggered");
@@ -122,6 +140,40 @@ export const Hike = () => {
       };
       getToken();
     }
+  };
+
+  const scryAndPlaneswalk = () => {
+    const newScryCards = deck.revealCards(2, false);
+    const newChaosScryCards = revealCards(PRE_CHAOS, 2, false);
+    deck.removeCards(newScryCards);
+    removeCards(PRE_CHAOS, newChaosScryCards);
+    game.setScryCards(newScryCards);
+    game.setAdditionalCards(newChaosScryCards);
+    setPickPlaneModalOpen(true);
+  };
+
+  const _pickPlaneModalClose = () => {
+    deck.addCardsToTop(scryCards);
+    addCardsToTop(PRE_CHAOS, additionalCards);
+    game.clearScryCards();
+    setPickPlaneModalOpen(false);
+  };
+
+  const _pickPlane = (planeCard, chaosCard) => {
+    putToBottomExcept(scryCards, planeCard);
+    putToBottomExcept(additionalCards, chaosCard, PRE_CHAOS);
+    game.clearScryCards();
+    game.clearAdditionalCards();
+    setPickPlaneModalOpen(false);
+    setTimeout(() => planeswalk({ planeCard, chaosCard }));
+  };
+
+  const putToBottomExcept = (cards, card, prefix = null) => {
+    const restCards = cards.filter((c) => c.deck_card_id !== card.deck_card_id);
+    const shuffledCards = shuffleArray(restCards.slice());
+    prefix
+      ? addCardsToBottom(prefix, [...shuffledCards])
+      : deck.addCardsToBottom([...shuffledCards]);
   };
 
   const _randomTokenModalClose = () => {
@@ -281,6 +333,27 @@ export const Hike = () => {
         close={_randomTokenModalClose}
         randomTokenProps={randomTokenProps}
       />
+
+      <PickHikePlaneModal
+        pickPlaneCards={scryCards}
+        pickChaosCards={additionalCards}
+        open={pickPlaneModalOpen}
+        onHide={_pickPlaneModalClose}
+        onSelect={_pickPlane}
+      />
+
+      <Button
+        className="w-100"
+        onClick={scryAndPlaneswalk}
+        disabled={loading}
+        icon={<i className="ms ms-planeswalker ms-2x mx-2" />}
+      >
+        <i className="ms ms-planeswalker mx-2" />
+        <span>
+          Scry Planeswalk - <em>Susan Foreman</em>
+        </span>
+        <i className="ss ss-who mx-2 " />
+      </Button>
 
       <History history={history} CardType={MtgCard} />
       <p className="text-center my-3 noselect">

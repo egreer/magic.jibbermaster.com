@@ -21,13 +21,10 @@ export const RandomToken = ({ card, style = {} }) => {
     }
   };
 
-  const onConfirm = useCallback(
-    (input) => {
-      const newURL = url.replace("<<X>>", input);
-      _randomTokenModalOpen(newURL);
-    },
-    [setValue]
-  );
+  const onConfirm = useCallback((input) => {
+    const newURL = url.replace("<<X>>", input);
+    _randomTokenModalOpen(newURL);
+  }, []);
 
   const closeConfirmModal = useCallback(() => {
     setOpenConfirm(false);
