@@ -251,6 +251,16 @@ export const HIKE_PROPERTIES = {
     errataProp(
       "When you planeswalk to or at the beginning of your upkeep, Seek Bola's Counsel choosing a mode at random."
     ),
+    randomChoiceProp({
+      choices: [
+        "Emblem - Lose",
+        "Discard",
+        "Planeswalk - Pools",
+        "Library",
+        "Destroy",
+        "Emblem - Sideboard",
+      ],
+    }),
   ],
   "Thousand-Year Storm": [
     errataProp(
