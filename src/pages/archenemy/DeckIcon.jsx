@@ -14,6 +14,10 @@ export const DeckIcon = ({ name, type = "ss-mythic ss-grad" }) => {
       return <i className={`ss ss-fw ${type} ss-pd3`}></i>;
     case "Archenemy Nicol Bolas":
       return <i className={`ss ss-fw ${type} ss-hou`}></i>;
+    case "Jump Scare!":
+      return <i className={`ss ss-fw ${type} ss-j22`}></i>;
+    case "Miracle Worker":
+      return <i className={`ss ss-fw ${type} ss-avr`}></i>;
     default:
       return null;
   }
