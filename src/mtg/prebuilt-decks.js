@@ -115,5 +115,33 @@ const DECKS = [
       ["What's Yours Is Now Mine", 1],
       ["When Will You Learn?", 1],
     ],
+  },{
+    name: "Jump Scare!",
+    cards: [
+      ["My Laughter Echoes", 1],
+      ["Power Without Equal", 1],
+      ["I Am Untouchable", 1],
+      ["Mine Is the Only Truth", 1],
+      ["Your Own Face Mocks You", 1],
+      ["Kneel Before My Legions", 1],
+      ["You Are Unworthy of Mercy", 1],
+      ["Chaos Is My Plaything", 1],
+      ["Your Plans Mean Nothing", 1],
+      ["You Will Know True Suffering", 1],
+    ],
+  },{
+    name: "Miracle Worker",
+    cards: [
+      ["Choose Your Demise", 1],
+      ["Behold the Power of Destruction", 1],
+      ["You Cannot Hide from Me", 1],
+      ["My Champion Stands Supreme", 1],
+      ["Only I Know What Awaits", 1],
+      ["My Followers Ascend", 1],
+      ["Time Bends to My Will", 1],
+      ["I Am Duskmourn", 1],
+      ["My Wealth Will Bury You", 1],
+      ["A Premonition of Your Demise", 1],
+    ],
   },
 ];
