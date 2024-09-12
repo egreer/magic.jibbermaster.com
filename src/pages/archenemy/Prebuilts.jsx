@@ -50,7 +50,7 @@ export const Prebuilts = ({ schemes, onSelectDeck }) => {
                       <Button
                         variant="success"
                         className="px-4"
-                        onClick={() => onSelectDeck("Custom", customDeck)}
+                        onClick={() => onSelectDeck(prebuilt, cardList)}
                       >
                         Use Deck
                       </Button>
