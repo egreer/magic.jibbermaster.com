@@ -13,7 +13,7 @@ export const getCardList = (deckname, schemes) => {
       clonedCard.count = c[1];
       return clonedCard;
     } else {
-      console.warn("Missing expected card in list", c[0]):
+      console.warn("Missing expected card in list", c[0]);
       return null;
     }
   }));
