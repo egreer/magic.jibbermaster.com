@@ -115,7 +115,8 @@ const DECKS = [
       ["What's Yours Is Now Mine", 1],
       ["When Will You Learn?", 1],
     ],
-  },{
+  },
+  {
     name: "Jump Scare!",
     cards: [
       ["My Laughter Echoes", 1],
@@ -129,7 +130,8 @@ const DECKS = [
       ["Your Plans Mean Nothing", 1],
       ["You Will Know True Suffering", 1],
     ],
-  },{
+  },
+  {
     name: "Miracle Worker",
     cards: [
       ["Choose Your Demise", 1],
