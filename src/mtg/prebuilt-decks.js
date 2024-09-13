@@ -2,21 +2,23 @@ export const getDeckList = () => {
   return DECKS.map((s) => s.name);
 };
 
-const compact = arr => arr.filter(Boolean);
+const compact = (arr) => arr.filter(Boolean);
 
 export const getCardList = (deckname, schemes) => {
   const deck = DECKS.find((s) => s.name === deckname);
-  return compact(deck.cards.map((c) => {
-    const scheme = schemes.find((s) => s.name === c[0]);
-    if(scheme){
-      const clonedCard = JSON.parse(JSON.stringify(scheme));
-      clonedCard.count = c[1];
-      return clonedCard;
-    } else {
-      console.warn("Missing expected card in list", c[0]);
-      return null;
-    }
-  }));
+  return compact(
+    deck.cards.map((c) => {
+      const scheme = schemes.find((s) => s.name === c[0]);
+      if (scheme) {
+        const clonedCard = JSON.parse(JSON.stringify(scheme));
+        clonedCard.count = c[1];
+        return clonedCard;
+      } else {
+        console.warn("Missing expected card in list", c[0]);
+        return null;
+      }
+    })
+  );
 };
 
 const DECKS = [
@@ -122,6 +124,36 @@ const DECKS = [
       ["This World Belongs to Me", 1],
       ["What's Yours Is Now Mine", 1],
       ["When Will You Learn?", 1],
+    ],
+  },
+  {
+    name: "Death Toll",
+    cards: [
+      ["Choose Your Champion", 1],
+      ["Plots That Span Centuries", 1],
+      ["My Tendrils Run Deep", 1],
+      ["Dark Wings Bring Your Downfall", 1],
+      ["I Am Never Alone", 1],
+      ["Rot Like the Scum You Are", 1],
+      ["You Live Only Because I Will It", 1],
+      ["My Will Is Irresistible", 1],
+      ["My Wings Enfold All", 1],
+      ["Your Mistake Is My Triumph", 1],
+    ],
+  },
+  {
+    name: "Endless Punishment",
+    cards: [
+      ["When Will You Learn?", 1],
+      ["My Crushing Masterstroke", 1],
+      ["Fear My Authority", 1],
+      ["Reality Is Mine to Control", 1],
+      ["Running Is Useless", 1],
+      ["You Exist Only to Amuse", 1],
+      ["I Call for Slaughter", 1],
+      ["I Will Savor Your Agony", 1],
+      ["Your Nightmares Are Delicious", 1],
+      ["No Secret Is Hidden from Me", 1],
     ],
   },
   {

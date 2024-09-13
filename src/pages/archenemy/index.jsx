@@ -208,7 +208,7 @@ export const Archenemy = () => {
           <Deck CardType={Scheme} />
         </DevTools>
       )}
-      <UpdatedBanner setName="Archenemy: Nicol Bolas" symbol="e01" />
+      <UpdatedBanner setName="Duskmourn: House of Horror" symbol="dsk" />
     </Container>
   );
 };
