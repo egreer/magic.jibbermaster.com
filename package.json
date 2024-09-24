@@ -101,7 +101,7 @@
     "sass": "^1.77.8",
     "source-map-explorer": "^2.5.3",
     "typescript": "^5.5.4",
-    "vite": "^5.4.2",
+    "vite": "^5.4.6",
     "vite-plugin-pwa": "^0.20.2"
   },
   "overrides": {
