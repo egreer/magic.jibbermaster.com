@@ -8,7 +8,7 @@ export const getCardList = (deckname, schemes) => {
   const deck = DECKS.find((s) => s.name === deckname);
   return compact(
     deck.cards.map((c) => {
-      const scheme = schemes.find((s) => s.name === c[0]);
+      const scheme = schemes.find((s) => s.name === c[0] && s.set == deck.set);
       if (scheme) {
         const clonedCard = JSON.parse(JSON.stringify(scheme));
         clonedCard.count = c[1];
@@ -24,6 +24,8 @@ export const getCardList = (deckname, schemes) => {
 const DECKS = [
   {
     name: "Assemble the Doomsday Machine",
+    set: "oarc",
+    icon: "ss-usg",
     cards: [
       ["All in Good Time", 1],
       ["Behold the Power of Destruction", 1],
@@ -44,6 +46,8 @@ const DECKS = [
   },
   {
     name: "Scorch the World with Dragonfire",
+    set: "oarc",
+    icon: "ss-scg",
     cards: [
       ["All Shall Smolder in My Wake", 2],
       ["Approach My Molten Realm", 1],
@@ -64,6 +68,8 @@ const DECKS = [
   },
   {
     name: "Trample Civilization Underfoot",
+    set: "oarc",
+    icon: "ss-c20",
     cards: [
       ["Every Last Vestige Shall Rot", 2],
       ["Evil Comes to Fruition", 1],
@@ -84,6 +90,8 @@ const DECKS = [
   },
   {
     name: "Bring About the Undead Apocalypse",
+    set: "oarc",
+    icon: "ss-pd3",
     cards: [
       ["Choose Your Champion", 2],
       ["Dance, Pathetic Marionette", 1],
@@ -103,6 +111,8 @@ const DECKS = [
   },
   {
     name: "Archenemy Nicol Bolas",
+    set: "oe01",
+    icon: "ss-hou",
     cards: [
       ["Because I Have Willed It", 1],
       ["Behold My Grandeur", 1],
@@ -128,6 +138,8 @@ const DECKS = [
   },
   {
     name: "Death Toll",
+    set: "dsc",
+    icon: "ss-mkm",
     cards: [
       ["Choose Your Champion", 1],
       ["Plots That Span Centuries", 1],
@@ -143,6 +155,8 @@ const DECKS = [
   },
   {
     name: "Endless Punishment",
+    set: "dsc",
+    icon: "ss-dsk",
     cards: [
       ["When Will You Learn?", 1],
       ["My Crushing Masterstroke", 1],
@@ -158,6 +172,8 @@ const DECKS = [
   },
   {
     name: "Jump Scare!",
+    set: "dsc",
+    icon: "ss-j22",
     cards: [
       ["My Laughter Echoes", 1],
       ["Power Without Equal", 1],
@@ -173,6 +189,8 @@ const DECKS = [
   },
   {
     name: "Miracle Worker",
+    set: "dsc",
+    icon: "ss-avr",
     cards: [
       ["Choose Your Demise", 1],
       ["Behold the Power of Destruction", 1],

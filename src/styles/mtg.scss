@@ -34,7 +34,7 @@
   .mtg-border-#{$rarity} {
     border-color: $text;
     &.mtg-grad {
-      // TODO: Fix Boarder
+      // TODO: Fix Border
       // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
       // http://jsfiddle.net/hkb7pd9g/28/
       border-image: linear-gradient(

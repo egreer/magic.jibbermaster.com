@@ -18,7 +18,7 @@ const PLANES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aplane+or+t%3Aphenomenon&unique=cards";
 
 const SCHEMES_URL =
-  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Ascheme&unique=cards";
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Ascheme&unique=art";
 
 const CONTRAPTIONS_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Acontraption&unique=cards";
