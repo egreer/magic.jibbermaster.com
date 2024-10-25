@@ -60,123 +60,15 @@ export const filterAPI = (card) =>
     "show_blank",
   ]);
 
-export const getAllPlanechaseCards = async () => {
-  try {
-    let planes = cached("planes");
-    if (!planes) {
-      console.log("Loading planes from Axios");
-      let response = await internet.get(PLANES_URL);
-      planes = response.data.data;
-      planes = planes.map((p) => addAdditionalProperties(filterAPI(p)));
-      cache("planes", planes);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded planes from store");
-    }
-    return planes;
-  } catch (e) {
-    console.error(e);
-  }
-};
+export const getAllArchenemyCards = () => fetchCards("schemes", SCHEMES_URL);
+export const getAllAttractionsCards = () =>
+  fetchCards("attractions", ATTRACTIONS_URL);
+export const getAllContraptionsCards = () =>
+  fetchCards("contraptions", CONTRAPTIONS_URL);
 
-export const getAllArchenemyCards = async () => {
-  try {
-    let schemes = cached("schemes");
-    if (!schemes) {
-      console.log("Loading archenemy from Axios");
-      let response = await internet.get(SCHEMES_URL);
-      schemes = response.data.data;
-      schemes = schemes.map((p) => addAdditionalProperties(filterAPI(p)));
-      cache("schemes", schemes);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded archenemy from store");
-    }
-    return schemes;
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-export const getAllAttractionsCards = async () => {
-  try {
-    let attractions = cached("attractions");
-    if (!attractions) {
-      console.log("Loading attractions from Axios");
-      let response = await internet.get(ATTRACTIONS_URL);
-      attractions = response.data.data;
-      attractions = attractions.map((p) =>
-        addAdditionalProperties(filterAPI(p))
-      );
-      cache("attractions", attractions);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded attractions from store");
-    }
-    return attractions;
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-export const getAllContraptionsCards = async () => {
-  try {
-    let contraptions = cached("contraptions");
-    if (!contraptions) {
-      console.log("Loading contraptions from Axios");
-      let response = await internet.get(CONTRAPTIONS_URL);
-      contraptions = response.data.data;
-      contraptions = contraptions.map((p) =>
-        addAdditionalProperties(filterAPI(p))
-      );
-      cache("contraptions", contraptions);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded contraptions from store");
-    }
-    return contraptions;
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-export const getAllSliversCards = async () => {
-  try {
-    let slivers = cached("slivers");
-    if (!slivers) {
-      console.log("Loading slivers from Axios");
-      let response = await internet.get(SLIVERS_URL);
-      slivers = response.data.data;
-      slivers = slivers.map((p) => addAdditionalProperties(filterAPI(p)));
-      cache("slivers", slivers);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded slivers from store");
-    }
-    return slivers;
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-export const getAllVanguardCards = async () => {
-  try {
-    let vanguard = cached("vanguard");
-    if (!vanguard) {
-      console.log("Loading vanguard from Axios");
-      let response = await internet.get(VANGUARD_URL);
-      vanguard = response.data.data;
-      vanguard = vanguard.map((p) => addAdditionalProperties(filterAPI(p)));
-      cache("vanguard", vanguard);
-      // TODO use the expire store parameter
-    } else {
-      console.log("Loaded vanguard from store");
-    }
-    return vanguard;
-  } catch (e) {
-    console.error(e);
-  }
-};
+export const getAllPlanechaseCards = () => fetchCards("planes", PLANES_URL);
+export const getAllSliversCards = () => fetchCards("slivers", SLIVERS_URL);
+export const getAllVanguardCards = () => fetchCards("vanguard", VANGUARD_URL);
 
 export const getAllHikeModePlaneCards = async () => {
   try {
@@ -209,6 +101,26 @@ export const getAllHikeModeChaosCards = async () => {
       console.log("Loaded hike chaos from store");
     }
     return hikeChaos;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const fetchCards = async (name, url, cachePrefix = null) => {
+  try {
+    let prefix = cachePrefix ?? name;
+    let cards = cached(prefix);
+    if (!cards) {
+      console.log(`Loading ${name} from Axios`);
+      let response = await internet.get(url);
+      cards = response.data.data;
+      cards = cards.map((p) => addAdditionalProperties(filterAPI(p)));
+      cache(prefix, cards);
+      // TODO use the expire store parameter
+    } else {
+      console.log(`Loaded ${name} from store`);
+    }
+    return cards;
   } catch (e) {
     console.error(e);
   }
