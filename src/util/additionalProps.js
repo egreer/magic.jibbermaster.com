@@ -534,6 +534,10 @@ export const VANGUARD_PROPERTIES = {
 };
 
 const ARCHENEMY_PROPERTIES = {
+  "I Am Never Alone": [{ name: "commander" }],
+  "Mortal Flesh Is Weak": [{ name: "shared-life" }],
+  "My Champion Stands Supreme": [{ name: "commander" }],
+  "You Will Know True Suffering": [{ name: "commander" }],
   "Your Inescapable Doom": [{ name: "unabandonable" }, counterProp("Doom")],
 };
 
