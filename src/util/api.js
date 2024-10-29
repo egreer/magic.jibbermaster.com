@@ -14,22 +14,25 @@ export const internet = axios.create();
 const ATTRACTIONS_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aattraction&unique=prints";
 
+const BOUNTIES_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=set%3Atotc+bounty&unique=card";
+
+const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
+
+const CONTRAPTIONS_URL =
+  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Acontraption&unique=cards";
+
 const PLANES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Aplane+or+t%3Aphenomenon&unique=cards";
 
 const SCHEMES_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Ascheme&unique=art";
 
-const CONTRAPTIONS_URL =
-  "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Acontraption&unique=cards";
-
 const SLIVERS_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Asliver&unique=cards";
 
 const VANGUARD_URL =
   "https://api.scryfall.com/cards/search?include_extras=1&q=t%3Avanguard&unique=cards";
-
-const COLLECTION_URL = "https://api.scryfall.com/cards/collection";
 
 export const filterAPI = (card) =>
   pick(card, [
@@ -63,6 +66,7 @@ export const filterAPI = (card) =>
 export const getAllArchenemyCards = () => fetchCards("schemes", SCHEMES_URL);
 export const getAllAttractionsCards = () =>
   fetchCards("attractions", ATTRACTIONS_URL);
+export const getAllBountiesCards = () => fetchCards("bounties", BOUNTIES_URL);
 export const getAllContraptionsCards = () =>
   fetchCards("contraptions", CONTRAPTIONS_URL);
 

@@ -38,11 +38,14 @@ export const Home = () => {
             <HomeButton path={"/archenemy"} text="Archenemy" variant="danger">
               <i className="ss ss-arc ss-3x mx-2 d-block" />
             </HomeButton>
-            <HomeButton path={"/planechase"} text="Planechase" variant="info">
-              <i className="ms ms-planeswalker ms-4x mx-2 d-block" />
+            <HomeButton path={"/bounty"} text="Bounty" variant="orange">
+              <i className="ss ss-otj ss-3x mx-2 d-block" />
             </HomeButton>
             <HomeButton path={"/hike"} text="Hike Mode" variant="warning">
               <i className="ss ss-h17 ss-3x mx-2 d-block" />
+            </HomeButton>
+            <HomeButton path={"/planechase"} text="Planechase" variant="info">
+              <i className="ms ms-planeswalker ms-4x mx-2 d-block" />
             </HomeButton>
             <HomeButton path={"/vanguard"} text="Vanguard" variant="light">
               <i className="ss ss-van ss-3x mx-2 d-block" />

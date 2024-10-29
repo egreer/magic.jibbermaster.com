@@ -9,6 +9,7 @@ import {
   hasCustomProperty,
   rotatedLayout,
   scryfallImageURL,
+  scryfallOracleText,
 } from "../../mtg/card.js";
 import { createMarkup } from "../../util/createMarkup";
 import { reactToBool } from "../../util/react";
@@ -35,6 +36,7 @@ export const MtgCard = React.forwardRef(
       displayHikeErrata = false,
       displayTextWhenRotated = false,
       displayTypeLine = false,
+      cardClass = "mtg-standard-card",
       ribbonProps = {},
     },
     ref
@@ -217,6 +219,7 @@ export const MtgCard = React.forwardRef(
       <div className={cn("card_image__outer", { rotated: isRotated })}>
         <div className={cn("card_image__inner", { rotated: isRotated })}>
           <Card.Img
+            alt={`${card?.name} - ${scryfallOracleText(card)}`}
             variant="top"
             width="100%"
             src={imageURI}
@@ -357,7 +360,7 @@ export const MtgCard = React.forwardRef(
             dialogClassName="modal-content-no-border"
           >
             <Modal.Body className="p-0" centered="true">
-              <Card bg="black" text="light" className={"mtg-standard-card"}>
+              <Card bg="black" text="light" className={cardClass}>
                 {renderImage({ scaled: false })}
                 {renderComponents()}
               </Card>
@@ -369,7 +372,7 @@ export const MtgCard = React.forwardRef(
     } else {
       return (
         <div ref={ref}>
-          <Card bg="black" text="light" className={"mtg-standard-card"}>
+          <Card bg="black" text="light" className={cardClass}>
             {renderImage()}
             {renderComponents()}
             <CardLinks card={card} />

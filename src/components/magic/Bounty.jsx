@@ -1,14 +1,13 @@
 import React from "react";
-import { ARCHENEMY_BACK } from "../../mtg/card";
+import { BOUNTY_BACK } from "../../mtg/card";
 import { MtgCard } from "./Card";
 import "./planes.scss";
 
-export const Scheme = React.forwardRef(({ ...props }, ref) => (
+export const Bounty = React.memo(({ ...props }) => (
   <MtgCard
     displayChildrenBelow={false}
-    back={ARCHENEMY_BACK}
-    {...props}
-    ref={ref}
+    back={BOUNTY_BACK}
     cardClass={"mtg-scheme-card"}
+    {...props}
   />
 ));

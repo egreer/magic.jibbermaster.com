@@ -65,8 +65,9 @@ export const Navigation = () => {
             menuVariant="dark"
           >
             <NavDropdownItem to="/archenemy" text="Archenemy" />
-            <NavDropdownItem to="/planechase" text="Planechase" />
+            <NavDropdownItem to="/bounty" text="Bounty" />
             <NavDropdownItem to="/hike" text="Hike" />
+            <NavDropdownItem to="/planechase" text="Planechase" />
             <NavDropdownItem to="/vanguard" text="Vanguard" />
           </NavDropdown>
           <NavDropdown

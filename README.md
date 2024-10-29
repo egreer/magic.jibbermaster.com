@@ -25,14 +25,14 @@ There is always the one villain at the table and this tool helps the Archenemy b
 
   </details>
 
-### [Planechase](https://magic.jibbermaster.com/planechase)
+### [Bounty](https://magic.jibbermaster.com/bounty)
 
-One of the most popular alternate game modes, this tool leverages a single stack of all the Planes to add powerful effects to the game.
+Howdy Partner, ready to work your way across the multiverse tracking down devious outlaws? Claim the bounty for their capture in this Commander game mode add-on. Yee-haw!
 
   <details>
-    <summary><em>Planechase Images</em></summary>
+    <summary><em>Bounty Images</em></summary>
 
-![Planechase gameplay of Naar Isle with one flame counter](/docs/images/planechase.png)
+![Bounty](/docs/images/bounty.png)
 
   </details>
 
@@ -44,6 +44,17 @@ A topsy turvy game mode that makes use of some of Magics zaniest effects. Based 
     <summary><em>Hike Mode Images</em></summary>
 
 ![Hike Mode on 'Queue of Beetles' as the static planar ability and 'Game of Chaos' as the chaos ability](/docs/images/hike_mode.png)
+
+  </details>
+
+### [Planechase](https://magic.jibbermaster.com/planechase)
+
+One of the most popular alternate game modes, this tool leverages a single stack of all the Planes to add powerful effects to the game.
+
+  <details>
+    <summary><em>Planechase Images</em></summary>
+
+![Planechase gameplay of Naar Isle with one flame counter](/docs/images/planechase.png)
 
   </details>
 

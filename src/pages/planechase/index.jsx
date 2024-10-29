@@ -254,10 +254,10 @@ export const Planechase = () => {
           <Alert variant="info" className="text-center">
             <h5>Ongoing Planes</h5>
           </Alert>
-          <div className="d-flex justify-content-center flex-wrap mtg-scheme-card">
+          <div className="d-flex justify-content-center flex-wrap">
             {ongoing.map((c) => (
               <div key={c.deck_card_id}>
-                <Plane card={c}>
+                <Plane card={c} cardClass="mtg-scheme-card">
                   <Button
                     onClick={() => abandonPlane(c)}
                     variant="danger"

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Container, Fade } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
+import { Jumbotron } from "../../components/Jumbotron";
 import { Loading } from "../../components/Loading";
 import { ActionButton } from "../../components/game/ActionButton";
 import { Deck } from "../../components/game/Deck";
@@ -16,12 +17,6 @@ import { getAllArchenemyCards } from "../../util/api.js";
 import { AbandonButton } from "./AbandonButton";
 import { DeckSelect } from "./DeckSelect";
 import { ArchenemyHelmet } from "./Helmet";
-
-const Jumbotron = ({ children }) => (
-  <div className="my-4 p-5 bg-primary text-white rounded bg-danger text-center">
-    {children}
-  </div>
-);
 
 export const Archenemy = () => {
   const [loading, setLoading] = useState(true);
@@ -147,7 +142,7 @@ export const Archenemy = () => {
           <Alert variant="info" className="text-center">
             <h5>Ongoing Schemes</h5>
           </Alert>
-          <div className="d-flex justify-content-center flex-wrap mtg-scheme-card">
+          <div className="d-flex justify-content-center flex-wrap">
             {ongoingSchemes.map((c) => (
               <React.Fragment key={c.deck_card_id}>
                 <Scheme card={c} displayActions={true}>

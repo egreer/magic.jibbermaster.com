@@ -11,11 +11,6 @@ export const DeckSelect = ({ schemes, onSelectDeck }) => {
   const [sharedLife, setSharedLife] = useState(false);
 
   const useAll = useCallback(() => {
-    console.log(
-      "🚀 ~ useAll ~ commander && !sharedLife:",
-      commander,
-      !sharedLife
-    );
     const filteredSchemes =
       commander && !sharedLife
         ? schemes

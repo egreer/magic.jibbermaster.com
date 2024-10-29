@@ -17,6 +17,7 @@ import { SettingsProvider } from "./hooks/useSettings";
 import { DeckProvider } from "./mtg/DeckContext";
 import { GameProvider } from "./mtg/GameContext";
 import { Attractions } from "./pages/attractions/Attraction";
+import { Bounties } from "./pages/bounty/Bounties";
 import { Contraptions } from "./pages/contraptions/Contraptions";
 import { DayNight } from "./pages/day-night/DayNight";
 import { DebugPage } from "./pages/DebugPage";
@@ -67,6 +68,16 @@ const Main = () => {
       <Route path="/day-night" element={<DayNight />} />
       <Route path="/slivers" element={<Slivers />} />
       <Route path="/vanguard" element={<Vanguard />} />
+      <Route
+        path="/bounty"
+        element={
+          <GameProvider prefix="bounty">
+            <DeckProvider prefix="bounty">
+              <Bounties />
+            </DeckProvider>
+          </GameProvider>
+        }
+      />
       <Route
         path="/hike"
         element={
