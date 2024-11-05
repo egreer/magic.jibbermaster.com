@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { getCounterType } from "../../mtg/card.js";
+import { hasCustomProperty } from "../../mtg/card.js";
 
 export const CounterIcon = ({ type, className = "", style = {} }) => {
   const icon = ({ ms, verticalAlign = "initial", fa }) => {
@@ -27,6 +27,8 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
       return icon({ fa: "fa fa-fw fa-radiation" });
     case "Flame":
       return icon({ ms: "ms-counter-flame" });
+    case "Fold":
+      return icon({ ms: "ms-ability-read-ahead" });
     case "Fun":
       return icon({ ms: "ms-counter-vortex", verticalAlign: "bottom" });
     case "Scroll":
@@ -40,11 +42,22 @@ export const CounterIcon = ({ type, className = "", style = {} }) => {
 
 export const Counter = ({ card, style = {} }) => {
   const [counter, setCounter] = useState(card?.counter || 0);
-  const type = getCounterType(card);
+  const { type, max, reset } = hasCustomProperty("counter", card);
+
+  const disabled = max && counter >= max;
+
   const incrementCounter = () => {
-    card.counter = counter + 1;
-    setCounter(counter + 1);
+    if (!disabled) {
+      card.counter = counter + 1;
+      setCounter(counter + 1);
+    }
   };
+
+  const resetCounters = () => {
+    card.counter = 0;
+    setCounter(0);
+  };
+
   return (
     <div style={style}>
       <h1 className="text-shadow noselect">
@@ -55,9 +68,22 @@ export const Counter = ({ card, style = {} }) => {
         variant="dark"
         size="lg"
         className="btn-translucent"
+        disabled={disabled}
       >
         <h3 className="mb-0">Add {type} Counter</h3>
       </Button>
+      {reset && (
+        <div>
+          <Button
+            onClick={resetCounters}
+            variant="danger"
+            size="lg"
+            className="btn-translucent"
+          >
+            <h3 className="mb-0">Remove Counters</h3>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

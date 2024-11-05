@@ -70,6 +70,7 @@ export const MtgCard = React.forwardRef(
     const hasInputPrompt = hasCustomProperty("input", card);
     const hasRandomToken = hasCustomProperty("random-token", card);
     const urlProp = hasCustomProperty("url", card);
+    const styleProp = hasCustomProperty("style", card);
 
     const isRotated = rotatedLayout(card);
 
@@ -323,7 +324,13 @@ export const MtgCard = React.forwardRef(
                 background={ribbonProps.background}
               ></CardRibbon>
             )}
-            <Card.Title className={cn("text-center", { "h-100": isBlank })}>
+            <Card.Title
+              className={cn(
+                "text-center",
+                { "h-100": isBlank },
+                styleProp?.abilities
+              )}
+            >
               {hasOverlayAbility && renderAbilities()}
               {renderCustomText()}
               {!isBlank && children}

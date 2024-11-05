@@ -5,12 +5,21 @@ export const ABILITIY_STACKS_PROP = { name: "ability-stacks" };
 export const CHAOS_TRIGGER_PROP = { name: "chaos-trigger" };
 export const PHENOMENON_PROP = { name: "phenomenon" };
 export const CHAOSOMENON_PROP = { name: "chaosomenon" };
-export const counterProp = (type) => {
-  return { name: "counter", type };
+
+const counterPropBuilder = ({ type, ...props }) => {
+  return { name: "counter", type, ...props };
 };
+
+export const counterProp = (type) => counterPropBuilder({ type });
+
 export const errataProp = (text) => {
   return { name: "errata", text };
 };
+
+const styleProp = ({ ...props }) => {
+  return { name: "style", ...props };
+};
+
 export const tokenProp = (count) => {
   return { name: "token", count };
 };
@@ -139,6 +148,11 @@ export const PLANECHASE_PROPERTIES = {
   ],
   Pompeii: [counterProp("Eruption")], //TODO: Future - Planar Die - Blank Side Effect
   "Pools of Becoming": [CHAOS_TRIGGER_PROP, { name: "multi-chaos", number: 3 }],
+  "Shrinking Plane": [
+    counterPropBuilder({ type: "Fold", max: 7, reset: true, titleStyle: {} }),
+    errataProp("Paper can be folded max 7 times."),
+    styleProp({ abilities: "align-self-start" }),
+  ],
   "Spatial Merging": [{ name: "multiple-planes", initial: 2, revealNumber: 0 }],
   "Stairs to Infinity": [CHAOS_TRIGGER_PROP, { name: "scry-1" }],
   "The Fertile Lands of Saulvinia": [
@@ -146,6 +160,7 @@ export const PLANECHASE_PROPERTIES = {
     { name: "multi-chaos", number: 1 },
   ],
   "Unleash the Flux": [COIN_PROP],
+  "Windmill Farm": [errataProp("Choose a permanent at random.")],
 };
 
 export const HIKE_PROPERTIES = {

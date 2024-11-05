@@ -405,7 +405,11 @@ export const Planechase = () => {
           <PlanarDie rollDone={(face) => console.log(`Rolled: ${face}`)} />
         </div>
       )}
-      <UpdatedBanner setName="Dr. Who" symbol="who" rarity="rare" />
+      <UpdatedBanner
+        setName="Unknown Event (2024)"
+        symbol="mb1"
+        rarity="rare"
+      />
     </Container>
   );
 };
