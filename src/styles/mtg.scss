@@ -1,6 +1,6 @@
-@import "../../node_modules/keyrune/sass/_variables";
+@use "../../node_modules/keyrune/sass/_variables";
 
-@each $rarity, $text, $left, $right, $stroke in $keyrune_palette {
+@each $rarity, $text, $left, $right, $stroke in variables.$keyrune_palette {
   /* Rarity Background */
   .mtg-bg-#{$rarity} {
     background: $text;
@@ -24,9 +24,9 @@
         #{$left} 100%
       );
       -webkit-text-stroke: 0.01em #{$stroke};
-      -webkit-text-fill-color: $keyrune_text_fill;
-      -webkit-background-clip: $keyrune_background_clip;
-      background-clip: $keyrune_background_clip;
+      -webkit-text-fill-color: variables.$keyrune_text_fill;
+      -webkit-background-clip: variables.$keyrune_background_clip;
+      background-clip: variables.$keyrune_background_clip;
     }
   }
 

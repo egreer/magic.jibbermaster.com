@@ -1,5 +1,5 @@
 // sass-lint:disable force-pseudo-nesting, no-important
-@import "../../../styles/colors";
+@use "../../../styles/colors";
 
 .planar .dice {
   .dot {
@@ -25,7 +25,7 @@
   }
 
   .face {
-    background-color: $translucent !important;
+    background-color: colors.$translucent !important;
 
     &.one {
       .dot:first-child {
@@ -49,29 +49,29 @@
 }
 .planar .dice {
   .face {
-    background-color: rgba($planarDiePurple, 0.8) !important;
+    background-color: rgba(colors.$planarDiePurple, 0.8) !important;
   }
 }
 
 .attraction .dice {
   .face {
     &.one {
-      background-color: rgba($attractionOneColor, 0.8) !important;
+      background-color: rgba(colors.$attractionOneColor, 0.8) !important;
     }
     &.two {
-      background-color: rgba($attractionTwoColor, 0.8) !important;
+      background-color: rgba(colors.$attractionTwoColor, 0.8) !important;
     }
     &.three {
-      background-color: rgba($attractionThreeColor, 0.8) !important;
+      background-color: rgba(colors.$attractionThreeColor, 0.8) !important;
     }
     &.four {
-      background-color: rgba($attractionFourColor, 0.8) !important;
+      background-color: rgba(colors.$attractionFourColor, 0.8) !important;
     }
     &.five {
-      background-color: rgba($attractionFiveColor, 0.8) !important;
+      background-color: rgba(colors.$attractionFiveColor, 0.8) !important;
     }
     &.six {
-      background-color: rgba($attractionSixColor, 0.8) !important;
+      background-color: rgba(colors.$attractionSixColor, 0.8) !important;
     }
   }
 }
@@ -92,7 +92,7 @@
 }
 
 @mixin dot-animation() {
-  background-color: $translucent !important;
+  background-color: colors.$translucent !important;
   .dot {
     // animation-duration: 2s;
     animation-name: backside;

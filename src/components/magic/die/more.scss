@@ -1,3 +1,4 @@
+@use "sass:meta";
 // https://codepen.io/vcurd/pen/RwaQPrb
 
 @keyframes tumble {
@@ -73,10 +74,10 @@ $animationDuration: 3s;
     animation: tumble 8s infinite linear;
   }
 
-  @import "./types/d4.scss";
-  @import "./types/d6.scss";
-  @import "./types/d8.scss";
-  @import "./types/d10.scss";
-  @import "./types/d12.scss";
-  @import "./types/d20.scss";
+  @include meta.load-css("types/d4.scss");
+  @include meta.load-css("types/d6.scss");
+  @include meta.load-css("types/d8.scss");
+  @include meta.load-css("types/d10.scss");
+  @include meta.load-css("types/d20.scss");
 }
+@include meta.load-css("types/d12.scss");
