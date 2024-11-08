@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
+import * as child from "child_process";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-import * as child from "child_process";
 
 const commitHash = child.execSync("git rev-parse --short HEAD").toString();
 
