@@ -35,11 +35,6 @@
     "start": "vite",
     "update-packages": "npx npm-check-updates -u"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
