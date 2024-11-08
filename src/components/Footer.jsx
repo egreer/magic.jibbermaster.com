@@ -53,6 +53,7 @@ export const Footer = () => {
             role="button"
             target="_blank"
             rel="noreferrer"
+            title="Explore source code at Github"
           >
             <i className="fab fa-github"></i>
           </a>
@@ -62,6 +63,7 @@ export const Footer = () => {
             role="button"
             target="_blank"
             rel="noreferrer"
+            title="Donate at Paypal"
           >
             <i className="fab fa-paypal"></i>
           </a>

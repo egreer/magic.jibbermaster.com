@@ -323,10 +323,12 @@ export const SYB = () => {
           <LoyaltyButtonGroup
             upProps={{
               onClick: incrementCount,
+              title: "Increase Player Count",
             }}
             downProps={{
               disabled: playerCount <= 1,
               onClick: decrementCount,
+              title: "Decrease Player Count",
             }}
           />
         </Col>
@@ -336,10 +338,12 @@ export const SYB = () => {
             upProps={{
               disabled: playerTargets >= playerCount - TARGET_OFFSET,
               onClick: incrementTargetCount,
+              title: "Increase Number of Targets",
             }}
             downProps={{
               disabled: playerTargets <= 1,
               onClick: decrementTargetCount,
+              title: "Decrease Number of Targets",
             }}
           />
         </Col>

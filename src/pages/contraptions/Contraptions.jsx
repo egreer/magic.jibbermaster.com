@@ -181,10 +181,12 @@ export const Contraptions = () => {
           <LoyaltyButtonGroup
             upProps={{
               onClick: incrementPlayerCount,
+              title: "Increase Player Count",
             }}
             downProps={{
               disabled: playerCount <= 1,
               onClick: decrementPlayerCount,
+              title: "Decrease Player Count",
             }}
           />
         </Col>

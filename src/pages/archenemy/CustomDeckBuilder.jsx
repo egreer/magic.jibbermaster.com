@@ -68,10 +68,12 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
           downProps={{
             disabled: card.count <= 0,
             onClick: () => decrementCount(card),
+            title: `Decrease ${card.name} Quantity`,
           }}
           upProps={{
             disabled: card.count >= 2,
             onClick: () => incrementCount(card),
+            title: `Increase ${card.name} Quantity`,
           }}
         />
       </div>

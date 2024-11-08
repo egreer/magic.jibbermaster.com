@@ -151,10 +151,12 @@ export const Vanguard = () => {
           <LoyaltyButtonGroup
             upProps={{
               onClick: incrementPlayerCount,
+              title: "Increase Player Count",
             }}
             downProps={{
               disabled: playerCount <= 1,
               onClick: decrementPlayerCount,
+              title: "Decrease Player Count",
             }}
           />
         </Col>
@@ -214,6 +216,7 @@ export const Vanguard = () => {
                         variant="danger"
                         size="lg"
                         className="btn-translucent mb-2 my-2 w-100"
+                        title="Remove Vanguard Avatar"
                       >
                         <DeleteIcon />
                       </Button>

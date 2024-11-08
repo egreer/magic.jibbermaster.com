@@ -14,6 +14,7 @@ export const ActionButton = ({
       className="mb-2 w-100"
       variant="success"
       disabled={disabled}
+      aria-label={text}
       {...rest}
     >
       {icon}

@@ -335,10 +335,12 @@ export const Formats = () => {
             upProps={{
               disabled: playerCount >= MAX_PLAYERS,
               onClick: incrementCount,
+              title: "Increase Player Count",
             }}
             downProps={{
               disabled: playerCount <= MIN_PLAYERS,
               onClick: decrementCount,
+              title: "Decrease Player Count",
             }}
           />
           <div className="text-center mb-5">

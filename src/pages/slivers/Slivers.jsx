@@ -283,10 +283,12 @@ export const Slivers = () => {
             <LoyaltyButtonGroup
               upProps={{
                 onClick: () => incrementSliverCount({ card }),
+                title: `Increase ${card.name} Count`,
               }}
               downProps={{
                 disabled: count < 1,
                 onClick: () => decrementSliverCount({ card }),
+                title: `Decrease ${card.name} Count`,
               }}
             />
           </div>

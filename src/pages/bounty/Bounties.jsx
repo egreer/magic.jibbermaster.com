@@ -139,10 +139,12 @@ export const Bounties = () => {
               upProps={{
                 disabled: bountyLevel >= 4 || !currentCard,
                 onClick: incrementCount,
+                title: "Increase Bounty Level",
               }}
               downProps={{
                 disabled: bountyLevel <= 1,
                 onClick: decrementCount,
+                title: "Decrease Bounty Level",
               }}
             />
           </div>

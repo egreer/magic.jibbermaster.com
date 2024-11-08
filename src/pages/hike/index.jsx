@@ -236,6 +236,7 @@ export const Hike = () => {
             onClick={planeswalk}
             disabled={loading}
             className="btn-translucent my-3 w-100"
+            title="Planeswalk - Changes current plane and chaos"
           >
             <i className="ms ms-planeswalker ms-2x mx-2" />
             <span className="mx-2 d-none d-sm-inline">Planeswalk</span>
@@ -249,6 +250,7 @@ export const Hike = () => {
             className="btn-translucent my-3  w-100"
             variant="info"
             disabled={loading}
+            title="Change Plane - Changes the current plane"
           >
             <i className="ss ss-fw ss-2x ss-fut mx-2" />
             <span className="mx-2 d-none d-sm-inline">Planes Hike</span>
@@ -260,6 +262,7 @@ export const Hike = () => {
             className="btn-translucent my-3  w-100"
             variant="warning"
             disabled={loading}
+            title="Chaos Hike - Changes the current Chaos"
           >
             <i className="ms ms-fw ms-2x ms-phenomenon mx-2" />
             <span className="mx-2 d-none d-sm-inline">Chaos Hike</span>
