@@ -29,15 +29,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 $utilities: map-merge(
   $utilities,
   (
-    "margin-start":
-      map-merge(
+    "margin-start": map-merge(
         map-get($utilities, "margin-start"),
         (
           class: ml,
         )
       ),
-    "margin-end":
-      map-merge(
+    "margin-end": map-merge(
         map-get($utilities, "margin-end"),
         (
           class: mr,
