@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dropdown, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { NavLink as RRNavLink } from "react-router-dom";
+import { NavLink as RRNavLink } from "react-router";
 import { useSettings } from "../hooks/useSettings";
 import { DoubleFaceIcon } from "./magic/DoubleFaceIcon";
 

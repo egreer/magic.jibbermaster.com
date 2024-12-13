@@ -1,6 +1,6 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
 const HomeButton = ({ path, text, children, variant = "secondary" }) => (
   <Col xs={6} sm={4} lg={6} className="my-2">
