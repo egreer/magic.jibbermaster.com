@@ -100,6 +100,14 @@
     "vite-plugin-pwa": "^0.21.1"
   },
   "overrides": {
+    "react-dice-complete": {
+      "react": ">=16.0.0",
+      "react-dom": ">=16.0.0"
+    },
+    "react-helmet-async": {
+      "react": ">=16.0.0",
+      "react-dom": ">=16.0.0"
+    },
     "react-textfit": {
       "react": ">=16.0.0",
       "react-dom": ">=16.0.0"
