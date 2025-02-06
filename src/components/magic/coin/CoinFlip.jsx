@@ -23,6 +23,9 @@ export const CoinFlip = ({ start = "heads", style = {} }) => {
     <div
       className={cn("coin", !flipping && side, { flipping })}
       onClick={coinToss}
+      onKeyUp={(event) => ["Enter"].includes(event.key) && coinToss()}
+      role="button"
+      tabIndex={0}
       style={style}
     >
       <div className="side side-heads mtg-bg-timeshifted mtg-grad">

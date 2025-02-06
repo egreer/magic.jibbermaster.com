@@ -23,7 +23,7 @@ export const DeckSelect = ({ schemes, onSelectDeck }) => {
           );
 
     onSelectDeck("All", filteredSchemes);
-  }, [commander, sharedLife, onSelectDeck]);
+  }, [commander, sharedLife, onSelectDeck, schemes]);
 
   return (
     <>

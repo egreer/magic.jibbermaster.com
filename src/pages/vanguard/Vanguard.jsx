@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
@@ -168,20 +169,18 @@ export const Vanguard = () => {
         touch={false}
       >
         {[...Array(playerCount)].map((_v, player) => {
-          const playerLabel = player + 1;
           const card = get(avatars, `player${player}`);
           return (
             <Carousel.Item
               key={player}
-              className="my-5"
+              className="text-center my-4"
               style={{ minHeight: "1vh" }}
             >
-              <h2 className="text-center mb-3" onClick={() => setLabel(player)}>
-                {labels[player] || `Player ${playerLabel}`}
-                <sup>
-                  <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
-                </sup>
-              </h2>
+              <PlayerHeader
+                setLabel={setLabel}
+                player={player}
+                labels={labels}
+              ></PlayerHeader>
               <Row className="my-3 mx-5">
                 <Col sm={6} className="mb-3 mb-sm-2">
                   <Button

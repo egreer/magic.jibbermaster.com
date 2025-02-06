@@ -71,7 +71,10 @@ export const Die = ({ sides = 20, initialSide = 1 }) => {
       <div
         className={cn("react__die", die, { rolling: rolling })}
         onClick={roll}
+        onKeyUp={(event) => ["Enter"].includes(event.key) && roll()}
         data-face={face}
+        role="button"
+        tabIndex={0}
       >
         {faces2}
       </div>

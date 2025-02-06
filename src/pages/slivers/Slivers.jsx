@@ -2,9 +2,10 @@ import Case from "case";
 import compact from "lodash/compact";
 import numeralPrefix from "numeral-prefix";
 import pluralize from "pluralize";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   Accordion,
+  AccordionContext,
   Badge,
   Button,
   Card,
@@ -76,12 +77,19 @@ const sliverProps = {
 };
 
 const AbilityHeader = ({ children, eventKey }) => {
+  const { activeEventKey } = useContext(AccordionContext);
   const decoratedOnClick = useAccordionButton(eventKey);
+
+  const isCurrentEventKey = activeEventKey === eventKey;
 
   return (
     <div
       className="py-1 px-2 bg-dark text-light border-secondary"
       onClick={decoratedOnClick}
+      onKeyUp={(event) => ["Enter"].includes(event.key) && decoratedOnClick()}
+      aria-pressed={isCurrentEventKey}
+      role="button"
+      tabIndex={0}
     >
       {children}
     </div>

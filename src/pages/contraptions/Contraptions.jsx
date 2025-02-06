@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
@@ -198,19 +199,17 @@ export const Contraptions = () => {
         touch={false}
       >
         {[...Array(playerCount)].map((_v, player) => {
-          const playerLabel = player + 1;
           return (
             <Carousel.Item
               key={player}
-              className="my-4"
+              className="my-4 text-center"
               style={{ minHeight: "1vh" }}
             >
-              <h2 className="text-center mb-5" onClick={() => setLabel(player)}>
-                {labels[player] || `Player ${playerLabel}`}
-                <sup>
-                  <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
-                </sup>
-              </h2>
+              <PlayerHeader
+                setLabel={setLabel}
+                player={player}
+                labels={labels}
+              />
 
               <Container>
                 <Row className="my-3 mx-5">

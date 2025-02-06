@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal } from "react-bootstrap";
 
-const DialogForm = ({ initialValue, setValue, onSubmit }) => {
+const DialogForm = ({ initialValue, setValue, title, onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -11,9 +11,9 @@ const DialogForm = ({ initialValue, setValue, onSubmit }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Control
-        autoFocus={true}
+        title={title}
+        autoFocus={true} // eslint-disable-line jsx-a11y/no-autofocus
         value={initialValue}
-        // onKeyUp={handleKeyPress}
         onChange={(a) => {
           setValue(a.target.value);
         }}
@@ -65,6 +65,7 @@ export const ConfirmForm = ({
       <Modal.Body>
         <DialogForm
           initialValue={value}
+          title={headerText}
           setValue={setValue}
           onSubmit={() => close(true)}
         />

@@ -255,15 +255,15 @@ export const Formats = () => {
             className="row"
             key={`${playerCount}-${f.name}-${f.weight * 100}`}
           >
-            <div
-              className="col-5 d-flex justify-content-between align-items-start"
+            <Button
+              className="bg-transparent border-0 col-5 d-flex justify-content-between align-items-start"
               onClick={() => adjustWeight(f)}
             >
               {f.name}
               <Badge bg="secondary" style={{ minWidth: "4.25em" }}>
                 {(((f.weight * 1000) / totalWeight) * 100).toFixed(1)}%
               </Badge>
-            </div>
+            </Button>
             <div className="col-7">
               <TooltipSlider
                 min={0}

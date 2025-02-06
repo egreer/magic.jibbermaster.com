@@ -18,8 +18,9 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends(
     "eslint:recommended",
-    "plugin:lodash/recommended"
-    // "plugin:react-hooks/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:lodash/recommended",
+    "plugin:react-hooks/recommended"
   ),
   {
     plugins: {
@@ -39,6 +40,7 @@ export default [
     },
 
     rules: {
+      "no-undef": "off",
       "no-unused-vars": "off",
       "lodash/prefer-lodash-method": "off",
       "lodash/prefer-constant": "off",
@@ -58,12 +60,6 @@ export default [
 
       "no-restricted-imports": ["error"],
     },
-  },
-  {
     files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-
-    rules: {
-      "no-undef": "off",
-    },
   },
 ];

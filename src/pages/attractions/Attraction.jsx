@@ -188,21 +188,19 @@ export const Attractions = () => {
         touch={false}
       >
         {[...Array(playerCount)].map((_v, player) => {
-          const playerLabel = player + 1;
           const playerAttractions = get(attractions, `player${player}`);
 
           return (
             <Carousel.Item
               key={player}
-              className="my-4"
+              className="text-center my-4"
               style={{ minHeight: "1vh" }}
             >
-              <h2 className="text-center mb-5" onClick={() => setLabel(player)}>
-                {labels[player] || `Player ${playerLabel}`}
-                <sup>
-                  <i className="fa fa-edit ml-2 text-secondary fa-xs"></i>
-                </sup>
-              </h2>
+              <PlayerHeader
+                setLabel={setLabel}
+                player={player}
+                labels={labels}
+              />
               <Container>
                 <Row className="my-3 mx-5">
                   <Col sm={6} className="mb-3 mb-sm-2">
