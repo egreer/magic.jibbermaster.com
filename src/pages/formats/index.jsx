@@ -223,6 +223,23 @@ export const Formats = () => {
     }
   };
 
+  const activeFormatActions = () => {
+    if (!activeFormat) {
+      return null;
+    } else {
+      const tagsValues = TAGS.filter(
+        (t) => t.action && activeFormat.tags.includes(t.name)
+      );
+      return tagsValues.map((t) => (
+        <sup className="mx-2">
+          <a href={t.action} title={t.name}>
+            <i className="ms ms-counter-arrow ss-rare"></i>
+          </a>
+        </sup>
+      ));
+    }
+  };
+
   const adjustWeight = useCallback(
     (format) => {
       setOpenConfirmFormat(format);
@@ -345,7 +362,7 @@ export const Formats = () => {
           />
           <div className="text-center mb-5">
             <Button
-              className="w-100"
+              className="w-100 mb-2"
               variant="danger"
               onClick={pickFormat}
               disabled={loadingFormat}
@@ -362,12 +379,15 @@ export const Formats = () => {
                 <span className="sr-only">Loading...</span>
               </Spinner>
             ) : (
-              <h1 className="my-2">{activeFormatName()}</h1>
+              <h1 className="my-2">
+                {activeFormatName()}
+                {activeFormatActions()}
+              </h1>
             )}
             {showDeckswapButton && (
               <Button
                 onClick={() => setSwapTriggered(true)}
-                className={"w-50 mx-auto"}
+                className={"w-50 mx-auto my-2"}
                 variant="success"
               >
                 Deckswaps?

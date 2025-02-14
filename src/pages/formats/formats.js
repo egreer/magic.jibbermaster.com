@@ -7,6 +7,7 @@ export const TAGS = [
   },
   {
     name: "Archenemy",
+    action: "/archenemy",
     defaultEnabled: false,
     description:
       "3 players band together to take out the 4th member of the group who is supported by a deck of devious Schemes. (Rules 904.*)",
@@ -54,6 +55,7 @@ export const TAGS = [
   },
   {
     name: "Hike Mode",
+    action: "/hike",
     defaultEnabled: true,
     description: "Let the Lord of Chaos rule in this planechase variant.",
   },
@@ -69,6 +71,7 @@ export const TAGS = [
   },
   {
     name: "Planechase",
+    action: "/planechase",
     defaultEnabled: true,
     description: "Players play with a central deck of planes. (Rules 901.*)",
   },
@@ -80,12 +83,14 @@ export const TAGS = [
   },
   {
     name: "SYB",
+    action: "/syb",
     defaultEnabled: true,
     description:
       "Players each try to take out their assigned target while defending themselves from 1 other person.",
   },
   {
     name: "SYB Multi",
+    action: "/syb",
     defaultEnabled: true,
     description:
       "Players each try to take out multiple assigned targets while defending themselves from the same number.",
@@ -110,6 +115,7 @@ export const TAGS = [
   },
   {
     name: "Vanguard",
+    action: "/vanguard",
     defaultEnabled: true,
     description:
       "Players select a Vanguard card to lead their deck to victory. (Rules 902.*)",
