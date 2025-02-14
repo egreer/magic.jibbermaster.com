@@ -44,6 +44,7 @@ export const CardTypeListModal = ({
         <Modal.Body>
           <Form.Control
             placeholder="Search..."
+            type="search"
             value={search}
             onChange={(a) => setSearch(a.target.value)}
           />

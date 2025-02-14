@@ -438,7 +438,9 @@ export const Slivers = () => {
       <InputGroup>
         <Form.Control
           placeholder="Search..."
+          type="search"
           value={search}
+          className="bg-dark text-light border"
           onChange={(a) => setSearch(a.target.value)}
         />
         <div>
