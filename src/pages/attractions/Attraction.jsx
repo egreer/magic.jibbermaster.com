@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
