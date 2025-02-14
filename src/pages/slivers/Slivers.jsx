@@ -260,11 +260,15 @@ export const Slivers = () => {
         count,
       };
     });
-    s.sort(
-      (first, second) =>
+    s.sort((first, second) => {
+      const abilityOrder =
         (first.card?.parsedAbility?.matchOrder || 10) -
-        (second?.card?.parsedAbility?.matchOrder || 10)
-    );
+        (second?.card?.parsedAbility?.matchOrder || 10);
+      const nameOrder = (
+        first.card?.parsedAbility?.abilities?.[0] || ""
+      ).localeCompare(second?.card?.parsedAbility?.abilities?.[0]);
+      return abilityOrder == 0 ? nameOrder : abilityOrder;
+    });
     return s;
   }, [sliverCounts, sliverById]);
 
