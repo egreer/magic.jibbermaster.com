@@ -10,7 +10,6 @@ import {
   Button,
   Card,
   Col,
-  Container,
   Fade,
   Form,
   InputGroup,
@@ -25,6 +24,7 @@ import {
 } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
 import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
+import { PageContainer } from "../../components/PageContainer";
 import { useLocalState } from "../../hooks/useLocalState";
 import { hasCustomProperty } from "../../mtg/card";
 import { ABILITIY_STACKS_PROP } from "../../util/additionalProps";
@@ -311,7 +311,7 @@ export const Slivers = () => {
   );
 
   return (
-    <Container className="slivers" fluid>
+    <PageContainer className="slivers">
       <Helmet title="Slivers" />
       <div className="d-grid gap-1">
         <h1 className="text-center">Sliver Calculator</h1>
@@ -469,6 +469,6 @@ export const Slivers = () => {
         symbol="mh2"
         rarity="rare"
       ></UpdatedBanner>
-    </Container>
+    </PageContainer>
   );
 };

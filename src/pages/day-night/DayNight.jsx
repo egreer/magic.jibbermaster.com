@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { DoubleFaceButton } from "../../components/magic/Buttons";
 import { MtgCard } from "../../components/magic/Card";
+import { PageContainer } from "../../components/PageContainer";
 import { useLocalState } from "../../hooks/useLocalState";
 import { fetchCard } from "../../util/api";
 
@@ -27,7 +28,7 @@ export const DayNight = () => {
   );
 
   return (
-    <Container className="day-night">
+    <PageContainer className="day-night">
       <Helmet title="Day-Night" />
       <Row>
         <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }}>
@@ -41,6 +42,6 @@ export const DayNight = () => {
           {toggle}
         </Col>
       </Row>
-    </Container>
+    </PageContainer>
   );
 };

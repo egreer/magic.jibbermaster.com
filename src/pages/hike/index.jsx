@@ -1,9 +1,10 @@
 import pluralize from "pluralize";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { Loading } from "../../components/Loading";
+import { PageContainer } from "../../components/PageContainer";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
@@ -216,7 +217,7 @@ export const Hike = () => {
 
   // TODO: Chaos Card
   return (
-    <Container className="hikemode" fluid>
+    <PageContainer className="hikemode">
       <HikeHelmet cards={cards.concat(chaosCards)} />
       <Row className="my-4 text-center">
         <Col>
@@ -401,6 +402,6 @@ export const Hike = () => {
           enabled={showAllCustom}
         />
       </DevTools>
-    </Container>
+    </PageContainer>
   );
 };

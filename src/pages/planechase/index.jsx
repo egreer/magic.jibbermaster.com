@@ -1,9 +1,10 @@
 import pluralize from "pluralize";
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, Button, Container, Fade } from "react-bootstrap";
+import { Alert, Button, Fade } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { DevTools } from "../../components/DevTools";
 import { Loading } from "../../components/Loading";
+import { PageContainer } from "../../components/PageContainer";
 import { ActionButton } from "../../components/game/ActionButton";
 import { Deck } from "../../components/game/Deck";
 import { History } from "../../components/game/History";
@@ -320,7 +321,7 @@ export const Planechase = () => {
   };
 
   return (
-    <Container className="planechase" fluid>
+    <PageContainer className="planechase">
       <PlanechaseHelmet planes={planes} />
       <ActionButton
         text="Planeswalk"
@@ -410,6 +411,6 @@ export const Planechase = () => {
         symbol="mb1"
         rarity="rare"
       />
-    </Container>
+    </PageContainer>
   );
 };

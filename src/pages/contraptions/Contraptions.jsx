@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PageContainer } from "../../components/PageContainer";
 import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -174,7 +175,7 @@ export const Contraptions = () => {
   };
 
   return (
-    <Container className="contraptions" fluid>
+    <PageContainer className="contraptions">
       <Helmet title="Contraptions" />
       <Row className="my-4 text-center">
         <Col>
@@ -354,6 +355,6 @@ export const Contraptions = () => {
         onConfirm={confirmPersonLabel}
         onClose={closeConfirmModal}
       ></ConfirmForm>
-    </Container>
+    </PageContainer>
   );
 };

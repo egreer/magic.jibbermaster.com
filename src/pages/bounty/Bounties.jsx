@@ -15,6 +15,7 @@ import {
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
 import { UpdatedBanner } from "../../components/magic/UpdatedBanner";
+import { PageContainer } from "../../components/PageContainer";
 import { useLocalState } from "../../hooks/useLocalState";
 import { useDeckContext } from "../../mtg/DeckContext";
 import { useGameContext } from "../../mtg/GameContext";
@@ -104,7 +105,7 @@ export const Bounties = () => {
   const decrementCount = () => setBountyLevel(Math.max(bountyLevel - 1, 1));
 
   return (
-    <Container className="bounties" fluid>
+    <PageContainer className="bounties">
       <Helmet title="Bounties" />
       <ActionButton
         text="Reveal Bounty"
@@ -188,6 +189,6 @@ export const Bounties = () => {
         <Deck CardType={Bounty} />
       </DevTools>
       <UpdatedBanner setName="Outlaws of Thunder Junction" symbol="otj" />
-    </Container>
+    </PageContainer>
   );
 };

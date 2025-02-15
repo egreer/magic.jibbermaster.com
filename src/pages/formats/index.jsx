@@ -2,15 +2,10 @@ import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import uniq from "lodash/uniq";
 import { useCallback, useMemo, useState } from "react";
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  Container,
-  Spinner,
-} from "react-bootstrap";
+import { Badge, Button, ButtonGroup, Spinner } from "react-bootstrap";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PageContainer } from "../../components/PageContainer";
 import TooltipSlider from "../../components/ToolTipSlider";
 import {
   DoubleFaceButton,
@@ -342,7 +337,7 @@ export const Formats = () => {
     enabledTags().includes("Deck Swaps");
 
   return (
-    <Container className="formats" fluid>
+    <PageContainer className="formats">
       <FormatsHelmet />
       <div className="my-4 noselect">
         <div className="text-center">
@@ -458,6 +453,6 @@ export const Formats = () => {
         onConfirm={confirmWeight}
         onClose={closeConfirmModal}
       ></ConfirmForm>
-    </Container>
+    </PageContainer>
   );
 };

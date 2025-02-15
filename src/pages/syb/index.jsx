@@ -1,13 +1,6 @@
 import debounce from "lodash/debounce";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  Button,
-  ButtonGroup,
-  Col,
-  Container,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { Button, ButtonGroup, Col, Row, Spinner } from "react-bootstrap";
 import CytoscapeComponent from "react-cytoscapejs";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
@@ -16,6 +9,7 @@ import {
   DoubleFaceButton,
   LoyaltyButtonGroup,
 } from "../../components/magic/Buttons";
+import { PageContainer } from "../../components/PageContainer";
 import { useLocalState } from "../../hooks/useLocalState";
 import { shuffleArray } from "../../util/shuffleArray";
 import { canStar } from "../formats/formats";
@@ -315,7 +309,7 @@ export const SYB = () => {
   };
 
   return (
-    <Container className="syb" fluid>
+    <PageContainer className="syb">
       <SYBHelmet />
       <Row className="my-4 text-center">
         <Col>
@@ -426,6 +420,6 @@ export const SYB = () => {
         onConfirm={confirmPersonLabel}
         onClose={closeConfirmModal}
       ></ConfirmForm>
-    </Container>
+    </PageContainer>
   );
 };

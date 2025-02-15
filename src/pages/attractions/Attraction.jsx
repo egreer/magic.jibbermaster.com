@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PageContainer } from "../../components/PageContainer";
 import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -163,7 +164,7 @@ export const Attractions = () => {
   };
 
   return (
-    <Container className="attractions" fluid>
+    <PageContainer className="attractions">
       <Helmet title="Attractions" />
       <Row className="my-5 text-center">
         <Col>
@@ -306,6 +307,6 @@ export const Attractions = () => {
         <AttractionDie rollDone={(r) => console.log(`Rolled: ${r}`)} />
       </div>
       <UpdatedBanner setName="Unfinity" symbol="unf" rarity="foil" />
-    </Container>
+    </PageContainer>
   );
 };

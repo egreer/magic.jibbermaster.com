@@ -1,12 +1,13 @@
 import get from "lodash/get";
 import set from "lodash/set";
 import React, { useCallback, useState } from "react";
-import { Button, Carousel, Col, Container, Row } from "react-bootstrap";
+import { Button, Carousel, Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { v4 as uuidv4 } from "uuid";
 import { CardTypeListModal } from "../../components/CardTypeListModal";
 import { Confirm } from "../../components/Confirm";
 import { ConfirmForm } from "../../components/ConfirmForm";
+import { PageContainer } from "../../components/PageContainer";
 import { PlayerHeader } from "../../components/PlayerHeader";
 import { RandomCardModal } from "../../components/RandomCardModal";
 import { LoyaltyButtonGroup } from "../../components/magic/Buttons";
@@ -144,7 +145,7 @@ export const Vanguard = () => {
   };
 
   return (
-    <Container className="vanguard" fluid>
+    <PageContainer className="vanguard">
       <Helmet title="Vanguard" />
       <Row className="my-4 text-center">
         <Col>
@@ -264,6 +265,6 @@ export const Vanguard = () => {
         onConfirm={confirmPersonLabel}
         onClose={closeConfirmModal}
       ></ConfirmForm>
-    </Container>
+    </PageContainer>
   );
 };
