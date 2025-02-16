@@ -334,8 +334,7 @@ export const Slivers = () => {
               const { allPlayers, youControl, abilities, reminderText } =
                 card?.parsedAbility || {};
               return (
-                card &&
-                card.oracle_html && (
+                card && (
                   <Accordion.Item
                     eventKey={card.id}
                     key={`ability-${card.id}`}
@@ -356,16 +355,23 @@ export const Slivers = () => {
                           )}
                         </Col>
                         <Col>
-                          {abilities?.map((ability, index) => (
-                            <div key={index}>
-                              <AbilityIcon ability={ability} className="mr-2" />
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: ability,
-                                }}
-                              ></span>
-                            </div>
-                          ))}
+                          {abilities?.length ? (
+                            abilities?.map((ability, index) => (
+                              <div key={index}>
+                                <AbilityIcon
+                                  ability={ability}
+                                  className="mr-2"
+                                />
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: ability,
+                                  }}
+                                ></span>
+                              </div>
+                            ))
+                          ) : (
+                            <span>None</span>
+                          )}
                           {reminderText && (
                             <div
                               dangerouslySetInnerHTML={{
