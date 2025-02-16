@@ -395,6 +395,13 @@ export const SYB = () => {
         confirmVariant="danger"
         triggerButtonParams={{ variant: "danger", className: "w-100" }}
       />
+      <DoubleFaceButton
+        text="Star Turn"
+        onClick={() => setStarTurn(!starTurn)}
+        enabled={starTurn}
+        className="my-3"
+        disabled={!canStar(playerCount)}
+      />
       <DevTools>
         <DoubleFaceButton
           text="Turn Edges"
@@ -405,11 +412,6 @@ export const SYB = () => {
           text="Screw Edges"
           onClick={() => setShowScrewEdges(!showScrewEdges)}
           enabled={showScrewEdges}
-        />
-        <DoubleFaceButton
-          text="Star Turn"
-          onClick={() => setStarTurn(!starTurn)}
-          enabled={starTurn}
         />
       </DevTools>
 
