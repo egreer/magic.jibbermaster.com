@@ -1,7 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 import { createMarkup } from "./createMarkup";
 
-export const ABILITIY_STACKS_PROP = { name: "ability-stacks" };
+export const ABILITY_STACKS_PROP = { name: "ability-stacks" };
 export const CHAOS_TRIGGER_PROP = { name: "chaos-trigger" };
 export const PHENOMENON_PROP = { name: "phenomenon" };
 export const CHAOSOMENON_PROP = { name: "chaosomenon" };
