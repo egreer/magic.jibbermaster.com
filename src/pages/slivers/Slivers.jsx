@@ -18,6 +18,7 @@ import {
 } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Confirm } from "../../components/Confirm";
+import { DevTools } from "../../components/DevTools";
 import {
   DoubleFaceButton,
   LoyaltyButtonGroup,
@@ -245,6 +246,16 @@ export const Slivers = () => {
     [sliverCounts, setSliverCounts, currentSliverCount]
   );
 
+  const incrementAllSliverCount = useCallback(
+    () => slivers.forEach((card) => incrementSliverCount({ card })),
+    [slivers, incrementSliverCount]
+  );
+
+  const decrementAllSliverCount = useCallback(
+    () => slivers.forEach((card) => decrementSliverCount({ card })),
+    [slivers, decrementSliverCount]
+  );
+
   const sliverById = useCallback(
     (id) => slivers.find((c) => c.id === id),
     [slivers]
@@ -463,6 +474,24 @@ export const Slivers = () => {
         ))}
       </Row>
 
+      <DevTools>
+        <div className="p-2 my-3 text-center border border-info rounded">
+          <div className="mx-2 d-inline h5 p-0 align-middle">
+            <strong>Sliver Count</strong>
+          </div>
+          <LoyaltyButtonGroup
+            text="Increment All Slivers"
+            upProps={{
+              title: "Increase Slivers Count",
+              onClick: incrementAllSliverCount,
+            }}
+            downProps={{
+              title: "Decrease Slivers Count",
+              onClick: decrementAllSliverCount,
+            }}
+          />
+        </div>
+      </DevTools>
       <UpdatedBanner
         setName="Modern Horizons 2"
         symbol="mh2"
