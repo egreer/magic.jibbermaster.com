@@ -493,8 +493,8 @@ export const Slivers = () => {
         </div>
       </DevTools>
       <UpdatedBanner
-        setName="Modern Horizons 2"
-        symbol="mh2"
+        setName="Mystery Booster 2"
+        symbol="mb2"
         rarity="rare"
       ></UpdatedBanner>
     </PageContainer>
