@@ -101,48 +101,45 @@ const parsedAbility = ({ card }) => {
   let youControl = false;
   let stacks = false;
   let reminderText = null;
-  let matchOrder = 10;
+  let matchOrder = 15;
   const abilities = [];
 
   const words = card?.oracle_html?.split("<br />");
   words?.forEach((word) => {
     let parsed = false;
 
-    // TODO Break on New line for checks
+    const addAbility = (ability, order) => {
+      abilities.push(ability);
+      parsed = true;
+      matchOrder = Math.min(order, matchOrder);
+    };
+
     let matches = word.match('All Slivers?(?: creatures)? have "(.*)"');
     if (!parsed && matches) {
-      abilities.push(matches[1]);
+      addAbility(matches[1], 3);
       allPlayers = true;
-      parsed = true;
-      matchOrder = Math.min(3, matchOrder);
     }
 
     matches = word.match(
       /All Slivers?(?: creatures)? have (.+?)\.( <small><em>\(.*)?/
     );
     if (!parsed && matches) {
-      abilities.push(Case.capital(matches[1]));
+      addAbility(Case.capital(matches[1]), 1);
       allPlayers = true;
       reminderText = matches[2];
-      parsed = true;
-      matchOrder = Math.min(1, matchOrder);
     }
 
     matches = word.match(/All Slivers?(?: creatures)? get (.+?)\./);
     if (!parsed && matches) {
-      abilities.push(matches[1]);
+      addAbility(matches[1], 9);
       allPlayers = true;
       stacks = true;
-      parsed = true;
-      matchOrder = Math.min(5, matchOrder);
     }
 
     matches = word.match('Slivers?(?: creatures)? you control have "(.*)"');
     if (!parsed && matches) {
-      abilities.push(matches[1]);
+      addAbility(matches[1], 4);
       youControl = true;
-      parsed = true;
-      matchOrder = Math.min(4, matchOrder);
     }
 
     matches = word.match(
@@ -163,15 +160,28 @@ const parsedAbility = ({ card }) => {
 
     matches = word.match(/Slivers?(?: creatures)? you control get (.+?)\./);
     if (!parsed && matches) {
-      abilities.push(matches[1]);
+      addAbility(matches[1], 10);
       youControl = true;
       stacks = true;
-      parsed = true;
-      matchOrder = Math.min(6, matchOrder);
     }
+
+    matches = word.match(
+      /Whenever a Slivers?(?: creatures?)? you control (.*)/
+    );
+    if (!parsed && matches) {
+      addAbility(word, 8);
+      youControl = true;
+    }
+
+    matches = word.match(/Whenever a Slivers?(?: creatures?)?(.*)/);
+    if (!parsed && matches) {
+      addAbility(word, 7);
+      allPlayers = true;
+    }
+
     // When in doubt throw it on
     if (!parsed) {
-      abilities.push(word);
+      addAbility(word, 14);
     }
   });
 
