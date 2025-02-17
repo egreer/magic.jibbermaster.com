@@ -33,7 +33,7 @@ export const RandomCardModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="info"
+            variant="primary"
             className="w-100"
             aria-label="Close"
             onClick={close}
