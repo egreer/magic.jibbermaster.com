@@ -191,6 +191,18 @@ const sliverName = (name, count) => {
   return count > 0 ? newName : null;
 };
 
+const compareSlivers = (card1, card2) => {
+  const abilityOrder =
+    (card1?.parsedAbility?.matchOrder || 10) -
+    (card2?.parsedAbility?.matchOrder || 10);
+  const abilityNameOrder = (
+    card1?.parsedAbility?.abilities?.[0] ?? ""
+  ).localeCompare(card2?.parsedAbility?.abilities?.[0] ?? "");
+  const nameOrder = (card1?.name ?? "").localeCompare(card2?.name ?? "");
+
+  return [abilityOrder, abilityNameOrder, nameOrder].find((e) => e != 0) || 0;
+};
+
 export const Slivers = () => {
   const [slivers, setSlivers] = useState([]);
   const [search, setSearch] = useState("");
@@ -264,21 +276,9 @@ export const Slivers = () => {
   const orderedSlivers = useMemo(() => {
     const s = Object.entries(sliverCounts).map(([key, count]) => {
       const card = sliverById(key);
-      return {
-        key,
-        card,
-        count,
-      };
+      return { key, card, count };
     });
-    s.sort((first, second) => {
-      const abilityOrder =
-        (first.card?.parsedAbility?.matchOrder || 10) -
-        (second?.card?.parsedAbility?.matchOrder || 10);
-      const nameOrder = (
-        first.card?.parsedAbility?.abilities?.[0] || ""
-      ).localeCompare(second?.card?.parsedAbility?.abilities?.[0]);
-      return abilityOrder == 0 ? nameOrder : abilityOrder;
-    });
+    s.sort((first, second) => compareSlivers(first.card, second?.card));
     return s;
   }, [sliverCounts, sliverById]);
 
