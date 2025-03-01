@@ -45,11 +45,11 @@
     "extends": "react-app"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "bootstrap": "^5.3.3",
     "case": "^1.6.3",
     "classnames": "^2.5.1",
-    "cytoscape": "^3.31.0",
+    "cytoscape": "^3.31.1",
     "jquery": "^3.7.1",
     "keyrune": "^3.16.1",
     "lodash": "^4.17.21",
@@ -66,12 +66,12 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.1.5",
-    "react-router-dom": "^7.1.5",
+    "react-router": "^7.2.0",
+    "react-router-dom": "^7.2.0",
     "react-textfit": "^1.1.1",
     "recharts": "^2.15.1",
     "store": "^2.0.12",
-    "uuid": "^11.0.5"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.15",
