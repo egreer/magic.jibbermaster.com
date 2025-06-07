@@ -99,7 +99,7 @@
     "source-map-explorer": "^2.5.3",
     "typescript": "^5.8.2",
     "vite": "^6.3.4",
-    "vite-plugin-pwa": "^0.21.2"
+    "vite-plugin-pwa": "^1.0.0"
   },
   "overrides": {
     "react-dice-complete": {
