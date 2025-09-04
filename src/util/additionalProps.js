@@ -222,6 +222,12 @@ export const HIKE_PROPERTIES = {
   ],
   "The Countdown Is at One": [PHENOMENON_PROP],
   "Enter the Dungeon": [PHENOMENON_PROP],
+  "Risky Move": [
+    COIN_PROP,
+    errataProp(
+      "When you planeswalk to or at the beginning of your upkeep, choose a random creature you control and a random opponent. Flip a coin. If you lose the flip, that opponent gains control of that creature."
+    ),
+  ],
   Necropotence: [
     errataProp(
       "Players skip their draw step.\n Whenever a player discards a card, exile that card from their graveyard.\n All players have: 'Pay 1 life to exile the top card of your library face down, and then put it into your hand at the beginning of your next end step."
