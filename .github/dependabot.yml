@@ -24,6 +24,14 @@ updates:
       react-router:
         patterns:
           - "react-router*"
+          - "@types/react-router*"
+      react-dom:
+        patterns:
+          - "react-dom"
+          - "@types/react-dom"
+      eslint:
+        patterns:
+          - "eslint*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
