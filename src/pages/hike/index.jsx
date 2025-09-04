@@ -99,7 +99,7 @@ export const Hike = () => {
   }, [cards, deck]);
 
   const planeshift = useCallback(
-    ({ card }) => {
+    ({ card } = { card: null }) => {
       const newCard = card ?? deck.drawCard() ?? null;
       game.setCurrentCard(newCard);
     },
@@ -107,7 +107,7 @@ export const Hike = () => {
   );
 
   const chaosshift = useCallback(
-    ({ card }) => {
+    ({ card } = { card: null }) => {
       const newCard = card ?? drawCard(PRE_CHAOS) ?? null;
       setCurrentChaosCard(newCard);
     },
@@ -115,7 +115,7 @@ export const Hike = () => {
   );
 
   const planeswalk = useCallback(
-    ({ planeCard, chaosCard }) => {
+    ({ planeCard, chaosCard } = { planeCard: null, chaosCard: null }) => {
       planeshift({ card: planeCard });
       chaosshift({ card: chaosCard });
     },
