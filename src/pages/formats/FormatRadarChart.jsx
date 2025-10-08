@@ -126,7 +126,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 export const FormatRadarChart = ({ data }) => {
   return (
     <div className="row mb-2 d-flex justify-content-center noselect">
-      <ResponsiveContainer width={350} aspect={1}>
+      <ResponsiveContainer width={350} height={350} aspect={1}>
         <RadarChart outerRadius="75%" data={data}>
           <PolarGrid />
           <PolarAngleAxis dataKey="name" />
