@@ -1,31 +1,22 @@
-// Hook
-// https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
-// https://usehooks-typescript.com/react-hook/use-local-storage
 import { useEffect, useState } from "react";
 
-export const useLocalState = (key: string, defaultValue: any) => {
-  const [value, setValue] = useState(() => {
-    const stickyValue = window.localStorage.getItem(key);
-    return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue;
+export const useLocalState = <T,>(key: string, defaultValue: T) => {
+  const [value, setValue] = useState<T>(() => {
+    try {
+      const stored = window.localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : defaultValue;
+    } catch {
+      return defaultValue;
+    }
   });
 
   useEffect(() => {
-    const stickyValue = window.localStorage.getItem(key);
-    if (stickyValue === null && defaultValue) {
-      setValue(defaultValue);
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.log("Local Storage Set Error", e);
     }
-  }, [key, defaultValue]);
-
-  useEffect(() => {
-    const stickyValue = window.localStorage.getItem(key);
-    if (stickyValue !== null) {
-      setValue(JSON.parse(stickyValue));
-    }
-  }, [key]);
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
 
-  return [value, setValue];
+  return [value, setValue] as const;
 };
