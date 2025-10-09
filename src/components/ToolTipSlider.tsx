@@ -3,7 +3,6 @@ import "rc-slider/assets/index.css";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap.css";
 import { TooltipProps } from "rc-tooltip/lib/Tooltip";
-import React from "react";
 
 const ToolTipSlider = ({
   tipProps,

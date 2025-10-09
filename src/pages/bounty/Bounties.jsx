@@ -54,16 +54,26 @@ export const Bounties = () => {
   const history = deck.history;
 
   const fetchBounties = useCallback(async () => {
-    const newBounties = await getAllBountiesCards();
-    setBounties(newBounties);
-    setLoading(false);
-  }, [setBounties, setLoading]);
+    setLoading(true);
+    try {
+      const newBounties = await getAllBountiesCards();
+      setBounties(newBounties);
+    } catch (e) {
+      console.log("Hike Fetch Card Load Error", e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    if (bounties && bounties.length <= 0) {
+    fetchBounties();
+  }, [fetchBounties]);
+
+  useEffect(() => {
+    if (bounties && bounties.length <= 0 && !loading) {
       fetchBounties();
     }
-  }, [bounties, fetchBounties]);
+  }, [bounties, loading, fetchBounties]);
 
   useEffect(() => {
     if (bounties?.length > 0 && !deck.isInit) {

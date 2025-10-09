@@ -48,16 +48,23 @@ export const Planechase = () => {
   const planeswalkDisabled = !!hasCustomProperty("top-5", currentCard);
 
   const fetchPlanes = useCallback(async () => {
-    const newPlanes = await getAllPlanechaseCards();
-    setPlanes([...newPlanes]);
-    setLoading(false);
-  }, [setPlanes, setLoading]);
+    setLoading(true);
+    try {
+      const newPlanes = await getAllPlanechaseCards();
+      setPlanes([...newPlanes]);
+      setLoading(false);
+    } catch (e) {
+      console.log("Planechase Fetch Card Load Error", e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    if (planes && planes.length <= 0) {
+    if (planes && planes.length <= 0 && !loading) {
       fetchPlanes();
     }
-  }, [planes, fetchPlanes]);
+  }, [planes, loading, fetchPlanes]);
 
   useEffect(() => {
     if (planes?.length > 0 && !deck.isInit) {

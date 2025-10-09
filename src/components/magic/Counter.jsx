@@ -48,13 +48,13 @@ export const Counter = ({ card, style = {} }) => {
 
   const incrementCounter = () => {
     if (!disabled) {
-      card.counter = counter + 1;
+      card.counter = counter + 1; //eslint-disable-line react-hooks/immutability
       setCounter(counter + 1);
     }
   };
 
   const resetCounters = () => {
-    card.counter = 0;
+    card.counter = 0; //eslint-disable-line react-hooks/immutability
     setCounter(0);
   };
 

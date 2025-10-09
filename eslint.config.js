@@ -47,7 +47,6 @@ export default [
       "lodash/prefer-lodash-typecheck": "off",
       "lodash/matches-prop-shorthand": [2, "never"],
       "unused-imports/no-unused-imports": "error",
-
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

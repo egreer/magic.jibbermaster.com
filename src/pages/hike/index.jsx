@@ -75,16 +75,23 @@ export const Hike = () => {
   const history = deck.history;
 
   const fetchCards = useCallback(async () => {
-    const hikePLanes = getAllHikeModePlaneCards();
-    const hikeChaos = getAllHikeModeChaosCards();
+    setLoading(true);
+    try {
+      const hikePLanes = getAllHikeModePlaneCards();
+      const hikeChaos = getAllHikeModeChaosCards();
 
-    const planes = [...customPlanes, ...(await hikePLanes)];
-    const chaos = [...customChaos, ...(await hikeChaos)];
-    setCards(planes);
-    setChaosCards(chaos);
-    getOrCreateCurrentDeck(PRE_CHAOS, chaos);
-    setLoading(false);
-  }, [setCards, setLoading]);
+      const planes = [...customPlanes, ...(await hikePLanes)];
+      const chaos = [...customChaos, ...(await hikeChaos)];
+      setCards(planes);
+      setChaosCards(chaos);
+      getOrCreateCurrentDeck(PRE_CHAOS, chaos);
+      setLoading(false);
+    } catch (e) {
+      console.log("Hike Fetch Card Load Error", e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (cards && cards.length <= 0) {
