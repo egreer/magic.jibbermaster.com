@@ -4,7 +4,6 @@ import {
   PolarRadiusAxis,
   Radar,
   RadarChart,
-  ResponsiveContainer,
   Tooltip,
 } from "recharts";
 import { CHAOS_TAGS, hasTags } from "./formats";
@@ -126,8 +125,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 export const FormatRadarChart = ({ data }) => {
   return (
     <div className="row mb-2 d-flex justify-content-center noselect">
-      <ResponsiveContainer width={350} height={350} aspect={1}>
-        <RadarChart outerRadius="75%" data={data}>
+
+        <RadarChart outerRadius="75%" width={350} height={350} data={data}>
           <PolarGrid />
           <PolarAngleAxis dataKey="name" />
           <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
@@ -144,7 +143,7 @@ export const FormatRadarChart = ({ data }) => {
             fillOpacity={0.8}
           />
         </RadarChart>
-      </ResponsiveContainer>
+
     </div>
   );
 };
