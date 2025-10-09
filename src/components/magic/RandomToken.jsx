@@ -13,6 +13,15 @@ export const RandomToken = ({ card, style = {} }) => {
   const property = hasCustomProperty("random-token", card);
   const { needsInput, prompt, action, url, text } = property;
 
+  const _randomTokenModalOpen = (tokenUrl) => {
+    const getToken = async () => {
+      const tokenCard = await fetchRandomCard(tokenUrl);
+      setAdditionalCard(tokenCard);
+      setRandomTokenModalOpen(true);
+    };
+    getToken();
+  };
+
   const _actionClick = () => {
     if (needsInput) {
       openConfirmModal();
@@ -36,15 +45,6 @@ export const RandomToken = ({ card, style = {} }) => {
   const openConfirmModal = useCallback(() => {
     setOpenConfirm(true);
   }, [setOpenConfirm]);
-
-  const _randomTokenModalOpen = (tokenUrl) => {
-    const getToken = async () => {
-      const tokenCard = await fetchRandomCard(tokenUrl);
-      setAdditionalCard(tokenCard);
-      setRandomTokenModalOpen(true);
-    };
-    getToken();
-  };
 
   const _randomTokenModalClose = useCallback(() => {
     setAdditionalCard(null);
