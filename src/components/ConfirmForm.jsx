@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Modal } from "react-bootstrap";
 
 const DialogForm = ({ initialValue, setValue, title, onSubmit }) => {
@@ -32,11 +32,7 @@ export const ConfirmForm = ({
   confirmVariant = "primary",
   ...props
 }) => {
-  const [value, setValue] = useState("");
-
-  useEffect(() => {
-    setValue(initialValue || "");
-  }, [initialValue]);
+  const [value, setValue] = useState(initialValue || "");
 
   const close = (confirm) => {
     if (confirm) {
