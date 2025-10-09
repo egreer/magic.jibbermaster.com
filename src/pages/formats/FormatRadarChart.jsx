@@ -125,25 +125,23 @@ const CustomTooltip = ({ active, payload, label }) => {
 export const FormatRadarChart = ({ data }) => {
   return (
     <div className="row mb-2 d-flex justify-content-center noselect">
-
-        <RadarChart outerRadius="75%" width={350} height={350} data={data}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="name" />
-          <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
-          <Tooltip
-            allowEscapeViewBox={{ x: true, y: true }}
-            content={<CustomTooltip />}
-            formatter={(value, name, props) => [value, props.payload["name"]]}
-          ></Tooltip>
-          <Radar
-            name="Formats"
-            dataKey="weight"
-            stroke="#dc3545"
-            fill="#bb2d3b"
-            fillOpacity={0.8}
-          />
-        </RadarChart>
-
+      <RadarChart outerRadius="75%" width={350} height={350} data={data}>
+        <PolarGrid />
+        <PolarAngleAxis dataKey="name" />
+        <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+        <Tooltip
+          allowEscapeViewBox={{ x: true, y: true }}
+          content={<CustomTooltip />}
+          formatter={(value, name, props) => [value, props.payload["name"]]}
+        ></Tooltip>
+        <Radar
+          name="Formats"
+          dataKey="weight"
+          stroke="#dc3545"
+          fill="#bb2d3b"
+          fillOpacity={0.8}
+        />
+      </RadarChart>
     </div>
   );
 };
