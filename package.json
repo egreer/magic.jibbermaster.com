@@ -28,6 +28,7 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky",
     "prettier": "prettier --cache --write '**/*.{ts,js,tsx,jsx,css,scss,html}'",
+    "prettier:check": "prettier --cache --check '**/*.{ts,js,tsx,jsx,css,scss,html}'",
     "prettier:nocache": "prettier --write '**/*.{ts,js,tsx,jsx,css,scss,html}'",
     "pretty-quick": "pretty-quick",
     "pretty-quick:staged": "pretty-quick --staged --pattern '**/*.{ts,js,tsx,jsx,css,scss,html}'",
