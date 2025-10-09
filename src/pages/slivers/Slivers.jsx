@@ -250,7 +250,7 @@ export const Slivers = () => {
           (activeOnly ? currentSliverCount({ card }) > 0 : true)
       )
     );
-  }, [slivers, search, activeOnly, currentSliverCount, setFilteredSlivers]);
+  }, [slivers, search, activeOnly, currentSliverCount]);
 
   const incrementSliverCount = useCallback(
     ({ card }) => {

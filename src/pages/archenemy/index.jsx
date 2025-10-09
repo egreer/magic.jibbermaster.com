@@ -35,16 +35,19 @@ export const Archenemy = () => {
   );
 
   const fetchSchemes = useCallback(async () => {
-    const newSchemes = await getAllArchenemyCards();
-    setSchemes(newSchemes);
-    setLoading(false);
-  }, [setSchemes, setLoading]);
-
+    setLoading(true);
+    try {
+      const newSchemes = await getAllArchenemyCards();
+      setSchemes(newSchemes);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
   useEffect(() => {
-    if (schemes && schemes.length <= 0) {
+    if (!loading && schemes && schemes.length <= 0) {
       fetchSchemes();
     }
-  }, [schemes, fetchSchemes]);
+  }, [schemes, loading, fetchSchemes]);
 
   useEffect(() => {
     setDeckSelection(!deck.isInit);
