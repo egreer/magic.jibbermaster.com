@@ -243,6 +243,7 @@ export const Slivers = () => {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFilteredSlivers(
       slivers.filter(
         (card) =>

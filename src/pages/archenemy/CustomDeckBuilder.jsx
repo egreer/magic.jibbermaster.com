@@ -22,8 +22,9 @@ export const CustomDeckBuilder = ({ schemes, onSelectDeck }) => {
     const newCustomDeck = schemes.map((scheme) => {
       return { ...scheme, count: 0 };
     });
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCustomDeck(newCustomDeck);
-  }, [schemes, setCustomDeck]);
+  }, [schemes]);
 
   const customDeckSize = () => {
     const reducer = (a, b) => a + b;
