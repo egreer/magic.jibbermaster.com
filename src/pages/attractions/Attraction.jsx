@@ -63,8 +63,7 @@ export const Attractions = () => {
 
   const confirmPersonLabel = useCallback(
     (value) => {
-      labels[confirmPerson] = value;
-      setLabels({ ...labels });
+      setLabels({ ...labels, [confirmPerson]: value });
       closeConfirmModal();
     },
     [labels, confirmPerson, closeConfirmModal, setLabels]

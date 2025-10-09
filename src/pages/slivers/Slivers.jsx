@@ -254,16 +254,16 @@ export const Slivers = () => {
 
   const incrementSliverCount = useCallback(
     ({ card }) => {
-      sliverCounts[card.id] = currentSliverCount({ card }) + 1;
-      setSliverCounts({ ...sliverCounts });
+      const count = currentSliverCount({ card }) + 1;
+      setSliverCounts({ ...sliverCounts, [card.id]: count });
     },
     [sliverCounts, setSliverCounts, currentSliverCount]
   );
 
   const decrementSliverCount = useCallback(
     ({ card }) => {
-      sliverCounts[card.id] = Math.max(currentSliverCount({ card }) - 1, 0);
-      setSliverCounts({ ...sliverCounts });
+      const count = Math.max(currentSliverCount({ card }) - 1, 0);
+      setSliverCounts({ ...sliverCounts, [card.id]: count });
     },
     [sliverCounts, setSliverCounts, currentSliverCount]
   );
