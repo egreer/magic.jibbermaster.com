@@ -20,7 +20,7 @@ const FallBack = ({ error, resetErrorBoundary }) => (
       >
         Github
         <sup>
-          <i class="fas fa-external-link-alt mx-1 fa-sm"></i>
+          <i className="fas fa-external-link-alt mx-1 fa-sm"></i>
         </sup>
       </a>
     </p>
