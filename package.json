@@ -34,7 +34,8 @@
     "pretty-quick:staged": "pretty-quick --staged --pattern '**/*.{ts,js,tsx,jsx,css,scss,html}'",
     "serve": "vite preview",
     "start": "vite",
-    "update-packages": "npx npm-check-updates -u"
+    "update:check": "npx npm-check-updates",
+    "update:all": "npx npm-check-updates -u"
   },
   "browserslist": [
     ">0.2%",
