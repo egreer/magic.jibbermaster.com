@@ -44,8 +44,8 @@ const Main = () => {
       <Route
         path="/archenemy"
         element={
-          <GameProvider prefix="archenemy">
-            <DeckProvider prefix="archenemy">
+          <GameProvider key="archenemy" prefix="archenemy">
+            <DeckProvider key="archenemy" prefix="archenemy">
               <Archenemy />
             </DeckProvider>
           </GameProvider>
@@ -54,8 +54,8 @@ const Main = () => {
       <Route
         path="/planechase"
         element={
-          <GameProvider prefix="planechase">
-            <DeckProvider prefix="planechase">
+          <GameProvider key="planechase" prefix="planechase">
+            <DeckProvider key="planechase" prefix="planechase">
               <Planechase />
             </DeckProvider>
           </GameProvider>
@@ -71,8 +71,8 @@ const Main = () => {
       <Route
         path="/bounty"
         element={
-          <GameProvider prefix="bounty">
-            <DeckProvider prefix="bounty">
+          <GameProvider key="bounty" prefix="bounty">
+            <DeckProvider key="bounty" prefix="bounty">
               <Bounties />
             </DeckProvider>
           </GameProvider>
@@ -81,8 +81,8 @@ const Main = () => {
       <Route
         path="/hike"
         element={
-          <GameProvider prefix="hikemode">
-            <DeckProvider prefix="hikemode">
+          <GameProvider key="hikemode" prefix="hikemode">
+            <DeckProvider key="hikemode" prefix="hikemode">
               <Hike />
             </DeckProvider>
           </GameProvider>
