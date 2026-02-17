@@ -44,7 +44,7 @@ const customPlanes = CUSTOM_PLANES.map((c) => addAdditionalProperties(c));
 const customChaos = CUSTOM_CHAOS.map((c) => addAdditionalProperties(c));
 
 export const Hike = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
   const [chaosCards, setChaosCards] = useState([]);
   const [currentChaosCard, setCurrentChaosCard] = useLocalState(

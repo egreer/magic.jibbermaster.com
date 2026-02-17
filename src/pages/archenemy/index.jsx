@@ -19,7 +19,7 @@ import { DeckSelect } from "./DeckSelect";
 import { ArchenemyHelmet } from "./Helmet";
 
 export const Archenemy = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [schemes, setSchemes] = useState([]);
   const [deckSelection, setDeckSelection] = useState(true);
 
@@ -39,10 +39,13 @@ export const Archenemy = () => {
     try {
       const newSchemes = await getAllArchenemyCards();
       setSchemes(newSchemes);
+    } catch (e) {
+      console.log("Archenemy Fetch Card Load Error", e);
     } finally {
       setLoading(false);
     }
   }, []);
+
   useEffect(() => {
     if (!loading && schemes && schemes.length <= 0) {
       fetchSchemes();

@@ -38,7 +38,7 @@ const bountyText = (bountyLevel) => {
 };
 
 export const Bounties = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showRules, setShowRules] = useState(false);
   const [bounties, setBounties] = useState([]);
   const [claimedBounty, setClaimedBounty] = useLocalState(

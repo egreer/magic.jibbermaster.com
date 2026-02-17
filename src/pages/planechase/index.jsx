@@ -26,7 +26,7 @@ import { PickPlaneModal } from "./PickPlaneModal";
 import { ScryModal } from "./ScryModal";
 
 export const Planechase = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [planes, setPlanes] = useState([]);
   const [tripleChaosModalOpen, setTripleChaosModalOpen] = useState(false);
   const [scryModalOpen, setScryModalOpen] = useState(false);
