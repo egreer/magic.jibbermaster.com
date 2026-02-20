@@ -52,7 +52,7 @@
     "case": "^1.6.3",
     "classnames": "^2.5.1",
     "cytoscape": "^3.33.1",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "keyrune": "^3.18.0",
     "lodash": "^4.17.23",
     "moment": "^2.30.1",
