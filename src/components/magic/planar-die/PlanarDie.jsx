@@ -1,6 +1,11 @@
 import noop from "lodash/noop";
-import ReactDice from "react-dice-complete";
+import ReactDiceModule from "react-dice-complete";
 import "./planar-die.scss";
+
+// react-dice-complete's CJS bundle isn't unwrapped by Vite's dep
+// pre-bundler, so the default import resolves to the { default } wrapper
+// instead of the component itself. Unwrap it explicitly.
+const ReactDice = ReactDiceModule?.default ?? ReactDiceModule;
 
 const translateRoll = (roll) => {
   switch (roll) {
