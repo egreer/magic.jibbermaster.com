@@ -1,35 +1,39 @@
 import cn from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 // import "./dice.scss";
 import "./more.scss";
 // https://codepen.io/vicentemundim/details/cenIh
+
+const animationDuration = 3000;
+
+const getRandomFace = (sides, initialSide) =>
+  Math.floor(Math.random() * sides) + initialSide;
+
 export const Die = ({ sides = 20, initialSide = 1 }) => {
   const [rolling, setRolling] = useState(false);
   console.log("🚀 ~ file: die.js ~ line 8 ~ Die ~ rolling", rolling);
   const [face, setFace] = useState(1);
   const [lastFace, setLastFace] = useState(null);
 
-  var timeoutId,
-    // transitionDuration = 500,
-    animationDuration = 3000;
+  const timeoutRef = useRef(null);
 
   const randomFace = () => {
-    const face = Math.floor(Math.random() * sides) + initialSide;
-    setLastFace(face === lastFace ? randomFace() : face);
+    const face = getRandomFace(sides, initialSide);
+    setLastFace(face === lastFace ? getRandomFace(sides, initialSide) : face);
     return face;
   };
 
   const rollTo = (face) => {
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutRef.current);
     setFace(face);
   };
 
   const roll = () => {
     setRolling(true);
     // $die.addClass('rolling')
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutRef.current);
 
-    timeoutId = setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setRolling(false);
       // $die.removeClass('rolling')
 

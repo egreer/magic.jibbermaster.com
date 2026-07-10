@@ -66,12 +66,8 @@ export const Bounties = () => {
   }, []);
 
   useEffect(() => {
-    fetchBounties();
-  }, [fetchBounties]);
-
-  useEffect(() => {
     if (bounties && bounties.length <= 0 && !loading) {
-      fetchBounties();
+      Promise.resolve().then(() => fetchBounties());
     }
   }, [bounties, loading, fetchBounties]);
 

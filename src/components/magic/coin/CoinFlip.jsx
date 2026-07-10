@@ -1,19 +1,20 @@
 import cn from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./coin.scss";
+
+const animationDuration = 2000;
 
 export const CoinFlip = ({ start = "heads", style = {} }) => {
   const [side, setSide] = useState(start);
   const [flipping, setFlipping] = useState(false);
 
-  var timeoutId,
-    animationDuration = 2000;
+  const timeoutRef = useRef(null);
 
   const coinToss = () => {
     setFlipping(true);
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutRef.current);
 
-    timeoutId = setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setFlipping(false);
       setSide(Math.random() < 0.5 ? "heads" : "tails");
     }, animationDuration);

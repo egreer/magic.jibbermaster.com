@@ -1,23 +1,24 @@
 import Case from "case";
 import sampleSize from "lodash/sampleSize";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { hasCustomProperty } from "../../mtg/card";
 import { AbilityIcon } from "../../util/createMarkup";
+
+const animationDuration = 2000;
 
 export const RandomChoice = ({ card, style = {} }) => {
   const [choices, setChoices] = useState(null);
   const [choosing, setChoosing] = useState(false);
 
-  var timeoutId,
-    animationDuration = 2000;
+  const timeoutRef = useRef(null);
 
   const property = hasCustomProperty("random-choices", card);
   const randomChoice = () => {
     setChoosing(true);
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutRef.current);
 
-    timeoutId = setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setChoosing(false);
       const selections = sampleSize(property.choices, property.count);
       setChoices(selections);

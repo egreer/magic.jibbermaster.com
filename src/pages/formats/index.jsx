@@ -393,9 +393,7 @@ export const Formats = () => {
       </div>
       <hr className="border-info" />
       <FormatRadarChart data={radarData}></FormatRadarChart>
-      <div className="mb-5">
-        <FormatToggles />
-      </div>
+      <div className="mb-5">{FormatToggles()}</div>
       <div className="noselect">
         <div className="my-3 d-flex justify-content-center">
           <ButtonGroup>
@@ -425,7 +423,7 @@ export const Formats = () => {
             </Button>
           </ButtonGroup>
         </div>
-        <ActiveFormats />
+        {ActiveFormats()}
         <DoubleFaceButton
           onClick={() => setDisplayWeights(!displayWeights)}
           enabled={displayWeights}
@@ -433,9 +431,7 @@ export const Formats = () => {
           className="my-5"
         />
       </div>
-      <div className="mb-5 noselect">
-        <FormatDescriptions />
-      </div>
+      <div className="mb-5 noselect">{FormatDescriptions()}</div>
       <div className="my-3">
         <Confirm
           onConfirm={reset}

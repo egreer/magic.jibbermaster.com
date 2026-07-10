@@ -95,7 +95,7 @@ export const Hike = () => {
 
   useEffect(() => {
     if (cards && cards.length <= 0) {
-      fetchCards();
+      Promise.resolve().then(() => fetchCards());
     }
   }, [cards, fetchCards]);
 
