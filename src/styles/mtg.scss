@@ -1,6 +1,17 @@
-@use "../../node_modules/keyrune/sass/_variables";
+// Sass is no longer supported in keyrune. Extracted from:
+// https://github.com/andrewgioia/keyrune/blob/d6480b720b0ab9042f592a64ace67451ed0f5254/sass/_variables.scss
+$keyrune_background_clip: text !default;
+$keyrune_text_fill: transparent !default;
+$keyrune_palette: (
+  ("common", #1a1718, #302b2c, #474040, #000),
+  ("uncommon", #707883, #5a6572, #9e9e9e, #111),
+  ("rare", #a58e4a, #876a3b, #dfbd6b, #333),
+  ("mythic", #bf4427, #b21f0f, #f38300, #333),
+  ("timeshifted", #652978, #652978, #c09ac5, #333)
+) !default;
 
-@each $rarity, $text, $left, $right, $stroke in variables.$keyrune_palette {
+// Create text versions of the rarity
+@each $rarity, $text, $left, $right, $stroke in $keyrune_palette {
   /* Rarity Background */
   .mtg-bg-#{$rarity} {
     background: $text;
@@ -24,9 +35,9 @@
         #{$left} 100%
       );
       -webkit-text-stroke: 0.01em #{$stroke};
-      -webkit-text-fill-color: variables.$keyrune_text_fill;
-      -webkit-background-clip: variables.$keyrune_background_clip;
-      background-clip: variables.$keyrune_background_clip;
+      -webkit-text-fill-color: $keyrune_text_fill;
+      -webkit-background-clip: $keyrune_background_clip;
+      background-clip: $keyrune_background_clip;
     }
   }
 
@@ -57,5 +68,38 @@
       // -webkit-background-clip: $keyrune_background_clip;
       // background-clip: $keyrune_background_clip;
     }
+  }
+}
+
+.mtg-text-foil {
+  color: #a6dced;
+  .mtg-grad {
+    // webkit outline/gradient
+    background: -webkit-linear-gradient(
+      -45deg,
+      #ea8d66 0%,
+      #ea8d66 10%,
+      #fdef8a 17%,
+      #8bcc93 33%,
+      #a6dced 50%,
+      #6f75aa 67%,
+      #e599c2 83%,
+      #eeeeee 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+      135deg,
+      #ea8d66 0%,
+      #ea8d66 15%,
+      #fdef8a 28%,
+      #8bcc93 42%,
+      #a6dced 55%,
+      #6f75aa 68%,
+      #e599c2 84%,
+      #e599c2 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    -webkit-text-stroke: 0.03em #333;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: $keyrune_background_clip;
   }
 }
