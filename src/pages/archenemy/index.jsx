@@ -21,13 +21,13 @@ import { ArchenemyHelmet } from "./Helmet";
 export const Archenemy = () => {
   const [loading, setLoading] = useState(false);
   const [schemes, setSchemes] = useState([]);
-  const [deckSelection, setDeckSelection] = useState(true);
 
   const game = useGameContext();
   const currentCard = game.currentCard;
   const ongoingSchemes = game.ongoingCards;
 
   const deck = useDeckContext();
+  const deckSelection = !deck.isInit;
 
   const [abandonedOngoing, setAbandonedOnGoing] = useLocalState(
     `archenemy-abandonedOngoing`,
@@ -48,13 +48,9 @@ export const Archenemy = () => {
 
   useEffect(() => {
     if (!loading && schemes && schemes.length <= 0) {
-      fetchSchemes();
+      Promise.resolve().then(() => fetchSchemes());
     }
   }, [schemes, loading, fetchSchemes]);
-
-  useEffect(() => {
-    setDeckSelection(!deck.isInit);
-  }, [deck.isInit]);
 
   const scheme = () => {
     if (currentCard) {
@@ -76,7 +72,6 @@ export const Archenemy = () => {
     game.reset();
     setAbandonedOnGoing(false);
     setLoading(false);
-    setDeckSelection(true);
   };
 
   const undo = async () => {

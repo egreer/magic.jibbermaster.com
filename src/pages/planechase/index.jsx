@@ -62,7 +62,7 @@ export const Planechase = () => {
 
   useEffect(() => {
     if (planes && planes.length <= 0 && !loading) {
-      fetchPlanes();
+      Promise.resolve().then(() => fetchPlanes());
     }
   }, [planes, loading, fetchPlanes]);
 
@@ -76,7 +76,7 @@ export const Planechase = () => {
     const open =
       scryCards.length > 0 && !!hasCustomProperty("scry-1", currentCard);
     if (open) {
-      setScryModalOpen(open);
+      Promise.resolve().then(() => setScryModalOpen(open));
     }
   }, [setScryModalOpen, scryCards, currentCard]);
 
@@ -85,7 +85,7 @@ export const Planechase = () => {
       revealedCards.length > 0 &&
       !!hasCustomProperty("multi-chaos", currentCard);
     if (open) {
-      setTripleChaosModalOpen(open);
+      Promise.resolve().then(() => setTripleChaosModalOpen(open));
     }
   }, [setTripleChaosModalOpen, revealedCards, currentCard]);
 
